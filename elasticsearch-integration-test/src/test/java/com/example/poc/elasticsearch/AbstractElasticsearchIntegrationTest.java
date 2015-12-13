@@ -1,8 +1,10 @@
-package com.example.elasticsearch;
+package com.example.poc.elasticsearch;
 
 import org.elasticsearch.client.Client;
 import org.junit.After;
 import org.junit.Before;
+
+import com.example.poc.elasticsearch.EmbeddedElasticsearchServer;
 
 /**
  * This is a helper class the starts an embedded elasticsearch server

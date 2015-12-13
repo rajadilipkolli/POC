@@ -1,4 +1,4 @@
-package com.example.elasticsearch;
+package com.example.poc.elasticsearch;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 

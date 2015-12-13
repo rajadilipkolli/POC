@@ -1,4 +1,4 @@
-package com.example.elasticsearch;
+package com.example.poc.elasticsearch;
 
 import org.elasticsearch.action.get.GetResponse;
 import org.junit.Test;

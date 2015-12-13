@@ -12,15 +12,22 @@
     </description>
 
 	<inceptionYear>2015</inceptionYear>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.0.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
+	
+	<dependencyManagement>
+   <dependencies>
+      <dependency>
+        <!-- Import dependency management from Spring Boot -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>1.3.0.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+   </dependencies>
+</dependencyManagement>
 
 	<modules>
+		
 		<module>spring-boot-sample-ws-cxf-restful</module>
 		<module>elasticsearch-integration-test</module>
 	</modules>
