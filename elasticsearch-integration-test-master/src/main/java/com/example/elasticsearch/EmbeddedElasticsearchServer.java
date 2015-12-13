@@ -1,4 +1,4 @@
-package de.cupofjava.elasticsearch;
+package com.example.elasticsearch;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
@@ -13,7 +13,7 @@ import org.elasticsearch.node.Node;
 /**
  * Example implementation of an embedded elasticsearch server.
  *
- * @author Felix Müller
+ *@author RajaDileep
  */
 public class EmbeddedElasticsearchServer {
 

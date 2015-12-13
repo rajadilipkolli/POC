@@ -1,4 +1,4 @@
-package de.cupofjava.elasticsearch;
+package com.example.elasticsearch;
 
 import org.elasticsearch.client.Client;
 import org.junit.After;
@@ -8,7 +8,7 @@ import org.junit.Before;
  * This is a helper class the starts an embedded elasticsearch server
  * for each test.
  *
- * @author Felix Müller
+ * @author RajaDileep
  */
 public abstract class AbstractElasticsearchIntegrationTest {
 

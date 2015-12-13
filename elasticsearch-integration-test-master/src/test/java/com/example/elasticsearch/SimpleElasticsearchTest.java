@@ -1,4 +1,4 @@
-package de.cupofjava.elasticsearch;
+package com.example.elasticsearch;
 
 import org.elasticsearch.action.get.GetResponse;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * Demonstrates how to use an embedded elasticsearch server in your tests.
  *
- * @author Felix Müller
+ * @author RajaDileep
  */
 public class SimpleElasticsearchTest extends AbstractElasticsearchIntegrationTest {
 
