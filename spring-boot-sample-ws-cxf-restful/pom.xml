@@ -7,14 +7,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>spring-boot-sample-ws-cxf-restful</name>
+	<url>https://github.com/rajadileepkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
 	<description>Demo project for Service First SOAP Webservices using Apache CXF and implementing the same in Spring RESTful using Spring Boot</description>
 
-    <parent>
-        <groupId>com.example.poc</groupId>
-        <artifactId>poc-parent</artifactId>
-        <version>1.0</version>
-        <relativePath>../poc-parent</relativePath>
-    </parent>
+	<parent>
+		<groupId>com.example.poc</groupId>
+		<artifactId>poc-parent</artifactId>
+		<version>1.0</version>
+		<relativePath>../poc-parent</relativePath>
+	</parent>
 
 	<scm>
 		<url>https://github.com/rajadileepkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
@@ -68,6 +69,15 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -4,7 +4,10 @@
 
 	<artifactId>elasticsearch-integration-test</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	
+	
 	<name>elasticsearch-integration-test</name>
+	<url>https://github.com/rajadileepkolli/POC/tree/master/elasticsearch-integration-test</url>
 	<description>This projects shows how you can set up an embedded elasticsearch server for proper integration tests.
     </description>
 
@@ -83,4 +86,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 </project>
