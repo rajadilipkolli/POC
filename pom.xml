@@ -33,6 +33,7 @@
 	<modules>
 		<module>spring-boot-sample-ws-cxf-restful</module>
 		<module>elasticsearch-integration-test</module>
+		<module>MongoDBRedisIntegration</module>
 	</modules>
 
 	<licenses>
