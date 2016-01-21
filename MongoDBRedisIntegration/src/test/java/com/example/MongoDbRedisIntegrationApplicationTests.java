@@ -17,17 +17,20 @@ public class MongoDbRedisIntegrationApplicationTests {
     @Autowired
     BookRepository repository;
     
+    @Autowired WebServicesController controller;
+    
 	@Test
 	public void contextLoads() {
 	}
 
 	@Test
 	public void insertData() {
+	    repository.deleteAll();
 	    Book book = new Book();
 	    book.setTitle("MongoDbCookBook");
 	    book.setText("MongoDB Data Book");
 	    book.setAuthor("Raja");
-	    Book response = repository.save(book);
+	    Book response = controller.saveBook(book);
 	    assertNotNull(response);
 	}
 }

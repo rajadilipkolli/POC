@@ -1,7 +1,6 @@
 package com.example;
 
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,35 +11,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping(value = "/book")
 public class WebServicesController
 {
 
     @Autowired
     BookRepository repository;
-    
-    @Autowired
-    private RedisTemplate<String,Book> redisTemplate;
 
-    @RequestMapping(name="/saveBook", method = RequestMethod.POST)
-    public String saveBook(Book book)
+    @Autowired
+    RedisTemplate<Object, Object> redisTemplate;
+
+    @RequestMapping(value = "/saveBook", method = RequestMethod.POST)
+    public Book saveBook(Book book)
     {
         Book inserted = repository.save(book);
-        return inserted.getId();
+        return inserted;
     }
-    
-    @SuppressWarnings("unchecked")
-    @RequestMapping(name="/findByTitle/{title}", method = RequestMethod.GET)
-    @Cacheable(value = "BOOK", key = "#id" ) 
-    public Optional<Book> findBookByTitle(@PathVariable String title)
+
+    @RequestMapping(value = "/findByTitle/{title}", method = RequestMethod.GET)
+    @Cacheable(value="book", key="#title")
+    public Book findBookByTitle(@PathVariable String title)
     {
-        Optional<Book> value = (Optional<Book>)redisTemplate.opsForHash().get("BOOK", title);
+        Book value = (Book) redisTemplate.opsForHash().get("BOOK", title);
         if (null != value)
         {
             return value;
         }
-        Stream<Book> inserted = repository.findByTitle(title);
-        redisTemplate.opsForHash().put("BOOK", title, inserted.findFirst());
-        return inserted.findFirst();
+        List<Book> inserted = repository.findByTitle(title);
+        if (inserted.isEmpty())
+        {
+            return null;
+        }
+        redisTemplate.opsForHash().put("BOOK", title, inserted.get(0));
+        return inserted.get(0);
     }
 }
