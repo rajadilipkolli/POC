@@ -6,9 +6,11 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootApplication
-public class MongoDbRedisIntegrationApplication {
+public class MongoDbRedisIntegrationApplication
+{
 
-	public static void main(String[] args) {
-		SpringApplication.run(MongoDbRedisIntegrationApplication.class, args);
-	}
+    public static void main(String[] args)
+    {
+        SpringApplication.run(MongoDbRedisIntegrationApplication.class, args);
+    }
 }

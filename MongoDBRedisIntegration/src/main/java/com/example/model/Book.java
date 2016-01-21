@@ -1,4 +1,4 @@
-package com.example;
+package com.example.model;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 public class Book implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     private String id;
     private String title;

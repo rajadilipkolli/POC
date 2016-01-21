@@ -9,28 +9,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.example.controller.WebServicesController;
+import com.example.model.Book;
+import com.example.repository.BookRepository;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MongoDbRedisIntegrationApplication.class)
 @WebAppConfiguration
-public class MongoDbRedisIntegrationApplicationTests {
+public class MongoDbRedisIntegrationApplicationTests
+{
 
     @Autowired
     BookRepository repository;
-    
-    @Autowired WebServicesController controller;
-    
-	@Test
-	public void contextLoads() {
-	}
 
-	@Test
-	public void insertData() {
-	    repository.deleteAll();
-	    Book book = new Book();
-	    book.setTitle("MongoDbCookBook");
-	    book.setText("MongoDB Data Book");
-	    book.setAuthor("Raja");
-	    Book response = controller.saveBook(book);
-	    assertNotNull(response);
-	}
+    @Autowired
+    WebServicesController controller;
+
+    @Test
+    public void contextLoads()
+    {
+    }
+
+    @Test
+    public void insertData()
+    {
+        repository.deleteAll();
+        Book book = new Book();
+        book.setTitle("MongoDbCookBook");
+        book.setText("MongoDB Data Book");
+        book.setAuthor("Raja");
+        Book response = controller.saveBook(book);
+        assertNotNull(response);
+    }
 }

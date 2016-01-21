@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controller;
 
 import java.util.List;
 
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.model.Book;
+import com.example.repository.BookRepository;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -24,12 +27,11 @@ public class WebServicesController
     @RequestMapping(value = "/saveBook", method = RequestMethod.POST)
     public Book saveBook(Book book)
     {
-        Book inserted = repository.save(book);
-        return inserted;
+        return repository.save(book);
     }
 
     @RequestMapping(value = "/findByTitle/{title}", method = RequestMethod.GET)
-    @Cacheable(value="book", key="#title")
+    @Cacheable(value = "book", key = "#title")
     public Book findBookByTitle(@PathVariable String title)
     {
         Book value = (Book) redisTemplate.opsForHash().get("BOOK", title);
