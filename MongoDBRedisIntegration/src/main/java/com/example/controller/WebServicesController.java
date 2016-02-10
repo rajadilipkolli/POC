@@ -1,8 +1,6 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -38,7 +36,7 @@ public class WebServicesController
     }
 
     @RequestMapping(value = "/findByTitle/{title}", method = RequestMethod.GET)
-    @Cacheable(value = "book", key = "#title")
+//    @Cacheable(value = "book", key = "#title")
     public Book findBookByTitle(@PathVariable String title)
     {
         Book value = (Book) redisTemplate.opsForHash().get("BOOK", title);
@@ -56,7 +54,7 @@ public class WebServicesController
     }
 
     @RequestMapping(value = "/updateByTitle/{title}/{author}", method = RequestMethod.GET)
-    @CachePut(value = "book", key = "#title")
+//    @CachePut(value = "book", key = "#title")
     public Book updateByTitle(@PathVariable(value = "title") String title,
             @PathVariable(value = "author") String author)
     {
