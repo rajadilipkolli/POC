@@ -1,9 +1,13 @@
 package com.example.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +28,9 @@ public class WebServicesController
     @Autowired
     RedisTemplate<Object, Object> redisTemplate;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
+
     @RequestMapping(value = "/saveBook", method = RequestMethod.POST)
     public Book saveBook(Book book)
     {
@@ -39,12 +46,25 @@ public class WebServicesController
         {
             return value;
         }
-        List<Book> inserted = repository.findByTitle(title);
-        if (inserted.isEmpty())
+        Book insertedBook = repository.findByTitle(title);
+        if (null != insertedBook)
         {
-            return null;
+            redisTemplate.opsForHash().put("BOOK", title, insertedBook);
+            return insertedBook;
         }
-        redisTemplate.opsForHash().put("BOOK", title, inserted.get(0));
-        return inserted.get(0);
+        return null;
+    }
+
+    @RequestMapping(value = "/updateByTitle/{title}/{author}", method = RequestMethod.GET)
+    @CachePut(value = "book", key = "#title")
+    public Book updateByTitle(@PathVariable(value = "title") String title,
+            @PathVariable(value = "author") String author)
+    {
+        Query query = new Query(Criteria.where("title").is(title));
+        Update update = new Update().set("author", author);
+        Book result = mongoTemplate.findAndModify(query, update,
+                new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
+        redisTemplate.opsForHash().put("BOOK", title, result);
+        return result;
     }
 }
