@@ -3,6 +3,7 @@ package com.example.model;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import lombok.Data;
@@ -18,4 +19,6 @@ public class Book implements Serializable
     private String title;
     private String author;
     private String text;
+    @Version
+    private int version;
 }
