@@ -42,6 +42,8 @@ public class RedisConfiguration extends CachingConfigurerSupport
         RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
         redisCacheManager.setTransactionAware(true);
         redisCacheManager.setLoadRemoteCachesOnStartup(true);
+//        redisCacheManager.setDefaultExpiration(10); /*Enabled for Testing Purposes*/
+        redisCacheManager.setUsePrefix(true);
         return redisCacheManager;
     }
 
