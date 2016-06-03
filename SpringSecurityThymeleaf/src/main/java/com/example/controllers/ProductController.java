@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class ProductController {
         return "productform";
     }
 
+    @Secured(value ={"ROLE_ADMIN"})
     @PostMapping(value = "product")
     public String saveProduct(Product product) {
         productService.saveProduct(product);
@@ -30,6 +32,7 @@ public class ProductController {
     }
 
     //Read
+    @Secured(value ={"ROLE_ADMIN","ROLE_USER"})
     @GetMapping("product/{id}")
     public String showProduct(@PathVariable String id, Model model) {
         model.addAttribute("product", productService.getProductById(id));

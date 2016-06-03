@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,22 +36,21 @@ public class UserController {
         binder.addValidators(userCreateFormValidator);
     }
 
-    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping("/user/{id}")
+    @Secured(value = { "ROLE_USER" })
     public ModelAndView getUserPage(@PathVariable String id) {
         log.debug("Getting user page for user={}", id);
         return new ModelAndView("user", "user", userService.getUserById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
         log.debug("Getting user create form");
         return new ModelAndView("user_create", "form", new UserCreateForm());
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         log.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
@@ -69,7 +68,7 @@ public class UserController {
             return "user_create";
         }
         // ok, redirect
-        return "redirect:/users";
+        return "redirect:/login";
     }
 
 }
