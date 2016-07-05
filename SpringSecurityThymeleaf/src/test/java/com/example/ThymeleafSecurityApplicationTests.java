@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.domain.Product;
+import com.example.email.EmailService;
 import com.example.repositories.ProductRepository;
 
 @RunWith(SpringRunner.class)
@@ -21,11 +22,19 @@ import com.example.repositories.ProductRepository;
 public class ThymeleafSecurityApplicationTests {
 
     private ProductRepository productRepository;
+    @Autowired private EmailService emailService;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    
+
+    @Test
+    public void testSendEmail()
+    {
+        emailService.sendEmail("rajadilipkolli@gmail.com", "JCart - Test Mail", "This is a test email from JCart");
+    } 
 
     @Test
     public void contextLoads() {
