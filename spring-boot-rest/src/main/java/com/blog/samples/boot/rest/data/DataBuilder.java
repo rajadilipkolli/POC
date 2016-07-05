@@ -14,7 +14,7 @@ public class DataBuilder {
 	
 	public List<Customer> createCustomers() {
 
-		Customer customer1 = new Customer("Raja", "kolli", DateTime.parse("1982-01-10").toDate(),
+		Customer customer1 = new Customer("Raja", "Kolli", DateTime.parse("1982-01-10").toDate(),
 				new Address("High Street", "Belfast", "India", "BT893PY"));
 
 		Customer customer2 = new Customer("Paul", "Jones", DateTime.parse("1973-01-03").toDate(),

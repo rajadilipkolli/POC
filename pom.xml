@@ -28,12 +28,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
 	</properties>
 
 	<modules>
 		<module>spring-boot-sample-ws-cxf-restful</module>
 		<module>elasticsearch-integration-test</module>
 		<module>MongoDBRedisIntegration</module>
+		<module>spring-boot-rest</module>
 	</modules>
 
 	<licenses>
