@@ -12,11 +12,10 @@
     <description>Spring security Integration Project</description>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.0.RC1</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+		<groupId>com.example.poc</groupId>
+		<artifactId>poc-parent</artifactId>
+		<version>1.0</version>
+	</parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

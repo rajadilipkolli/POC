@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-dependencies</artifactId>
-		<version>1.3.6.RELEASE</version>
+		<version>1.4.0.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -36,6 +36,7 @@
 		<module>elasticsearch-integration-test</module>
 		<module>MongoDBRedisIntegration</module>
 		<module>spring-boot-rest</module>
+		<module>SpringSecurityThymeleaf</module>
 	</modules>
 
 	<licenses>

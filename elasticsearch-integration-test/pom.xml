@@ -19,7 +19,6 @@
 
 	<properties>
 		<encoding>UTF-8</encoding>
-		<elasticsearch.version>2.3.3</elasticsearch.version>
 		<commons.io.version>2.4</commons.io.version>
 		<fest.assert.version>1.4</fest.assert.version>
 	</properties>
