@@ -24,7 +24,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<cxf.version>3.1.6</cxf.version>
+		<cxf.version>3.1.7</cxf.version>
 	</properties>
 
 	<dependencies>
@@ -43,17 +43,27 @@
 
 		<!--********* Apache CXF Dependency ********* -->
 		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>${cxf.version}</version>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+		    <version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http</artifactId>
+			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
 		<!--********* ./ Apache CXF Dependency ********* -->
 
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>swagger-ui</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>

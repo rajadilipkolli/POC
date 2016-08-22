@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.net.URL;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -13,19 +12,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.blog.samples.Application;
 import com.blog.samples.boot.rest.data.DataBuilder;
@@ -35,50 +31,45 @@ import com.blog.samples.boot.rest.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
-@IntegrationTest({"server.port=0"})
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class, webEnvironment=WebEnvironment.RANDOM_PORT)
 public class CustomerControllerIT {
+	
+    @Autowired
+    private TestRestTemplate template;
 
-	@Value("${local.server.port}")
-	private int port;
-	private URL base;
-	private RestTemplate template;
+    @Autowired
+    private DataBuilder dataBuilder;
 
-	@Autowired
-	private DataBuilder dataBuilder;
-	
-	@Autowired
-	private CustomerRepository customerRepository;
-	
-	private static final String JSON_CONTENT_TYPE = "application/json;charset=UTF-8"; 
-	
-	
-	@Before
-	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/rest/customers");
-		template = new TestRestTemplate();		
-		
-		/* remove and reload test data */
-		customerRepository.deleteAll();		
-		dataBuilder.createCustomers().forEach(customer -> customerRepository.save(customer));		
-	}
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	@Test
-	public void getAllCustomers() throws Exception {
-		ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);		
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-		
-		List<Customer> customers = convertJsonToCustomers(response.getBody());		
-		assertThat(customers.size(), equalTo(3));		
-	}
-	
-	@Test
+	private String base;
+    
+    private static final String JSON_CONTENT_TYPE = "application/json;charset=UTF-8"; 
+
+    @Before
+    public void setUp() throws Exception {
+    	this.base = "/rest/customers";
+        /* remove and reload test data */
+        customerRepository.deleteAll();     
+        dataBuilder.createCustomers().forEach(customer -> customerRepository.save(customer));       
+    }
+
+    @Test
+    public void getAllCustomers() throws Exception {
+        ResponseEntity<String> response = template.getForEntity("/rest/customers", String.class);     
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+        List<Customer> customers = convertJsonToCustomers(response.getBody());      
+        assertThat(customers.size(), equalTo(3));       
+    }
+
+    @Test
 	public void getCustomerById() throws Exception {
 		
 		Long customerId = getCustomerIdByFirstName("Raja");
-		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base.toString(), customerId), String.class);
+		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
 		
@@ -99,7 +90,7 @@ public class CustomerControllerIT {
 		Customer customer = new Customer("Gary", "Steale", DateTime.parse("1984-03-08").toDate(),
 				new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
 
-		ResponseEntity<String> response = template.postForEntity("http://localhost:" + port + "/rest/customers", customer, String.class);
+		ResponseEntity<String> response = template.postForEntity(base, customer, String.class);
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
 		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
 		assertThat(response.getHeaders().getFirst("Location"), containsString("/rest/customers/"));
@@ -118,7 +109,7 @@ public class CustomerControllerIT {
 	public void updateCustomer() throws Exception {
 
 		Long customerId = getCustomerIdByFirstName("Raja");
-		ResponseEntity<String> getCustomerResponse = template.getForEntity(String.format("%s/%s", base.toString(), customerId), String.class);
+		ResponseEntity<String> getCustomerResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
 		assertThat(getCustomerResponse.getStatusCode(), equalTo(HttpStatus.OK));
 		assertThat(getCustomerResponse.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
 		
@@ -141,13 +132,13 @@ public class CustomerControllerIT {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON); 
 		HttpEntity<Customer> entity = new HttpEntity<Customer>(customerToUpdate, headers); 
-		ResponseEntity<String> response = template.exchange(String.format("%s/%s", base.toString(), customerId), HttpMethod.PUT, entity, String.class, customerId);
+		ResponseEntity<String> response = template.exchange(String.format("%s/%s", base, customerId), HttpMethod.PUT, entity, String.class, customerId);
 		
 		assertThat(response.getBody(), nullValue());
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.NO_CONTENT));
 
 		/* GET updated customer and ensure name is updated as expected */
-		ResponseEntity<String> getUpdatedCustomerResponse = template.getForEntity(String.format("%s/%s", base.toString(), customerId), String.class);
+		ResponseEntity<String> getUpdatedCustomerResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
 		assertThat(getCustomerResponse.getStatusCode(), equalTo(HttpStatus.OK));
 		assertThat(getCustomerResponse.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
 		
@@ -165,7 +156,7 @@ public class CustomerControllerIT {
 	public void deleteCustomer() throws Exception {
 
 		Long customerId = getCustomerIdByFirstName("Raja");		
-		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base.toString(), customerId), String.class);
+		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
 		
@@ -179,17 +170,17 @@ public class CustomerControllerIT {
 		assertThat(customer.getAddress().getPostcode(), equalTo("BT893PY"));
 		
 		/* delete customer */
-		template.delete(String.format("%s/%s", base.toString(), customerId), String.class);
+		template.delete(String.format("%s/%s", base, customerId), String.class);
 		
 		/* attempt to get customer and ensure qwe get a 404 */
-		ResponseEntity<String> secondCallResponse = template.getForEntity(String.format("%s/%s", base.toString(), customerId), String.class);
+		ResponseEntity<String> secondCallResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
 		assertThat(secondCallResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
 	}
 	
 	@Test
 	public void getNonExistantCustomerReturnsError404() throws Exception {
 		
-		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base.toString(), 999999), String.class);
+		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, 999999), String.class);
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));		
 	}
 	
@@ -210,7 +201,7 @@ public class CustomerControllerIT {
 		return mapper.readValue(json, Customer.class);
 	}
 	
-	private List<Customer> convertJsonToCustomers(String json) throws Exception {		
+    private List<Customer> convertJsonToCustomers(String json) throws Exception {		
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, Customer.class));
 	}
