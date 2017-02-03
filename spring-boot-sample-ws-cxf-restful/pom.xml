@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-sample-ws-cxf-restful</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <name>spring-boot-sample-ws-cxf-restful</name>
     <url>https://github.com/rajadilipkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
@@ -12,7 +12,7 @@
     <parent>
         <groupId>com.example.poc</groupId>
         <artifactId>poc-parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
 
     <properties>
