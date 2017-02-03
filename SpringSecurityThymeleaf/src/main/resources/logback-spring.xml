@@ -23,11 +23,11 @@
 
     <appender name="FILE"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${CATALINA_HOME}/logs/DigitalBridge.log</file>
+        <file>${CATALINA_HOME}/logs/springsecuritythymeleaf.log</file>
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${CATALINA_HOME}/logs/DigitalBridge.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${CATALINA_HOME}/logs/springsecuritythymeleaf.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>

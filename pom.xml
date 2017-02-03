@@ -39,6 +39,7 @@
         <module>MongoDBRedisIntegration</module>
         <module>spring-boot-rest</module>
         <module>SpringSecurityThymeleaf</module>
+        <module>the-best-way-to-log-jdbc-statements</module>
     </modules>
 
     <licenses>
