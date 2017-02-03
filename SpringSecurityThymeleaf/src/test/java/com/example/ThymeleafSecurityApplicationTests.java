@@ -19,29 +19,29 @@ import com.example.repositories.ProductRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ThymeleafSecurityApplicationTests {
-
-    private ProductRepository productRepository;
-    @Autowired private EmailService emailService;
+public class ThymeleafSecurityApplicationTests
+{
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-    
+    private ProductRepository productRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Test
     public void testSendEmail()
     {
-        emailService.sendEmail("rajadilipkolli@gmail.com", "JCart - Test Mail", "This is a test email from JCart");
-    } 
-
-    @Test
-    public void contextLoads() {
+        emailService.sendEmail("rajadileepkolli@gmail.com", "JCart - Test Mail",
+                "This is a test email from JCart");
     }
 
     @Test
-    public void testSaveProduct() {
+    public void contextLoads()
+    {
+    }
+
+    @Test
+    public void testSaveProduct()
+    {
         // setup product
         Product product = new Product();
         product.setDescription("Spring Framework Shirt");

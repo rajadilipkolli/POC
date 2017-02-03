@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<name>POC by Example</name>
-	<url>https://github.com/rajadileepkolli/POC</url>
+	<url>https://github.com/rajadilipkolli/POC</url>
 	<description>
         Parent pom to aggregate modules.
     </description>
@@ -16,14 +16,14 @@
 	<inceptionYear>2015</inceptionYear>
 
 	<scm>
-		<url>https://github.com/rajadileepkolli/POC/</url>
+		<url>https://github.com/rajadilipkolli/POC/</url>
 		<developerConnection>Raja Dilip</developerConnection>
 	</scm>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-dependencies</artifactId>
-		<version>1.4.1.RELEASE</version>
+		<version>1.5.1.RELEASE</version>
 	</parent>
 
 	<properties>
