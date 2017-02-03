@@ -6,3 +6,5 @@ services:
   - redis
 sudo: false
 install: true
+script:
+  - mvn clean verify
