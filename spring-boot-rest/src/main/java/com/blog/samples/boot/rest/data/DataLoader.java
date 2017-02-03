@@ -10,20 +10,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class DataLoader implements CommandLineRunner{
+public class DataLoader implements CommandLineRunner
+{
 
-	@Autowired
-	private DataBuilder dataBuilder;
-	
-	@Autowired
-	private CustomerRepository customerRepository;
+    @Autowired
+    private DataBuilder dataBuilder;
 
-	
-	@Override
-	public void run(String... arg0) throws Exception {
-		
-		log.debug("Loading test data...");
-		dataBuilder.createCustomers().forEach(customer -> customerRepository.save(customer));
-		log.debug("Test data loaded...");	
-	}
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Override
+    public void run(String... arg0) throws Exception
+    {
+
+        log.debug("Loading test data...");
+        dataBuilder.createCustomers()
+                .forEach(customer -> customerRepository.save(customer));
+        log.debug("Test data loaded...");
+    }
 }
