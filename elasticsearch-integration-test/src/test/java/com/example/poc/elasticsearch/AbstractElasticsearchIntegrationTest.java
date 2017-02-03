@@ -7,29 +7,32 @@ import org.junit.Before;
 import com.example.poc.elasticsearch.EmbeddedElasticsearchServer;
 
 /**
- * This is a helper class the starts an embedded elasticsearch server
- * for each test.
+ * This is a helper class the starts an embedded elasticsearch server for each test.
  *
- * @author RajaDileep
+ * @author rajakolli
  */
-public abstract class AbstractElasticsearchIntegrationTest {
+public abstract class AbstractElasticsearchIntegrationTest
+{
 
     private EmbeddedElasticsearchServer embeddedElasticsearchServer;
 
     @Before
-    public void startEmbeddedElasticsearchServer() {
+    public void startEmbeddedElasticsearchServer()
+    {
         embeddedElasticsearchServer = new EmbeddedElasticsearchServer();
     }
 
     @After
-    public void shutdownEmbeddedElasticsearchServer() {
+    public void shutdownEmbeddedElasticsearchServer()
+    {
         embeddedElasticsearchServer.shutdown();
     }
 
     /**
      * By using this method you can access the embedded server.
      */
-    protected Client getClient() {
+    protected Client getClient()
+    {
         return embeddedElasticsearchServer.getClient();
     }
 }
