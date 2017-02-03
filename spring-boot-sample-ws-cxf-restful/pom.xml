@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-sample-ws-cxf-restful</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <name>spring-boot-sample-ws-cxf-restful</name>
     <url>https://github.com/rajadilipkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
@@ -13,13 +12,14 @@
     <parent>
         <groupId>com.example.poc</groupId>
         <artifactId>poc-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <scm>
         <url>https://github.com/rajadilipkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
         <developerConnection>Raja Dilip</developerConnection>
-    </scm>
+      <tag>v0.0.1</tag>
+  </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
