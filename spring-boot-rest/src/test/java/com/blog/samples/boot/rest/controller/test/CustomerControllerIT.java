@@ -1,10 +1,6 @@
 package com.blog.samples.boot.rest.controller.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -60,10 +56,10 @@ public class CustomerControllerIT {
     @Test
     public void getAllCustomers() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/rest/customers", String.class);     
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<Customer> customers = convertJsonToCustomers(response.getBody());      
-        assertThat(customers.size(), equalTo(3));       
+        assertThat(customers.size()).isEqualTo(3);       
     }
 
     @Test
@@ -71,18 +67,18 @@ public class CustomerControllerIT {
 		
 		Long customerId = getCustomerIdByFirstName("Raja");
 		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getHeaders().getContentType().toString()).isEqualTo(JSON_CONTENT_TYPE);
 		
 		Customer customer = convertJsonToCustomer(response.getBody());
 		
-		assertThat(customer.getFirstName(), equalTo("Raja"));
-		assertThat(customer.getLastName(), equalTo("Kolli"));
+		assertThat(customer.getFirstName()).isEqualTo("Raja");
+		assertThat(customer.getLastName()).isEqualTo("Kolli");
 		assertThat(customer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
-		assertThat(customer.getAddress().getStreet(), equalTo("High Street"));
-		assertThat(customer.getAddress().getTown(), equalTo("Belfast"));
-		assertThat(customer.getAddress().getCounty(), equalTo("India"));
-		assertThat(customer.getAddress().getPostcode(), equalTo("BT893PY"));
+		assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
+		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
+		assertThat(customer.getAddress().getCounty()).isEqualTo("India");
+		assertThat(customer.getAddress().getPostcode()).isEqualTo("BT893PY");
 	}
 	
 	@Test
@@ -92,18 +88,18 @@ public class CustomerControllerIT {
 				new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
 
 		ResponseEntity<String> response = template.postForEntity(base, customer, String.class);
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
-		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
-		assertThat(response.getHeaders().getFirst("Location"), containsString("/rest/customers/"));
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		assertThat(response.getHeaders().getContentType().toString()).isEqualTo(JSON_CONTENT_TYPE);
+		assertThat(response.getHeaders().getFirst("Location")).contains("/rest/customers/");
 		
 		Customer returnedCustomer = convertJsonToCustomer(response.getBody());		
-		assertThat(customer.getFirstName(), equalTo(returnedCustomer.getFirstName()));
-		assertThat(customer.getLastName(), equalTo(returnedCustomer.getLastName()));
-		assertThat(customer.getDateOfBirth(), equalTo(returnedCustomer.getDateOfBirth()));
-		assertThat(customer.getAddress().getStreet(), equalTo(returnedCustomer.getAddress().getStreet()));
-		assertThat(customer.getAddress().getTown(), equalTo(returnedCustomer.getAddress().getTown()));
-		assertThat(customer.getAddress().getCounty(), equalTo(returnedCustomer.getAddress().getCounty()));
-		assertThat(customer.getAddress().getPostcode(), equalTo(returnedCustomer.getAddress().getPostcode()));
+		assertThat(customer.getFirstName()).isEqualTo(returnedCustomer.getFirstName());
+		assertThat(customer.getLastName()).isEqualTo(returnedCustomer.getLastName());
+		assertThat(customer.getDateOfBirth()).isEqualTo(returnedCustomer.getDateOfBirth());
+		assertThat(customer.getAddress().getStreet()).isEqualTo(returnedCustomer.getAddress().getStreet());
+		assertThat(customer.getAddress().getTown()).isEqualTo(returnedCustomer.getAddress().getTown());
+		assertThat(customer.getAddress().getCounty()).isEqualTo(returnedCustomer.getAddress().getCounty());
+		assertThat(customer.getAddress().getPostcode()).isEqualTo(returnedCustomer.getAddress().getPostcode());
 	}
 
 	@Test
@@ -111,17 +107,17 @@ public class CustomerControllerIT {
 
 		Long customerId = getCustomerIdByFirstName("Raja");
 		ResponseEntity<String> getCustomerResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
-		assertThat(getCustomerResponse.getStatusCode(), equalTo(HttpStatus.OK));
-		assertThat(getCustomerResponse.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
+		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(getCustomerResponse.getHeaders().getContentType().toString()).isEqualTo(JSON_CONTENT_TYPE);
 		
 		Customer returnedCustomer = convertJsonToCustomer(getCustomerResponse.getBody());
-		assertThat(returnedCustomer.getFirstName(), equalTo("Raja"));
-		assertThat(returnedCustomer.getLastName(), equalTo("Kolli"));
+		assertThat(returnedCustomer.getFirstName()).isEqualTo("Raja");
+		assertThat(returnedCustomer.getLastName()).isEqualTo("Kolli");
 		assertThat(returnedCustomer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
-		assertThat(returnedCustomer.getAddress().getStreet(), equalTo("High Street"));
-		assertThat(returnedCustomer.getAddress().getTown(), equalTo("Belfast"));
-		assertThat(returnedCustomer.getAddress().getCounty(), equalTo("India"));
-		assertThat(returnedCustomer.getAddress().getPostcode(), equalTo("BT893PY"));
+		assertThat(returnedCustomer.getAddress().getStreet()).isEqualTo("High Street");
+		assertThat(returnedCustomer.getAddress().getTown()).isEqualTo("Belfast");
+		assertThat(returnedCustomer.getAddress().getCounty()).isEqualTo("India");
+		assertThat(returnedCustomer.getAddress().getPostcode()).isEqualTo("BT893PY");
 		
 		/* convert JSON response to Java and update name */
 		ObjectMapper mapper = new ObjectMapper();
@@ -135,22 +131,22 @@ public class CustomerControllerIT {
 		HttpEntity<Customer> entity = new HttpEntity<Customer>(customerToUpdate, headers); 
 		ResponseEntity<String> response = template.exchange(String.format("%s/%s", base, customerId), HttpMethod.PUT, entity, String.class, customerId);
 		
-		assertThat(response.getBody(), nullValue());
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.NO_CONTENT));
+		assertThat(response.getBody()).isNull();
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
 		/* GET updated customer and ensure name is updated as expected */
 		ResponseEntity<String> getUpdatedCustomerResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
-		assertThat(getCustomerResponse.getStatusCode(), equalTo(HttpStatus.OK));
-		assertThat(getCustomerResponse.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
+		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(getCustomerResponse.getHeaders().getContentType().toString()).isEqualTo(JSON_CONTENT_TYPE);
 		
 		Customer updatedCustomer = convertJsonToCustomer(getUpdatedCustomerResponse.getBody());
-		assertThat(updatedCustomer.getFirstName(), equalTo("Wayne"));
-		assertThat(updatedCustomer.getLastName(), equalTo("Rooney"));
-		assertThat(updatedCustomer.getDateOfBirth().toString(), equalTo("Sun Jan 10 00:00:00 IST 1982"));
-		assertThat(updatedCustomer.getAddress().getStreet(), equalTo("High Street"));
-		assertThat(updatedCustomer.getAddress().getTown(), equalTo("Belfast"));
-		assertThat(updatedCustomer.getAddress().getCounty(), equalTo("India"));
-		assertThat(updatedCustomer.getAddress().getPostcode(), equalTo("BT893PY"));
+		assertThat(updatedCustomer.getFirstName()).isEqualTo("Wayne");
+		assertThat(updatedCustomer.getLastName()).isEqualTo("Rooney");
+		assertThat(updatedCustomer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
+		assertThat(updatedCustomer.getAddress().getStreet()).isEqualTo("High Street");
+		assertThat(updatedCustomer.getAddress().getTown()).isEqualTo("Belfast");
+		assertThat(updatedCustomer.getAddress().getCounty()).isEqualTo("India");
+		assertThat(updatedCustomer.getAddress().getPostcode()).isEqualTo("BT893PY");
 	}
 
 	@Test
@@ -158,31 +154,31 @@ public class CustomerControllerIT {
 
 		Long customerId = getCustomerIdByFirstName("Raja");		
 		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-		assertThat(response.getHeaders().getContentType().toString(), equalTo(JSON_CONTENT_TYPE));
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getHeaders().getContentType().toString()).isEqualTo(JSON_CONTENT_TYPE);
 		
 		Customer customer = convertJsonToCustomer(response.getBody());
-		assertThat(customer.getFirstName(), equalTo("Raja"));
-		assertThat(customer.getLastName(), equalTo("Kolli"));
+		assertThat(customer.getFirstName()).isEqualTo("Raja");
+		assertThat(customer.getLastName()).isEqualTo("Kolli");
 		assertThat(customer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
-		assertThat(customer.getAddress().getStreet(), equalTo("High Street"));
-		assertThat(customer.getAddress().getTown(), equalTo("Belfast"));
-		assertThat(customer.getAddress().getCounty(), equalTo("India"));
-		assertThat(customer.getAddress().getPostcode(), equalTo("BT893PY"));
+		assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
+		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
+		assertThat(customer.getAddress().getCounty()).isEqualTo("India");
+		assertThat(customer.getAddress().getPostcode()).isEqualTo("BT893PY");
 		
 		/* delete customer */
 		template.delete(String.format("%s/%s", base, customerId), String.class);
 		
 		/* attempt to get customer and ensure qwe get a 404 */
 		ResponseEntity<String> secondCallResponse = template.getForEntity(String.format("%s/%s", base, customerId), String.class);
-		assertThat(secondCallResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+		assertThat(secondCallResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 	
 	@Test
 	public void getNonExistantCustomerReturnsError404() throws Exception {
 		
 		ResponseEntity<String> response = template.getForEntity(String.format("%s/%s", base, 999999), String.class);
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));		
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);		
 	}
 	
 	/**
