@@ -3,7 +3,7 @@
 
     <groupId>com.example.poc</groupId>
     <artifactId>poc-parent</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>POC by Example</name>
@@ -18,7 +18,7 @@
         <connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
         <developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
         <url>https://github.com/rajadilipkolli/POC</url>
-        <tag>v0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <parent>
