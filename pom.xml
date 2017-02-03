@@ -1,49 +1,51 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example.poc</groupId>
-	<artifactId>poc-parent</artifactId>
-	<version>1.0</version>
-	<packaging>pom</packaging>
+    <groupId>com.example.poc</groupId>
+    <artifactId>poc-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>POC by Example</name>
-	<url>https://github.com/rajadilipkolli/POC</url>
-	<description>
+    <name>POC by Example</name>
+    <url>https://github.com/rajadilipkolli/POC</url>
+    <description>
         Parent pom to aggregate modules.
     </description>
 
-	<inceptionYear>2015</inceptionYear>
+    <inceptionYear>2015</inceptionYear>
 
-	<scm>
-		<url>https://github.com/rajadilipkolli/POC/</url>
-		<developerConnection>Raja Dilip</developerConnection>
-	</scm>
+    <scm>
+        <connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
+        <developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
+        <url>https://github.com/rajadilipkolli/POC</url>
+        <tag>https://github.com/rajadilipkolli/POC/tags</tag>
+    </scm>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-dependencies</artifactId>
-		<version>1.5.1.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>1.5.1.RELEASE</version>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
-	<modules>
-		<module>spring-boot-sample-ws-cxf-restful</module>
-		<module>elasticsearch-integration-test</module>
-		<module>MongoDBRedisIntegration</module>
-		<module>spring-boot-rest</module>
-		<module>SpringSecurityThymeleaf</module>
-	</modules>
+    <modules>
+        <module>spring-boot-sample-ws-cxf-restful</module>
+        <module>elasticsearch-integration-test</module>
+        <module>MongoDBRedisIntegration</module>
+        <module>spring-boot-rest</module>
+        <module>SpringSecurityThymeleaf</module>
+    </modules>
 
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<comments>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <comments>
 				Copyright 2007-2015 the original author or authors.
 				
 				Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,15 +60,15 @@
 				See the License for the specific language governing permissions and
 				limitations under the License.
             </comments>
-		</license>
-	</licenses>
+        </license>
+    </licenses>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

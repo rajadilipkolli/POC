@@ -14,13 +14,11 @@
     <parent>
         <groupId>com.example.poc</groupId>
         <artifactId>poc-parent</artifactId>
-        <version>1.0</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <encoding>UTF-8</encoding>
         <commons.io.version>2.4</commons.io.version>
-        <fest.assert.version>1.4</fest.assert.version>
     </properties>
 
     <dependencies>
