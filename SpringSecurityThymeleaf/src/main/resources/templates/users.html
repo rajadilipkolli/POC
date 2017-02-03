@@ -2,30 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Framework Guru</title>
+<title>Spring Framework Guru</title>
 
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <div th:if="${not #lists.isEmpty(users)}">
-        <h2>User List</h2>
-        <table class="table table-striped">
-            <tr>
-                <th>Id</th>
-                <th>UserName</th>
-                <th>Role</th>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.id}">User Id</td>
-                <td th:text="${user.username}">UserName</td>
-                <td th:text="${user.role}">Role</td>
-            </tr>
-        </table>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+		<div th:if="${not #lists.isEmpty(users)}">
+			<h2>User List</h2>
+			<table class="table table-striped">
+				<tr>
+					<th>Id</th>
+					<th>UserName</th>
+					<th>Role</th>
+				</tr>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.id}">User Id</td>
+					<td th:text="${user.username}">UserName</td>
+					<td th:text="${user.role}">Role</td>
+				</tr>
+			</table>
 
-    </div>
-</div>
+		</div>
+	</div>
 
 </body>
 </html>

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example.poc</groupId>
@@ -73,12 +74,13 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <!-- Keep changes in the local repo, push will be done afterwards -->
+                    <!-- Keep changes in the local repo, push will be done 
+                        afterwards -->
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <!-- Use a better name for the tag -->
                     <tagNameFormat>v@{project.version}</tagNameFormat>
-					<tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
+                    <tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
                 </configuration>
                 <dependencies>
                     <dependency>
