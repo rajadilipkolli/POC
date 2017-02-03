@@ -79,6 +79,7 @@
                     <localCheckout>true</localCheckout>
                     <!-- Use a better name for the tag -->
                     <tagNameFormat>v@{project.version}</tagNameFormat>
+					<tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
                 </configuration>
                 <dependencies>
                     <dependency>
