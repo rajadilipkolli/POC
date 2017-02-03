@@ -3,7 +3,7 @@
 
     <groupId>com.example.poc</groupId>
     <artifactId>poc-parent</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>POC by Example</name>
