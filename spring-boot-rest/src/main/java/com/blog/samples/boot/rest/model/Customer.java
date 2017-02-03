@@ -12,39 +12,37 @@ import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
-public class Customer{
+public class Customer
+{
 
-	public Customer(){}
-	
-	public Customer(String firstName, String lastName, Date dateOfBirth, Address address) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dateOfBirth = dateOfBirth;
-		this.address = address;
-	}
-
-
-	@Id
-	@Getter
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
+    @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-	
-	@Setter
-	@Getter
-	private String firstName;
-	
-	@Setter
-	@Getter
-	private String lastName;
-	
-	@Setter	
-	@Getter
-	private Date dateOfBirth;
 
-	@Setter
-	@Getter
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Address address;
+    private String firstName;
+
+    private String lastName;
+
+    private Date dateOfBirth;
+
+    @OneToOne(cascade = { CascadeType.ALL })
+    private Address address;
+
+    public Customer()
+    {
+        super();
+    }
+
+    public Customer(String firstName, String lastName, Date dateOfBirth, Address address)
+    {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+    }
 }

@@ -14,16 +14,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class EmailService {
-    
+public class EmailService
+{
+
     @Autowired
     JavaMailSender javaMailSender;
 
     @Value("${support.email}")
     String supportEmail;
 
-    public void sendEmail(String to, String subject, String content) {
-        try {
+    public void sendEmail(String to, String subject, String content)
+    {
+        try
+        {
             // Prepare message using a Spring helper
             final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
             final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
@@ -33,8 +36,10 @@ public class EmailService {
             message.setText(content, true /* isHtml */);
 
             javaMailSender.send(message.getMimeMessage());
-        } catch (MailException | MessagingException e) {
-            log.error(e.getMessage());
+        }
+        catch (MailException | MessagingException e)
+        {
+            log.error(e.getMessage(), e);
         }
     }
 }

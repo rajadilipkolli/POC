@@ -8,36 +8,32 @@ import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="")
+@Setter
+@Getter
+@Entity
 public class Address{
-
-	public Address(){}
-	
-	public Address(String street, String town, String county, String postcode) {
-		this.street = street;
-		this.town = town;
-		this.county = county;
-		this.postcode = postcode;
-	}
 
 	@Id
 	@Getter
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 	
-	@Setter
-	@Getter
 	private String street;
 	
-	@Setter
-	@Getter
 	private String town;
 	
-	@Setter
-	@Getter
 	private String county;
 
-	@Setter
-	@Getter
 	private String postcode;
+	
+	public Address(){
+        //JPA needs no Args Constructor
+    }
+    
+    public Address(String street, String town, String county, String postcode) {
+        this.street = street;
+        this.town = town;
+        this.county = county;
+        this.postcode = postcode;
+    }
 }

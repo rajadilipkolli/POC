@@ -2,6 +2,9 @@ package com.example.domain;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper=true)
 public class CurrentUser extends org.springframework.security.core.userdetails.User{
 
     private static final long serialVersionUID = 1L;

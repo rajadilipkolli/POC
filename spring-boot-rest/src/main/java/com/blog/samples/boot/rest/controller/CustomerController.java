@@ -22,98 +22,107 @@ import com.blog.samples.boot.rest.repository.CustomerRepository;
  * Customer Controller exposes a series of RESTful endpoints
  */
 @RestController
-public class CustomerController {
+public class CustomerController
+{
 
-	@Autowired
-	private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	
-	/**
-	 * Get customer using id. Returns HTTP 404 if customer not found
-	 * 
-	 * @param customerId
-	 * @return retrieved customer
-	 */
-	@RequestMapping(value = "/rest/customers/{customerId}", method = RequestMethod.GET)
-	public Customer getCustomer(@PathVariable("customerId") Long customerId) {
-		
-		/* validate customer Id parameter */
-		if (null==customerId) {
-			throw new InvalidCustomerRequestException();
-		}
-		
-		Customer customer = customerRepository.findOne(customerId);
-		
-		if(null==customer){
-			throw new CustomerNotFoundException();
-		}
-		
-		return customer;
-	}
+    /**
+     * Get customer using id. Returns HTTP 404 if customer not found
+     * 
+     * @param customerId
+     * @return retrieved customer
+     */
+    @RequestMapping(value = "/rest/customers/{customerId}", method = RequestMethod.GET)
+    public Customer getCustomer(@PathVariable("customerId") Long customerId)
+    {
 
-	
-	/**
-	 * Gets all customers.
-	 *
-	 * @return the customers
-	 */
-	@RequestMapping(value = "/rest/customers", method = RequestMethod.GET)
-	public List<Customer> getCustomers() {
-		
-		return (List<Customer>) customerRepository.findAll();
-	}
+        /* validate customer Id parameter */
+        if (null == customerId)
+        {
+            throw new InvalidCustomerRequestException();
+        }
 
-	
-	/**
-	 * Create a new customer and return in response with HTTP 201
-	 *
-	 * @param the customer
-	 * @return created customer
-	 */
-	@RequestMapping(value = { "/rest/customers" }, method = { RequestMethod.POST })
-	public Customer createCustomer(@RequestBody Customer customer, HttpServletResponse httpResponse, WebRequest request) {
+        Customer customer = customerRepository.findOne(customerId);
 
-		Customer createdcustomer = null;
-		createdcustomer = customerRepository.save(customer);		
-		httpResponse.setStatus(HttpStatus.CREATED.value());
-		httpResponse.setHeader("Location", String.format("%s/rest/customers/%s", request.getContextPath(), customer.getId()));
-		
-		return createdcustomer;
-	}
+        if (null == customer)
+        {
+            throw new CustomerNotFoundException();
+        }
 
-	
-	/**
-	 * Update customer with given customer id.
-	 *
-	 * @param customer the customer
-	 */
-	@RequestMapping(value = { "/rest/customers/{customerId}" }, method = { RequestMethod.PUT })
-	public void updateCustomer(@RequestBody Customer customer, @PathVariable("customerId") Long customerId,
-								   		  HttpServletResponse httpResponse) {
+        return customer;
+    }
 
-		if(!customerRepository.exists(customerId)){
-			httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-		}
-		else{
-			customerRepository.save(customer);
-			httpResponse.setStatus(HttpStatus.NO_CONTENT.value());	
-		}
-	}
+    /**
+     * Gets all customers.
+     *
+     * @return the customers
+     */
+    @RequestMapping(value = "/rest/customers", method = RequestMethod.GET)
+    public List<Customer> getCustomers()
+    {
 
-	
-	/**
-	 * Deletes the customer with given customer id if it exists and returns HTTP204.
-	 *
-	 * @param customerId the customer id
-	 */
-	@RequestMapping(value = "/rest/customers/{customerId}", method = RequestMethod.DELETE)
-	public void removeCustomer(@PathVariable("customerId") Long customerId, HttpServletResponse httpResponse) {
+        return (List<Customer>) customerRepository.findAll();
+    }
 
-		if(customerRepository.exists(customerId)){
-			customerRepository.delete(customerId);	
-		}
-		
-		httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-	}
+    /**
+     * Create a new customer and return in response with HTTP 201
+     *
+     * @param the customer
+     * @return created customer
+     */
+    @RequestMapping(value = { "/rest/customers" }, method = { RequestMethod.POST })
+    public Customer createCustomer(@RequestBody Customer customer,
+            HttpServletResponse httpResponse, WebRequest request)
+    {
+
+        Customer createdcustomer = customerRepository.save(customer);
+        httpResponse.setStatus(HttpStatus.CREATED.value());
+        httpResponse.setHeader("Location", String.format("%s/rest/customers/%s",
+                request.getContextPath(), customer.getId()));
+
+        return createdcustomer;
+    }
+
+    /**
+     * Update customer with given customer id.
+     *
+     * @param customer the customer
+     */
+    @RequestMapping(value = { "/rest/customers/{customerId}" }, method = {
+            RequestMethod.PUT })
+    public void updateCustomer(@RequestBody Customer customer,
+            @PathVariable("customerId") Long customerId, HttpServletResponse httpResponse)
+    {
+
+        if (!customerRepository.exists(customerId))
+        {
+            httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        }
+        else
+        {
+            customerRepository.save(customer);
+            httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+        }
+    }
+
+    /**
+     * Deletes the customer with given customer id if it exists and returns HTTP204.
+     *
+     * @param customerId the customer id
+     */
+    @RequestMapping(value = "/rest/customers/{customerId}", method = RequestMethod.DELETE)
+    public void removeCustomer(@PathVariable("customerId") Long customerId,
+            HttpServletResponse httpResponse)
+    {
+
+        if (customerRepository.exists(customerId))
+        {
+            customerRepository.delete(customerId);
+        }
+
+        httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+    }
 
 }
