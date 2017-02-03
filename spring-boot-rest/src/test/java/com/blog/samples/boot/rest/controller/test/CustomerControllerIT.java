@@ -1,5 +1,6 @@
 package com.blog.samples.boot.rest.controller.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
@@ -77,7 +78,7 @@ public class CustomerControllerIT {
 		
 		assertThat(customer.getFirstName(), equalTo("Raja"));
 		assertThat(customer.getLastName(), equalTo("Kolli"));
-		assertThat(customer.getDateOfBirth().toString(), equalTo("Sun Jan 10 00:00:00 IST 1982"));
+		assertThat(customer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
 		assertThat(customer.getAddress().getStreet(), equalTo("High Street"));
 		assertThat(customer.getAddress().getTown(), equalTo("Belfast"));
 		assertThat(customer.getAddress().getCounty(), equalTo("India"));
@@ -116,7 +117,7 @@ public class CustomerControllerIT {
 		Customer returnedCustomer = convertJsonToCustomer(getCustomerResponse.getBody());
 		assertThat(returnedCustomer.getFirstName(), equalTo("Raja"));
 		assertThat(returnedCustomer.getLastName(), equalTo("Kolli"));
-		assertThat(returnedCustomer.getDateOfBirth().toString(), equalTo("Sun Jan 10 00:00:00 IST 1982"));
+		assertThat(returnedCustomer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
 		assertThat(returnedCustomer.getAddress().getStreet(), equalTo("High Street"));
 		assertThat(returnedCustomer.getAddress().getTown(), equalTo("Belfast"));
 		assertThat(returnedCustomer.getAddress().getCounty(), equalTo("India"));
@@ -163,7 +164,7 @@ public class CustomerControllerIT {
 		Customer customer = convertJsonToCustomer(response.getBody());
 		assertThat(customer.getFirstName(), equalTo("Raja"));
 		assertThat(customer.getLastName(), equalTo("Kolli"));
-		assertThat(customer.getDateOfBirth().toString(), equalTo("Sun Jan 10 00:00:00 IST 1982"));
+		assertThat(customer.getDateOfBirth().toString()).isEqualTo("Sun Jan 10 00:00:00 UTC 1982");
 		assertThat(customer.getAddress().getStreet(), equalTo("High Street"));
 		assertThat(customer.getAddress().getTown(), equalTo("Belfast"));
 		assertThat(customer.getAddress().getCounty(), equalTo("India"));

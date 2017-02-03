@@ -3,8 +3,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-sample-ws-cxf-restful</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
-
     <name>spring-boot-sample-ws-cxf-restful</name>
     <url>https://github.com/rajadilipkolli/POC/tree/master/spring-boot-sample-ws-cxf-restful</url>
     <description>Demo project for Service First SOAP Webservices using Apache CXF and implementing the same in Spring RESTful using Spring Boot</description>
