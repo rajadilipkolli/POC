@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -48,7 +47,6 @@ public class TheBestWayToLogJdbcStatementsApplication
     }
 
     @Bean
-    @Lazy
     CommandLineRunner init(JdbcTemplate jdbcTemplate)
     { // DataSourceAutoConfiguration creates jdbcTemplate
         return args ->
