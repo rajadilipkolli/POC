@@ -1,5 +1,7 @@
 package com.example.poc.restful.controller;
 
+import org.springframework.stereotype.Service;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -7,6 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @Api("/sayHello")
+@Service
 public class HelloServiceImpl1 implements HelloService
 {
 

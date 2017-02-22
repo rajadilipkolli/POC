@@ -71,7 +71,7 @@ public class TheBestWayToLogJdbcStatementsApplication
                 preparedStatement.addBatch();
                 preparedStatement.executeBatch();
 
-                jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class);
+                jdbcTemplate.queryForObject("SELECT COUNT(1) FROM users", Integer.class);
                 System.out.println(
                         "**********************************************************");
 

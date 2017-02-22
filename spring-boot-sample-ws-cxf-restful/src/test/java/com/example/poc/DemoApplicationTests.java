@@ -31,6 +31,17 @@ public class DemoApplicationTests
         ResponseEntity<String> response = this.testRestTemplate
                 .getForEntity("/services/sayHello/{userName}", String.class, "ApacheCXF");
         assertThat(response.getStatusCode().is2xxSuccessful()).isEqualTo(true);
+        assertThat(response.getBody())
+                .isEqualTo("Hello ApacheCXF, Welcome to CXF RS Spring Boot World!!!");
+    }
+
+    @Test
+    public void testMVCRestService()
+    {
+        ResponseEntity<String> response = this.testRestTemplate
+                .getForEntity("/restapi/example/{userName}", String.class, "SpringMVC");
+        assertThat(response.getStatusCode().is2xxSuccessful()).isEqualTo(true);
+        assertThat(response.getBody()).isEqualTo("Welcome to Spring boot SpringMVC!!!");
     }
 
 }
