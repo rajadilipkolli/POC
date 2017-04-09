@@ -40,6 +40,7 @@
         <module>spring-boot-rest</module>
         <module>SpringSecurityThymeleaf</module>
         <module>the-best-way-to-log-jdbc-statements</module>
+        <module>spring-boot-jooq</module>
     </modules>
 
     <licenses>
