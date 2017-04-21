@@ -8,9 +8,11 @@
         <artifactId>poc-parent</artifactId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
+    <name>spring-boot-jooq-example</name>
 
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
 

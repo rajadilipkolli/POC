@@ -9,9 +9,7 @@
 
     <name>POC by Example</name>
     <url>https://github.com/rajadilipkolli/POC</url>
-    <description>
-        Parent pom to aggregate modules.
-    </description>
+    <description>Parent pom to aggregate modules using spring-boot</description>
 
     <inceptionYear>2015</inceptionYear>
 
@@ -22,10 +20,20 @@
         <tag>HEAD</tag>
     </scm>
 
+    <issueManagement>
+        <url>https://github.com/rajadilipkolli/POC/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+   
+    <ciManagement>
+        <system>travis-ci</system>
+        <url>https://travis-ci.org/rajadilipkolli/POC</url>
+    </ciManagement>
+     
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>1.5.3.RELEASE</version>
     </parent>
 
     <properties>

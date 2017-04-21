@@ -8,7 +8,12 @@
         <artifactId>poc-parent</artifactId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
+    <name>spring-boot-rest</name>
 
+    <scm>
+        <url>https://github.com/rajadilipkolli/POC/tree/master/spring-boot-rest</url>
+    </scm>
+    
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
