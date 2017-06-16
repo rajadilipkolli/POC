@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserById(String id) {
         log.debug("Getting user={}", id);
-        return Optional.ofNullable(userRepository.findOne(id));
+        return userRepository.findById(id);
     }
 
     @Override
     public Collection<User> getAllUsers() {
         log.debug("Getting all users");
-        return userRepository.findAll(new Sort("username"));
+        return userRepository.findAll(Sort.by("username"));
     }
 
     @Override

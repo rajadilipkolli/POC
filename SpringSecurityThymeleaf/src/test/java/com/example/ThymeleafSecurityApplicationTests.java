@@ -1,11 +1,10 @@
 package com.example;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,11 +36,13 @@ public class ThymeleafSecurityApplicationTests
     @Test
     public void contextLoads()
     {
+        assertThat(emailService).isNotNull();
     }
 
     @Test
     public void testSaveProduct()
     {
+        productRepository.deleteAll();
         // setup product
         Product product = new Product();
         product.setDescription("Spring Framework Shirt");
@@ -49,36 +50,40 @@ public class ThymeleafSecurityApplicationTests
         product.setProductId("1234");
 
         // save product, verify has ID value after save
-        assertNull(product.getId()); // null before save
+        assertThat(product.getId()).isNull(); // null before save
         productRepository.save(product);
-        assertNotNull(product.getId()); // not null after save
+        assertThat(product.getId()).isNotNull(); // not null after save
 
         // fetch from DB
-        Product fetchedProduct = productRepository.findOne(product.getId());
+        Optional<Product> fetchedProductOptional = productRepository
+                .findById(product.getId());
 
+        Product fetchedProduct = fetchedProductOptional.get();
         // should not be null
-        assertNotNull(fetchedProduct);
+        assertThat(fetchedProduct).isNotNull();
 
         // should equal
-        assertEquals(product.getId(), fetchedProduct.getId());
-        assertEquals(product.getDescription(), fetchedProduct.getDescription());
+        assertThat(product.getId()).isEqualTo(fetchedProduct.getId());
+        assertThat(product.getDescription()).isEqualTo(fetchedProduct.getDescription());
 
         // update description and save
         fetchedProduct.setDescription("New Description");
         productRepository.save(fetchedProduct);
 
         // get from DB, should be updated
-        Product fetchedUpdatedProduct = productRepository.findOne(fetchedProduct.getId());
-        assertEquals(fetchedProduct.getDescription(),
-                fetchedUpdatedProduct.getDescription());
+        Optional<Product> fetchedUpdatedProduct = productRepository
+                .findById(fetchedProduct.getId());
+
+        assertThat(fetchedProduct.getDescription())
+                .isEqualTo(fetchedUpdatedProduct.get().getDescription());
 
         // verify count of products in DB
         long productCount = productRepository.count();
-        assertEquals(productCount, 1);
+        assertThat(productCount).isEqualTo(1);
 
         // get all products, list should only have one
         List<Product> products = productRepository.findAll();
 
-        assertEquals(products.size(), 1);
+        assertThat(products.size()).isEqualTo(1);
     }
 }

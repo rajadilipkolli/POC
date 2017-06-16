@@ -1,6 +1,7 @@
 package com.blog.samples.boot.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,14 +45,14 @@ public class CustomerController
             throw new InvalidCustomerRequestException();
         }
 
-        Customer customer = customerRepository.findOne(customerId);
+        Optional<Customer> customer = customerRepository.findById(customerId);
 
-        if (null == customer)
+        if (!customer.isPresent())
         {
             throw new CustomerNotFoundException();
         }
 
-        return customer;
+        return customer.get();
     }
 
     /**
@@ -96,7 +97,7 @@ public class CustomerController
             @PathVariable("customerId") Long customerId, HttpServletResponse httpResponse)
     {
 
-        if (!customerRepository.exists(customerId))
+        if (!customerRepository.existsById(customerId))
         {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
@@ -117,9 +118,9 @@ public class CustomerController
             HttpServletResponse httpResponse)
     {
 
-        if (customerRepository.exists(customerId))
+        if (customerRepository.existsById(customerId))
         {
-            customerRepository.delete(customerId);
+            customerRepository.deleteById(customerId);
         }
 
         httpResponse.setStatus(HttpStatus.NO_CONTENT.value());

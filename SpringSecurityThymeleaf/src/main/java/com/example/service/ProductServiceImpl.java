@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(String id) {
-        return productRepository.findOne(id);
+    public Optional<Product> getProductById(String id) {
+        return productRepository.findById(id);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(String id) {
-        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 
 }

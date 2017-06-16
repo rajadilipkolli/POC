@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.domain.Product;
 
@@ -8,7 +9,7 @@ public interface ProductService {
 
     Product saveProduct(Product product);
 
-    Product getProductById(String id);
+    Optional<Product> getProductById(String id);
 
     List<Product> listAllProducts();
     
