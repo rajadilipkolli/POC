@@ -4,8 +4,11 @@ import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import redis.clients.jedis.Protocol;
 
 @Configuration
 public class RedisConfiguration extends CachingConfigurerSupport
@@ -14,9 +17,10 @@ public class RedisConfiguration extends CachingConfigurerSupport
     @Bean
     public JedisConnectionFactory jedisConnectionFactory()
     {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName("127.0.0.1");
-        jedisConnectionFactory.setPort(6379);
+        RedisStandaloneConfiguration standaloneConfig = new RedisStandaloneConfiguration(
+                Protocol.DEFAULT_HOST, Protocol.DEFAULT_PORT);
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(
+                standaloneConfig);
         return jedisConnectionFactory;
     }
 
