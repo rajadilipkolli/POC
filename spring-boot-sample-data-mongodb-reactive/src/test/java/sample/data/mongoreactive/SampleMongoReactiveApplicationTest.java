@@ -9,6 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * Tests for {@link SampleMongoReactiveApplicationTest}.
+ *
+ * @author Raja Kolli
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SampleMongoReactiveApplicationTest {

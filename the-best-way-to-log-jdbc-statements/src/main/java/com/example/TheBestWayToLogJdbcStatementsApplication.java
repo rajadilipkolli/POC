@@ -11,6 +11,7 @@ import org.hibernate.engine.jdbc.internal.Formatter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +34,8 @@ public class TheBestWayToLogJdbcStatementsApplication
 
     public static void main(String[] args)
     {
-        SpringApplication.run(TheBestWayToLogJdbcStatementsApplication.class);
+    	ConfigurableApplicationContext appCtx = SpringApplication.run(TheBestWayToLogJdbcStatementsApplication.class);
+        System.exit(SpringApplication.exit(appCtx));
     }
 
     @Bean

@@ -48,7 +48,7 @@
         <module>SpringSecurityThymeleaf</module>
         <module>the-best-way-to-log-jdbc-statements</module>
         <module>spring-boot-jooq</module>
-        <module>spring-boot-webflux-mongo</module>
+        <module>spring-boot-sample-data-mongodb-reactive</module>
     </modules>
 
     <licenses>
