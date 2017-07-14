@@ -48,6 +48,7 @@
         <module>SpringSecurityThymeleaf</module>
         <module>the-best-way-to-log-jdbc-statements</module>
         <module>spring-boot-jooq</module>
+        <module>spring-boot-webflux-mongo</module>
     </modules>
 
     <licenses>
@@ -55,7 +56,7 @@
             <name>Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <comments>
-				Copyright 2007-2015 the original author or authors.
+				Copyright 2007-2017 the original author or authors.
 				
 				Licensed under the Apache License, Version 2.0 (the "License");
 				you may not use this file except in compliance with the License.
