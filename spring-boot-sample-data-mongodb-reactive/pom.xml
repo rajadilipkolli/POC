@@ -10,7 +10,6 @@
 		<groupId>com.example.poc</groupId>
 		<artifactId>poc-parent</artifactId>
 		<version>0.0.5-SNAPSHOT</version>
-		<relativePath>..</relativePath>
 	</parent>
 
 	<properties>

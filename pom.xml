@@ -42,13 +42,13 @@
     </properties>
 
     <modules>
-        <module>spring-boot-sample-ws-cxf-restful</module>
-        <module>mongodb-redis-integration</module>
+    	<module>mongodb-redis-integration</module>
+    	<module>springsecuritythymeleaf</module>
+    	<module>spring-boot-jooq</module>
         <module>spring-boot-rest</module>
-        <module>springsecuritythymeleaf</module>
-        <module>the-best-way-to-log-jdbc-statements</module>
-        <module>spring-boot-jooq</module>
         <module>spring-boot-sample-data-mongodb-reactive</module>
+        <module>spring-boot-sample-ws-cxf-restful</module>
+        <module>the-best-way-to-log-jdbc-statements</module>
     </modules>
 
     <licenses>
