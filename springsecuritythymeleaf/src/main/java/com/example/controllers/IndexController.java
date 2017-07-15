@@ -8,16 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class IndexController {
-    
-    @GetMapping(value = { "/", "index" })
-    public String index() {
-        log.debug("Getting home page");
-        return "login";
-    }
-    
-    @GetMapping("/home")
-    public String home() {
-        log.debug("Getting home page");
-        return "home";
-    }
+
+	@GetMapping(value = { "/", "index" })
+	public String index() {
+		log.debug("Getting home page");
+		return "login";
+	}
+
+	@GetMapping("/home")
+	public String home() {
+		log.debug("Getting home page");
+		return "home";
+	}
 }

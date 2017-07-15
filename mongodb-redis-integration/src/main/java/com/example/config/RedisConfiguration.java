@@ -36,7 +36,7 @@ public class RedisConfiguration extends CachingConfigurerSupport
 		implements CachingConfigurer {
 
 	@Bean
-	JedisConnectionFactory jedisConnectionFactory() {
+	public JedisConnectionFactory jedisConnectionFactory() {
 		return new JedisConnectionFactory();
 	}
 

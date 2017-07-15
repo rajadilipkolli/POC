@@ -12,14 +12,14 @@ import lombok.NonNull;
 @Document
 @Data
 @NoArgsConstructor
-public class User implements Serializable{
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    private String id;
-    @NonNull
-    private String username;
-    @NonNull
-    private String password;
-    private Role role;
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String id;
+	@NonNull
+	private String username;
+	@NonNull
+	private String password;
+	private Role role;
 }

@@ -7,12 +7,12 @@ import com.example.domain.Product;
 
 public interface ProductService {
 
-    Product saveProduct(Product product);
+	Product saveProduct(Product product);
 
-    Optional<Product> getProductById(String id);
+	Optional<Product> getProductById(String id);
 
-    List<Product> listAllProducts();
-    
-    void deleteProduct(String id);
+	List<Product> listAllProducts();
+
+	void deleteProduct(String id);
 
 }

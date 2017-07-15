@@ -9,10 +9,10 @@ import com.example.domain.CurrentUser;
 @ControllerAdvice
 public class CurrentUserControllerAdvice {
 
-    @ModelAttribute("currentUser")
-    public CurrentUser getCurrentUser(Authentication authentication) {
-        return (authentication == null) ? null : (CurrentUser) authentication.getPrincipal();
-    }
-
+	@ModelAttribute("currentUser")
+	public CurrentUser getCurrentUser(Authentication authentication) {
+		return (authentication == null) ? null
+				: (CurrentUser) authentication.getPrincipal();
+	}
 
 }

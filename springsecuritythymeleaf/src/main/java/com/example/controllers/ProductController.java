@@ -10,52 +10,52 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.domain.Product;
 import com.example.service.ProductService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
-    private ProductService productService;
+	private final ProductService productService;
 
-    @GetMapping("product/new")
-    public String newProduct(Model model) {
-        model.addAttribute("product", new Product());
-        return "productform";
-    }
+	@GetMapping("product/new")
+	public String newProduct(Model model) {
+		model.addAttribute("product", new Product());
+		return "productform";
+	}
 
-    @Secured(value ={"ROLE_ADMIN"})
-    @PostMapping(value = "product")
-    public String saveProduct(Product product) {
-        productService.saveProduct(product);
-        return "redirect:/product/" + product.getId();
-    }
+	@Secured(value = { "ROLE_ADMIN" })
+	@PostMapping(value = "product")
+	public String saveProduct(Product product) {
+		productService.saveProduct(product);
+		return "redirect:/product/" + product.getId();
+	}
 
-    //Read
-    @Secured(value ={"ROLE_ADMIN","ROLE_USER"})
-    @GetMapping("product/{id}")
-    public String showProduct(@PathVariable String id, Model model) {
-        model.addAttribute("product", productService.getProductById(id));
-        return "productshow";
-    }
+	// Read
+	@Secured(value = { "ROLE_ADMIN", "ROLE_USER" })
+	@GetMapping("product/{id}")
+	public String showProduct(@PathVariable String id, Model model) {
+		model.addAttribute("product", productService.getProductById(id));
+		return "productshow";
+	}
 
-    @GetMapping(value = "/products")
-    public String list(Model model) {
-        model.addAttribute("products", productService.listAllProducts());
-        return "products";
-    }
-    
-    //Update
-    @GetMapping("product/edit/{id}")
-    public String edit(@PathVariable String id, Model model){
-        model.addAttribute("product", productService.getProductById(id));
-        return "productform";
-    }
-    
-    //Delete
-    @GetMapping("product/delete/{id}")
-    public String delete(@PathVariable String id){
-        productService.deleteProduct(id);
-        return "redirect:/products";
-    }
+	@GetMapping(value = "/products")
+	public String list(Model model) {
+		model.addAttribute("products", productService.listAllProducts());
+		return "products";
+	}
+
+	// Update
+	@GetMapping("product/edit/{id}")
+	public String edit(@PathVariable String id, Model model) {
+		model.addAttribute("product", productService.getProductById(id));
+		return "productform";
+	}
+
+	// Delete
+	@GetMapping("product/delete/{id}")
+	public String delete(@PathVariable String id) {
+		productService.deleteProduct(id);
+		return "redirect:/products";
+	}
 }

@@ -11,15 +11,15 @@ import lombok.Data;
 @Document
 @Data
 public class Product {
-    
-    @Id
-    private String id;
 
-    @Version
-    private Integer version;
+	@Id
+	private String id;
 
-    private String productId;
-    private String description;
-    private String imageUrl;
-    private BigDecimal price;
+	@Version
+	private Integer version;
+
+	private String productId;
+	private String description;
+	private String imageUrl;
+	private BigDecimal price;
 }

@@ -57,7 +57,7 @@ public class WebServicesControllerTest {
 	private Book dummyBook;
 
 	@Before
-	public void setup() throws IOException {
+	public void setUp() throws IOException {
 		dummyBook = new Book();
 		dummyBook.setTitle("JUNIT_TITLE");
 		dummyBook.setAuthor("JUNIT_AUTHOR");

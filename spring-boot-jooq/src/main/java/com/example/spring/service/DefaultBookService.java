@@ -12,7 +12,7 @@ public class DefaultBookService implements BookService
 {
 
     @Autowired
-    DSLContext dsl;
+    private DSLContext dsl;
 
     @Transactional
     @Override

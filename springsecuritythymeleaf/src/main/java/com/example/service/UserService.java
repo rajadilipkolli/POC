@@ -8,12 +8,12 @@ import com.example.domain.UserCreateForm;
 
 public interface UserService {
 
-    Optional<User> getUserById(String id);
+	Optional<User> getUserById(String id);
 
-    Optional<User> getUserByUserName(String userName);
+	Optional<User> getUserByUserName(String userName);
 
-    Collection<User> getAllUsers();
+	Collection<User> getAllUsers();
 
-    User create(UserCreateForm form);
+	User create(UserCreateForm form);
 
 }

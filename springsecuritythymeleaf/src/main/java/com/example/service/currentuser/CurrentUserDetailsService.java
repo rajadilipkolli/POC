@@ -9,22 +9,25 @@ import com.example.domain.CurrentUser;
 import com.example.domain.User;
 import com.example.service.UserService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
-public class CurrentUserDetailsService implements UserDetailsService{
-    
-    private UserService userService;
+@RequiredArgsConstructor
+public class CurrentUserDetailsService implements UserDetailsService {
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.debug("Authenticating user with username={}", username.replaceFirst("@.*", "@***"));
-        User user = userService.getUserByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with username=%s was not found", username)));
-        return new CurrentUser(user);
-    }
+	private final UserService userService;
+
+	@Override
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		log.debug("Authenticating user with username={}",
+				username.replaceFirst("@.*", "@***"));
+		User user = userService.getUserByUserName(username)
+				.orElseThrow(() -> new UsernameNotFoundException(
+						String.format("User with username=%s was not found", username)));
+		return new CurrentUser(user);
+	}
 
 }

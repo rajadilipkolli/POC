@@ -4,34 +4,33 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper=true)
-public class CurrentUser extends org.springframework.security.core.userdetails.User{
+@EqualsAndHashCode(callSuper = true)
+public class CurrentUser extends org.springframework.security.core.userdetails.User {
 
-    private static final long serialVersionUID = 1L;
-    
-    private User user;
+	private static final long serialVersionUID = 1L;
 
-    public CurrentUser(User user) {
-        super(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
-        this.user = user;
-    }
+	private User user;
 
-    public User getUser() {
-        return user;
-    }
+	public CurrentUser(User user) {
+		super(user.getUsername(), user.getPassword(),
+				AuthorityUtils.createAuthorityList(user.getRole().toString()));
+		this.user = user;
+	}
 
-    public String getId() {
-        return user.getId();
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public Role getRole() {
-        return user.getRole();
-    }
+	public String getId() {
+		return user.getId();
+	}
 
-    @Override
-    public String toString() {
-        return "CurrentUser{" +
-                "user=" + user +
-                "} " + super.toString();
-    }
+	public Role getRole() {
+		return user.getRole();
+	}
+
+	@Override
+	public String toString() {
+		return "CurrentUser{" + "user=" + user + "} " + super.toString();
+	}
 }

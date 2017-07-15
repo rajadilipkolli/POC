@@ -16,7 +16,7 @@ public class SpringTransactionProvider implements TransactionProvider
             .getLogger(SpringTransactionProvider.class);
 
     @Autowired
-    DataSourceTransactionManager txMgr;
+    private DataSourceTransactionManager txMgr;
 
     @Override
     public void begin(TransactionContext ctx)
