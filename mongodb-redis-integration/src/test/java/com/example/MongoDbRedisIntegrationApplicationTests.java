@@ -38,13 +38,13 @@ import com.example.repository.BookRepository;
 public class MongoDbRedisIntegrationApplicationTests {
 
 	@Autowired
-	BookRepository repository;
+	private BookRepository repository;
 
 	@Autowired
-	MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 
 	@Autowired
-	WebServicesController controller;
+	private WebServicesController controller;
 
 	@Test
 	public void contextLoads() {

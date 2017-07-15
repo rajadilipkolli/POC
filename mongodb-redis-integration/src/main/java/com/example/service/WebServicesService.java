@@ -26,43 +26,51 @@ import org.springframework.stereotype.Service;
 import com.example.model.Book;
 import com.example.repository.BookRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author rajakolli
  *
  */
 @Service
+@Slf4j
 public class WebServicesService {
 
 	@Autowired
 	private BookRepository repository;
 
-	/*
-	 * @Autowired private RedisTemplate<Object, Object> redisTemplate;
-	 */
-
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
 	public Book save(Book book) {
+		log.info("Saving book :{}", book);
 		return this.repository.save(book);
 	}
 
 	public Book findBookByTitle(String title) {
-		/*
-		 * Book value = (Book) redisTemplate.opsForHash().get("BOOK", title); if (null !=
-		 * value) { return value; }
-		 */
-		Book insertedBook = this.repository.findByTitle(title);
-		// redisTemplate.opsForHash().put("BOOK", title, insertedBook);
-		return insertedBook;
+		log.info("Finding Book by Title :{}", title);
+		return this.repository.findByTitle(title);
 	}
 
 	public Book updateByTitle(String title, String author) {
+		log.info("Updating Book Author by Title :{} with {}", title, author);
 		Query query = new Query(Criteria.where("title").is(title));
 		Update update = new Update().set("author", author);
 		Book result = this.mongoTemplate.findAndModify(query, update,
 				new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
-		// redisTemplate.opsForHash().put("BOOK", title, result);
 		return result;
+	}
+
+	public void deleteBook(String id) {
+		this.repository.deleteById(id);
+		log.info("deleting Books by id :{}", id);
+	}
+
+	public void deleteAllCache() {
+		log.info("Deleting Cache");
+	}
+
+	public Long count() {
+		return this.repository.count();
 	}
 }

@@ -18,13 +18,11 @@ package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * @author rajakolli
  *
  */
-@EnableCaching
 @SpringBootApplication
 public class MongoDbRedisIntegrationApplication {
 
