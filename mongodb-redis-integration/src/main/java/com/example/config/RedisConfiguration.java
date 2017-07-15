@@ -43,7 +43,7 @@ public class RedisConfiguration extends CachingConfigurerSupport
 	/* redis template definition */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
-		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(jedisConnectionFactory());
 		return template;
 	}
@@ -51,7 +51,7 @@ public class RedisConfiguration extends CachingConfigurerSupport
 	/*
 	 * declare Redis Cache Manager
 	 * 
-	 * Never load remore caches as it can be corrupted
+	 * Never load remote caches on startup as it can be corrupted
 	 * 
 	 * (non-Javadoc)
 	 * 
@@ -62,11 +62,13 @@ public class RedisConfiguration extends CachingConfigurerSupport
 	public RedisCacheManager cacheManager() {
 		RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
 		redisCacheManager.setTransactionAware(true);
-		redisCacheManager.setLoadRemoteCachesOnStartup(false);
 		// redisCacheManager.setDefaultExpiration(10); /*Enabled for Testing Purposes*/
 		return redisCacheManager;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.cache.annotation.CachingConfigurerSupport#errorHandler()
+	 */
 	@Bean
 	@Override
 	public CacheErrorHandler errorHandler() {

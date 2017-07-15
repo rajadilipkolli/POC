@@ -15,9 +15,6 @@
 		<version>0.0.5-SNAPSHOT</version>
 	</parent>
 
-	<scm>
-		<url>https://github.com/rajadilipkolli/POC/tree/master/MongoDBRedisIntegration</url>
-	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
@@ -56,6 +53,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.kstyrc</groupId>
+			<artifactId>embedded-redis</artifactId>
+			<version>0.6</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,4 +84,7 @@
 		</plugins>
 	</build>
 
+	<scm>
+		<url>https://github.com/rajadilipkolli/POC/tree/master/mongodb-redis-integration</url>
+	</scm>
 </project>

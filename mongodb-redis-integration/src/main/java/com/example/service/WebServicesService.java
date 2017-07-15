@@ -56,9 +56,8 @@ public class WebServicesService {
 		log.info("Updating Book Author by Title :{} with {}", title, author);
 		Query query = new Query(Criteria.where("title").is(title));
 		Update update = new Update().set("author", author);
-		Book result = this.mongoTemplate.findAndModify(query, update,
+		return this.mongoTemplate.findAndModify(query, update,
 				new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
-		return result;
 	}
 
 	public void deleteBook(String id) {
@@ -72,5 +71,9 @@ public class WebServicesService {
 
 	public Long count() {
 		return this.repository.count();
+	}
+
+	public void deleteAllCollections() {
+		this.repository.deleteAll();
 	}
 }

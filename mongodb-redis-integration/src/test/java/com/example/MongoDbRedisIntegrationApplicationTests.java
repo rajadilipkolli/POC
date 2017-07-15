@@ -27,7 +27,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.controller.WebServicesController;
 import com.example.model.Book;
-import com.example.repository.BookRepository;
 
 /**
  * @author rajakolli
@@ -36,9 +35,6 @@ import com.example.repository.BookRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class MongoDbRedisIntegrationApplicationTests {
-
-	@Autowired
-	private BookRepository repository;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -53,7 +49,7 @@ public class MongoDbRedisIntegrationApplicationTests {
 
 	@Test
 	public void insertData() {
-		repository.deleteAll();
+		controller.deleteAll();
 		Book book = new Book();
 		book.setTitle("MongoDbCookBook");
 		book.setText("MongoDB Data Book");
