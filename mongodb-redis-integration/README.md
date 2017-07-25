@@ -1,0 +1,81 @@
+# Redis Implementation
+
+# How to start in windows
+	One click Redis install as a Windows service:
+	https://github.com/rgl/redis/downloads
+			or
+	https://github.com/MSOpenTech/redis/releases
+	Download and run the top .exe
+	
+	This will install redis as a service, incase it is not installed and not started then start by
+	
+	Start Redis Server click on redis-server.exe
+	To Start client use redis-cli.exe
+	To find all keys issue keys *
+	To remove all keys use flushall
+	
+## Why Caching?
+
+  Caching is becoming an integral part of most of the web and mobile applications to enhance the speed of providing data. It helps reduce roundtrip calls to the datastore (Database, REST service, file, etc.). Spring provides cache abstraction, which enables integrating caching providers (EhCache, Hazelcast, Infinispan, Couchbase, Redis, etc.) with the existing Spring application.
+
+  In a scenario where the application is up but the cache you are connected to fails, how do you continue to function without an outage? And how do you continue to use the cache once it is brought up without any interruptions? There are multiple solutions for this problem, but we will go through how to short circuit the cache in the Spring environment.
+
+## Use case : A Spring application is up, but the Cache goes down.
+
+Spring Cache framework provides an interceptor for cache errors, org.springframework.cache.interceptor.CacheErrorHandler, for the application to take action upon. We will go through this setup in a Spring Boot application, where the application class has to implement org.springframework.cache.annotation.CachingConfigurer, and it can override the errorHandler method.
+
+```
+@EnableCaching
+@Configuration
+public class RedisConfiguration extends CachingConfigurerSupport
+		implements CachingConfigurer {
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new CustomCacheErrorHandler();
+    }
+}
+```
+With CustomCacheErrorHandler, you can provide what needs to be done in case there's an error with your cache. This CustomCacheErrorHandler implements the org.springframework.cache.interceptor.CacheErrorHandler , which provides a handle for error conditions while doing Get, Put, Evict, and Clear operations with the cache provider. By overriding these methods, you can provide the means for what needs to be done in these scenarios.
+
+```
+public class CustomCacheErrorHandler implements CacheErrorHandler{
+    @Override
+    public void handleCacheGetError(RuntimeException exception, 
+                                    Cache cache, Object key) {
+        //Do something on Get Error in cache
+    }
+    @Override
+    public void handleCachePutError(RuntimeException exception, Cache cache, 
+                                    Object key, Object value) {
+        //Do something on Put error in cache
+    }
+    @Override
+    public void handleCacheEvictError(RuntimeException exception, Cache cache, 
+                                      Object key) {
+        //Do something on error while Evict cache
+    }
+    @Override
+    public void handleCacheClearError(RuntimeException exception,Cache cache){
+        //Do something on error while clearing cache
+    }
+}
+```
+  Let's review how the application would be unaffected if the cache goes down. When the following method is invoked, Spring will try to use the CacheManager to get the cache entry, which will fail because the cache is down. The CacheErrorHandler will intercept this error, and one of the **handleCache****Errors** would be invoked. If you don't take any action in these methods, then the application will go ahead and serve the request without failing or throwing an exception.
+
+```
+@Cacheable(value = "book", key = "#title", unless = "#result == null")
+	public Book findBookByTitle(@PathVariable String title) {
+```
+Here unless is used to not cache null value
+
+  Once the cache is back up, the call to **findBookByTitle** would invoke the CacheManager, which would work this time. Data is fetched from the cache or backend store (and stored in the cache if it is not present already). This way, the application functions seamlessly even if the cache stops functioning itself.
+
+  This strategy works well for the use case where a Spring application is up but the cache goes down. In case a cache is down during app startup, Spring won't be able to create a CacheManager object and would not start. You can intercept this error and make use of org.springframework.cache.support.NoOpCacheManager, which will bypass the cache and let the application to be brought up **(not a recommended way, though)** or try an alternate cache manager setup on a different server.
+	
+### TO-DO
+ Perform Load Test and check if keys are removed	
+	
+### Reference 
+  - http://caseyscarborough.com/blog/2014/12/18/caching-data-in-spring-using-redis/ 
+  - http://www.sitepoint.com/caching-a-mongodb-database-with-redis/ 
+  - http://stackoverflow.com/questions/10696463/mongodb-with-redis/10721249#10721249
