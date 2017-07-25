@@ -1,109 +1,120 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example.poc</groupId>
-    <artifactId>poc-parent</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<groupId>com.example.poc</groupId>
+	<artifactId>poc-parent</artifactId>
+	<version>0.0.5-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <name>POC by Example</name>
-    <url>https://github.com/rajadilipkolli/POC</url>
-    <description>Parent pom to aggregate modules using spring-boot</description>
+	<name>POC by Example</name>
+	<url>https://github.com/rajadilipkolli/POC</url>
+	<description>Parent pom to aggregate modules using spring-boot</description>
 
-    <inceptionYear>2015</inceptionYear>
+	<inceptionYear>2015</inceptionYear>
 
-    <scm>
-        <connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
-        <developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
-        <url>https://github.com/rajadilipkolli/POC</url>
-        <tag>HEAD</tag>
-    </scm>
+	<scm>
+		<connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
+		<developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
+		<url>https://github.com/rajadilipkolli/POC</url>
+		<tag>HEAD</tag>
+	</scm>
 
-    <issueManagement>
-        <url>https://github.com/rajadilipkolli/POC/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
-   
-    <ciManagement>
-        <system>travis-ci</system>
-        <url>https://travis-ci.org/rajadilipkolli/POC</url>
-    </ciManagement>
-     
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.0.0.M2</version>
-    </parent>
+	<issueManagement>
+		<url>https://github.com/rajadilipkolli/POC/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-    </properties>
+	<ciManagement>
+		<system>travis-ci</system>
+		<url>https://travis-ci.org/rajadilipkolli/POC</url>
+	</ciManagement>
 
-    <modules>
-    	<module>mongodb-redis-integration</module>
-    </modules>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-dependencies</artifactId>
+		<version>2.0.0.M2</version>
+	</parent>
 
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-            <comments>
-				    
-    Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
+	</properties>
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+	<licenses>
+		<license>
+			<name>MIT</name>
+			<url>https://github.com/rajadilipkolli/POC/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-            </comments>
-        </license>
-    </licenses>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<!-- Keep changes in the local repo, push will be done afterwards -->
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+						<!-- Use a better name for the tag -->
+						<tagNameFormat>v@{project.version}</tagNameFormat>
+						<tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-provider-gitexe</artifactId>
+							<version>1.9</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>${maven-checkstyle-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${findbugs-maven-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <!-- Keep changes in the local repo, push will be done 
-                        afterwards -->
-                    <pushChanges>false</pushChanges>
-                    <localCheckout>true</localCheckout>
-                    <!-- Use a better name for the tag -->
-                    <tagNameFormat>v@{project.version}</tagNameFormat>
-                    <tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.scm</groupId>
-                        <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>1.9</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
-	
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
