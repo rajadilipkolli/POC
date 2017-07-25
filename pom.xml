@@ -49,6 +49,7 @@
         <module>spring-boot-sample-data-mongodb-reactive</module>
         <module>spring-boot-sample-ws-cxf-restful</module>
         <module>the-best-way-to-log-jdbc-statements</module>
+        <module>spring-boot-activemq</module>
     </modules>
 
     <licenses>

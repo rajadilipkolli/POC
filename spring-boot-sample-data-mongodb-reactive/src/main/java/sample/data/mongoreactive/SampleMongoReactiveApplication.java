@@ -16,8 +16,6 @@
 
 package sample.data.mongoreactive;
 
-import java.util.concurrent.CountDownLatch;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,38 +31,32 @@ public class SampleMongoReactiveApplication implements CommandLineRunner {
 	private ReactiveCustomerRepository repository;
 
 	public void run(String... args) throws Exception {
-		this.repository.deleteAll().then().block();
+		System.out.println("Deleting all Customers");
+		this.repository.deleteAll().then().subscribe();
 
 		// save a couple of customers
 		this.repository.saveAll(
 				Flux.just(new Customer("Alice", "Smith"), new Customer("Bob", "Smith")))
-				.then().block();
+				.then().subscribe();
 
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		repository.findAll() //
-				.doOnNext(System.out::println) //
-				.doOnComplete(countDownLatch::countDown) //
-				.doOnError(throwable -> countDownLatch.countDown()) //
-				.subscribe();
+		repository.findAll().subscribe(System.out::println);
 
-		countDownLatch.await();
 		System.out.println();
 
 		// fetch an individual customer
 		System.out.println("Customer found with findByFirstName('Alice'):");
 		System.out.println("--------------------------------");
-		System.out.println(this.repository.findByFirstName(Mono.just("Alice")).block());
+		this.repository.findByFirstName(Mono.just("Alice")).log()
+				.subscribe(System.out::println);
 
 		System.out.println("Customers found with findByLastName('Smith'):");
 		System.out.println("--------------------------------");
-		for (Customer customer : this.repository.findByLastName(Mono.just("Smith"))
-				.collectList().block()) {
-			System.out.println(customer);
-		}
+		this.repository.findByLastName(Mono.just("Smith")).log()
+				.subscribe(System.out::println);
 	}
 
 	public static void main(String[] args) throws Exception {
