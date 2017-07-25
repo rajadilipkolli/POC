@@ -1,6 +1,8 @@
-# Redis Implementation
+# MongoDb Integration with Redis as Caching with fault tolerant
 
-# How to start in windows
+## Source code for [this](https://dzone.com/articles/enabling-caching-in-mongodb-database-with-redis-us) article
+
+## How to start in windows
 	One click Redis install as a Windows service:
 	https://github.com/rgl/redis/downloads
 			or

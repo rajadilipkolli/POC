@@ -6,4 +6,14 @@
 ### Introduction
 This repo is for all POC which I does and learnings I learnt
 Below are the projects that I have completed POC
-- [mongodb-redis-integration](mongodb-redis-integration/README.md)
+- [mongodb-redis-integration](mongodb-redis-integration/README.md) -> adding fault tolerant caching layer to MongoDB.
+
+### Filing Issues
+
+If you encounter any bug, please file an issue [here](https://github.com/rajadilipkolli/POC/issues/new).
+
+To suggest a new feature or changes that could be made, file an issue the same way you would for a bug.
+
+### Pull Requests
+
+Pull requests are welcome. To open your own pull request, click [here](https://github.com/rajadilipkolli/POC/compare). When creating a pull request, make sure you are pointing to the fork and branch that your changes were made in.
