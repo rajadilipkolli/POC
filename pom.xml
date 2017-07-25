@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example.poc</groupId>
-	<artifactId>poc-parent</artifactId>
+	<artifactId>poc</artifactId>
 	<version>0.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -12,6 +12,14 @@
 	<description>Parent pom to aggregate modules using spring-boot</description>
 
 	<inceptionYear>2015</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>MIT</name>
+			<url>https://github.com/rajadilipkolli/POC/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<scm>
 		<connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
@@ -39,21 +47,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
-		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
 		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
 	</properties>
-
-
-	<licenses>
-		<license>
-			<name>MIT</name>
-			<url>https://github.com/rajadilipkolli/POC/blob/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 
 	<build>
 		<pluginManagement>
@@ -85,21 +81,14 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin.version}</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven-javadoc-plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven-source-plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -153,28 +142,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	
 	<modules>
-		<module>mongodb-redis-integration</module>
+		<module>poc-parent</module>
 	</modules>
 </project>

@@ -1,4 +1,4 @@
-[![Travis CI](https://travis-ci.org/rajadilipkolli/POC.svg?branch=master)](https://travis-ci.org/rajadilipkolli/POC)
+[![Build Status](https://travis-ci.org/rajadilipkolli/POC.svg?branch=master)](https://travis-ci.org/rajadilipkolli/POC)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg) ](https://githib.com/rajadilipkolli/POC/blob/master/LICENSE)
 
 # My POC

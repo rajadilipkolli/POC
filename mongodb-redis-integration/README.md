@@ -29,8 +29,7 @@ Spring Cache framework provides an interceptor for cache errors, org.springframe
 ```
 @EnableCaching
 @Configuration
-public class RedisConfiguration extends CachingConfigurerSupport
-		implements CachingConfigurer {
+public class RedisConfiguration extends CachingConfigurerSupport {
     @Override
     public CacheErrorHandler errorHandler() {
         return new CustomCacheErrorHandler();

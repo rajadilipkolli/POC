@@ -8,13 +8,14 @@
 
 	<name>MongoDBRedisIntegration</name>
 	<description>This project demonstrates how to integrate MongoDB with Redis</description>
+
 	<parent>
 		<groupId>com.example.poc</groupId>
 		<artifactId>poc-parent</artifactId>
 		<version>0.0.5-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		<relativePath>../poc-parent</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -33,4 +34,5 @@
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 		</dependency>
 	</dependencies>
+
 </project>

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.poc.mongodbredisintegration.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,7 +69,8 @@ public class MongoDBRedisIntegrationControllerTest {
                 .perform(put("/book/updateByTitle/title/author")
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andExpect(content().string(
-                        "{\"id\":\"JUNIT\",\"title\":\"JUNIT_TITLE\",\"author\":\"JUNIT_AUTHOR\",\"text\":\"JUNIT_TEXT\",\"version\":1}"));
+                        "{\"id\":\"JUNIT\",\"title\":\"JUNIT_TITLE\","
+                        + "\"author\":\"JUNIT_AUTHOR\",\"text\":\"JUNIT_TEXT\",\"version\":1}"));
     }
 
     @Test

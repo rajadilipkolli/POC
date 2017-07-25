@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.poc.mongodbredisintegration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,11 +36,11 @@ public class MongoDBRedisIntegrationApplicationTest {
     @Test
     public void insertData() {
         controller.deleteAll();
-        Book book = new Book();
+        final Book book = new Book();
         book.setTitle("MongoDbCookBook");
         book.setText("MongoDB Data Book");
         book.setAuthor("Raja");
-        Book response = controller.saveBook(book);
+        final Book response = controller.saveBook(book);
         assertThat(response).isNotNull();
         assertThat(response.getId()).isNotBlank();
         assertThat(response.getAuthor()).isEqualTo("Raja");
