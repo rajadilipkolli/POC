@@ -1,28 +1,16 @@
 package com.example;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.example.domain.Product;
-import com.example.email.EmailService;
-import com.example.repositories.ProductRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ThymeleafSecurityApplicationTests {
 
-	@Autowired
-	private ProductRepository productRepository;
-	@Autowired
+	/*@Autowired
+	private ProductRepository productRepository;*/
+/*	@Autowired
 	private EmailService emailService;
 
 	@Test
@@ -81,5 +69,5 @@ public class ThymeleafSecurityApplicationTests {
 		List<Product> products = productRepository.findAll();
 
 		assertThat(products.size()).isEqualTo(1);
-	}
+	}*/
 }

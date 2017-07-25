@@ -1,19 +1,14 @@
-package com.example.service;
+package com.example.repository;
 
-import java.util.List;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.example.entities.User;
 
-public interface UserService {
-
+public interface UserRepository extends MongoRepository<User, String> {
+	
 	User findUserByUsername(String username);
 
 	User findUserByEmail(String email);
 
-	List<User> findAllUsers();
-
-	User saveUser(User user);
-
 	User findUserByUsernameAndPassword(String username, String givenPassword);
-
 }
