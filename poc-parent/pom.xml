@@ -52,9 +52,9 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -189,6 +189,25 @@
 					</formats>
 					<check />
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<!-- Keep changes in the local repo, push will be done afterwards -->
+					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>
+					<!-- Use a better name for the tag -->
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.9.5</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
