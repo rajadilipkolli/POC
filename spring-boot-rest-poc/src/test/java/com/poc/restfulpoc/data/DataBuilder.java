@@ -12,10 +12,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
-
+import org.springframework.boot.test.context.TestComponent;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
@@ -24,20 +21,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This should run only in dev environment
+ * This will be used to load data in test environment
  * 
  * @author rajakolli
  *
  */
-@Component
+@TestComponent
 @RequiredArgsConstructor
 @Slf4j
-public class DataBuilder implements ApplicationRunner {
+public class DataBuilder {
 
     private final CustomerRepository customerRepository;
 
-    @Override
-    public void run(ApplicationArguments arg0) throws Exception {
+    public void run() throws Exception {
         log.debug("Loading test data...");
         final ZoneId defaultZoneId = ZoneId.of("UTC");
         final Customer customer1 = new Customer("Raja", "Kolli",

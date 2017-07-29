@@ -37,7 +37,7 @@ import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = RestFulPOCApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {RestFulPOCApplication.class, DataBuilder.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CustomerControllerITTest {
 
     private static final String JSON_CONTENT_TYPE = "application/json;charset=UTF-8";
@@ -57,7 +57,7 @@ public class CustomerControllerITTest {
     public void setUp() throws Exception {
         this.base = "/rest/customers";
         customerRepository.deleteAll();
-        dataBuilder.run(null);
+        dataBuilder.run();
     }
 
     @Test
