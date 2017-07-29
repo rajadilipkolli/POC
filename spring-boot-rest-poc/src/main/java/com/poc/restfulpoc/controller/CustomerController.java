@@ -66,7 +66,7 @@ public class CustomerController {
     /**
      * Create a new customer and return in response with HTTP 201
      *
-     * @param the customer
+     * @param customer
      * @return created customer
      */
     @PostMapping(value = { "/rest/customers" })
