@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.poc.restfulpoc.entities;
 
 import java.util.Date;
@@ -37,7 +42,19 @@ public class Customer {
             Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = (Date) dateOfBirth.clone();
         this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        if (dateOfBirth == null) {
+            return null;
+        } else {
+            return new Date(dateOfBirth.getTime());
+        }
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = (Date) dateOfBirth.clone();
     }
 }
