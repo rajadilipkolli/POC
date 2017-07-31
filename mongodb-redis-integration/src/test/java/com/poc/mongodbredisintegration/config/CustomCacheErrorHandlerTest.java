@@ -1,14 +1,17 @@
+/**
+ * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.poc.mongodbredisintegration.config;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -47,7 +50,7 @@ public class CustomCacheErrorHandlerTest {
 
     private SimpleService simpleService;
 
-    AnnotationConfigApplicationContext context;
+    private AnnotationConfigApplicationContext context;
 
     @Before
     public void setup() {
@@ -65,10 +68,10 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void getFail() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
 
-        Object result = this.simpleService.get(0L);
+        final Object result = this.simpleService.get(0L);
         verify(this.errorHandler).handleCacheGetError(exception, cache, 0L);
         verify(this.cache).get(0L);
         verify(this.cache).put(0L, result); // result of the invocation
@@ -76,22 +79,22 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void getAndPutFail() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
         willThrow(exception).given(this.cache).put(0L, 0L); // Update of the cache will fail as well
 
-        Object counter = this.simpleService.get(0L);
+        final Object counter = this.simpleService.get(0L);
 
         willReturn(new SimpleValueWrapper(2L)).given(this.cache).get(0L);
-        Object counter2 = this.simpleService.get(0L);
-        Object counter3 = this.simpleService.get(0L);
-        assertNotSame(counter, counter2);
-        assertEquals(counter2, counter3);
+        final Object counter2 = this.simpleService.get(0L);
+        final Object counter3 = this.simpleService.get(0L);
+        assertThat(counter2).isEqualTo(counter3);
+        assertThat(counter).isNotEqualTo(counter2);
     }
 
     @Test
     public void getFailProperException() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -102,7 +105,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void putFail() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
         willThrow(exception).given(this.cache).put(0L, 0L);
 
         this.simpleService.put(0L);
@@ -111,7 +114,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void putFailProperException() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
         willThrow(exception).given(this.cache).put(0L, 0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -122,7 +125,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void evictFail() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
         willThrow(exception).given(this.cache).evict(0L);
 
         this.simpleService.evict(0L);
@@ -131,7 +134,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void evictFailProperException() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
         willThrow(exception).given(this.cache).evict(0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -142,7 +145,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void clearFail() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
         willThrow(exception).given(this.cache).clear();
 
         this.simpleService.clear();
@@ -151,7 +154,7 @@ public class CustomCacheErrorHandlerTest {
 
     @Test
     public void clearFailProperException() {
-        UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
         willThrow(exception).given(this.cache).clear();
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -177,15 +180,15 @@ public class CustomCacheErrorHandlerTest {
 
         @Bean
         public CacheManager cacheManager() {
-            SimpleCacheManager cacheManager = new SimpleCacheManager();
+            final SimpleCacheManager cacheManager = new SimpleCacheManager();
             cacheManager.setCaches(Collections.singletonList(mockCache()));
             return cacheManager;
         }
 
         @Bean
         public Cache mockCache() {
-            Cache cache = mock(Cache.class);
-            when(cache.getName()).thenReturn("test");
+            final Cache cache = mock(Cache.class);
+            given(cache.getName()).willReturn("test");
             return cache;
         }
 
