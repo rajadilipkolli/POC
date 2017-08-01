@@ -7,7 +7,7 @@ services:
 sudo: false
 install: true
 script:
-  - mvn clean verify
+  - mvnw clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'
