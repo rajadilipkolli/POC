@@ -49,8 +49,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     private CacheInterceptor cacheInterceptor;
 
-    private CacheErrorHandler errorHandler;
-
     private SimpleService simpleService;
 
     private AnnotationConfigApplicationContext context;
@@ -60,7 +58,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         context = new AnnotationConfigApplicationContext(Config.class);
         this.cache = context.getBean("mockCache", Cache.class);
         this.cacheInterceptor = context.getBean(CacheInterceptor.class);
-        this.errorHandler = context.getBean(CustomCacheErrorHandler.class);
+        context.getBean(CustomCacheErrorHandler.class);
         this.simpleService = context.getBean(SimpleService.class);
     }
 

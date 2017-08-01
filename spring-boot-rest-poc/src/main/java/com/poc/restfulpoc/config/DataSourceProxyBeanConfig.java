@@ -29,10 +29,15 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
             log.info("Inside Proxy Creation");
 
+            // use pretty formatted query with multiline enabled
+            final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
+            creator.setMultiline(true);
+
             final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
+            listener.setQueryLogEntryCreator(creator);
 
             return ProxyDataSourceBuilder.create((DataSource) bean).countQuery()
-                    .name("MyDS").listener(listener).multiline()
+                    .name("MyDS").listener(listener)
                     .logSlowQueryToSysOut(1, TimeUnit.MINUTES).build();
 
         }
