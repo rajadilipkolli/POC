@@ -4,10 +4,9 @@ jdk:
 services:
   - mongodb
   - redis
-sudo: false
 install: true
 script:
-  - mvnw clean verify
+  - mvn clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'
