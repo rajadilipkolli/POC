@@ -56,7 +56,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
     private AnnotationConfigApplicationContext context;
 
     @Before
-    public void setup() {
+    public void setUp() {
         context = new AnnotationConfigApplicationContext(Config.class);
         this.cache = context.getBean("mockCache", Cache.class);
         this.cacheInterceptor = context.getBean(CacheInterceptor.class);
@@ -213,10 +213,12 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
         @CacheEvict
         public void evict(long id) {
+            this.counter.decrementAndGet();
         }
 
         @CacheEvict(allEntries = true)
         public void clear() {
+            this.counter = new AtomicLong(0);
         }
     }
 
