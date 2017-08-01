@@ -7,11 +7,12 @@ package com.poc.mongodbredisintegration.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -37,7 +38,9 @@ import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-public class CustomCacheErrorHandlerTest {
+import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
+
+public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegrationTest{
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
