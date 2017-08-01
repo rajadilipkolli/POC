@@ -60,7 +60,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         context = new AnnotationConfigApplicationContext(Config.class);
         this.cache = context.getBean("mockCache", Cache.class);
         this.cacheInterceptor = context.getBean(CacheInterceptor.class);
-        this.errorHandler = context.getBean(CacheErrorHandler.class);
+        this.errorHandler = context.getBean(CustomCacheErrorHandler.class);
         this.simpleService = context.getBean(SimpleService.class);
     }
 
@@ -75,7 +75,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         willThrow(exception).given(this.cache).get(0L);
 
         final Object result = this.simpleService.get(0L);
-        verify(this.errorHandler).handleCacheGetError(exception, cache, 0L);
         verify(this.cache).get(0L);
         verify(this.cache).put(0L, result); // result of the invocation
     }
@@ -112,7 +111,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         willThrow(exception).given(this.cache).put(0L, 0L);
 
         this.simpleService.put(0L);
-        verify(this.errorHandler).handleCachePutError(exception, cache, 0L, 0L);
     }
 
     @Test
@@ -132,7 +130,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         willThrow(exception).given(this.cache).evict(0L);
 
         this.simpleService.evict(0L);
-        verify(this.errorHandler).handleCacheEvictError(exception, cache, 0L);
     }
 
     @Test
@@ -152,7 +149,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         willThrow(exception).given(this.cache).clear();
 
         this.simpleService.clear();
-        verify(this.errorHandler).handleCacheClearError(exception, cache);
     }
 
     @Test
@@ -173,7 +169,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         @Bean
         @Override
         public CacheErrorHandler errorHandler() {
-            return mock(CacheErrorHandler.class);
+            return new CustomCacheErrorHandler();
         }
 
         @Bean
