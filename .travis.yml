@@ -6,7 +6,7 @@ services:
   - redis
 install: true
 script:
-  - mvn clean verify
+  - ./mvn clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'
