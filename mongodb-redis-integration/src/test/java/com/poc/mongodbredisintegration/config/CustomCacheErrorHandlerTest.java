@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
 
-public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegrationTest{
+public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegrationTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -58,7 +58,6 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         context = new AnnotationConfigApplicationContext(Config.class);
         this.cache = context.getBean("mockCache", Cache.class);
         this.cacheInterceptor = context.getBean(CacheInterceptor.class);
-        context.getBean(CustomCacheErrorHandler.class);
         this.simpleService = context.getBean(SimpleService.class);
     }
 
@@ -69,7 +68,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void getFail() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
 
         final Object result = this.simpleService.get(0L);
@@ -79,9 +79,11 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void getAndPutFail() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
-        willThrow(exception).given(this.cache).put(0L, 0L); // Update of the cache will fail as well
+        willThrow(exception).given(this.cache).put(0L, 0L); // Update of the cache will
+                                                            // fail as well
 
         final Object counter = this.simpleService.get(0L);
 
@@ -94,7 +96,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void getFailProperException() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on get");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on get");
         willThrow(exception).given(this.cache).get(0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -105,7 +108,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void putFail() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on put");
         willThrow(exception).given(this.cache).put(0L, 0L);
 
         this.simpleService.put(0L);
@@ -113,7 +117,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void putFailProperException() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on put");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on put");
         willThrow(exception).given(this.cache).put(0L, 0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -124,7 +129,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void evictFail() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on evict");
         willThrow(exception).given(this.cache).evict(0L);
 
         this.simpleService.evict(0L);
@@ -132,7 +138,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void evictFailProperException() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on evict");
         willThrow(exception).given(this.cache).evict(0L);
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
@@ -143,7 +150,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void clearFail() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on evict");
         willThrow(exception).given(this.cache).clear();
 
         this.simpleService.clear();
@@ -151,7 +159,8 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
     @Test
     public void clearFailProperException() {
-        final UnsupportedOperationException exception = new UnsupportedOperationException("Test exception on evict");
+        final UnsupportedOperationException exception = new UnsupportedOperationException(
+                "Test exception on evict");
         willThrow(exception).given(this.cache).clear();
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());

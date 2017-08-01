@@ -16,6 +16,10 @@
 		<relativePath>../poc-parent</relativePath>
 	</parent>
 
+	<properties>
+		<cxf.version>3.1.12</cxf.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,4 +54,5 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 	</dependencies>
+
 </project>
