@@ -42,7 +42,7 @@ public class Customer {
             Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = (Date) dateOfBirth.clone();
+        this.dateOfBirth = (null != dateOfBirth) ? (Date) dateOfBirth.clone() : null;
         this.address = address;
     }
 
@@ -55,6 +55,10 @@ public class Customer {
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = (Date) dateOfBirth.clone();
+        if (null == dateOfBirth) {
+            this.dateOfBirth = null;
+        } else {
+            this.dateOfBirth = (Date) dateOfBirth.clone();
+        }
     }
 }
