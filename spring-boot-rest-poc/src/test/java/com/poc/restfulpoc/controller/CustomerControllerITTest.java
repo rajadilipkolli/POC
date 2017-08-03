@@ -15,10 +15,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,19 +23,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.poc.restfulpoc.RestFulPOCApplication;
+import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {RestFulPOCApplication.class, DataBuilder.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CustomerControllerITTest {
+public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
     private static final String JSON_CONTENT_TYPE = "application/json;charset=UTF-8";
 
