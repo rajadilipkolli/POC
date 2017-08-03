@@ -75,7 +75,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
     @Test
     public void testGetAllCustomers() throws Exception {
-        final ResponseEntity<String> response = template.getForEntity("/rest/customers",
+        final ResponseEntity<String> response = template.getForEntity(base,
                 String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 

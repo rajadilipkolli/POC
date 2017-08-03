@@ -6,11 +6,9 @@
 package com.poc.restfulpoc.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpStatus;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.poc.restfulpoc.entities.Customer;
-import com.poc.restfulpoc.exception.CustomerNotFoundException;
-import com.poc.restfulpoc.exception.InvalidCustomerRequestException;
-import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.service.CustomerService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor //From spring 4.3 way to autowire
+@RequiredArgsConstructor // From spring 4.3 way to autowire
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
     /**
      * Get customer using id. Returns HTTP 404 if customer not found
@@ -40,16 +36,8 @@ public class CustomerController {
      * @return retrieved customer
      */
     @GetMapping(value = "/rest/customers/{customerId}")
-    public Customer getCustomer(@PathVariable("customerId") Long customerId) {
-
-        /* validate customer Id parameter */
-        if (null == customerId) {
-            throw new InvalidCustomerRequestException();
-        }
-
-        final Optional<Customer> customer = customerRepository.findById(customerId);
-
-        return customer.orElseThrow(CustomerNotFoundException::new);
+    public Customer getCustomer(@PathVariable("customerId") @NotBlank Long customerId) {
+        return customerService.getCustomer(customerId);
     }
 
     /**
@@ -59,8 +47,7 @@ public class CustomerController {
      */
     @GetMapping(value = "/rest/customers")
     public List<Customer> getCustomers() {
-
-        return (List<Customer>) customerRepository.findAll();
+        return customerService.getCustomers();
     }
 
     /**
@@ -72,13 +59,7 @@ public class CustomerController {
     @PostMapping(value = { "/rest/customers" })
     public Customer createCustomer(@RequestBody Customer customer,
             HttpServletResponse httpResponse, WebRequest request) {
-
-        final Customer createdcustomer = customerRepository.save(customer);
-        httpResponse.setStatus(HttpStatus.CREATED.value());
-        httpResponse.setHeader("Location", String.format("%s/rest/customers/%s",
-                request.getContextPath(), customer.getId()));
-
-        return createdcustomer;
+        return customerService.createCustomer(customer, httpResponse, request);
     }
 
     /**
@@ -90,13 +71,7 @@ public class CustomerController {
     public void updateCustomer(@RequestBody Customer customer,
             @PathVariable("customerId") Long customerId,
             HttpServletResponse httpResponse) {
-
-        if (!customerRepository.existsById(customerId)) {
-            httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        } else {
-            customerRepository.save(customer);
-            httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-        }
+        customerService.updateCustomer(customer, customerId, httpResponse);
     }
 
     /**
@@ -107,12 +82,7 @@ public class CustomerController {
     @DeleteMapping(value = "/rest/customers/{customerId}")
     public void removeCustomer(@PathVariable("customerId") Long customerId,
             HttpServletResponse httpResponse) {
-
-        if (customerRepository.existsById(customerId)) {
-            customerRepository.deleteById(customerId);
-        }
-
-        httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+        customerService.deleteCustomerById(customerId, httpResponse);
     }
 
 }
