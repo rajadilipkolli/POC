@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
@@ -19,28 +21,24 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 
 @Slf4j
 @Configuration
-public class DataSourceProxyBeanConfig implements BeanPostProcessor {
+public class DataSourceProxyBeanConfig {
 
-    public Object postProcessAfterInitialization(Object bean, String beanName)
-            throws BeansException {
+    @Bean
+    public DataSource customDataSource(DataSourceProperties properties) {
+        log.info("Inside Proxy Creation");
 
-        if (bean instanceof DataSource) {
-            System.out.println("AfterInitialization : " + beanName);
-
-            log.info("Inside Proxy Creation");
-
-            // use pretty formatted query with multiline enabled
-            final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
-            creator.setMultiline(true);
-
-            final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
-            listener.setQueryLogEntryCreator(creator);
-
-            return ProxyDataSourceBuilder.create((DataSource) bean).countQuery()
-                    .name("MyDS").listener(listener)
-                    .logSlowQueryToSysOut(1, TimeUnit.MINUTES).build();
-
+        final HikariDataSource dataSource = (HikariDataSource) properties
+                .initializeDataSourceBuilder().type(HikariDataSource.class).build();
+        if (properties.getName() != null) {
+            dataSource.setPoolName(properties.getName());
         }
-        return bean; // you can return any other object as well
+        // use pretty formatted query with multiline enabled
+        final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
+        creator.setMultiline(true);
+        final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
+        listener.setQueryLogEntryCreator(creator);
+
+        return ProxyDataSourceBuilder.create(dataSource).countQuery().name("MyDS")
+                .listener(listener).logSlowQueryToSysOut(1, TimeUnit.MINUTES).build();
     }
 }
