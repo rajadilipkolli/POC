@@ -12,8 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
-
-import net.ttddyy.dsproxy.support.ProxyDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplicationTest {
 
@@ -23,7 +22,7 @@ public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplication
     @Test
     public void test() {
         assertThat(datasource).isNotNull();
-        assertThat(datasource).isExactlyInstanceOf(ProxyDataSource.class);
+        assertThat(datasource).isInstanceOf(HikariDataSource.class);
     }
 
 }
