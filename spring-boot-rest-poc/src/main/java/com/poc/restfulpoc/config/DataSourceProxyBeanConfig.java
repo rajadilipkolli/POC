@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
@@ -27,8 +26,7 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
     @Override
-    public Object postProcessAfterInitialization(final Object bean, final String beanName)
-            throws BeansException {
+    public Object postProcessAfterInitialization(final Object bean, final String beanName) {
         if (bean instanceof DataSource) {
             log.info("Inside Proxy Creation");
             final ProxyFactory factory = new ProxyFactory(bean);
