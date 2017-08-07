@@ -68,7 +68,7 @@ public class MongoDBRedisIntegrationController {
      */
     @PutMapping(value = "/updateByTitle/{title}/{author}")
     @CachePut(value = "book", key = "#title")
-    public Book updateByTitle(@PathVariable(value = "title") String title,
+    public Book updateAuthorByTitle(@PathVariable(value = "title") String title,
             @PathVariable(value = "author") String author) {
         return service.updateByTitle(title, author);
     }

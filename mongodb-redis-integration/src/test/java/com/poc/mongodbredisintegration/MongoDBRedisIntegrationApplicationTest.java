@@ -39,6 +39,11 @@ public class MongoDBRedisIntegrationApplicationTest extends AbstractMongoDBRedis
         assertThat(response).isNotNull();
         assertThat(response.getId()).isNotBlank();
         assertThat(response.getAuthor()).isEqualTo("Raja");
+        final Book updatedBook = controller.updateAuthorByTitle("MongoDbCookBook", "Raja1");
+        assertThat(updatedBook.getAuthor()).isEqualTo("Raja1");
+        controller.deleteBookByTitle("JUNITTitle");
+        final Book updatedBook1 = controller.findBookByTitle("JUNITTitle");
+        assertThat(updatedBook1).isNull();
     }
 
 }
