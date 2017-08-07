@@ -12,6 +12,8 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -220,8 +222,15 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
         /* delete customer */
         template.delete(String.format("%s/%s", base, customerId), String.class);
+        
+        // Sleeping for 1 second so that JMS message is received
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-        /* attempt to get customer and ensure qwe get a 404 */
+        /* attempt to get customer and ensure we get a 404 */
         final ResponseEntity<String> secondCallResponse = template
                 .getForEntity(String.format("%s/%s", base, customerId), String.class);
         assertThat(secondCallResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

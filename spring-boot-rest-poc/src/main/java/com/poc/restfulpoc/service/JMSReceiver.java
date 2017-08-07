@@ -8,7 +8,6 @@ package com.poc.restfulpoc.service;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +21,9 @@ public class JMSReceiver {
     private final CustomerRepository customerRepository;
 
     @JmsListener(destination = "jms.message.endpoint")
-    public void receiveMessage(Customer customer) {
-        log.info("Received :{}", customer);
-        customerRepository.save(customer);
+    public void receiveMessage(String customerId) {
+        log.info("Received CustomerID:{}", customerId);
+        customerRepository.deleteById(Long.valueOf(customerId));
         log.info("Updated Customer");
     }
 }
