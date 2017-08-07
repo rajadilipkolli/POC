@@ -7,10 +7,12 @@ package com.poc.restfulpoc.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final JmsTemplate jmsTemplate;
 
     @Override
     public Customer getCustomer(Long customerId) {
@@ -55,7 +58,14 @@ public class CustomerServiceImpl implements CustomerService {
         if (!customerRepository.existsById(customerId)) {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         } else {
-            customerRepository.save(customer);
+            // Using JMS Template as the call can be asynchronous
+            jmsTemplate.convertAndSend("jms.message.endpoint", customer);
+            // Adding delay to demostrate in JUNIT test cases
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         }
 
@@ -66,8 +76,6 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerRepository.existsById(customerId)) {
             customerRepository.deleteById(customerId);
         }
-
         httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-
     }
 }

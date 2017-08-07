@@ -8,7 +8,7 @@
 This repo is for all POC which I does and learnings I learnt
 Below are the projects that I have completed POC
 - [mongodb-redis-integration](mongodb-redis-integration/README.md) -> adding fault tolerant caching layer to MongoDB.
-- [spring-boot-rest-poc](spring-boot-rest-poc/README.md) -> Enterprise application integrated with spring data, datasource-proxy, JPA 
+- [spring-boot-rest-poc](spring-boot-rest-poc/README.md) -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
 
 ### Filing Issues
 
