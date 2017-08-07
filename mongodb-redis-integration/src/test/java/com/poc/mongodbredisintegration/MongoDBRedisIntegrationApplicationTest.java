@@ -44,6 +44,7 @@ public class MongoDBRedisIntegrationApplicationTest extends AbstractMongoDBRedis
         controller.deleteBookByTitle("JUNITTitle");
         final Book updatedBook1 = controller.findBookByTitle("JUNITTitle");
         assertThat(updatedBook1).isNull();
+        controller.deleteBookByTitle("MongoDbCookBook");
     }
 
 }

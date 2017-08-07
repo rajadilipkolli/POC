@@ -11,7 +11,7 @@
 
 	<parent>
 		<groupId>com.example.poc</groupId>
-		<artifactId>poc</artifactId>
+		<artifactId>poc-bom</artifactId>
 		<version>0.0.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
