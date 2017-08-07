@@ -10,6 +10,7 @@ script:
 cache:
   directories:
     - '$HOME/.m2/repository'
+    - '$HOME/.m2/wrapper'
     - '$HOME/.embedmongo'
     
 after_success:

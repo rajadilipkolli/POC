@@ -223,7 +223,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         /* delete customer */
         template.delete(String.format("%s/%s", base, customerId), String.class);
         
-        // Sleeping for 1 second so that JMS message is received
+        // Sleeping for 1 second so that JMS message is consumed
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
