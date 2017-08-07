@@ -22,8 +22,7 @@ public class JMSReceiver {
 
     @JmsListener(destination = "jms.message.endpoint")
     public void receiveMessage(String customerId) {
-        log.info("Received CustomerID:{}", customerId);
+        log.info("Received CustomerID:{} for deletion", customerId);
         customerRepository.deleteById(Long.valueOf(customerId));
-        log.info("Updated Customer");
     }
 }
