@@ -26,7 +26,7 @@
 
 Spring Cache framework provides an interceptor for cache errors, org.springframework.cache.interceptor.CacheErrorHandler, for the application to take action upon. We will go through this setup in a Spring Boot application, where the application class has to implement org.springframework.cache.annotation.CachingConfigurer, and it can override the errorHandler method.
 
-```
+```java
 @EnableCaching
 @Configuration
 public class RedisConfiguration extends CachingConfigurerSupport {
@@ -38,7 +38,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 ```
 With CustomCacheErrorHandler, you can provide what needs to be done in case there's an error with your cache. This CustomCacheErrorHandler implements the org.springframework.cache.interceptor.CacheErrorHandler , which provides a handle for error conditions while doing Get, Put, Evict, and Clear operations with the cache provider. By overriding these methods, you can provide the means for what needs to be done in these scenarios.
 
-```
+```java
 public class CustomCacheErrorHandler implements CacheErrorHandler{
     @Override
     public void handleCacheGetError(RuntimeException exception, 
@@ -63,7 +63,7 @@ public class CustomCacheErrorHandler implements CacheErrorHandler{
 ```
   Let's review how the application would be unaffected if the cache goes down. When the following method is invoked, Spring will try to use the CacheManager to get the cache entry, which will fail because the cache is down. The CacheErrorHandler will intercept this error, and one of the **handleCache****Errors** would be invoked. If you don't take any action in these methods, then the application will go ahead and serve the request without failing or throwing an exception.
 
-```
+```java
 @Cacheable(value = "book", key = "#title", unless = "#result == null")
 	public Book findBookByTitle(@PathVariable String title) {
 ```
@@ -73,10 +73,10 @@ Here unless is used to not cache null value
 
   This strategy works well for the use case where a Spring application is up but the cache goes down. In case a cache is down during app startup, Spring won't be able to create a CacheManager object and would not start. You can intercept this error and make use of org.springframework.cache.support.NoOpCacheManager, which will bypass the cache and let the application to be brought up **(not a recommended way, though)** or try an alternate cache manager setup on a different server.
 	
-### TO-DO
+#### TO-DO
  Perform Load Test and check if keys are removed	
 	
-### Reference 
+#### Reference 
   - http://caseyscarborough.com/blog/2014/12/18/caching-data-in-spring-using-redis/ 
   - http://www.sitepoint.com/caching-a-mongodb-database-with-redis/ 
   - http://stackoverflow.com/questions/10696463/mongodb-with-redis/10721249#10721249
