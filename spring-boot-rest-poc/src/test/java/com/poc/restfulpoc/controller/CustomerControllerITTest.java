@@ -78,7 +78,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
     public void testGetCustomerByNullId() throws Exception {
         final ResponseEntity<String> response = template
                 .getForEntity(String.format("%s/%s", base, null), String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test

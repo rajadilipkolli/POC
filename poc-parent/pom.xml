@@ -228,6 +228,7 @@
 					<!-- Configures the directory in which the XML report is created -->
 					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs
 					</findbugsXmlOutputDirectory>
+					 <excludeFilterFile>${project.basedir}/../config/findbugs-exclude.xml</excludeFilterFile>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -258,6 +259,8 @@
 					</formats>
 					<check>
 						<haltOnFailure>true</haltOnFailure>
+						<branchRate>60</branchRate>
+                        <totalBranchRate>60</totalBranchRate>
 					</check>
 				</configuration>
 			</plugin>

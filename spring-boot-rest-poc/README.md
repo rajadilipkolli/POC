@@ -79,3 +79,7 @@ public class JMSReceiver {
     }
 }
 ```
+
+### Exception Handling 
+Reference :: [Guide to Spring Boot REST API Error Handling](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
+

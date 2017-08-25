@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
 import com.poc.restfulpoc.entities.Customer;
-import com.poc.restfulpoc.exception.CustomerNotFoundException;
+import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final JmsTemplate jmsTemplate;
 
     @Override
-    public Customer getCustomer(Long customerId) {
+    public Customer getCustomer(Long customerId) throws EntityNotFoundException {
         final Optional<Customer> customer = customerRepository.findById(customerId);
-        return customer.orElseThrow(CustomerNotFoundException::new);
+        if (customer.isPresent()) {
+            return customer.get();
+        } else {
+            throw new EntityNotFoundException(Customer.class, "id",
+                    customerId.toString());
+        }
     }
 
     @Override

@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.WebRequest;
 
 import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.exception.EntityNotFoundException;
 
 public interface CustomerService {
 
-    Customer getCustomer(Long customerId);
+    Customer getCustomer(Long customerId) throws EntityNotFoundException;
 
     List<Customer> getCustomers();
 

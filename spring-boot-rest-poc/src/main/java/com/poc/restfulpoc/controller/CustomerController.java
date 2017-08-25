@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.service.CustomerService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,11 @@ public class CustomerController {
      * 
      * @param customerId
      * @return retrieved customer
+     * @throws EntityNotFoundException 
      */
     @GetMapping(value = "/rest/customers/{customerId}")
-    public Customer getCustomer(@PathVariable("customerId") @NotBlank Long customerId) {
+    public Customer getCustomer(@PathVariable("customerId") @NotBlank Long customerId)
+            throws EntityNotFoundException {
         return customerService.getCustomer(customerId);
     }
 
