@@ -21,6 +21,7 @@ import org.springframework.jms.support.converter.MessageType;
 @Configuration
 @EnableJms
 public class JMSApplicationConfig {
+    
     @Bean
     public JmsListenerContainerFactory<DefaultMessageListenerContainer> myJMSFactory(
             ConnectionFactory connectionFactory,

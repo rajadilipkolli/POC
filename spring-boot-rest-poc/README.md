@@ -11,6 +11,13 @@
 
 ### Notes
 
+Steps in building application
+ - Define Database using entities
+ - Define way to load non-transactional tables
+ - define exception mechanism
+ - define controller end points and always code to Interface so that it can be extended easily later
+ - add datasource proxy for pretty printing SQL queries
+
 We want to display all SQL queries so take advantage of spring boot autoconfiguration we will implement BeanPostProcessor and for the initilization of Bean configure DataSourceProxy
 
 ``` java

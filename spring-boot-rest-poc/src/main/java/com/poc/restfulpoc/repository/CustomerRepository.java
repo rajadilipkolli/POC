@@ -13,6 +13,6 @@ import com.poc.restfulpoc.entities.Customer;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    public List<Customer> findByFirstName(String firstName);
+    List<Customer> findByFirstName(String firstName);
 
 }

@@ -259,8 +259,8 @@
 					</formats>
 					<check>
 						<haltOnFailure>true</haltOnFailure>
-						<branchRate>60</branchRate>
-                        <totalBranchRate>60</totalBranchRate>
+						<branchRate>65</branchRate>
+                        <totalBranchRate>65</totalBranchRate>
 					</check>
 				</configuration>
 			</plugin>

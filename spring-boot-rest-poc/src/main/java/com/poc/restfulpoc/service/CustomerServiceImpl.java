@@ -7,12 +7,9 @@ package com.poc.restfulpoc.service;
 
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequest;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
@@ -29,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomer(Long customerId) throws EntityNotFoundException {
-        final Optional<Customer> customer = customerRepository.findById(customerId);
+        final Optional<Customer> customer = findById(customerId);
         if (customer.isPresent()) {
             return customer.get();
         } else {
@@ -44,35 +41,35 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer createCustomer(Customer customer, HttpServletResponse httpResponse,
-            WebRequest request) {
-        final Customer createdcustomer = customerRepository.save(customer);
-        httpResponse.setStatus(HttpStatus.CREATED.value());
-        httpResponse.setHeader("Location", String.format("%s/rest/customers/%s",
-                request.getContextPath(), customer.getId()));
-
-        return createdcustomer;
+    public Customer createCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Override
-    public void updateCustomer(Customer customer, Long customerId,
-            HttpServletResponse httpResponse) {
-
-        if (!customerRepository.existsById(customerId)) {
-            httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        } else {
-            customerRepository.save(customer);
-            httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-        }
-
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
     }
 
     @Override
-    public void deleteCustomerById(Long customerId, HttpServletResponse httpResponse) {
-        if (customerRepository.existsById(customerId)) {
-            // Using JMS Template as the call can be asynchronous
-            jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
-        }
-        httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+    public void deleteCustomerById(Long customerId) {
+        // Using JMS Template as the call can be asynchronous
+        jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
+    }
+
+    @Override
+    public boolean isCustomerExist(Customer customer) {
+        final List<Customer> customerList = customerRepository
+                .findByFirstName(customer.getFirstName());
+        return !customerList.isEmpty();
+    }
+
+    @Override
+    public Optional<Customer> findById(Long customerId) {
+        return customerRepository.findById(customerId);
+    }
+
+    @Override
+    public void deleteAllCustomers() {
+        customerRepository.deleteAll();
     }
 }

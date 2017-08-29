@@ -6,10 +6,7 @@
 package com.poc.restfulpoc.service;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.context.request.WebRequest;
+import java.util.Optional;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
@@ -20,12 +17,16 @@ public interface CustomerService {
 
     List<Customer> getCustomers();
 
-    Customer createCustomer(Customer customer, HttpServletResponse httpResponse,
-            WebRequest request);
+    Customer createCustomer(Customer customer);
 
-    void updateCustomer(Customer customer, Long customerId,
-            HttpServletResponse httpResponse);
+    void updateCustomer(Customer customer);
 
-    void deleteCustomerById(Long customerId, HttpServletResponse httpResponse);
+    void deleteCustomerById(Long customerId);
+
+    boolean isCustomerExist(Customer customer);
+
+    Optional<Customer> findById(Long customerId);
+
+    void deleteAllCustomers();
 
 }

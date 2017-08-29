@@ -26,7 +26,8 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
     @Override
-    public Object postProcessAfterInitialization(final Object bean, final String beanName) {
+    public Object postProcessAfterInitialization(final Object bean,
+            final String beanName) {
         if (bean instanceof DataSource) {
             log.info("Inside Proxy Creation");
             final ProxyFactory factory = new ProxyFactory(bean);
@@ -49,17 +50,22 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
             final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
             listener.setQueryLogEntryCreator(creator);
 
-            this.dataSource = ProxyDataSourceBuilder.create(dataSource).countQuery()
-                    .name("MyDS").listener(listener)
-                    .logSlowQueryToSysOut(1, TimeUnit.MINUTES).build();
+            // @formatter:off
+            this.dataSource = ProxyDataSourceBuilder.create(dataSource)
+                                                    .countQuery()
+                                                    .name("MyDS")
+                                                    .listener(listener)
+                                                    .logSlowQueryToSysOut(5, TimeUnit.SECONDS)
+                                                    .build();
+            // @formatter:on
         }
 
         @Override
         public Object invoke(final MethodInvocation invocation) throws Throwable {
-            final Method proxyMethod = ReflectionUtils.findMethod(dataSource.getClass(),
-                    invocation.getMethod().getName());
+            final Method proxyMethod = ReflectionUtils.findMethod(
+                    this.dataSource.getClass(), invocation.getMethod().getName());
             if (proxyMethod != null) {
-                return proxyMethod.invoke(dataSource, invocation.getArguments());
+                return proxyMethod.invoke(this.dataSource, invocation.getArguments());
             }
             return invocation.proceed();
         }

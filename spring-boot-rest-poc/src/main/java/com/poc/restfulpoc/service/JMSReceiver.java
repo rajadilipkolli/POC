@@ -5,24 +5,8 @@
  */
 package com.poc.restfulpoc.service;
 
-import org.springframework.jms.annotation.JmsListener;
-import org.springframework.stereotype.Component;
+public interface JMSReceiver {
 
-import com.poc.restfulpoc.repository.CustomerRepository;
+    void receiveMessage(String customerId);
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-@Component
-@RequiredArgsConstructor
-@Slf4j
-public class JMSReceiver {
-
-    private final CustomerRepository customerRepository;
-
-    @JmsListener(destination = "jms.message.endpoint")
-    public void receiveMessage(String customerId) {
-        log.info("Received CustomerID:{} for deletion", customerId);
-        customerRepository.deleteById(Long.valueOf(customerId));
-    }
 }
