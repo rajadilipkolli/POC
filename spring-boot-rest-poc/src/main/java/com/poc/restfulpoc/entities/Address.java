@@ -10,10 +10,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>Address class.</p>
+ *
+ * @author rajakolli
+ * @version 1: 0
+ */
 @Setter
 @Getter
 @Entity
@@ -22,7 +30,28 @@ public class Address {
 
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(
+            name = "sequenceGenerator", 
+            strategy = "enhanced-sequence",
+            parameters = {
+                @org.hibernate.annotations.Parameter(
+                    name = "optimizer",
+                    value = "pooled-lo"
+                ),
+                @org.hibernate.annotations.Parameter(
+                    name = "initial_value", 
+                    value = "1"
+                ),
+                @org.hibernate.annotations.Parameter(
+                    name = "increment_size", 
+                    value = "5"
+                )
+            }
+        )
+        @GeneratedValue(
+            strategy = GenerationType.SEQUENCE, 
+            generator = "sequenceGenerator"
+        )
     private long id;
 
     private String street;
@@ -33,6 +62,14 @@ public class Address {
 
     private String postcode;
 
+    /**
+     * <p>Constructor for Address.</p>
+     *
+     * @param street a {@link java.lang.String} object.
+     * @param town a {@link java.lang.String} object.
+     * @param county a {@link java.lang.String} object.
+     * @param postcode a {@link java.lang.String} object.
+     */
     public Address(String street, String town, String county, String postcode) {
         this.street = street;
         this.town = town;

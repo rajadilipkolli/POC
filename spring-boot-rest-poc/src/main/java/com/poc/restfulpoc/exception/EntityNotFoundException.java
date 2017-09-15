@@ -11,10 +11,22 @@ import java.util.stream.IntStream;
 
 import org.springframework.util.StringUtils;
 
+/**
+ * <p>EntityNotFoundException class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 public class EntityNotFoundException extends Exception {
 
     private static final long serialVersionUID = 5566374399391524344L;
 
+    /**
+     * <p>Constructor for EntityNotFoundException.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param searchParamsMap a {@link java.lang.Object} object.
+     */
     @SuppressWarnings("rawtypes")
     public EntityNotFoundException(Class clazz, Object... searchParamsMap) {
         super(EntityNotFoundException.generateMessage(clazz.getSimpleName(),

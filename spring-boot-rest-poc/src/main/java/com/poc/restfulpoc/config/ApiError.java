@@ -27,8 +27,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * <p>ApiError class.</p>
+ *
+ * @author rajakolli
+ * @version 1: 0
+ */
 @Data
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, 
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT,
                 use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
@@ -44,11 +50,22 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
+    /**
+     * <p>Constructor for ApiError.</p>
+     *
+     * @param status a {@link org.springframework.http.HttpStatus} object.
+     */
     public ApiError(HttpStatus status) {
         this();
         this.status = status;
     }
 
+    /**
+     * <p>Constructor for ApiError.</p>
+     *
+     * @param status a {@link org.springframework.http.HttpStatus} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     public ApiError(HttpStatus status, Throwable ex) {
         this();
         this.status = status;
@@ -56,6 +73,13 @@ public class ApiError {
         this.debugMessage = ex.getLocalizedMessage();
     }
 
+    /**
+     * <p>Constructor for ApiError.</p>
+     *
+     * @param status a {@link org.springframework.http.HttpStatus} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     public ApiError(HttpStatus status, String message, Throwable ex) {
         this();
         this.status = status;
@@ -84,6 +108,11 @@ public class ApiError {
                 fieldError.getRejectedValue(), fieldError.getDefaultMessage());
     }
 
+    /**
+     * <p>addValidationErrors.</p>
+     *
+     * @param fieldErrors a {@link java.util.List} object.
+     */
     public void addValidationErrors(List<FieldError> fieldErrors) {
         fieldErrors.forEach(this::addValidationError);
     }
@@ -93,6 +122,11 @@ public class ApiError {
                 objectError.getDefaultMessage());
     }
 
+    /**
+     * <p>addValidationError.</p>
+     *
+     * @param globalErrors a {@link java.util.List} object.
+     */
     public void addValidationError(List<ObjectError> globalErrors) {
         globalErrors.forEach(this::addValidationError);
     }
@@ -102,12 +136,20 @@ public class ApiError {
      * validation fails.
      * @param cv the ConstraintViolation
      */
+    /** {@inheritDoc} */
     private void addValidationError(ConstraintViolation<?> cv) {
         this.addValidationError(cv.getRootBeanClass().getSimpleName(),
                 ((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
                 cv.getInvalidValue(), cv.getMessage());
     }
 
+    /**
+     * <p>addValidationErrors.</p>
+     *
+     * @param constraintViolations a {@link java.util.Set} object.
+/**
+ * {@inheritDoc}
+ */
     public void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
         constraintViolations.forEach(this::addValidationError);
     }
@@ -133,16 +175,19 @@ public class ApiError {
 }
 
 class LowerCaseClassNameResolver extends TypeIdResolverBase {
+/** {@inheritDoc} */
 
     @Override
     public String idFromValue(Object value) {
         return value.getClass().getSimpleName().toLowerCase(Locale.getDefault());
     }
+/** {@inheritDoc} */
 
     @Override
     public String idFromValueAndType(Object value, Class<?> suggestedType) {
         return idFromValue(value);
     }
+/** {@inheritDoc} */
 
     @Override
     public JsonTypeInfo.Id getMechanism() {

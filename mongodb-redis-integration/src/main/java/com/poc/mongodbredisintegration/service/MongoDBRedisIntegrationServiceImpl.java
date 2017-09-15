@@ -19,10 +19,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * <p>MongoDBRedisIntegrationServiceImpl class.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 @RequiredArgsConstructor
 @Service

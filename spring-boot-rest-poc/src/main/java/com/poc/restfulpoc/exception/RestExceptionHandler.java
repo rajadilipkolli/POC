@@ -31,20 +31,22 @@ import com.poc.restfulpoc.config.ApiError;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
+/**
+ * <p>RestExceptionHandler class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 @ControllerAdvice
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
+     * {@inheritDoc}
+     *
      * Handle MissingServletRequestParameterException. Triggered when a 'required' request
      * parameter is missing.
-     *
-     * @param ex MissingServletRequestParameterException
-     * @param headers HttpHeaders
-     * @param status HttpStatus
-     * @param request WebRequest
-     * @return the ApiError object
      */
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(
@@ -55,14 +57,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Handle HttpMediaTypeNotSupportedException. This one triggers when JSON is invalid
      * as well.
-     *
-     * @param ex HttpMediaTypeNotSupportedException
-     * @param headers HttpHeaders
-     * @param status HttpStatus
-     * @param request WebRequest
-     * @return the ApiError object
      */
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
@@ -77,15 +75,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Handle MethodArgumentNotValidException. Triggered when an object fails @Valid
      * validation.
-     *
-     * @param ex the MethodArgumentNotValidException that is thrown when @Valid validation
-     * fails
-     * @param headers HttpHeaders
-     * @param status HttpStatus
-     * @param request WebRequest
-     * @return the ApiError object
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -129,13 +122,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
+     * {@inheritDoc}
      *
-     * @param ex HttpMessageNotReadableException
-     * @param headers HttpHeaders
-     * @param status HttpStatus
-     * @param request WebRequest
-     * @return the ApiError object
+     * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
      */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
@@ -149,13 +138,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle HttpMessageNotWritableException.
+     * {@inheritDoc}
      *
-     * @param ex HttpMessageNotWritableException
-     * @param headers HttpHeaders
-     * @param status HttpStatus
-     * @param request WebRequest
-     * @return the ApiError object
+     * Handle HttpMessageNotWritableException.
      */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotWritable(
@@ -168,6 +153,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Handle javax.persistence.EntityNotFoundException
+     *
+     * @param ex a {@link javax.persistence.EntityNotFoundException} object.
+     * @return a {@link org.springframework.http.ResponseEntity} object.
      */
     @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(
@@ -180,6 +168,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      *
      * @param ex the DataIntegrityViolationException
      * @return the ApiError object
+     * @param request a {@link org.springframework.web.context.request.WebRequest} object.
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<Object> handleDataIntegrityViolation(
@@ -196,6 +185,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      *
      * @param ex the Exception
      * @return the ApiError object
+     * @param request a {@link org.springframework.web.context.request.WebRequest} object.
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(

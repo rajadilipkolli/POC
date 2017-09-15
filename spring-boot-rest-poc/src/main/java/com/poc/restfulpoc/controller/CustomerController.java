@@ -29,6 +29,12 @@ import com.poc.restfulpoc.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * <p>CustomerController class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor // From spring 4.3 way to autowire
@@ -53,10 +59,10 @@ public class CustomerController {
 
     /**
      * Get customer using id. Returns HTTP 404 if customer not found
-     * 
-     * @param customerId
+     *
+     * @param customerId a {@link java.lang.Long} object.
      * @return retrieved customer
-     * @throws EntityNotFoundException 
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
     @GetMapping(value = "/rest/customers/{customerId}", produces = {
             MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
@@ -73,10 +79,11 @@ public class CustomerController {
     }
 
     /**
-     * Create a new customer
+     * Create a new customer and return in response with HTTP 201
      *
-     * @param customer
+     * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
      * @return created customer
+     * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder} object.
      */
     @PostMapping(value = { "/rest/customers/" })
     public ResponseEntity<Void> createCustomer(@RequestBody Customer customer,
@@ -100,7 +107,9 @@ public class CustomerController {
      * Update customer with given customer id.
      *
      * @param customer the customer
-     * @return 
+     * @param customerId a {@link java.lang.Long} object.
+     * @param customerId a {@link java.lang.Long} object.
+     * @return a {@link org.springframework.http.ResponseEntity} object.
      */
     @PutMapping(value = { "/rest/customers/{customerId}" })
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
@@ -127,7 +136,7 @@ public class CustomerController {
      * Deletes the customer with given customer id if it exists and returns HTTP204.
      *
      * @param customerId the customer id
-     * @return 
+     * @return a {@link org.springframework.http.ResponseEntity} object.
      */
     @DeleteMapping(value = "/rest/customers/{customerId}")
     public ResponseEntity<Customer> removeCustomer(
@@ -143,6 +152,11 @@ public class CustomerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
+    /**
+     * <p>deleteAllUsers.</p>
+     *
+     * @return a {@link org.springframework.http.ResponseEntity} object.
+     */
     @DeleteMapping(value = "/rest/customers/")
     public ResponseEntity<Customer> deleteAllUsers() {
         log.info("Deleting All Users");

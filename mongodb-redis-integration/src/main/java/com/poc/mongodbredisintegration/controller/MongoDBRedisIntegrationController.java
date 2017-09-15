@@ -22,10 +22,11 @@ import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * <p>MongoDBRedisIntegrationController class.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 @RestController
 @RequestMapping(value = "/book")
@@ -47,7 +48,7 @@ public class MongoDBRedisIntegrationController {
 
     /**
      * <p>findBookByTitle.</p>
-     * 
+     *
      * unless is specified to not cache null values
      *
      * @param title a {@link java.lang.String} object.

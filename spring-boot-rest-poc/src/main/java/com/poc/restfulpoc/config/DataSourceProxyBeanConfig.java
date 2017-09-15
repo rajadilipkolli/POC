@@ -21,10 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 
+/**
+ * <p>DataSourceProxyBeanConfig class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 @Slf4j
 @Configuration
 public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
+    /** {@inheritDoc} */
     @Override
     public Object postProcessAfterInitialization(final Object bean,
             final String beanName) {

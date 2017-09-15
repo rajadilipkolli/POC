@@ -11,10 +11,11 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * <p>CustomCacheErrorHandler class.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 @Slf4j
 public class CustomCacheErrorHandler implements CacheErrorHandler {

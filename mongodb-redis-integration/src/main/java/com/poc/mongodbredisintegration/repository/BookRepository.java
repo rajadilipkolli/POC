@@ -12,10 +12,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.poc.mongodbredisintegration.document.Book;
 
 /**
+ * <p>BookRepository interface.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 public interface BookRepository extends MongoRepository<Book, String> {
     

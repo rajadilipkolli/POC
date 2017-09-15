@@ -15,10 +15,11 @@ import com.poc.mongodbredisintegration.document.Book;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * <p>DataLoader class.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 @Component
 @RequiredArgsConstructor

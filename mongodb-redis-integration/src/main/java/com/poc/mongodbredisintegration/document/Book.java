@@ -15,10 +15,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 /**
+ * <p>Book class.</p>
+ *
  * @author rajakolli
  * @version 0 : 5
  * @since July 2017
- *
  */
 @Data
 @Document

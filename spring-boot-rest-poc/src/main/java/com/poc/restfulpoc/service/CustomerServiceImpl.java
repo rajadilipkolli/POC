@@ -17,6 +17,12 @@ import com.poc.restfulpoc.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * <p>CustomerServiceImpl class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -24,6 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final JmsTemplate jmsTemplate;
 
+    /** {@inheritDoc} */
     @Override
     public Customer getCustomer(Long customerId) throws EntityNotFoundException {
         final Optional<Customer> customer = findById(customerId);
@@ -35,27 +42,32 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Customer> getCustomers() {
         return (List<Customer>) customerRepository.findAll();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void updateCustomer(Customer customer) {
         customerRepository.save(customer);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteCustomerById(Long customerId) {
         // Using JMS Template as the call can be asynchronous
         jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCustomerExist(Customer customer) {
         final List<Customer> customerList = customerRepository
@@ -63,11 +75,13 @@ public class CustomerServiceImpl implements CustomerService {
         return !customerList.isEmpty();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Customer> findById(Long customerId) {
         return customerRepository.findById(customerId);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteAllCustomers() {
         customerRepository.deleteAll();
