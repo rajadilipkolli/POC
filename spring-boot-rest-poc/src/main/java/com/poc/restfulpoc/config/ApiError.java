@@ -136,7 +136,6 @@ public class ApiError {
      * validation fails.
      * @param cv the ConstraintViolation
      */
-    /** {@inheritDoc} */
     private void addValidationError(ConstraintViolation<?> cv) {
         this.addValidationError(cv.getRootBeanClass().getSimpleName(),
                 ((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
@@ -147,9 +146,7 @@ public class ApiError {
      * <p>addValidationErrors.</p>
      *
      * @param constraintViolations a {@link java.util.Set} object.
-/**
- * {@inheritDoc}
- */
+     */
     public void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
         constraintViolations.forEach(this::addValidationError);
     }

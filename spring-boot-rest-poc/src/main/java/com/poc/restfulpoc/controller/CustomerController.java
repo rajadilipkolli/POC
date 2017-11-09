@@ -109,7 +109,6 @@ public class CustomerController {
      *
      * @param customer the customer
      * @param customerId a {@link java.lang.Long} object.
-     * @param customerId a {@link java.lang.Long} object.
      * @return a {@link org.springframework.http.ResponseEntity} object.
      */
     @PutMapping(value = { "/rest/customers/{customerId}" })
