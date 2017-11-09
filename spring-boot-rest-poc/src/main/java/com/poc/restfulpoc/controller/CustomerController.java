@@ -8,7 +8,8 @@ package com.poc.restfulpoc.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
