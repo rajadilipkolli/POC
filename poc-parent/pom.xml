@@ -44,8 +44,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<aspectj.version>1.9.0.BETA-7</aspectj.version>
-		
+		<!-- <aspectj.version>1.9.0.BETA-7</aspectj.version> -->
+
 		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
 		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
 		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
@@ -296,6 +296,25 @@
 						<goals>
 							<goal>sources</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.3</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
