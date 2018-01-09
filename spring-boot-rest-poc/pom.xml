@@ -16,6 +16,10 @@
 		<relativePath>../poc-parent</relativePath>
 	</parent>
 
+	<properties>
+		<datasourceproxy.version>1.4.5</datasourceproxy.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,7 +51,7 @@
 		<dependency>
 			<groupId>net.ttddyy</groupId>
 			<artifactId>datasource-proxy</artifactId>
-			<version>1.4.4</version>
+			<version>${datasourceproxy.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
