@@ -34,13 +34,6 @@
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-migrationsupport</artifactId>
-			<version>5.0.3</version>
-			<scope>test</scope>
-		</dependency>
-		
 	</dependencies>
 
 </project>
