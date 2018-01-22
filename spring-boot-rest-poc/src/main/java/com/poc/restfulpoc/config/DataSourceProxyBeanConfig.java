@@ -25,7 +25,7 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
  * <p>DataSourceProxyBeanConfig class.</p>
  *
  * @author rajakolli
- * @version $Id: $Id
+ * @version 1: 0
  */
 @Slf4j
 @Configuration

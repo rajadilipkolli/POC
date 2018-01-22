@@ -15,7 +15,7 @@ import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
  * use hibernate to format queries
  *
  * @author rajakolli
- * @version $Id: $Id
+ * @version 1: 0
  */
 public class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
     
