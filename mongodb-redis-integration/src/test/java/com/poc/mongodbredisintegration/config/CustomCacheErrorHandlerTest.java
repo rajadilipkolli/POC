@@ -19,6 +19,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -95,6 +97,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
     }
 
     @Test
+    @Disabled
     public void getFailProperException() {
         final UnsupportedOperationException exception = new UnsupportedOperationException(
                 "Test exception on get");
@@ -102,7 +105,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
         this.thrown.expect(is(exception));
-//        this.simpleService.get(0L);
+        this.simpleService.get(0L);
     }
 
     @Test
@@ -115,6 +118,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
     }
 
     @Test
+    @Disabled
     public void putFailProperException() {
         final UnsupportedOperationException exception = new UnsupportedOperationException(
                 "Test exception on put");
@@ -123,7 +127,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
         this.thrown.expect(is(exception));
-//        this.simpleService.put(0L);
+        this.simpleService.put(0L);
     }
 
     @Test
@@ -136,6 +140,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
     }
 
     @Test
+    @Disabled
     public void evictFailProperException() {
         final UnsupportedOperationException exception = new UnsupportedOperationException(
                 "Test exception on evict");
@@ -143,11 +148,12 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
+        this.simpleService.evict(0L);
         this.thrown.expect(is(exception));
-//        this.simpleService.evict(0L);
     }
 
     @Test
+    @DisplayName("Clearing Cache Failed")
     public void clearFail() {
         final UnsupportedOperationException exception = new UnsupportedOperationException(
                 "Test exception on evict");
@@ -157,6 +163,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
     }
 
     @Test
+    @Disabled
     public void clearFailProperException() {
         final UnsupportedOperationException exception = new UnsupportedOperationException(
                 "Test exception on evict");
@@ -165,7 +172,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
         this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
         this.thrown.expect(is(exception));
-//        this.simpleService.clear();
+        this.simpleService.clear();
     }
 
     @TestConfiguration
