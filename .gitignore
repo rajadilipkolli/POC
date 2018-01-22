@@ -22,13 +22,10 @@
 hs_err_pid*
 
 # Eclipse 
-/.settings/
-*/.settings/
-/.project
-*/.project
-*/target/
-/.classpath
-*/.classpath
+*.settings/
+*.project
+*target/
+*.classpath
 .checkstyle
 .fbExcludeFilterFile
-/target/
+*.sts4-cache

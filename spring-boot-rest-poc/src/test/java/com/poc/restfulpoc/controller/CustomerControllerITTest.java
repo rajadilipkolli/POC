@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -24,6 +24,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
@@ -47,7 +48,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
     private String base;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         this.base = "/rest/customers/";
         customerRepository.deleteAll();
