@@ -101,6 +101,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
     }
 
     @Test
+    @DisplayName("Creating Customer")
     public void testCreateCustomer() throws Exception {
         final Customer customer = new Customer("Gary", "Steale",
                 Date.from(LocalDate.of(1984, Month.MARCH, 8)
@@ -141,11 +142,25 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         response = template.getForEntity(location, String.class);
         returnedCustomer = convertJsonToCustomer(response.getBody());
         assertThat(returnedCustomer.getDateOfBirth()).isNull();
-
+        
         newCustomer = new Customer("Gary", "Steale", null,
                 new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
         response = template.postForEntity(base, newCustomer, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+    }
+    
+    @Test
+    @DisplayName("Tests InValid Customer")
+    public void testInValidCustomer() {
+        Customer newCustomer = new Customer(" ", "Steale",
+                new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(100)),
+                new Address());
+        ResponseEntity<String> response = template.postForEntity(base, newCustomer,
+                String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        newCustomer = new Customer(null, "Steale", null, new Address());
+        response = template.postForEntity(base, newCustomer, String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     
     @Test

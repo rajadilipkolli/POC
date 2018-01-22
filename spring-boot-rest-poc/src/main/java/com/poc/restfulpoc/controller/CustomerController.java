@@ -6,13 +6,17 @@
 package com.poc.restfulpoc.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.poc.restfulpoc.config.ApiError;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.service.CustomerService;
+import com.poc.restfulpoc.validator.CustomerValidator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +48,7 @@ public class CustomerController {
 
     //Service which will do all data retrieval/manipulation work
     private final CustomerService customerService;
+    private final CustomerValidator customerValidator;
     
     /**
      * Retrieve all customers.
@@ -82,10 +89,18 @@ public class CustomerController {
      * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder} object.
      */
     @PostMapping(value = { "/rest/customers/" })
-    public ResponseEntity<Void> createCustomer(@RequestBody Customer customer,
-            UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
+            UriComponentsBuilder ucBuilder, Errors errors) {
+        customerValidator.validate(customer, errors);
+        if (errors.hasErrors()) {
+            final String errorMessage = errors.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
+            log.error("Error in request :{}", errorMessage);
+            final ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY,
+                    new Throwable(errorMessage));
+            return new ResponseEntity<>(apiError, apiError.getStatus());
+        }
         log.info("Creating Customer :{} ", customer.getFirstName());
-
         if (customerService.isCustomerExist(customer)) {
             log.error("A Customer with name {} already exist ", customer.getFirstName());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
