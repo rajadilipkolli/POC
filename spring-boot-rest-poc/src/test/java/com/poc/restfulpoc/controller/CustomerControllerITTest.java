@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -80,6 +81,14 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         final ResponseEntity<String> response = template
                 .getForEntity(String.format("%s/%s", base, null), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+    
+    @Test
+    @DisplayName("Test with Id that doesn't exist")
+    public void testGetCustomerByIdWhichDoesntExist() throws Exception {
+        final ResponseEntity<String> response = template
+                .getForEntity(String.format("%s/%s", base, Long.MAX_VALUE), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test

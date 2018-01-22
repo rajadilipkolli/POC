@@ -6,7 +6,6 @@
 package com.poc.restfulpoc.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
@@ -63,14 +62,6 @@ public interface CustomerService {
      * @return a boolean.
      */
     boolean isCustomerExist(Customer customer);
-
-    /**
-     * <p>findById.</p>
-     *
-     * @param customerId a {@link java.lang.Long} object.
-     * @return a {@link java.util.Optional} object.
-     */
-    Optional<Customer> findById(Long customerId);
 
     /**
      * <p>deleteAllCustomers.</p>

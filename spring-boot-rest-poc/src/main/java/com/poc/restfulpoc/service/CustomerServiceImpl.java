@@ -6,7 +6,6 @@
 package com.poc.restfulpoc.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
@@ -33,13 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
     /** {@inheritDoc} */
     @Override
     public Customer getCustomer(Long customerId) throws EntityNotFoundException {
-        final Optional<Customer> customer = findById(customerId);
-        if (customer.isPresent()) {
-            return customer.get();
-        } else {
-            throw new EntityNotFoundException(Customer.class, "id",
-                    customerId.toString());
-        }
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
+                        customerId.toString()));
     }
 
     /** {@inheritDoc} */
@@ -73,12 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
         final List<Customer> customerList = customerRepository
                 .findByFirstName(customer.getFirstName());
         return !customerList.isEmpty();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Optional<Customer> findById(Long customerId) {
-        return customerRepository.findById(customerId);
     }
 
     /** {@inheritDoc} */

@@ -6,7 +6,6 @@
 package com.poc.restfulpoc.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 
@@ -66,16 +65,12 @@ public class CustomerController {
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
     @GetMapping(value = "/rest/customers/{customerId}", produces = {
-            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Customer> getCustomer(
             @PathVariable("customerId") @NotBlank Long customerId)
             throws EntityNotFoundException {
         log.info("Fetching Customer with id {}", customerId);
         final Customer user = customerService.getCustomer(customerId);
-        if (user == null) {
-            log.error("Customer with id {} not found", customerId);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -110,26 +105,21 @@ public class CustomerController {
      * @param customer the customer
      * @param customerId a {@link java.lang.Long} object.
      * @return a {@link org.springframework.http.ResponseEntity} object.
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any 
      */
     @PutMapping(value = { "/rest/customers/{customerId}" })
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
-            @PathVariable("customerId") Long customerId) {
+            @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Updating Customer {}", customerId);
 
-        final Optional<Customer> currentUser = customerService.findById(customerId);
+        final Customer currentUser = customerService.getCustomer(customerId);
+        currentUser.setFirstName(customer.getFirstName());
+        currentUser.setLastName(customer.getLastName());
+        currentUser.setDateOfBirth(customer.getDateOfBirth());
+        currentUser.setAddress(customer.getAddress());
 
-        if (!currentUser.isPresent()) {
-            log.error("Customer with id {} not found ", customerId);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        currentUser.get().setFirstName(customer.getFirstName());
-        currentUser.get().setLastName(customer.getLastName());
-        currentUser.get().setDateOfBirth(customer.getDateOfBirth());
-        currentUser.get().setAddress(customer.getAddress());
-
-        customerService.updateCustomer(currentUser.get());
-        return new ResponseEntity<>(currentUser.get(), HttpStatus.OK);
+        customerService.updateCustomer(currentUser);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
     /**
@@ -137,17 +127,14 @@ public class CustomerController {
      *
      * @param customerId the customer id
      * @return a {@link org.springframework.http.ResponseEntity} object.
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any 
      */
     @DeleteMapping(value = "/rest/customers/{customerId}")
     public ResponseEntity<Customer> removeCustomer(
-            @PathVariable("customerId") Long customerId) {
+            @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Fetching & Deleting User with id {}", customerId);
 
-        final Optional<Customer> user = customerService.findById(customerId);
-        if (!user.isPresent()) {
-            log.error("Unable to delete. Customer with id {} not found", customerId);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        customerService.getCustomer(customerId);
         customerService.deleteCustomerById(customerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
