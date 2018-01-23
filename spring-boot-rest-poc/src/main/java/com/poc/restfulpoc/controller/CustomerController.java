@@ -87,6 +87,7 @@ public class CustomerController {
      * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
      * @return created customer
      * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder} object.
+     * @param errors a {@link org.springframework.validation.Errors} object.
      */
     @PostMapping(value = { "/rest/customers/" })
     public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
@@ -95,9 +96,9 @@ public class CustomerController {
         if (errors.hasErrors()) {
             final String errorMessage = errors.getAllErrors().stream()
                     .map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
-            log.error("Error in request :{}", errorMessage);
             final ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY,
                     new Throwable(errorMessage));
+            log.error("Detailed Error while processing request :{}", apiError.toString());
             return new ResponseEntity<>(apiError, apiError.getStatus());
         }
         log.info("Creating Customer :{} ", customer.getFirstName());
@@ -119,8 +120,9 @@ public class CustomerController {
      *
      * @param customer the customer
      * @param customerId a {@link java.lang.Long} object.
+     * @param customerId a {@link java.lang.Long} object.
      * @return a {@link org.springframework.http.ResponseEntity} object.
-     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any 
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
     @PutMapping(value = { "/rest/customers/{customerId}" })
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
@@ -142,7 +144,7 @@ public class CustomerController {
      *
      * @param customerId the customer id
      * @return a {@link org.springframework.http.ResponseEntity} object.
-     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any 
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
     @DeleteMapping(value = "/rest/customers/{customerId}")
     public ResponseEntity<Customer> removeCustomer(

@@ -16,14 +16,24 @@ import org.springframework.validation.Validator;
 
 import com.poc.restfulpoc.entities.Customer;
 
+/**
+ * <p>CustomerValidator class.</p>
+ *
+ * @author rajakolli
+ * @version $Id: $Id
+ */
 @Component
 public class CustomerValidator implements Validator {
 
+    private static final String ERROR_CODE = "VALIDATIONERROR";
+
+    /** {@inheritDoc} */
     @Override
     public boolean supports(Class<?> clazz) {
         return CustomerValidator.class.isAssignableFrom(clazz);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void validate(@NonNull Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",
@@ -31,9 +41,9 @@ public class CustomerValidator implements Validator {
         final Customer customer = (Customer) target;
         final Date dob = customer.getDateOfBirth();
         if (Objects.nonNull(dob) && dob.after(new Date())) {
-            errors.rejectValue("dateOfBirth", "NULL",
+            errors.rejectValue("dateOfBirth", ERROR_CODE,
                     "Date Of Birth Should be before today");
-            errors.reject("NULL", "Entity Not Processable");
+            errors.reject(ERROR_CODE, "Entity Not Processable");
         }
     }
 

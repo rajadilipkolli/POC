@@ -172,19 +172,19 @@ public class ApiError {
 }
 
 class LowerCaseClassNameResolver extends TypeIdResolverBase {
-/** {@inheritDoc} */
+    /** {@inheritDoc} */
 
     @Override
     public String idFromValue(Object value) {
         return value.getClass().getSimpleName().toLowerCase(Locale.getDefault());
     }
-/** {@inheritDoc} */
+    /** {@inheritDoc} */
 
     @Override
     public String idFromValueAndType(Object value, Class<?> suggestedType) {
         return idFromValue(value);
     }
-/** {@inheritDoc} */
+    /** {@inheritDoc} */
 
     @Override
     public JsonTypeInfo.Id getMechanism() {
