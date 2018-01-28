@@ -36,20 +36,49 @@ public class DataBuilder {
     public void run() throws Exception {
         log.debug("Loading test data...");
         final ZoneId defaultZoneId = ZoneId.of("UTC");
-        final Customer customer1 = new Customer("Raja", "Kolli",
-                Date.from(LocalDate.of(1982, Month.JANUARY, 10)
-                        .atStartOfDay(defaultZoneId).toInstant()),
-                new Address("High Street", "Belfast", "India", "BT893PY"));
+        // @formatter:off
 
-        final Customer customer2 = new Customer("Paul", "Jones",
-                Date.from(LocalDate.of(1973, Month.JANUARY, 03)
-                        .atStartOfDay(defaultZoneId).toInstant()),
-                new Address("Main Street", "Lurgan", "Armagh", "BT283FG"));
+        final Customer customer1 = Customer.builder()
+                .firstName("Raja")
+                .lastName("Kolli")
+                .dateOfBirth(Date.from(LocalDate.of(1982, Month.JANUARY, 10)
+                        .atStartOfDay(defaultZoneId).toInstant()))
+                .address(Address.builder()
+                            .county("India")
+                            .postcode("BT893PY")
+                            .street("High Street")
+                            .town("Belfast")
+                            .build())
+                .build();
 
-        final Customer customer3 = new Customer("Steve", "Toale",
-                Date.from(LocalDate.of(1979, Month.MARCH, 8).atStartOfDay(defaultZoneId)
-                        .toInstant()),
-                new Address("Main Street", "Newry", "Down", "BT359JK"));
+        final Customer customer2 = Customer.builder()
+                .firstName("Paul")
+                .lastName("Jones")
+                .dateOfBirth(Date.from(LocalDate.of(1973, Month.JANUARY, 03)
+                        .atStartOfDay(defaultZoneId).toInstant()))
+                .address(Address.builder()
+                            .street("Main Street")
+                            .town("Lurgan")
+                            .county("Armagh")
+                            .postcode("BT283FG")
+                            .build())
+                .build();
+
+        final Customer customer3 = Customer.builder()
+                .firstName("Steve")
+                .lastName("Toale")
+                .dateOfBirth(Date.from(LocalDate.of(1979, Month.MARCH, 8).atStartOfDay(defaultZoneId)
+                        .toInstant()))
+                .address(Address.builder()
+                            .street("Main Street")
+                            .town("Newry")
+                            .county("Down")
+                            .postcode("BT359JK")
+                        .build())
+                .build();
+        
+       // @formatter:on
+
         customerRepository.saveAll(
                 Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));
         log.debug("Test data loaded...");

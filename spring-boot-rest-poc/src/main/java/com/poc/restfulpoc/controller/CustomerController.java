@@ -72,7 +72,7 @@ public class CustomerController {
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
     @GetMapping(value = "/rest/customers/{customerId}", produces = {
-            MediaType.APPLICATION_JSON_VALUE})
+            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<Customer> getCustomer(
             @PathVariable("customerId") @NotBlank Long customerId)
             throws EntityNotFoundException {

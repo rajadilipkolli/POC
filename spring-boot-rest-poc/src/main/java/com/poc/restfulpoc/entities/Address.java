@@ -12,9 +12,13 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>Address class.</p>
@@ -26,8 +30,13 @@ import lombok.Setter;
 @Getter
 @Entity
 @NoArgsConstructor // Only to be compliant with JPA
+@ToString
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
 public class Address {
 
+    // @formatter:off
+ 
     @Id
     @Getter
     @GenericGenerator(
@@ -52,6 +61,8 @@ public class Address {
             strategy = GenerationType.SEQUENCE, 
             generator = "sequenceGenerator"
         )
+    
+    // @formatter:on
     private long id;
 
     private String street;
@@ -61,20 +72,5 @@ public class Address {
     private String county;
 
     private String postcode;
-
-    /**
-     * <p>Constructor for Address.</p>
-     *
-     * @param street a {@link java.lang.String} object.
-     * @param town a {@link java.lang.String} object.
-     * @param county a {@link java.lang.String} object.
-     * @param postcode a {@link java.lang.String} object.
-     */
-    public Address(String street, String town, String county, String postcode) {
-        this.street = street;
-        this.town = town;
-        this.county = county;
-        this.postcode = postcode;
-    }
 
 }

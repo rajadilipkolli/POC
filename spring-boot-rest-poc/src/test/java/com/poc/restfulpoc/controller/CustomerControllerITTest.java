@@ -82,7 +82,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
                 .getForEntity(String.format("%s/%s", base, null), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-    
+
     @Test
     @DisplayName("Test with Id that doesn't exist")
     public void testGetCustomerByIdWhichDoesntExist() throws Exception {
@@ -103,10 +103,19 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
     @Test
     @DisplayName("Creating Customer")
     public void testCreateCustomer() throws Exception {
-        final Customer customer = new Customer("Gary", "Steale",
-                Date.from(LocalDate.of(1984, Month.MARCH, 8)
-                        .atStartOfDay(ZoneId.of("UTC")).toInstant()),
-                new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
+        // @formatter:off
+        final Customer customer = Customer.builder()
+                                    .firstName("Gary")
+                                    .lastName("Steale")
+                                    .dateOfBirth(Date.from(LocalDate.of(1984, Month.MARCH, 8)
+                                            .atStartOfDay(ZoneId.of("UTC")).toInstant()))
+                                    .address(Address.builder()
+                                                .street("Main Street")
+                                                .town("Portadown")
+                                                .county("Armagh")
+                                                .postcode("BT359JK").build())
+                                    .build();
+        // @formatter:on
 
         ResponseEntity<String> response = template.postForEntity(base, customer,
                 String.class);
@@ -130,8 +139,13 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         assertThat(customer.getAddress().getPostcode())
                 .isEqualTo(returnedCustomer.getAddress().getPostcode());
 
-        Customer newCustomer = new Customer("Andy", "Steale", null,
-                new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
+        Customer newCustomer = Customer.builder().firstName("Andy").lastName("Steale")
+                .address(Address.builder()
+                        .street("Main Street")
+                        .town("Portadown")
+                        .county("Armagh")
+                        .postcode("BT359JK").build())
+                .build();
         response = template.postForEntity(base, newCustomer, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getHeaders().getContentLength()).isEqualTo(0);
@@ -142,27 +156,32 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         response = template.getForEntity(location, String.class);
         returnedCustomer = convertJsonToCustomer(response.getBody());
         assertThat(returnedCustomer.getDateOfBirth()).isNull();
-        
-        newCustomer = new Customer("Gary", "Steale", null,
-                new Address("Main Street", "Portadown", "Armagh", "BT359JK"));
+
+        newCustomer = Customer.builder().firstName("Gary").lastName("Steale")
+                .address(Address.builder()
+                        .street("Main Street")
+                        .town("Portadown")
+                        .county("Armagh")
+                        .postcode("BT359JK").build())
+                .build();
         response = template.postForEntity(base, newCustomer, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
-    
+
     @Test
     @DisplayName("Tests InValid Customer")
     public void testInValidCustomer() {
-        Customer newCustomer = new Customer(" ", "Steale",
-                new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(100)),
-                new Address());
+        Customer newCustomer = Customer.builder().firstName(" ").lastName("Steale")
+                .dateOfBirth(new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(100)))
+                .build();
         ResponseEntity<String> response = template.postForEntity(base, newCustomer,
                 String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
-        newCustomer = new Customer(null, "Steale", null, new Address());
+        newCustomer = Customer.builder().firstName(null).lastName("Steale").build();
         response = template.postForEntity(base, newCustomer, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-    
+
     @Test
     public void testUpdateCustomer() throws Exception {
         final Long customerId = getCustomerIdByFirstName("Raja");

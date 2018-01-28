@@ -17,12 +17,16 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * <p>Customer class.</p>
+ * <p> Customer class. </p>
  *
  * @author rajakolli
  * @version 1: 0
@@ -31,8 +35,12 @@ import lombok.Setter;
 @Getter
 @Entity
 @NoArgsConstructor // Only to be compliant with JPA
+@ToString
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
 public class Customer {
 
+    // @formatter:off
     @Id
     @Getter
     @GenericGenerator(
@@ -57,6 +65,7 @@ public class Customer {
             strategy = GenerationType.SEQUENCE, 
             generator = "sequenceGenerator"
         )
+    // @formatter:on
     private long id;
 
     @NotNull
@@ -70,23 +79,9 @@ public class Customer {
     private Address address;
 
     /**
-     * <p>Constructor for Customer.</p>
-     *
-     * @param firstName a {@link java.lang.String} object.
-     * @param lastName a {@link java.lang.String} object.
-     * @param dateOfBirth a {@link java.util.Date} object.
-     * @param address a {@link com.poc.restfulpoc.entities.Address} object.
-     */
-    public Customer(String firstName, String lastName, Date dateOfBirth,
-            Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = (null != dateOfBirth) ? (Date) dateOfBirth.clone() : null;
-        this.address = address;
-    }
-
-    /**
-     * <p>Getter for the field <code>dateOfBirth</code>.</p>
+     * <p>
+     * Getter for the field <code>dateOfBirth</code>.
+     * </p>
      *
      * @return a {@link java.util.Date} object.
      */
@@ -99,7 +94,9 @@ public class Customer {
     }
 
     /**
-     * <p>Setter for the field <code>dateOfBirth</code>.</p>
+     * <p>
+     * Setter for the field <code>dateOfBirth</code>.
+     * </p>
      *
      * @param dateOfBirth a {@link java.util.Date} object.
      */
