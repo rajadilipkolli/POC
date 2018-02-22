@@ -112,7 +112,7 @@ public class CustomerController {
         customerService.createCustomer(customer);
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/customers/{customerId}")
+        headers.setLocation(ucBuilder.path("/rest/customers/{customerId}")
                 .buildAndExpand(customer.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

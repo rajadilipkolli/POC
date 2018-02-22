@@ -40,19 +40,19 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
         assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
         String replyString = response.readEntity(String.class);
         final List<Customer> custList = convertJsonToCustomers(replyString);
-        assertThat(custList).isNotEmpty().size().isEqualTo(3);
+        assertThat(custList).isNotEmpty().size().isGreaterThan(1);
 
         // Reverse to the starting URI
         wc.back(true);
 
-        wc.path("/customers/").path("4");
+        wc.path("/customers/").path(custList.get(0).getId());
         response = wc.get(Response.class);
         assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
         replyString = response.readEntity(String.class);
         final ObjectMapper mapper = new ObjectMapper();
         final Customer cust = mapper.readValue(replyString, Customer.class);
         assertThat(replyString).isNotNull();
-        assertThat(cust.getId()).isEqualTo(4);
+        assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
     }
 
     private List<Customer> convertJsonToCustomers(String json) throws Exception {
