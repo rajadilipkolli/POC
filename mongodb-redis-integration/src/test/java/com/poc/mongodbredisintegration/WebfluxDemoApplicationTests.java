@@ -1,9 +1,17 @@
+/**
+ * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.poc.mongodbredisintegration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,15 +24,28 @@ import reactor.core.publisher.Mono;
 
 public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegrationTest {
 
+    private static final String TITLE = "JUNIT_TITLE";
+
     @Autowired
     private WebTestClient webTestClient;
 
     @Autowired
     BookReactiveRepository bookReactiveRepository;
 
+    @BeforeAll
+    public void setUp() {
+        final List<Book> bookList = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            Book book = new Book();
+            book.setTitle(TITLE + String.valueOf(i));
+            bookList.add(book);
+        }
+        bookReactiveRepository.saveAll(bookList);
+    }
+
     @Test
     public void testCreateBook() {
-        Book book = Book.builder().author("Raja").text("This is a Test Book")
+        final Book book = Book.builder().author("Raja").text("This is a Test Book")
                 .title("JUNIT_TITLE").build();
 
         webTestClient.post().uri("/Books").contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -44,7 +65,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
     @Test
     public void testGetSingleBook() {
-        Book book = bookReactiveRepository.save(Book.builder().author("Raja")
+        final Book book = bookReactiveRepository.save(Book.builder().author("Raja")
                 .text("This is a Test Book").title("JUNIT_TITLE").build()).block();
 
         webTestClient.get()
@@ -55,10 +76,10 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
     @Test
     public void testUpdateBook() {
-        Book book = bookReactiveRepository.save(Book.builder().author("Raja")
+        final Book book = bookReactiveRepository.save(Book.builder().author("Raja")
                 .text("This is a Test Book").title("JUNIT_TITLE").build()).block();
 
-        Book newBookData = Book.builder().author("Raja").text("Updated Book")
+        final Book newBookData = Book.builder().author("Raja").text("Updated Book")
                 .title("JUNIT_TITLE").build();
 
         webTestClient.put()
@@ -72,7 +93,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
     @Test
     public void testDeleteBook() {
-        Book book = bookReactiveRepository.save(Book.builder().author("Raja")
+        final Book book = bookReactiveRepository.save(Book.builder().author("Raja")
                 .text("This is a Test Book").title("JUNIT_TITLE").build()).block();
 
         webTestClient.delete()

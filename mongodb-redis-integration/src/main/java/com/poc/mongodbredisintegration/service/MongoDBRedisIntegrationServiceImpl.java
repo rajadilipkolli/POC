@@ -5,6 +5,8 @@
  */
 package com.poc.mongodbredisintegration.service;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -81,6 +83,11 @@ public class MongoDBRedisIntegrationServiceImpl
     @Override
     public void deleteAllCollections() {
         this.repository.deleteAll();
+    }
+
+    @Override
+    public void saveAllBooks(List<Book> bookList) {
+        this.repository.saveAll(bookList);
     }
 
 }

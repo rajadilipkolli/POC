@@ -5,6 +5,8 @@
  */
 package com.poc.mongodbredisintegration.controller;
 
+import java.util.List;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -115,6 +117,10 @@ public class MongoDBRedisIntegrationController {
      */
     public void deleteAll() {
         this.service.deleteAllCollections();
+    }
+
+    public void saveAllBooks(List<Book> bookList) {
+        this.service.saveAllBooks(bookList);
     }
 
 }

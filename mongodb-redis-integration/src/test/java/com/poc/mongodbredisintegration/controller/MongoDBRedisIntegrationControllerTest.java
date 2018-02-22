@@ -29,7 +29,7 @@ import com.poc.mongodbredisintegration.document.Book;
 import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest
+@WebMvcTest(controllers = MongoDBRedisIntegrationController.class)
 public class MongoDBRedisIntegrationControllerTest {
 
     @Autowired

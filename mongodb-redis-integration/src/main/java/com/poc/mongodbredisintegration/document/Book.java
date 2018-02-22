@@ -15,8 +15,10 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>Book class.</p>
@@ -28,6 +30,8 @@ import lombok.Data;
 @Data
 @Document
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
 

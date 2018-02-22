@@ -5,6 +5,10 @@
  */
 package com.poc.mongodbredisintegration.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -33,9 +37,18 @@ public class DataLoader implements ApplicationRunner {
         final Long cnt = controller.count();
         if (cnt == 0) {
             controller.deleteCache();
-            final Book book = Book.builder().title("MongoDbCookBook")
-                    .text("MongoDB Data Book").author("Raja").build();
+            Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")
+                    .author("Raja").build();
             controller.saveBook(book);
+
+            final List<Book> bookList = new ArrayList<>();
+            for (int i = 0; i < 100; i++) {
+                book = new Book();
+                book.setTitle(RandomStringUtils.randomAlphanumeric(20));
+                book.setText(RandomStringUtils.randomAlphanumeric(30));
+                bookList.add(book);
+            }
+            controller.saveAllBooks(bookList);
         }
     }
 }

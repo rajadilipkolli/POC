@@ -5,6 +5,8 @@
  */
 package com.poc.mongodbredisintegration.service;
 
+import java.util.List;
+
 import com.poc.mongodbredisintegration.document.Book;
 
 /**
@@ -64,5 +66,7 @@ public interface MongoDBRedisIntegrationService {
      * <p>deleteAllCollections.</p>
      */
     void deleteAllCollections();
+
+    void saveAllBooks(List<Book> bookList);
 
 }
