@@ -17,7 +17,7 @@
 	</parent>
 
 	<properties>
-		<datasourceproxy.version>1.4.5</datasourceproxy.version>
+		<datasourceproxy.version>1.4.7</datasourceproxy.version>
 	</properties>
 
 	<dependencies>
