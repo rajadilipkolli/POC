@@ -11,8 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -22,6 +26,7 @@ import com.poc.mongodbredisintegration.repository.BookReactiveRepository;
 
 import reactor.core.publisher.Mono;
 
+@TestInstance(Lifecycle.PER_CLASS)
 public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegrationTest {
 
     private static final String TITLE = "JUNIT_TITLE";
@@ -36,7 +41,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
     public void setUp() {
         final List<Book> bookList = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
-            Book book = new Book();
+            final Book book = new Book();
             book.setTitle(TITLE + String.valueOf(i));
             bookList.add(book);
         }
@@ -54,6 +59,19 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
                 .contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
                 .jsonPath("$.id").isNotEmpty().jsonPath("$.text")
                 .isEqualTo("This is a Test Book");
+    }
+    
+    @Test
+    @DisplayName("Invalid Data")
+    public void testCreateBookFail() {
+        final Book book = Book.builder().author("Raja").text("This is a Test Book")
+                .title(RandomStringUtils.randomAlphanumeric(200)).build();
+
+        webTestClient.post().uri("/Books").contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
+                .exchange().expectStatus().isBadRequest().expectHeader()
+                .contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+                .jsonPath("$.message").isEqualTo("Validation failed for object='book'. Error count: 1");
     }
 
     @Test
