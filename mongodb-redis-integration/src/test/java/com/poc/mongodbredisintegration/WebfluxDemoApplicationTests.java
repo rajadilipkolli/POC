@@ -60,18 +60,30 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
                 .jsonPath("$.id").isNotEmpty().jsonPath("$.text")
                 .isEqualTo("This is a Test Book");
     }
-    
+
     @Test
     @DisplayName("Invalid Data")
     public void testCreateBookFail() {
-        final Book book = Book.builder().author("Raja").text("This is a Test Book")
+        Book book = Book.builder().author("Raja").text("This is a Test Book")
                 .title(RandomStringUtils.randomAlphanumeric(200)).build();
 
         webTestClient.post().uri("/Books").contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
                 .exchange().expectStatus().isBadRequest().expectHeader()
                 .contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-                .jsonPath("$.message").isEqualTo("Validation failed for object='book'. Error count: 1");
+                .jsonPath("$.message")
+                .isEqualTo("Validation failed for object='book'. Error count: 1")
+                .jsonPath("$.errors.[0].defaultMessage")
+                .isEqualTo("size must be between 0 and 140");
+
+        book = Book.builder().build();
+        webTestClient.post().uri("/Books").contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
+                .exchange().expectStatus().isBadRequest().expectHeader()
+                .contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+                .jsonPath("$.message")
+                .isEqualTo("Validation failed for object='book'. Error count: 1")
+                .jsonPath("$.errors.[0].defaultMessage").isEqualTo("must not be blank");
     }
 
     @Test
