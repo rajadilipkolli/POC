@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -44,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor // From spring 4.3 way to autowire
+@RequestMapping("/rest")
 public class CustomerController {
 
     //Service which will do all data retrieval/manipulation work
@@ -55,7 +57,7 @@ public class CustomerController {
      *
      * @return the customers
      */
-    @GetMapping(value = "/rest/customers/")
+    @GetMapping(value = "/customers/")
     public ResponseEntity<List<Customer>> getCustomers() {
         final List<Customer> customers = customerService.getCustomers();
         if (customers.isEmpty()) {
@@ -71,7 +73,7 @@ public class CustomerController {
      * @return retrieved customer
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @GetMapping(value = "/rest/customers/{customerId}", produces = {
+    @GetMapping(value = "/customers/{customerId}", produces = {
             MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<Customer> getCustomer(
             @PathVariable("customerId") @NotBlank Long customerId)
@@ -89,7 +91,7 @@ public class CustomerController {
      * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder} object.
      * @param errors a {@link org.springframework.validation.Errors} object.
      */
-    @PostMapping(value = { "/rest/customers/" })
+    @PostMapping(value = { "/customers/" })
     public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
             UriComponentsBuilder ucBuilder, Errors errors) {
         customerValidator.validate(customer, errors);
@@ -110,7 +112,7 @@ public class CustomerController {
         customerService.createCustomer(customer);
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/rest/customers/{customerId}")
+        headers.setLocation(ucBuilder.path("/customers/{customerId}")
                 .buildAndExpand(customer.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
@@ -123,7 +125,7 @@ public class CustomerController {
      * @return a {@link org.springframework.http.ResponseEntity} object.
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @PutMapping(value = { "/rest/customers/{customerId}" })
+    @PutMapping(value = { "/customers/{customerId}" })
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Updating Customer {}", customerId);
@@ -145,7 +147,7 @@ public class CustomerController {
      * @return a {@link org.springframework.http.ResponseEntity} object.
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @DeleteMapping(value = "/rest/customers/{customerId}")
+    @DeleteMapping(value = "/customers/{customerId}")
     public ResponseEntity<Customer> removeCustomer(
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Fetching & Deleting User with id {}", customerId);
@@ -160,7 +162,7 @@ public class CustomerController {
      *
      * @return a {@link org.springframework.http.ResponseEntity} object.
      */
-    @DeleteMapping(value = "/rest/customers/")
+    @DeleteMapping(value = "/customers/")
     public ResponseEntity<Customer> deleteAllUsers() {
         log.info("Deleting All Users");
   
