@@ -69,9 +69,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
         assertThat(customer.getFirstName()).isEqualTo("Raja");
         assertThat(customer.getLastName()).isEqualTo("Kolli");
-        assertThat(customer.getDateOfBirth()).hasDayOfMonth(10);
-        assertThat(customer.getDateOfBirth()).hasMonth(1);
-        assertThat(customer.getDateOfBirth()).hasYear(1982);
+        assertThat(customer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1).hasYear(1982);
         assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
         assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
         assertThat(customer.getAddress().getCounty()).isEqualTo("India");
@@ -187,25 +185,23 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         assertThat(getCustomerResponse.getHeaders().getContentType().toString())
                 .isEqualTo(JSON_CONTENT_TYPE);
 
-        final Customer returnedCustomer = getCustomerResponse.getBody();
-        assertThat(returnedCustomer.getFirstName()).isEqualTo("Raja");
-        assertThat(returnedCustomer.getLastName()).isEqualTo("Kolli");
-        assertThat(returnedCustomer.getDateOfBirth()).hasDayOfMonth(10);
-        assertThat(returnedCustomer.getDateOfBirth()).hasMonth(1);
-        assertThat(returnedCustomer.getDateOfBirth()).hasYear(1982);
-        assertThat(returnedCustomer.getAddress().getStreet()).isEqualTo("High Street");
-        assertThat(returnedCustomer.getAddress().getTown()).isEqualTo("Belfast");
-        assertThat(returnedCustomer.getAddress().getCounty()).isEqualTo("India");
-        assertThat(returnedCustomer.getAddress().getPostcode()).isEqualTo("BT893PY");
+        final Customer persistedCustomer = getCustomerResponse.getBody();
+        assertThat(persistedCustomer.getFirstName()).isEqualTo("Raja");
+        assertThat(persistedCustomer.getLastName()).isEqualTo("Kolli");
+        assertThat(persistedCustomer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1)
+                .hasYear(1982);
+        assertThat(persistedCustomer.getAddress().getStreet()).isEqualTo("High Street");
+        assertThat(persistedCustomer.getAddress().getTown()).isEqualTo("Belfast");
+        assertThat(persistedCustomer.getAddress().getCounty()).isEqualTo("India");
+        assertThat(persistedCustomer.getAddress().getPostcode()).isEqualTo("BT893PY");
 
-        final Customer customerToUpdate = getCustomerResponse.getBody();
-        customerToUpdate.setFirstName("Wayne");
-        customerToUpdate.setLastName("Rooney");
+        persistedCustomer.setFirstName("Wayne");
+        persistedCustomer.setLastName("Rooney");
 
         /* PUT updated customer */
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<Customer> entity = new HttpEntity<Customer>(customerToUpdate,
+        final HttpEntity<Customer> entity = new HttpEntity<Customer>(persistedCustomer,
                 headers);
         final ResponseEntity<Customer> response = template.exchange(
                 String.format("%s/%s", base, customerId), HttpMethod.PUT, entity,
@@ -217,9 +213,8 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         final Customer updatedCustomer = response.getBody();
         assertThat(updatedCustomer.getFirstName()).isEqualTo("Wayne");
         assertThat(updatedCustomer.getLastName()).isEqualTo("Rooney");
-        assertThat(updatedCustomer.getDateOfBirth()).hasDayOfMonth(10);
-        assertThat(updatedCustomer.getDateOfBirth()).hasMonth(1);
-        assertThat(updatedCustomer.getDateOfBirth()).hasYear(1982);
+        assertThat(updatedCustomer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1)
+                .hasYear(1982);
         assertThat(updatedCustomer.getAddress().getStreet()).isEqualTo("High Street");
         assertThat(updatedCustomer.getAddress().getTown()).isEqualTo("Belfast");
         assertThat(updatedCustomer.getAddress().getCounty()).isEqualTo("India");
@@ -252,9 +247,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         final Customer customer = response.getBody();
         assertThat(customer.getFirstName()).isEqualTo("Raja");
         assertThat(customer.getLastName()).isEqualTo("Kolli");
-        assertThat(customer.getDateOfBirth()).hasDayOfMonth(10);
-        assertThat(customer.getDateOfBirth()).hasMonth(1);
-        assertThat(customer.getDateOfBirth()).hasYear(1982);
+        assertThat(customer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1).hasYear(1982);
         assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
         assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
         assertThat(customer.getAddress().getCounty()).isEqualTo("India");
@@ -266,8 +259,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         // Sleeping for 1 second so that JMS message is consumed
         try {
             TimeUnit.SECONDS.sleep(1);
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
