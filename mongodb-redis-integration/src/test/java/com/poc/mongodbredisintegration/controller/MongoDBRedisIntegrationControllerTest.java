@@ -45,12 +45,8 @@ public class MongoDBRedisIntegrationControllerTest {
     @BeforeEach
     public void setUp() throws Exception {
         controller = new MongoDBRedisIntegrationController(service);
-        dummyBook = new Book();
-        dummyBook.setTitle("JUNIT_TITLE");
-        dummyBook.setAuthor("JUNIT_AUTHOR");
-        dummyBook.setId("JUNIT");
-        dummyBook.setText("JUNIT_TEXT");
-        dummyBook.setVersion(1);
+        dummyBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").id("JUNIT")
+                .text("JUNIT_TEXT").version(1).build();
     }
 
     @Test

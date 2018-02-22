@@ -31,10 +31,8 @@ public class MongoDBRedisIntegrationApplicationTest extends AbstractMongoDBRedis
     @Test
     public void insertData() {
         controller.deleteAll();
-        final Book book = new Book();
-        book.setTitle("MongoDbCookBook");
-        book.setText("MongoDB Data Book");
-        book.setAuthor("Raja");
+        final Book book = Book.builder().title("MongoDbCookBook")
+                .text("MongoDB Data Book").author("Raja").build();
         final Book response = controller.saveBook(book);
         assertThat(response).isNotNull();
         assertThat(response.getId()).isNotBlank();

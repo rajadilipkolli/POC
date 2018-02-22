@@ -33,10 +33,8 @@ public class DataLoader implements ApplicationRunner {
         final Long cnt = controller.count();
         if (cnt == 0) {
             controller.deleteCache();
-            final Book book = new Book();
-            book.setTitle("MongoDbCookBook");
-            book.setText("MongoDB Data Book");
-            book.setAuthor("Raja");
+            final Book book = Book.builder().title("MongoDbCookBook")
+                    .text("MongoDB Data Book").author("Raja").build();
             controller.saveBook(book);
         }
     }
