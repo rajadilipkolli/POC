@@ -35,7 +35,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
     private WebTestClient webTestClient;
 
     @Autowired
-    BookReactiveRepository bookReactiveRepository;
+    private BookReactiveRepository bookReactiveRepository;
 
     @BeforeAll
     public void setUp() {
@@ -129,6 +129,13 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
         webTestClient.delete()
                 .uri("/Books/{id}", Collections.singletonMap("id", book.getId()))
                 .exchange().expectStatus().isOk();
+    }
+    
+    @Test
+    public void testActuatorStatus() {
+        this.webTestClient.get().uri("/actuator/health").accept(MediaType.APPLICATION_JSON)
+                .exchange().expectStatus().isOk().expectBody()
+                .json("{\"status\":\"UP\"}");
     }
 
 }

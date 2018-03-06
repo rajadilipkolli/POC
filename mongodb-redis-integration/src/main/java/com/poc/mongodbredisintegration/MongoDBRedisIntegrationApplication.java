@@ -7,6 +7,7 @@ package com.poc.mongodbredisintegration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
  * <p>MongoDBRedisIntegrationApplication class.</p>
@@ -16,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since July 2017
  */
 @SpringBootApplication
+@EnableWebFlux
 public class MongoDBRedisIntegrationApplication {
 
     /**
