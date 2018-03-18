@@ -31,6 +31,10 @@ public class RestFulPOCApplication {
     
     @Bean
     public WebMvcConfigurer initializrWebMvcConfigurer() {
+        return webMvcConfigurer();
+    }
+
+    private static final WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
@@ -38,4 +42,5 @@ public class RestFulPOCApplication {
             }
         };
     }
+    
 }
