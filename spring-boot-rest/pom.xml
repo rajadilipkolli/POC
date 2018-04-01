@@ -18,8 +18,8 @@
 
 	<properties>
 		<datasourceproxy.version>1.4.7</datasourceproxy.version>
-		<cxf.version>3.2.2</cxf.version>
-		<swagger-ui.version>3.10.0</swagger-ui.version>
+		<cxf.version>3.2.4</cxf.version>
+		<swagger-ui.version>3.13.0</swagger-ui.version>
 	</properties>
 
 	<dependencies>
@@ -70,13 +70,13 @@
 			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
-		<!-- CXF automatically loads a WADL provider if a cxf-rt-rs-service-description 
-			module is available on the runtime classpath. -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<!-- CXF automatically loads a WADL provider if a cxf-rt-rs-service-description 
+			module is available on the runtime classpath. -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-service-description</artifactId>

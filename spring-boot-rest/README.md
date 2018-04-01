@@ -8,8 +8,11 @@
 - [DatasourceProxy](https://github.com/ttddyy/datasource-proxy)
 - [Flyway](https://flywaydb.org/)
 - [ActiveMQ](http://activemq.apache.org/)
+- Apache CXF
 
 ### Notes
+
+To access cxf generated docs visit http://localhost:8080/services/services
 
 Steps in building application
  - Define Database using entities
