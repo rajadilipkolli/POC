@@ -17,7 +17,7 @@ import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
  * @author rajakolli
  * @version 1: 0
  */
-public class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
+class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
     
     private Formatter formatter = FormatStyle.BASIC.getFormatter();
 

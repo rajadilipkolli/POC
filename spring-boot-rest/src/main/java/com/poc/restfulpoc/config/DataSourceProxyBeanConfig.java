@@ -71,7 +71,7 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
         public Object invoke(final MethodInvocation invocation) throws Throwable {
             final Method proxyMethod = ReflectionUtils.findMethod(
                     this.dataSource.getClass(), invocation.getMethod().getName());
-            if (proxyMethod != null) {
+            if (null != proxyMethod) {
                 return proxyMethod.invoke(this.dataSource, invocation.getArguments());
             }
             return invocation.proceed();
