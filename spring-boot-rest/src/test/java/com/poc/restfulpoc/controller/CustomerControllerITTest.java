@@ -18,6 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -40,6 +42,9 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
     @Autowired
     private DataBuilder dataBuilder;
+    
+    @Autowired
+    private CacheManager cacheManager;
 
     private String base;
 
@@ -273,6 +278,23 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
         final ResponseEntity<Customer> response = userRestTemplate().getForEntity(base,
                 Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+    
+    @Test
+    public void validateCache() {
+        Cache customersCache = this.cacheManager.getCache("customer");
+        assertThat(customersCache).isNotNull();
+        customersCache.clear(); // Simple test assuming the cache is empty
+        Long custId = getCustomerIdByFirstName("Raja");
+        assertThat(customersCache.get(custId)).isNull();
+        final ResponseEntity<Customer> response = userRestTemplate()
+                .getForEntity(String.format("%s/%s", base, custId), Customer.class);
+        Customer customer = response.getBody();
+        Customer cacheCustomer = (Customer) customersCache.get(custId).get();
+        assertThat(cacheCustomer.getFirstName()).isEqualTo(customer.getFirstName());
+        assertThat(cacheCustomer.getLastName()).isEqualTo(customer.getLastName());
+        assertThat(cacheCustomer.getDateOfBirth()).isEqualTo(customer.getDateOfBirth());
+        assertThat(cacheCustomer.getAddress().getCounty()).isEqualTo(customer.getAddress().getCounty());
     }
 
     /**

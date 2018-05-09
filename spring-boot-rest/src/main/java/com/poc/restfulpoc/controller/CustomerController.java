@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor // From spring 4.3 way to autowire
-@RequestMapping("/rest")
+@RequestMapping("/rest/customers/")
 public class CustomerController {
 
     //Service which will do all data retrieval/manipulation work
@@ -57,7 +57,7 @@ public class CustomerController {
      *
      * @return the customers
      */
-    @GetMapping(value = "/customers/")
+    @GetMapping
     public ResponseEntity<List<Customer>> getCustomers() {
         final List<Customer> customers = customerService.getCustomers();
         if (customers.isEmpty()) {
@@ -73,7 +73,7 @@ public class CustomerController {
      * @return retrieved customer
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @GetMapping(value = "/customers/{customerId}", produces = {
+    @GetMapping(value = "{customerId}", produces = {
             MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<Customer> getCustomer(
             @PathVariable("customerId") @NotBlank Long customerId)
@@ -91,7 +91,7 @@ public class CustomerController {
      * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder} object.
      * @param errors a {@link org.springframework.validation.Errors} object.
      */
-    @PostMapping(value = { "/customers/" })
+    @PostMapping
     public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
             UriComponentsBuilder ucBuilder, Errors errors) {
         customerValidator.validate(customer, errors);
@@ -125,7 +125,7 @@ public class CustomerController {
      * @return a {@link org.springframework.http.ResponseEntity} object.
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @PutMapping(value = { "/customers/{customerId}" })
+    @PutMapping(value = { "{customerId}" })
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Updating Customer {}", customerId);
@@ -147,7 +147,7 @@ public class CustomerController {
      * @return a {@link org.springframework.http.ResponseEntity} object.
      * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
      */
-    @DeleteMapping(value = "/customers/{customerId}")
+    @DeleteMapping(value = "{customerId}")
     public ResponseEntity<Customer> removeCustomer(
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Fetching & Deleting User with id {}", customerId);
@@ -162,7 +162,7 @@ public class CustomerController {
      *
      * @return a {@link org.springframework.http.ResponseEntity} object.
      */
-    @DeleteMapping(value = "/customers/")
+    @DeleteMapping
     public ResponseEntity<Customer> deleteAllUsers() {
         log.info("Deleting All Users");
   

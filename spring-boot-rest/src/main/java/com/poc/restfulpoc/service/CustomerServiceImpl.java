@@ -7,6 +7,9 @@ package com.poc.restfulpoc.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /** {@inheritDoc} */
     @Override
+    @Cacheable(value = "customer", key = "#customerId", unless = "#result == null")
     public Customer getCustomer(Long customerId) throws EntityNotFoundException {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
@@ -51,12 +55,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     /** {@inheritDoc} */
     @Override
+    @CachePut(value = "customer", key = "#customerId")
     public void updateCustomer(Customer customer) {
         customerRepository.save(customer);
     }
 
     /** {@inheritDoc} */
     @Override
+    @CacheEvict(value = "customer", key = "#customerId")
     public void deleteCustomerById(Long customerId) {
         // Using JMS Template as the call can be asynchronous
         jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
@@ -72,6 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /** {@inheritDoc} */
     @Override
+    @CacheEvict(value = "customer", allEntries = true)
     public void deleteAllCustomers() {
         customerRepository.deleteAll();
     }

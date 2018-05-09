@@ -29,6 +29,10 @@ spring:
           batch_versioned_data: true
         order_inserts: true
         order_updates: true
+  cache:
+    type: CAFFEINE
+    caffeine:
+      spec: maximumSize=200,expireAfterAccess=600s
 
 management:
   endpoints:
