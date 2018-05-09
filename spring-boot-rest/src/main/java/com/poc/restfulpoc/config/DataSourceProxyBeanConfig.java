@@ -12,12 +12,15 @@ import javax.sql.DataSource;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.hibernate.engine.jdbc.internal.FormatStyle;
+import org.hibernate.engine.jdbc.internal.Formatter;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 
@@ -77,4 +80,16 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
             return invocation.proceed();
         }
     }
+}
+
+class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
+    
+    private Formatter formatter = FormatStyle.BASIC.getFormatter();
+
+    /** {@inheritDoc} */
+    @Override
+    protected String formatQuery(String query) {
+        return this.formatter.format(query);
+    }
+
 }

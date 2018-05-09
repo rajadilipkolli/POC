@@ -29,3 +29,10 @@ spring:
           batch_versioned_data: true
         order_inserts: true
         order_updates: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+     
