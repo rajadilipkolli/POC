@@ -104,7 +104,7 @@ public class CustomerController {
             return new ResponseEntity<>(apiError, apiError.getStatus());
         }
         log.info("Creating Customer :{} ", customer.getFirstName());
-        if (customerService.isCustomerExist(customer)) {
+        if (customerService.isCustomerExist(customer.getFirstName())) {
             log.error("A Customer with name {} already exist ", customer.getFirstName());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -130,14 +130,9 @@ public class CustomerController {
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Updating Customer {}", customerId);
 
-        final Customer currentUser = customerService.getCustomer(customerId);
-        currentUser.setFirstName(customer.getFirstName());
-        currentUser.setLastName(customer.getLastName());
-        currentUser.setDateOfBirth(customer.getDateOfBirth());
-        currentUser.setAddress(customer.getAddress());
-
-        customerService.updateCustomer(currentUser);
-        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+        final Customer updatedCustomer = customerService.updateCustomer(customer,
+                customerId);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
     /**
@@ -152,7 +147,6 @@ public class CustomerController {
             @PathVariable("customerId") Long customerId) throws EntityNotFoundException {
         log.info("Fetching & Deleting User with id {}", customerId);
 
-        customerService.getCustomer(customerId);
         customerService.deleteCustomerById(customerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

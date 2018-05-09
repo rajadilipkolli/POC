@@ -53,26 +53,35 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc} 
+     * @return 
+     * @throws EntityNotFoundException */
     @Override
-    @CachePut(value = "customer", key = "#customerId")
-    public void updateCustomer(Customer customer) {
-        customerRepository.save(customer);
+    @CachePut(value = "customer", key = "#customerId", unless = "#result == null")
+    public Customer updateCustomer(Customer customer, Long customerId)
+            throws EntityNotFoundException {
+        final Customer currentUser = getCustomer(customerId);
+        currentUser.setFirstName(customer.getFirstName());
+        currentUser.setLastName(customer.getLastName());
+        currentUser.setDateOfBirth(customer.getDateOfBirth());
+        currentUser.setAddress(customer.getAddress());
+        return customerRepository.save(customer);
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc} 
+     * @throws EntityNotFoundException */
     @Override
     @CacheEvict(value = "customer", key = "#customerId")
-    public void deleteCustomerById(Long customerId) {
+    public void deleteCustomerById(Long customerId) throws EntityNotFoundException {
+        getCustomer(customerId);
         // Using JMS Template as the call can be asynchronous
         jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean isCustomerExist(Customer customer) {
-        final List<Customer> customerList = customerRepository
-                .findByFirstName(customer.getFirstName());
+    public boolean isCustomerExist(String firstName) {
+        final List<Customer> customerList = customerRepository.findByFirstName(firstName);
         return !customerList.isEmpty();
     }
 

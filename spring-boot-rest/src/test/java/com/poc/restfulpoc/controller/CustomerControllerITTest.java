@@ -282,19 +282,20 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
     
     @Test
     public void validateCache() {
-        Cache customersCache = this.cacheManager.getCache("customer");
+        final Cache customersCache = this.cacheManager.getCache("customer");
         assertThat(customersCache).isNotNull();
         customersCache.clear(); // Simple test assuming the cache is empty
-        Long custId = getCustomerIdByFirstName("Raja");
+        final Long custId = getCustomerIdByFirstName("Raja");
         assertThat(customersCache.get(custId)).isNull();
         final ResponseEntity<Customer> response = userRestTemplate()
                 .getForEntity(String.format("%s/%s", base, custId), Customer.class);
-        Customer customer = response.getBody();
-        Customer cacheCustomer = (Customer) customersCache.get(custId).get();
+        final Customer customer = response.getBody();
+        final Customer cacheCustomer = (Customer) customersCache.get(custId).get();
         assertThat(cacheCustomer.getFirstName()).isEqualTo(customer.getFirstName());
         assertThat(cacheCustomer.getLastName()).isEqualTo(customer.getLastName());
         assertThat(cacheCustomer.getDateOfBirth()).isEqualTo(customer.getDateOfBirth());
-        assertThat(cacheCustomer.getAddress().getCounty()).isEqualTo(customer.getAddress().getCounty());
+        assertThat(cacheCustomer.getAddress().getCounty())
+                .isEqualTo(customer.getAddress().getCounty());
     }
 
     /**
