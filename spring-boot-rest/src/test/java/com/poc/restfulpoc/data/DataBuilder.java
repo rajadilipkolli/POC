@@ -43,39 +43,39 @@ public class DataBuilder {
                 .lastName("Kolli")
                 .dateOfBirth(Date.from(LocalDate.of(1982, Month.JANUARY, 10)
                         .atStartOfDay(defaultZoneId).toInstant()))
-                .address(Address.builder()
+                .build();
+        customer1.setAddress(Address.builder()
                             .county("India")
                             .postcode("BT893PY")
                             .street("High Street")
                             .town("Belfast")
-                            .build())
-                .build();
+                            .build());
 
         final Customer customer2 = Customer.builder()
                 .firstName("Paul")
                 .lastName("Jones")
                 .dateOfBirth(Date.from(LocalDate.of(1973, Month.JANUARY, 03)
                         .atStartOfDay(defaultZoneId).toInstant()))
-                .address(Address.builder()
+                .build();
+        customer2.setAddress(Address.builder()
                             .street("Main Street")
                             .town("Lurgan")
                             .county("Armagh")
                             .postcode("BT283FG")
-                            .build())
-                .build();
+                            .build());
 
         final Customer customer3 = Customer.builder()
                 .firstName("Steve")
                 .lastName("Toale")
                 .dateOfBirth(Date.from(LocalDate.of(1979, Month.MARCH, 8).atStartOfDay(defaultZoneId)
                         .toInstant()))
-                .address(Address.builder()
+                .build();
+        customer3.setAddress(Address.builder()
                             .street("Main Street")
                             .town("Newry")
                             .county("Down")
                             .postcode("BT359JK")
-                        .build())
-                .build();
+                            .build());
         
        // @formatter:on
 

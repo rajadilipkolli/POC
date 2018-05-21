@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,9 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,6 +42,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 
     // @formatter:off
@@ -75,7 +80,8 @@ public class Customer {
 
     private Date dateOfBirth;
 
-    @OneToOne(cascade = { CascadeType.ALL })
+    @OneToOne(mappedBy = "customer", cascade = {
+            CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
     private Address address;
 
     /**
@@ -106,5 +112,16 @@ public class Customer {
         } else {
             this.dateOfBirth = (Date) dateOfBirth.clone();
         }
+    }
+    
+    public void setAddress(Address address) {
+        if (address == null) {
+            if (this.address != null) {
+                this.address.setCustomer(null);
+            }
+        } else {
+            address.setCustomer(this);
+        }
+        this.address = address;
     }
 }

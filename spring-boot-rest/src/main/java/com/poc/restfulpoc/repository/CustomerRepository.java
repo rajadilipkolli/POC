@@ -7,7 +7,7 @@ package com.poc.restfulpoc.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.poc.restfulpoc.entities.Customer;
 /**
@@ -16,7 +16,7 @@ import com.poc.restfulpoc.entities.Customer;
  * @author rajakolli
  * @version $Id: $Id
  */
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     /**
      * <p>findByFirstName.</p>

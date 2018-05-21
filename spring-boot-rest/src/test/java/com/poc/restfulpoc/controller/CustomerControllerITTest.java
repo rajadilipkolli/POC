@@ -109,12 +109,12 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
                                     .lastName("Steale")
                                     .dateOfBirth(Date.from(LocalDate.of(1984, Month.MARCH, 8)
                                             .atStartOfDay(ZoneId.of("UTC")).toInstant()))
-                                    .address(Address.builder()
-                                                .street("Main Street")
-                                                .town("Portadown")
-                                                .county("Armagh")
-                                                .postcode("BT359JK").build())
                                     .build();
+        customer.setAddress(Address.builder()
+                                    .street("Main Street")
+                                    .town("Portadown")
+                                    .county("Armagh")
+                                    .postcode("BT359JK").build());
         // @formatter:on
 
         ResponseEntity<Customer> response = userRestTemplate().postForEntity(base,
@@ -140,9 +140,9 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
                 .isEqualTo(returnedCustomer.getAddress().getPostcode());
 
         Customer newCustomer = Customer.builder().firstName("Andy").lastName("Steale")
-                .address(Address.builder().street("Main Street").town("Portadown")
-                        .county("Armagh").postcode("BT359JK").build())
                 .build();
+        newCustomer.setAddress(Address.builder().street("Main Street").town("Portadown")
+                        .county("Armagh").postcode("BT359JK").build());
         response = userRestTemplate().postForEntity(base, newCustomer, Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getHeaders().getContentLength()).isEqualTo(0);
