@@ -44,9 +44,10 @@ public interface CustomerService {
     /**
      * <p>updateCustomer.</p>
      *
+     * @param customerId a {@link java.lang.Long} object.
      * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
      * @return a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @throws EntityNotFoundException 
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any. 
      */
     Customer updateCustomer(Customer customer, Long customerId) throws EntityNotFoundException;
 
@@ -54,7 +55,7 @@ public interface CustomerService {
      * <p>deleteCustomerById.</p>
      *
      * @param customerId a {@link java.lang.Long} object.
-     * @throws EntityNotFoundException 
+     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any. 
      */
     void deleteCustomerById(Long customerId) throws EntityNotFoundException;
 

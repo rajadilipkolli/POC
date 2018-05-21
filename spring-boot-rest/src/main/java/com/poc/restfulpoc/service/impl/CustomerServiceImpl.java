@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE in the project root for
  * license information.
  */
-package com.poc.restfulpoc.service;
+package com.poc.restfulpoc.service.impl;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.service.CustomerService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +24,7 @@ import lombok.RequiredArgsConstructor;
  * <p>CustomerServiceImpl class.</p>
  *
  * @author rajakolli
- * @version $Id: $Id
+ * @version 0: 5
  */
 @Service
 @RequiredArgsConstructor
@@ -53,9 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
-    /** {@inheritDoc} 
-     * @return 
-     * @throws EntityNotFoundException */
+    /** {@inheritDoc} */
     @Override
     @CachePut(value = "customer", key = "#customerId", unless = "#result == null")
     public Customer updateCustomer(Customer customer, Long customerId)
@@ -68,8 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
-    /** {@inheritDoc} 
-     * @throws EntityNotFoundException */
+    /** {@inheritDoc} */
     @Override
     @CacheEvict(value = "customer", key = "#customerId")
     public void deleteCustomerById(Long customerId) throws EntityNotFoundException {

@@ -3,12 +3,13 @@
  * Licensed under the MIT License. See LICENSE in the project root for
  * license information.
  */
-package com.poc.restfulpoc.service;
+package com.poc.restfulpoc.service.impl;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.service.JMSReceiver;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * <p>JMSReceiverImpl class.</p>
  *
  * @author rajakolli
- * @version $Id: $Id
+ * @version 0: 5
  */
 @Component
 @RequiredArgsConstructor

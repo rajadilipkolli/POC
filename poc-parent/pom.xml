@@ -53,8 +53,10 @@
 		<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 		<findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
 		<cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
-		<jacoco-maven-plugin.version>0.8.0</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
 		<java.version>1.8</java.version>
+		<junit-jupiter.version>5.2.0</junit-jupiter.version>
+		<junit-platform.version>1.2.0</junit-platform.version>
 	</properties>
 
 	<dependencies>
@@ -350,7 +352,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.junit.platform</groupId>

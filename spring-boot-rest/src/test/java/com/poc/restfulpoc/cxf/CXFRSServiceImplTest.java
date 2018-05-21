@@ -31,7 +31,7 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 
     @Test
     @DisplayName("Test Customers")
-    void testGetCustomers() throws Exception {
+    public void testGetCustomers() throws Exception {
         final WebClient wc = WebClient.create("http://localhost:" + port + API_PATH, "username", "password", null);
         wc.accept("application/json");
 
