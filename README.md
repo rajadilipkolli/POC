@@ -19,3 +19,8 @@ To suggest a new feature or changes that could be made, file an issue the same w
 ### Pull Requests
 
 Pull requests are welcome. To open your own pull request, click [here](https://github.com/rajadilipkolli/POC/compare). When creating a pull request, make sure you are pointing to the fork and branch that your changes were made in.
+
+### How to setup Project
+
+This project is using lombok so you need to prepare your IDE as described [here](http://www.vogella.com/tutorials/Lombok/article.html).
+After Setup import project as a maven project.
