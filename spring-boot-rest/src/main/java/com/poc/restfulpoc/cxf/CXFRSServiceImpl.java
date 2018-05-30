@@ -10,15 +10,20 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.service.CustomerService;
-
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Implementation of ApacheCXF Rest Service.
+ *
+ * @author Raja Kolli
+ *
+ */
 @Slf4j
 @Service
 public class CXFRSServiceImpl implements CXFRSService {
@@ -29,7 +34,7 @@ public class CXFRSServiceImpl implements CXFRSService {
 	@Override
 	public Response getCustomers() {
 		log.info("Inside getCustomers Method");
-		final List<Customer> response = customerService.getCustomers();
+		final List<Customer> response = this.customerService.getCustomers();
 		if (!response.isEmpty()) {
 			return Response.status(Status.OK).entity(response).build();
 		}
@@ -40,9 +45,9 @@ public class CXFRSServiceImpl implements CXFRSService {
 	public Response getCustomer(Long customerId) {
 		Customer customer = null;
 		try {
-			customer = customerService.getCustomer(customerId);
+			customer = this.customerService.getCustomer(customerId);
 		}
-		catch (EntityNotFoundException e) {
+		catch (EntityNotFoundException ex) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		return Response.status(Status.OK).entity(customer).build();

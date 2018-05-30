@@ -8,19 +8,19 @@ package com.poc.mongodbredisintegration.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
+import com.poc.mongodbredisintegration.document.Book;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
-import com.poc.mongodbredisintegration.document.Book;
-
-import lombok.RequiredArgsConstructor;
-
 /**
- * <p> DataLoader class. </p>
+ * <p>
+ * DataLoader class.
+ * </p>
  *
  * @author Raja Kolli
  * @version 0 : 5
@@ -35,7 +35,7 @@ public class DataLoader implements ApplicationRunner {
 	/** {@inheritDoc} */
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		final Long cnt = controller.count();
+		final Long cnt = this.controller.count();
 		if (cnt == 0) {
 			this.controller.deleteCache();
 			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")

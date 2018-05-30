@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
@@ -22,16 +21,22 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * ApacheCXF based REST Service.
+ *
+ * @author Raja Kolli
+ *
+ */
 @Api("/cxf")
 @ApiModel("Customer")
 @Path("/cxf")
 public interface CXFRSService {
 
 	@GET
-	@Path(value = "/customers/")
+	@Path("/customers/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Retrieves all customers from database", notes = "List of Customer details along with address is displayed", httpMethod = "GET", produces = "application/json")
-	@ApiResponses(value = {
+	@ApiResponses({
 			@ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
 			@ApiResponse(code = 404, message = "Customer resource not found") })
 	Response getCustomers();
@@ -40,11 +45,11 @@ public interface CXFRSService {
 	@Path("/customers/{customerId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Gets a customer resource with provided Id.", notes = "Customer details along with address is displayed", httpMethod = "GET", produces = "application/json")
-	@ApiResponses(value = {
+	@ApiResponses({
 			@ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
 			@ApiResponse(code = 404, message = "Customer resource not found") })
 	Response getCustomer(
-			@PathParam("customerId") @ApiParam(value = "The customerId") Long customerId)
+			@PathParam("customerId") @ApiParam("The customerId") Long customerId)
 			throws EntityNotFoundException;
 
 }

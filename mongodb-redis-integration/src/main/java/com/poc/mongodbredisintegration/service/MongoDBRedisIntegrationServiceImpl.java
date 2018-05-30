@@ -7,6 +7,11 @@ package com.poc.mongodbredisintegration.service;
 
 import java.util.List;
 
+import com.poc.mongodbredisintegration.document.Book;
+import com.poc.mongodbredisintegration.repository.BookRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -14,20 +19,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import com.poc.mongodbredisintegration.document.Book;
-import com.poc.mongodbredisintegration.repository.BookRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * <p>
  * MongoDBRedisIntegrationServiceImpl class.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 @RequiredArgsConstructor
 @Service

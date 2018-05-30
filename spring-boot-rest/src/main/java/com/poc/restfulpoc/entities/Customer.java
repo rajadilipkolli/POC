@@ -16,11 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,13 +25,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * <p>
  * Customer class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 1: 0
  */
 @Setter
@@ -47,32 +45,13 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 
-	// @formatter:off
-    @Id
-    @Getter
-    @GenericGenerator(
-            name = "sequenceGenerator",
-            strategy = "enhanced-sequence",
-            parameters = {
-                @org.hibernate.annotations.Parameter(
-                    name = "optimizer",
-                    value = "pooled-lo"
-                ),
-                @org.hibernate.annotations.Parameter(
-                    name = "initial_value",
-                    value = "1"
-                ),
-                @org.hibernate.annotations.Parameter(
-                    name = "increment_size",
-                    value = "5"
-                )
-            }
-        )
-        @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "sequenceGenerator"
-        )
-    // @formatter:on
+	@Id
+	@Getter
+	@GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence", parameters = {
+			@org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+			@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+			@org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private long id;
 
 	@NotNull
@@ -93,11 +72,11 @@ public class Customer {
 	 * @return a {@link java.util.Date} object.
 	 */
 	public Date getDateOfBirth() {
-		if (dateOfBirth == null) {
+		if (this.dateOfBirth == null) {
 			return null;
 		}
 		else {
-			return new Date(dateOfBirth.getTime());
+			return new Date(this.dateOfBirth.getTime());
 		}
 	}
 

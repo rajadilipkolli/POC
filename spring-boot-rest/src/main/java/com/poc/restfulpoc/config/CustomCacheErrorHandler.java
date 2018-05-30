@@ -5,19 +5,19 @@
  */
 package com.poc.restfulpoc.config;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.cache.Cache;
 import org.springframework.cache.interceptor.CacheErrorHandler;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
  * CustomCacheErrorHandler class.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 @Slf4j
 public class CustomCacheErrorHandler implements CacheErrorHandler {

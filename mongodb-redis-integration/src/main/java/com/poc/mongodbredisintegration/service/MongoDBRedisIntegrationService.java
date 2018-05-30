@@ -14,9 +14,9 @@ import com.poc.mongodbredisintegration.document.Book;
  * MongoDBRedisIntegrationService interface.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 public interface MongoDBRedisIntegrationService {
 

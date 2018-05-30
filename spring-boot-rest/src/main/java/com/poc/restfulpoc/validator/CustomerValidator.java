@@ -8,21 +8,21 @@ package com.poc.restfulpoc.validator;
 import java.util.Date;
 import java.util.Objects;
 
+import com.poc.restfulpoc.entities.Customer;
+
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.poc.restfulpoc.entities.Customer;
-
 /**
  * <p>
  * CustomerValidator class.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 @Component
 public class CustomerValidator implements Validator {

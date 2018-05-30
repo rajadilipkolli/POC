@@ -5,19 +5,12 @@
  */
 package com.poc.mongodbredisintegration.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.poc.mongodbredisintegration.document.Book;
+import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,9 +18,20 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.poc.mongodbredisintegration.document.Book;
-import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author Raja Kolli
+ *
+ */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = MongoDBRedisIntegrationController.class)
 public class MongoDBRedisIntegrationControllerTest {
@@ -44,23 +48,23 @@ public class MongoDBRedisIntegrationControllerTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		controller = new MongoDBRedisIntegrationController(service);
-		dummyBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").id("JUNIT")
-				.text("JUNIT_TEXT").version(1).build();
+		this.controller = new MongoDBRedisIntegrationController(this.service);
+		this.dummyBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
+				.id("JUNIT").text("JUNIT_TEXT").version(1).build();
 	}
 
 	@Test
 	public void testSaveBook() throws Exception {
-		when(service.save(dummyBook)).thenReturn(dummyBook);
+		given(this.service.save(this.dummyBook)).willReturn(this.dummyBook);
 		this.mockMvc
-				.perform(post("/book/saveBook").content(dummyBook.toString())
+				.perform(post("/book/saveBook").content(this.dummyBook.toString())
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void testUpdateByTitle() throws Exception {
-		when(service.updateByTitle("title", "author")).thenReturn(dummyBook);
+		given(this.service.updateByTitle("title", "author")).willReturn(this.dummyBook);
 		this.mockMvc
 				.perform(put("/book/updateByTitle/title/author")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -71,13 +75,13 @@ public class MongoDBRedisIntegrationControllerTest {
 
 	@Test
 	public void testDeleteBookByTitle() throws Exception {
-		when(service.findBookByTitle("test")).thenReturn(dummyBook);
+		given(this.service.findBookByTitle("test")).willReturn(this.dummyBook);
 		this.mockMvc
 				.perform(delete("/book/deleteByTitle/test")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andExpect(
 						content().string(containsString("Book with title test deleted")));
-		when(service.findBookByTitle("test")).thenReturn(null);
+		given(this.service.findBookByTitle("test")).willReturn(null);
 		this.mockMvc
 				.perform(delete("/book/deleteByTitle/test")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -95,8 +99,8 @@ public class MongoDBRedisIntegrationControllerTest {
 
 	@Test
 	public void testCount() {
-		when(service.count()).thenReturn(3L);
-		assertThat(controller.count()).isGreaterThan(0);
+		given(this.service.count()).willReturn(3L);
+		assertThat(this.controller.count()).isGreaterThan(0);
 	}
 
 	@Test

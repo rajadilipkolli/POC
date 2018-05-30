@@ -7,18 +7,18 @@ package com.poc.mongodbredisintegration.repository;
 
 import java.util.Optional;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 import com.poc.mongodbredisintegration.document.Book;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * <p>
  * BookRepository interface.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 public interface BookRepository extends MongoRepository<Book, String> {
 

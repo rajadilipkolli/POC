@@ -5,23 +5,27 @@
  */
 package com.poc.restfulpoc.cxf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.net.HttpURLConnection;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
 
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.server.LocalServerPort;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Customer;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
+import org.springframework.boot.web.server.LocalServerPort;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * @author Raja Kolli
+ *
+ */
 class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 
 	private static final String API_PATH = "/services/cxf";

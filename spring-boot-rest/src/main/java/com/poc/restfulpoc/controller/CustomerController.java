@@ -11,6 +11,14 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
+import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.exception.ApiError;
+import com.poc.restfulpoc.exception.EntityNotFoundException;
+import com.poc.restfulpoc.service.CustomerService;
+import com.poc.restfulpoc.validator.CustomerValidator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,22 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.poc.restfulpoc.config.ApiError;
-import com.poc.restfulpoc.entities.Customer;
-import com.poc.restfulpoc.exception.EntityNotFoundException;
-import com.poc.restfulpoc.service.CustomerService;
-import com.poc.restfulpoc.validator.CustomerValidator;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * <p>
  * CustomerController class.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 @Slf4j
 @RestController
@@ -61,9 +60,9 @@ public class CustomerController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Customer>> getCustomers() {
-		final List<Customer> customers = customerService.getCustomers();
+		final List<Customer> customers = this.customerService.getCustomers();
 		if (customers.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseEntity.noContent().build();
 		}
 		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}
@@ -72,7 +71,7 @@ public class CustomerController {
 	 * Get customer using id. Returns HTTP 404 if customer not found
 	 * @param customerId a {@link java.lang.Long} object.
 	 * @return retrieved customer
-	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 * @throws EntityNotFoundException if any.
 	 */
 	@GetMapping(value = "{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
@@ -80,12 +79,12 @@ public class CustomerController {
 			@PathVariable("customerId") @NotBlank Long customerId)
 			throws EntityNotFoundException {
 		log.info("Fetching Customer with id {}", customerId);
-		final Customer user = customerService.getCustomer(customerId);
+		final Customer user = this.customerService.getCustomer(customerId);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	/**
-	 * Create a new customer and return in response with HTTP 201
+	 * Create a new customer and return in response with HTTP 201.
 	 * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
 	 * @return created customer
 	 * @param ucBuilder a {@link org.springframework.web.util.UriComponentsBuilder}
@@ -95,7 +94,7 @@ public class CustomerController {
 	@PostMapping
 	public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
 			UriComponentsBuilder ucBuilder, Errors errors) {
-		customerValidator.validate(customer, errors);
+		this.customerValidator.validate(customer, errors);
 		if (errors.hasErrors()) {
 			final String errorMessage = errors.getAllErrors().stream()
 					.map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
@@ -105,12 +104,12 @@ public class CustomerController {
 			return new ResponseEntity<>(apiError, apiError.getStatus());
 		}
 		log.info("Creating Customer :{} ", customer.getFirstName());
-		if (customerService.isCustomerExist(customer.getFirstName())) {
+		if (this.customerService.isCustomerExist(customer.getFirstName())) {
 			log.error("A Customer with name {} already exist ", customer.getFirstName());
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 
-		customerService.createCustomer(customer);
+		this.customerService.createCustomer(customer);
 
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/rest/customers/{customerId}")
@@ -125,12 +124,12 @@ public class CustomerController {
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
 	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
 	 */
-	@PutMapping(value = { "{customerId}" })
+	@PutMapping("{customerId}")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
 			@PathVariable("customerId") Long customerId) throws EntityNotFoundException {
 		log.info("Updating Customer {}", customerId);
 
-		final Customer updatedCustomer = customerService.updateCustomer(customer,
+		final Customer updatedCustomer = this.customerService.updateCustomer(customer,
 				customerId);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
 	}
@@ -141,12 +140,12 @@ public class CustomerController {
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
 	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
 	 */
-	@DeleteMapping(value = "{customerId}")
+	@DeleteMapping("{customerId}")
 	public ResponseEntity<Customer> removeCustomer(
 			@PathVariable("customerId") Long customerId) throws EntityNotFoundException {
 		log.info("Fetching & Deleting User with id {}", customerId);
 
-		customerService.deleteCustomerById(customerId);
+		this.customerService.deleteCustomerById(customerId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
@@ -160,8 +159,8 @@ public class CustomerController {
 	public ResponseEntity<Customer> deleteAllUsers() {
 		log.info("Deleting All Users");
 
-		customerService.deleteAllCustomers();
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		this.customerService.deleteAllCustomers();
+		return ResponseEntity.noContent().build();
 	}
 
 }

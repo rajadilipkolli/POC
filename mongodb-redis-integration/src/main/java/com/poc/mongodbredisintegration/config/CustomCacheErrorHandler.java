@@ -3,19 +3,20 @@
  * Licensed under the MIT License. See LICENSE in the project root for
  * license information.
  */
+
 package com.poc.mongodbredisintegration.config;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.cache.Cache;
 import org.springframework.cache.interceptor.CacheErrorHandler;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
  * CustomCacheErrorHandler class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 0 : 5
  * @since July 2017
  */

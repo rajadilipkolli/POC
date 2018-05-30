@@ -7,17 +7,17 @@ package com.poc.restfulpoc.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.poc.restfulpoc.entities.Customer;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * <p>
  * CustomerRepository interface.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 

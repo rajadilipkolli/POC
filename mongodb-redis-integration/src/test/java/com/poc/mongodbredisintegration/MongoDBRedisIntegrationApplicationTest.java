@@ -5,15 +5,19 @@
  */
 package com.poc.mongodbredisintegration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
+import com.poc.mongodbredisintegration.document.Book;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
-import com.poc.mongodbredisintegration.document.Book;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Raja Kolli
+ *
+ */
 public class MongoDBRedisIntegrationApplicationTest
 		extends AbstractMongoDBRedisIntegrationTest {
 
@@ -25,25 +29,25 @@ public class MongoDBRedisIntegrationApplicationTest
 
 	@Test
 	public void contextLoads() {
-		assertThat(mongoTemplate).isNotNull();
+		assertThat(this.mongoTemplate).isNotNull();
 	}
 
 	@Test
 	public void insertData() {
-		controller.deleteAll();
+		this.controller.deleteAll();
 		final Book book = Book.builder().title("MongoDbCookBook")
 				.text("MongoDB Data Book").author("Raja").build();
-		final Book response = controller.saveBook(book);
+		final Book response = this.controller.saveBook(book);
 		assertThat(response).isNotNull();
 		assertThat(response.getId()).isNotBlank();
 		assertThat(response.getAuthor()).isEqualTo("Raja");
-		final Book updatedBook = controller.updateAuthorByTitle("MongoDbCookBook",
+		final Book updatedBook = this.controller.updateAuthorByTitle("MongoDbCookBook",
 				"Raja1");
 		assertThat(updatedBook.getAuthor()).isEqualTo("Raja1");
-		controller.deleteBookByTitle("JUNITTitle");
-		final Book updatedBook1 = controller.findBookByTitle("JUNITTitle");
+		this.controller.deleteBookByTitle("JUNITTitle");
+		final Book updatedBook1 = this.controller.findBookByTitle("JUNITTitle");
 		assertThat(updatedBook1).isNull();
-		controller.deleteBookByTitle("MongoDbCookBook");
+		this.controller.deleteBookByTitle("MongoDbCookBook");
 	}
 
 }

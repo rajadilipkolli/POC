@@ -23,8 +23,8 @@ import org.springframework.jms.support.converter.MessageType;
  * JMSApplicationConfig class.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 @Configuration
 @EnableJms

@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
  * CaffeineConfiguration class.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 @EnableCaching
 @Configuration

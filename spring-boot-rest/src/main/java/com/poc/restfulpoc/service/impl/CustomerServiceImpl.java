@@ -7,25 +7,24 @@ package com.poc.restfulpoc.service.impl;
 
 import java.util.List;
 
+import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.exception.EntityNotFoundException;
+import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.service.CustomerService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.poc.restfulpoc.entities.Customer;
-import com.poc.restfulpoc.exception.EntityNotFoundException;
-import com.poc.restfulpoc.repository.CustomerRepository;
-import com.poc.restfulpoc.service.CustomerService;
-
-import lombok.RequiredArgsConstructor;
-
 /**
  * <p>
  * CustomerServiceImpl class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 0: 5
  */
 @Service
@@ -40,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Cacheable(value = "customer", key = "#customerId", unless = "#result == null")
 	public Customer getCustomer(Long customerId) throws EntityNotFoundException {
-		return customerRepository.findById(customerId)
+		return this.customerRepository.findById(customerId)
 				.orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
 						customerId.toString()));
 	}
@@ -48,13 +47,13 @@ public class CustomerServiceImpl implements CustomerService {
 	/** {@inheritDoc} */
 	@Override
 	public List<Customer> getCustomers() {
-		return (List<Customer>) customerRepository.findAll();
+		return this.customerRepository.findAll();
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public Customer createCustomer(Customer customer) {
-		return customerRepository.save(customer);
+		return this.customerRepository.save(customer);
 	}
 
 	/** {@inheritDoc} */
@@ -67,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
 		currentUser.setLastName(customer.getLastName());
 		currentUser.setDateOfBirth(customer.getDateOfBirth());
 		currentUser.setAddress(customer.getAddress());
-		return customerRepository.save(customer);
+		return this.customerRepository.save(customer);
 	}
 
 	/** {@inheritDoc} */
@@ -76,13 +75,14 @@ public class CustomerServiceImpl implements CustomerService {
 	public void deleteCustomerById(Long customerId) throws EntityNotFoundException {
 		getCustomer(customerId);
 		// Using JMS Template as the call can be asynchronous
-		jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
+		this.jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean isCustomerExist(String firstName) {
-		final List<Customer> customerList = customerRepository.findByFirstName(firstName);
+		final List<Customer> customerList = this.customerRepository
+				.findByFirstName(firstName);
 		return !customerList.isEmpty();
 	}
 
@@ -90,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@CacheEvict(value = "customer", allEntries = true)
 	public void deleteAllCustomers() {
-		customerRepository.deleteAll();
+		this.customerRepository.deleteAll();
 	}
 
 }

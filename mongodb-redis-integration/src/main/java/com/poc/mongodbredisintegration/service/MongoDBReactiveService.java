@@ -5,13 +5,18 @@
  */
 package com.poc.mongodbredisintegration.service;
 
-import org.springframework.http.ResponseEntity;
-
 import com.poc.mongodbredisintegration.document.Book;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import org.springframework.http.ResponseEntity;
+
+/**
+ * Interface for MongoDBReactiveService.
+ *
+ * @author Raja Kolli
+ *
+ */
 public interface MongoDBReactiveService {
 
 	Flux<Book> findAllBooks();

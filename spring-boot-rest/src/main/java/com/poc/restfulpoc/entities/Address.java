@@ -25,7 +25,7 @@ import lombok.ToString;
  * Address class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 1: 0
  */
 @Setter

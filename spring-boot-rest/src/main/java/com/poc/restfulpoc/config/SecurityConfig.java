@@ -16,6 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+/**
+ * Defines WebSecurity Configuration.
+ *
+ * @author Raja Kolli
+ *
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -31,16 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
-        http.csrf().disable().authorizeRequests()
-                .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
-                .requestMatchers(EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class)).hasRole("ACTUATOR")
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-                .antMatchers("/**").hasRole("USER")
-                .and()
-            .httpBasic();
-        // @formatter:on
+		http.csrf().disable().authorizeRequests()
+				.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+				.requestMatchers(
+						EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class))
+				.hasRole("ACTUATOR")
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+				.permitAll().antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+				.antMatchers("/**").hasRole("USER").and().httpBasic();
 	}
 
 }

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * RestFulPOCApplication class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 1: 0
  */
 @SpringBootApplication
@@ -37,7 +37,7 @@ public class RestFulPOCApplication {
 		return webMvcConfigurer();
 	}
 
-	private static final WebMvcConfigurer webMvcConfigurer() {
+	private static WebMvcConfigurer webMvcConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addViewControllers(ViewControllerRegistry registry) {

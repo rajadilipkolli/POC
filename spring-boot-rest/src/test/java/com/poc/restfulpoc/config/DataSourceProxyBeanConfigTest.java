@@ -5,15 +5,22 @@
  */
 package com.poc.restfulpoc.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import javax.sql.DataSource;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.zaxxer.hikari.HikariDataSource;
+import org.junit.jupiter.api.Test;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * Tests for DataSourceProxyBeanConfig.
+ *
+ * @author Raja Kolli
+ *
+ */
 public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
@@ -21,8 +28,8 @@ public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplication
 
 	@Test
 	public void test() {
-		assertThat(datasource).isNotNull();
-		assertThat(datasource).isInstanceOf(HikariDataSource.class);
+		assertThat(this.datasource).isNotNull();
+		assertThat(this.datasource).isInstanceOf(HikariDataSource.class);
 	}
 
 }

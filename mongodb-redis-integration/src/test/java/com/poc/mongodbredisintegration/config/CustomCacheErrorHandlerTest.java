@@ -5,21 +5,16 @@
  */
 package com.poc.mongodbredisintegration.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willReturn;
-import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -37,7 +32,12 @@ import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegrationTest {
 
@@ -51,15 +51,15 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
 	@BeforeEach
 	public void setUp() {
-		context = new AnnotationConfigApplicationContext(Config.class);
-		this.cache = context.getBean("mockCache", Cache.class);
-		this.cacheInterceptor = context.getBean(CacheInterceptor.class);
-		this.simpleService = context.getBean(SimpleService.class);
+		this.context = new AnnotationConfigApplicationContext(Config.class);
+		this.cache = this.context.getBean("mockCache", Cache.class);
+		this.cacheInterceptor = this.context.getBean(CacheInterceptor.class);
+		this.simpleService = this.context.getBean(SimpleService.class);
 	}
 
 	@AfterEach
 	public void tearDown() {
-		context.close();
+		this.context.close();
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 		willThrow(exception).given(this.cache).get(0L);
 
 		this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
-		assertThrows(UnsupportedOperationException.class,
+		Assertions.assertThrows(UnsupportedOperationException.class,
 				() -> this.simpleService.get(0L), message);
 	}
 
@@ -121,7 +121,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
 		this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
-		assertThrows(UnsupportedOperationException.class,
+		Assertions.assertThrows(UnsupportedOperationException.class,
 				() -> this.simpleService.get(0L), message);
 	}
 
@@ -143,7 +143,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
 		this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
-		assertThrows(UnsupportedOperationException.class,
+		Assertions.assertThrows(UnsupportedOperationException.class,
 				() -> this.simpleService.evict(0L), message);
 	}
 
@@ -166,7 +166,7 @@ public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegration
 
 		this.cacheInterceptor.setErrorHandler(new SimpleCacheErrorHandler());
 
-		assertThrows(UnsupportedOperationException.class,
+		Assertions.assertThrows(UnsupportedOperationException.class,
 				() -> this.simpleService.clear(), message);
 	}
 

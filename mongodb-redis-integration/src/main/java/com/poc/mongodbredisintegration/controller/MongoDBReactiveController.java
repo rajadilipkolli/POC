@@ -7,6 +7,12 @@ package com.poc.mongodbredisintegration.controller;
 
 import javax.validation.Valid;
 
+import com.poc.mongodbredisintegration.document.Book;
+import com.poc.mongodbredisintegration.service.MongoDBReactiveService;
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,13 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poc.mongodbredisintegration.document.Book;
-import com.poc.mongodbredisintegration.service.MongoDBReactiveService;
-
-import lombok.RequiredArgsConstructor;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
+/**
+ * MongoDB Reactive Controller.
+ *
+ * @author Raja Kolli
+ *
+ */
 @RestController
 @RequiredArgsConstructor
 public class MongoDBReactiveController {
@@ -32,36 +37,34 @@ public class MongoDBReactiveController {
 
 	@GetMapping("/Books")
 	public Flux<Book> getAllBooks() {
-		return reactiveService.findAllBooks();
+		return this.reactiveService.findAllBooks();
 	}
 
 	@GetMapping("/Books/{id}")
-	public Mono<ResponseEntity<Book>> getBookById(
-			@PathVariable(value = "id") String bookId) {
-		return reactiveService.getBookById(bookId);
+	public Mono<ResponseEntity<Book>> getBookById(@PathVariable("id") String bookId) {
+		return this.reactiveService.getBookById(bookId);
 	}
 
 	@PostMapping("/Books")
 	public Mono<Book> createTweets(@Valid @RequestBody Book book) {
-		return reactiveService.save(book);
+		return this.reactiveService.save(book);
 	}
 
 	@PutMapping("/Books/{id}")
-	public Mono<ResponseEntity<Book>> updateBook(
-			@PathVariable(value = "id") String bookId, @Valid @RequestBody Book book) {
-		return reactiveService.updateBook(bookId, book);
+	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String bookId,
+			@Valid @RequestBody Book book) {
+		return this.reactiveService.updateBook(bookId, book);
 	}
 
 	@DeleteMapping("/Books/{id}")
-	public Mono<ResponseEntity<Void>> deleteBook(
-			@PathVariable(value = "id") String bookId) {
-		return reactiveService.deleteBook(bookId);
+	public Mono<ResponseEntity<Void>> deleteBook(@PathVariable("id") String bookId) {
+		return this.reactiveService.deleteBook(bookId);
 	}
 
 	// Books are Sent to the client as Server Sent Events
 	@GetMapping(value = "/stream/Books", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Book> streamAllTweets() {
-		return reactiveService.findAllBooks();
+		return this.reactiveService.findAllBooks();
 	}
 
 }

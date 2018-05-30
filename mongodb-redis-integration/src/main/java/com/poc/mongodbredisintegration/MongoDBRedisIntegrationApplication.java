@@ -14,9 +14,9 @@ import org.springframework.web.reactive.config.EnableWebFlux;
  * MongoDBRedisIntegrationApplication class.
  * </p>
  *
- * @author rajakolli
- * @version 0 : 5
+ * @author Raja Kolli
  * @since July 2017
+ * @version 0 : 5
  */
 @SpringBootApplication
 @EnableWebFlux

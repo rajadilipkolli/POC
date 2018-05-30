@@ -16,8 +16,8 @@ import org.springframework.util.StringUtils;
  * EntityNotFoundException class.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 public class EntityNotFoundException extends Exception {
 

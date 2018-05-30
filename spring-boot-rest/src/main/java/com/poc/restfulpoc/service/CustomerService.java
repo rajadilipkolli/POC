@@ -15,8 +15,8 @@ import com.poc.restfulpoc.exception.EntityNotFoundException;
  * CustomerService interface.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 public interface CustomerService {
 

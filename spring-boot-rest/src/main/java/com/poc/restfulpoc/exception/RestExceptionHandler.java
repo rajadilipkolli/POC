@@ -5,13 +5,12 @@
  */
 package com.poc.restfulpoc.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
+
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +26,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.poc.restfulpoc.config.ApiError;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * <p>
  * RestExceptionHandler class.
  * </p>
  *
- * @author rajakolli
- * @version $Id: $Id
+ * @author Raja Kolli
+ * @version 0: 5
  */
 @ControllerAdvice
 @Slf4j
@@ -86,7 +81,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
 			WebRequest request) {
-		final ApiError apiError = new ApiError(BAD_REQUEST);
+		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 		apiError.setMessage("Validation error");
 		apiError.addValidationErrors(ex.getBindingResult().getFieldErrors());
 		apiError.addValidationError(ex.getBindingResult().getGlobalErrors());
@@ -102,7 +97,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
 	protected ResponseEntity<Object> handleConstraintViolation(
 			javax.validation.ConstraintViolationException ex) {
-		final ApiError apiError = new ApiError(BAD_REQUEST);
+		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 		apiError.setMessage("Validation error");
 		apiError.addValidationErrors(ex.getConstraintViolations());
 		return buildResponseEntity(apiError);
@@ -116,7 +111,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	 */
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
-		final ApiError apiError = new ApiError(NOT_FOUND);
+		final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
 	}
@@ -134,7 +129,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		log.info("{} to {}", servletWebRequest.getHttpMethod(),
 				servletWebRequest.getRequest().getServletPath());
 		final String error = "Malformed JSON request";
-		return buildResponseEntity(new ApiError(BAD_REQUEST, error, ex));
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
 	/**
@@ -152,14 +147,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handle javax.persistence.EntityNotFoundException
+	 * Handle javax.persistence.EntityNotFoundException.
 	 * @param ex a {@link javax.persistence.EntityNotFoundException} object.
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
 	 */
 	@ExceptionHandler(javax.persistence.EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(
 			javax.persistence.EntityNotFoundException ex) {
-		return buildResponseEntity(new ApiError(NOT_FOUND, ex));
+		return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
 	}
 
 	/**
@@ -179,7 +174,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handle Exception, handle generic Exception.class
+	 * Handle Exception, handle generic Exception.class.
 	 * @param ex the Exception
 	 * @return the ApiError object
 	 * @param request a {@link org.springframework.web.context.request.WebRequest} object.
@@ -187,7 +182,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(
 			MethodArgumentTypeMismatchException ex, WebRequest request) {
-		final ApiError apiError = new ApiError(BAD_REQUEST);
+		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 		apiError.setMessage(String.format(
 				"The parameter '%s' of value '%s' could not be converted to type '%s'",
 				ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));

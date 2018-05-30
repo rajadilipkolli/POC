@@ -5,7 +5,9 @@
  */
 package com.poc.restfulpoc;
 
+import com.poc.restfulpoc.data.DataBuilder;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -13,8 +15,6 @@ import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.poc.restfulpoc.data.DataBuilder;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { RestFulPOCApplication.class,

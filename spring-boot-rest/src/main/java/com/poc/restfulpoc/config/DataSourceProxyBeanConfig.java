@@ -10,26 +10,26 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sql.DataSource;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-import org.hibernate.engine.jdbc.internal.FormatStyle;
-import org.hibernate.engine.jdbc.internal.Formatter;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ReflectionUtils;
-
 import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.hibernate.engine.jdbc.internal.FormatStyle;
+import org.hibernate.engine.jdbc.internal.Formatter;
+
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ReflectionUtils;
 
 /**
  * <p>
  * DataSourceProxyBeanConfig class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 1: 0
  */
 @Slf4j
@@ -54,7 +54,7 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
 		private final DataSource dataSource;
 
-		public ProxyDataSourceInterceptor(final DataSource dataSource) {
+		ProxyDataSourceInterceptor(final DataSource dataSource) {
 			super();
 			// use pretty formatted query with multiline enabled
 			final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
@@ -63,14 +63,9 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 			final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
 			listener.setQueryLogEntryCreator(creator);
 
-			// @formatter:off
-            this.dataSource = ProxyDataSourceBuilder.create(dataSource)
-                                                    .countQuery()
-                                                    .name("MyDS")
-                                                    .listener(listener)
-                                                    .logSlowQueryToSysOut(5, TimeUnit.SECONDS)
-                                                    .build();
-            // @formatter:on
+			this.dataSource = ProxyDataSourceBuilder.create(dataSource).countQuery()
+					.name("MyDS").listener(listener)
+					.logSlowQueryToSysOut(5, TimeUnit.SECONDS).build();
 		}
 
 		@Override
@@ -83,18 +78,24 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 			return invocation.proceed();
 		}
 
-	}
+		/**
+		 * Formatter for SQL Statements.
+		 *
+		 * @author Raja Kolli
+		 *
+		 */
+		static class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
 
-}
+			private Formatter formatter = FormatStyle.BASIC.getFormatter();
 
-class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
+			/** {@inheritDoc} */
+			@Override
+			protected String formatQuery(String query) {
+				return this.formatter.format(query);
+			}
 
-	private Formatter formatter = FormatStyle.BASIC.getFormatter();
+		}
 
-	/** {@inheritDoc} */
-	@Override
-	protected String formatQuery(String query) {
-		return this.formatter.format(query);
 	}
 
 }

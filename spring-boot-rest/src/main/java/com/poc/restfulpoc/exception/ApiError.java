@@ -3,36 +3,33 @@
  * Licensed under the MIT License. See LICENSE in the project root for
  * license information.
  */
-package com.poc.restfulpoc.config;
+package com.poc.restfulpoc.exception;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import org.hibernate.validator.internal.engine.path.PathImpl;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
-import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.internal.engine.path.PathImpl;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 /**
  * <p>
  * ApiError class.
  * </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 1: 0
  */
 @Data
@@ -52,7 +49,7 @@ public class ApiError {
 	private List<ApiSubError> subErrors;
 
 	private ApiError() {
-		timestamp = LocalDateTime.now();
+		this.timestamp = LocalDateTime.now();
 	}
 
 	/**
@@ -96,10 +93,10 @@ public class ApiError {
 	}
 
 	private void addSubError(ApiSubError subError) {
-		if (subErrors == null) {
-			subErrors = new ArrayList<>();
+		if (this.subErrors == null) {
+			this.subErrors = new ArrayList<>();
 		}
-		subErrors.add(subError);
+		this.subErrors.add(subError);
 	}
 
 	private void addValidationError(String object, String field, Object rejectedValue,
@@ -162,10 +159,22 @@ public class ApiError {
 		constraintViolations.forEach(this::addValidationError);
 	}
 
-	abstract interface ApiSubError {
+	/**
+	 * Marker Interface.
+	 *
+	 * @author Raja kolli
+	 *
+	 */
+	interface ApiSubError {
 
 	}
 
+	/**
+	 * ApiValidationError.
+	 * 
+	 * @author Raja Kolli
+	 *
+	 */
 	@Data
 	@EqualsAndHashCode(callSuper = false)
 	@AllArgsConstructor
@@ -184,31 +193,6 @@ public class ApiError {
 			this.message = message;
 		}
 
-	}
-
-}
-
-class LowerCaseClassNameResolver extends TypeIdResolverBase {
-
-	/** {@inheritDoc} */
-
-	@Override
-	public String idFromValue(Object value) {
-		return value.getClass().getSimpleName().toLowerCase(Locale.getDefault());
-	}
-
-	/** {@inheritDoc} */
-
-	@Override
-	public String idFromValueAndType(Object value, Class<?> suggestedType) {
-		return idFromValue(value);
-	}
-
-	/** {@inheritDoc} */
-
-	@Override
-	public JsonTypeInfo.Id getMechanism() {
-		return JsonTypeInfo.Id.CUSTOM;
 	}
 
 }
