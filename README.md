@@ -24,3 +24,8 @@ Pull requests are welcome. To open your own pull request, click [here](https://g
 
 This project is using lombok so you need to prepare your IDE as described [here](http://www.vogella.com/tutorials/Lombok/article.html).
 After Setup import project as a maven project.
+
+### How to apply spring-formatter
+
+To assign spring-formatter issue command mvnw io.spring.javaformat:spring-javaformat-maven-plugin:apply after adding plugin to pom.xml
+
