@@ -13,14 +13,6 @@
 
 	<inceptionYear>2015</inceptionYear>
 
-	<licenses>
-		<license>
-			<name>MIT</name>
-			<url>https://github.com/rajadilipkolli/POC/blob/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<scm>
 		<connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
 		<developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>

@@ -17,14 +17,6 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<licenses>
-		<license>
-			<name>MIT</name>
-			<url>https://github.com/rajadilipkolli/POC/blob/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<scm>
 		<connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
 		<developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
@@ -247,8 +239,8 @@
 							<suppressionsLocation>../config/checkstyle-suppressions.xml</suppressionsLocation>
 							<encoding>UTF-8</encoding>
 							<consoleOutput>true</consoleOutput>
-							<failsOnError>false</failsOnError>
-							<failOnViolation>false</failOnViolation>
+							<failsOnError>true</failsOnError>
+							<failOnViolation>true</failOnViolation>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
 						</configuration>
 						<goals>

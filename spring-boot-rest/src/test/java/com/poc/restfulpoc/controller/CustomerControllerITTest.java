@@ -1,8 +1,19 @@
-/**
- * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
+/*
+ * Copyright 2015-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package com.poc.restfulpoc.controller;
 
 import java.time.LocalDate;
@@ -305,7 +316,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	/**
 	 * Convenience method for testing that gives us the customer id based on test
 	 * customers name. Need this as IDs will increment as tests are rerun
-	 * @param firstName
+	 * @param firstName the customer firstName.
 	 * @return customer Id
 	 */
 	private Long getCustomerIdByFirstName(String firstName) {

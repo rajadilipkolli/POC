@@ -10,9 +10,4 @@
 			<property name="regexp" value="true" />
 		</module>
 	</module>
-	<module name="Header">
-		<property name="headerFile" value="config/java.header" />
-		<property name="fileExtensions" value="java" />
-		<property name="id" value="header"/>
-	</module>
 </module>

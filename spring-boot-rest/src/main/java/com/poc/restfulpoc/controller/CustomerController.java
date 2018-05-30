@@ -1,8 +1,19 @@
-/**
- * Copyright (c) Raja Dilip Chowdary Kolli. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
+/*
+ * Copyright 2015-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package com.poc.restfulpoc.controller;
 
 import java.util.List;
@@ -68,9 +79,9 @@ public class CustomerController {
 	}
 
 	/**
-	 * Get customer using id. Returns HTTP 404 if customer not found
+	 * Get customer using id. Returns HTTP 404 if customer not found.
 	 * @param customerId a {@link java.lang.Long} object.
-	 * @return retrieved customer
+	 * @return Retrieved customer.
 	 * @throws EntityNotFoundException if any.
 	 */
 	@GetMapping(value = "{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE,
@@ -122,7 +133,7 @@ public class CustomerController {
 	 * @param customer the customer
 	 * @param customerId a {@link java.lang.Long} object.
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
-	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 * @throws EntityNotFoundException if any.
 	 */
 	@PutMapping("{customerId}")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
@@ -138,7 +149,7 @@ public class CustomerController {
 	 * Deletes the customer with given customer id if it exists and returns HTTP204.
 	 * @param customerId the customer id
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
-	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 * @throws EntityNotFoundException if any.
 	 */
 	@DeleteMapping("{customerId}")
 	public ResponseEntity<Customer> removeCustomer(
@@ -146,7 +157,7 @@ public class CustomerController {
 		log.info("Fetching & Deleting User with id {}", customerId);
 
 		this.customerService.deleteCustomerById(customerId);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	/**
