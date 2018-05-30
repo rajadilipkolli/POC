@@ -10,7 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
- * <p>MongoDBRedisIntegrationApplication class.</p>
+ * <p>
+ * MongoDBRedisIntegrationApplication class.
+ * </p>
  *
  * @author rajakolli
  * @version 0 : 5
@@ -20,13 +22,14 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @EnableWebFlux
 public class MongoDBRedisIntegrationApplication {
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(MongoDBRedisIntegrationApplication.class, args);
-    }
+	/**
+	 * <p>
+	 * main.
+	 * </p>
+	 * @param args an array of {@link java.lang.String} objects.
+	 */
+	public static void main(String[] args) {
+		SpringApplication.run(MongoDBRedisIntegrationApplication.class, args);
+	}
 
 }

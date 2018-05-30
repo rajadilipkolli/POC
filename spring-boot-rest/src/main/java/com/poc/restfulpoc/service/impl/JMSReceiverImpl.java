@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <p>JMSReceiverImpl class.</p>
+ * <p>
+ * JMSReceiverImpl class.
+ * </p>
  *
  * @author rajakolli
  * @version 0: 5
@@ -23,15 +25,16 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class JMSReceiverImpl  implements JMSReceiver {
+public class JMSReceiverImpl implements JMSReceiver {
 
-    private final CustomerRepository customerRepository;
+	private final CustomerRepository customerRepository;
 
-    /** {@inheritDoc} */
-    @JmsListener(destination = "jms.message.endpoint")
-    @Override
-    public void receiveMessage(String customerId) {
-        log.info("Received CustomerID:{} for deletion", customerId);
-        customerRepository.deleteById(Long.valueOf(customerId));
-    }
+	/** {@inheritDoc} */
+	@JmsListener(destination = "jms.message.endpoint")
+	@Override
+	public void receiveMessage(String customerId) {
+		log.info("Received CustomerID:{} for deletion", customerId);
+		customerRepository.deleteById(Long.valueOf(customerId));
+	}
+
 }

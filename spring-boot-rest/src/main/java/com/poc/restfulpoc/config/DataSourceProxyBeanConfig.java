@@ -25,7 +25,9 @@ import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 
 /**
- * <p>DataSourceProxyBeanConfig class.</p>
+ * <p>
+ * DataSourceProxyBeanConfig class.
+ * </p>
  *
  * @author rajakolli
  * @version 1: 0
@@ -34,33 +36,34 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 @Configuration
 public class DataSourceProxyBeanConfig implements BeanPostProcessor {
 
-    /** {@inheritDoc} */
-    @Override
-    public Object postProcessAfterInitialization(final Object bean,
-            final String beanName) {
-        if (bean instanceof DataSource) {
-            log.info("Inside Proxy Creation");
-            final ProxyFactory factory = new ProxyFactory(bean);
-            factory.setProxyTargetClass(true);
-            factory.addAdvice(new ProxyDataSourceInterceptor((DataSource) bean));
-            return factory.getProxy();
-        }
-        return bean;
-    }
+	/** {@inheritDoc} */
+	@Override
+	public Object postProcessAfterInitialization(final Object bean,
+			final String beanName) {
+		if (bean instanceof DataSource) {
+			log.info("Inside Proxy Creation");
+			final ProxyFactory factory = new ProxyFactory(bean);
+			factory.setProxyTargetClass(true);
+			factory.addAdvice(new ProxyDataSourceInterceptor((DataSource) bean));
+			return factory.getProxy();
+		}
+		return bean;
+	}
 
-    private static class ProxyDataSourceInterceptor implements MethodInterceptor {
-        private final DataSource dataSource;
+	private static class ProxyDataSourceInterceptor implements MethodInterceptor {
 
-        public ProxyDataSourceInterceptor(final DataSource dataSource) {
-            super();
-            // use pretty formatted query with multiline enabled
-            final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
-            creator.setMultiline(true);
+		private final DataSource dataSource;
 
-            final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
-            listener.setQueryLogEntryCreator(creator);
+		public ProxyDataSourceInterceptor(final DataSource dataSource) {
+			super();
+			// use pretty formatted query with multiline enabled
+			final PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
+			creator.setMultiline(true);
 
-            // @formatter:off
+			final SystemOutQueryLoggingListener listener = new SystemOutQueryLoggingListener();
+			listener.setQueryLogEntryCreator(creator);
+
+			// @formatter:off
             this.dataSource = ProxyDataSourceBuilder.create(dataSource)
                                                     .countQuery()
                                                     .name("MyDS")
@@ -68,28 +71,30 @@ public class DataSourceProxyBeanConfig implements BeanPostProcessor {
                                                     .logSlowQueryToSysOut(5, TimeUnit.SECONDS)
                                                     .build();
             // @formatter:on
-        }
+		}
 
-        @Override
-        public Object invoke(final MethodInvocation invocation) throws Throwable {
-            final Method proxyMethod = ReflectionUtils.findMethod(
-                    this.dataSource.getClass(), invocation.getMethod().getName());
-            if (null != proxyMethod) {
-                return proxyMethod.invoke(this.dataSource, invocation.getArguments());
-            }
-            return invocation.proceed();
-        }
-    }
+		@Override
+		public Object invoke(final MethodInvocation invocation) throws Throwable {
+			final Method proxyMethod = ReflectionUtils.findMethod(
+					this.dataSource.getClass(), invocation.getMethod().getName());
+			if (null != proxyMethod) {
+				return proxyMethod.invoke(this.dataSource, invocation.getArguments());
+			}
+			return invocation.proceed();
+		}
+
+	}
+
 }
 
 class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
-    
-    private Formatter formatter = FormatStyle.BASIC.getFormatter();
 
-    /** {@inheritDoc} */
-    @Override
-    protected String formatQuery(String query) {
-        return this.formatter.format(query);
-    }
+	private Formatter formatter = FormatStyle.BASIC.getFormatter();
+
+	/** {@inheritDoc} */
+	@Override
+	protected String formatQuery(String query) {
+		return this.formatter.format(query);
+	}
 
 }

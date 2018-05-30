@@ -19,7 +19,9 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 /**
- * <p>JMSApplicationConfig class.</p>
+ * <p>
+ * JMSApplicationConfig class.
+ * </p>
  *
  * @author rajakolli
  * @version $Id: $Id
@@ -27,39 +29,43 @@ import org.springframework.jms.support.converter.MessageType;
 @Configuration
 @EnableJms
 public class JMSApplicationConfig {
-    
-    /**
-     * <p>myJMSFactory.</p>
-     *
-     * @param connectionFactory a {@link javax.jms.ConnectionFactory} object.
-     * @param configurer a
-     * {@link org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer}
-     * object.
-     * @return a {@link org.springframework.jms.config.JmsListenerContainerFactory}
-     * object.
-     */
-    @Bean
-    public JmsListenerContainerFactory<DefaultMessageListenerContainer> myJMSFactory(
-            ConnectionFactory connectionFactory,
-            DefaultJmsListenerContainerFactoryConfigurer configurer) {
-        final DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        // This provides all boot's default to this factory, including the message
-        // converter
-        configurer.configure(factory, connectionFactory);
-        // You could still override some of Boot's default if necessary.
-        return factory;
-    }
 
-    /**
-     * <p>jacksonJmsMessageConverter.</p>
-     *
-     * @return a {@link org.springframework.jms.support.converter.MessageConverter} object.
-     */
-    @Bean
-    public MessageConverter jacksonJmsMessageConverter() {
-        final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
-    }
+	/**
+	 * <p>
+	 * myJMSFactory.
+	 * </p>
+	 * @param connectionFactory a {@link javax.jms.ConnectionFactory} object.
+	 * @param configurer a
+	 * {@link org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer}
+	 * object.
+	 * @return a {@link org.springframework.jms.config.JmsListenerContainerFactory}
+	 * object.
+	 */
+	@Bean
+	public JmsListenerContainerFactory<DefaultMessageListenerContainer> myJMSFactory(
+			ConnectionFactory connectionFactory,
+			DefaultJmsListenerContainerFactoryConfigurer configurer) {
+		final DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+		// This provides all boot's default to this factory, including the message
+		// converter
+		configurer.configure(factory, connectionFactory);
+		// You could still override some of Boot's default if necessary.
+		return factory;
+	}
+
+	/**
+	 * <p>
+	 * jacksonJmsMessageConverter.
+	 * </p>
+	 * @return a {@link org.springframework.jms.support.converter.MessageConverter}
+	 * object.
+	 */
+	@Bean
+	public MessageConverter jacksonJmsMessageConverter() {
+		final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+		converter.setTargetType(MessageType.TEXT);
+		converter.setTypeIdPropertyName("_type");
+		return converter;
+	}
+
 }

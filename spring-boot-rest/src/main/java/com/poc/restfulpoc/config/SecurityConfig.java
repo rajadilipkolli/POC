@@ -19,19 +19,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @SuppressWarnings("deprecation")
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        return new InMemoryUserDetailsManager(
-                User.withDefaultPasswordEncoder().username("username").password("password")
-                        .authorities("ROLE_USER").build(),
-                User.withDefaultPasswordEncoder().username("admin").password("admin")
-                        .authorities("ROLE_ACTUATOR", "ROLE_USER", "ROLE_ADMIN").build());
-    }
+	@SuppressWarnings("deprecation")
+	@Bean
+	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+		return new InMemoryUserDetailsManager(
+				User.withDefaultPasswordEncoder().username("username")
+						.password("password").authorities("ROLE_USER").build(),
+				User.withDefaultPasswordEncoder().username("admin").password("admin")
+						.authorities("ROLE_ACTUATOR", "ROLE_USER", "ROLE_ADMIN").build());
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// @formatter:off
         http.csrf().disable().authorizeRequests()
                 .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class)).hasRole("ACTUATOR")
@@ -41,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .httpBasic();
         // @formatter:on
-    }
-
+	}
 
 }

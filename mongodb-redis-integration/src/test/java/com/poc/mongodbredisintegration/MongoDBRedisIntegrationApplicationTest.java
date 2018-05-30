@@ -14,35 +14,36 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
 
+public class MongoDBRedisIntegrationApplicationTest
+		extends AbstractMongoDBRedisIntegrationTest {
 
-public class MongoDBRedisIntegrationApplicationTest extends AbstractMongoDBRedisIntegrationTest {
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoDBRedisIntegrationController controller;
 
-    @Autowired
-    private MongoDBRedisIntegrationController controller;
+	@Test
+	public void contextLoads() {
+		assertThat(mongoTemplate).isNotNull();
+	}
 
-    @Test
-    public void contextLoads() {
-        assertThat(mongoTemplate).isNotNull();
-    }
-
-    @Test
-    public void insertData() {
-        controller.deleteAll();
-        final Book book = Book.builder().title("MongoDbCookBook")
-                .text("MongoDB Data Book").author("Raja").build();
-        final Book response = controller.saveBook(book);
-        assertThat(response).isNotNull();
-        assertThat(response.getId()).isNotBlank();
-        assertThat(response.getAuthor()).isEqualTo("Raja");
-        final Book updatedBook = controller.updateAuthorByTitle("MongoDbCookBook", "Raja1");
-        assertThat(updatedBook.getAuthor()).isEqualTo("Raja1");
-        controller.deleteBookByTitle("JUNITTitle");
-        final Book updatedBook1 = controller.findBookByTitle("JUNITTitle");
-        assertThat(updatedBook1).isNull();
-        controller.deleteBookByTitle("MongoDbCookBook");
-    }
+	@Test
+	public void insertData() {
+		controller.deleteAll();
+		final Book book = Book.builder().title("MongoDbCookBook")
+				.text("MongoDB Data Book").author("Raja").build();
+		final Book response = controller.saveBook(book);
+		assertThat(response).isNotNull();
+		assertThat(response.getId()).isNotBlank();
+		assertThat(response.getAuthor()).isEqualTo("Raja");
+		final Book updatedBook = controller.updateAuthorByTitle("MongoDbCookBook",
+				"Raja1");
+		assertThat(updatedBook.getAuthor()).isEqualTo("Raja1");
+		controller.deleteBookByTitle("JUNITTitle");
+		final Book updatedBook1 = controller.findBookByTitle("JUNITTitle");
+		assertThat(updatedBook1).isNull();
+		controller.deleteBookByTitle("MongoDbCookBook");
+	}
 
 }

@@ -23,28 +23,29 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CXFRSServiceImpl implements CXFRSService {
 
-    @Autowired
-    private CustomerService customerService;
+	@Autowired
+	private CustomerService customerService;
 
-    @Override
-    public Response getCustomers() {
-        log.info("Inside getCustomers Method");
-        final List<Customer> response = customerService.getCustomers();
-        if (!response.isEmpty()) {
-            return Response.status(Status.OK).entity(response).build();
-        }
-        return Response.status(Status.NOT_FOUND).build();
-    }
+	@Override
+	public Response getCustomers() {
+		log.info("Inside getCustomers Method");
+		final List<Customer> response = customerService.getCustomers();
+		if (!response.isEmpty()) {
+			return Response.status(Status.OK).entity(response).build();
+		}
+		return Response.status(Status.NOT_FOUND).build();
+	}
 
-    @Override
-    public Response getCustomer(Long customerId) {
-        Customer customer = null;
-        try {
-            customer = customerService.getCustomer(customerId);
-        } catch (EntityNotFoundException e) {
-            return Response.status(Status.NOT_FOUND).build();
-        }
-        return Response.status(Status.OK).entity(customer).build();
-    }
+	@Override
+	public Response getCustomer(Long customerId) {
+		Customer customer = null;
+		try {
+			customer = customerService.getCustomer(customerId);
+		}
+		catch (EntityNotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
+		}
+		return Response.status(Status.OK).entity(customer).build();
+	}
 
 }

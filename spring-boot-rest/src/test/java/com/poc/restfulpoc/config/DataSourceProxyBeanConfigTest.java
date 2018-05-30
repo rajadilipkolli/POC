@@ -16,13 +16,13 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplicationTest {
 
-    @Autowired
-    private DataSource datasource;
+	@Autowired
+	private DataSource datasource;
 
-    @Test
-    public void test() {
-        assertThat(datasource).isNotNull();
-        assertThat(datasource).isInstanceOf(HikariDataSource.class);
-    }
+	@Test
+	public void test() {
+		assertThat(datasource).isNotNull();
+		assertThat(datasource).isInstanceOf(HikariDataSource.class);
+	}
 
 }

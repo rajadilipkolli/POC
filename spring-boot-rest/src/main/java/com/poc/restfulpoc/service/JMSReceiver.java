@@ -6,18 +6,21 @@
 package com.poc.restfulpoc.service;
 
 /**
- * <p>JMSReceiver interface.</p>
+ * <p>
+ * JMSReceiver interface.
+ * </p>
  *
  * @author rajakolli
  * @version $Id: $Id
  */
 public interface JMSReceiver {
 
-    /**
-     * <p>receiveMessage.</p>
-     *
-     * @param customerId a {@link java.lang.String} object.
-     */
-    void receiveMessage(String customerId);
+	/**
+	 * <p>
+	 * receiveMessage.
+	 * </p>
+	 * @param customerId a {@link java.lang.String} object.
+	 */
+	void receiveMessage(String customerId);
 
 }

@@ -9,67 +9,79 @@ import java.util.List;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
+
 /**
- * <p>CustomerService interface.</p>
+ * <p>
+ * CustomerService interface.
+ * </p>
  *
  * @author rajakolli
  * @version $Id: $Id
  */
 public interface CustomerService {
 
-    /**
-     * <p>getCustomer.</p>
-     *
-     * @param customerId a {@link java.lang.Long} object.
-     * @return a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
-     */
-    Customer getCustomer(Long customerId) throws EntityNotFoundException;
+	/**
+	 * <p>
+	 * getCustomer.
+	 * </p>
+	 * @param customerId a {@link java.lang.Long} object.
+	 * @return a {@link com.poc.restfulpoc.entities.Customer} object.
+	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 */
+	Customer getCustomer(Long customerId) throws EntityNotFoundException;
 
-    /**
-     * <p>getCustomers.</p>
-     *
-     * @return a {@link java.util.List} object.
-     */
-    List<Customer> getCustomers();
+	/**
+	 * <p>
+	 * getCustomers.
+	 * </p>
+	 * @return a {@link java.util.List} object.
+	 */
+	List<Customer> getCustomers();
 
-    /**
-     * <p>createCustomer.</p>
-     *
-     * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @return a {@link com.poc.restfulpoc.entities.Customer} object.
-     */
-    Customer createCustomer(Customer customer);
+	/**
+	 * <p>
+	 * createCustomer.
+	 * </p>
+	 * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
+	 * @return a {@link com.poc.restfulpoc.entities.Customer} object.
+	 */
+	Customer createCustomer(Customer customer);
 
-    /**
-     * <p>updateCustomer.</p>
-     *
-     * @param customerId a {@link java.lang.Long} object.
-     * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @return a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any. 
-     */
-    Customer updateCustomer(Customer customer, Long customerId) throws EntityNotFoundException;
+	/**
+	 * <p>
+	 * updateCustomer.
+	 * </p>
+	 * @param customerId a {@link java.lang.Long} object.
+	 * @param customer a {@link com.poc.restfulpoc.entities.Customer} object.
+	 * @return a {@link com.poc.restfulpoc.entities.Customer} object.
+	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 */
+	Customer updateCustomer(Customer customer, Long customerId)
+			throws EntityNotFoundException;
 
-    /**
-     * <p>deleteCustomerById.</p>
-     *
-     * @param customerId a {@link java.lang.Long} object.
-     * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any. 
-     */
-    void deleteCustomerById(Long customerId) throws EntityNotFoundException;
+	/**
+	 * <p>
+	 * deleteCustomerById.
+	 * </p>
+	 * @param customerId a {@link java.lang.Long} object.
+	 * @throws com.poc.restfulpoc.exception.EntityNotFoundException if any.
+	 */
+	void deleteCustomerById(Long customerId) throws EntityNotFoundException;
 
-    /**
-     * <p>isCustomerExist.</p>
-     *
-     * @param firstName a {@link com.poc.restfulpoc.entities.Customer} object.
-     * @return a boolean.
-     */
-    boolean isCustomerExist(String firstName);
+	/**
+	 * <p>
+	 * isCustomerExist.
+	 * </p>
+	 * @param firstName a {@link com.poc.restfulpoc.entities.Customer} object.
+	 * @return a boolean.
+	 */
+	boolean isCustomerExist(String firstName);
 
-    /**
-     * <p>deleteAllCustomers.</p>
-     */
-    void deleteAllCustomers();
+	/**
+	 * <p>
+	 * deleteAllCustomers.
+	 * </p>
+	 */
+	void deleteAllCustomers();
 
 }

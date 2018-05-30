@@ -21,7 +21,9 @@ import com.poc.restfulpoc.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 
 /**
- * <p>CustomerServiceImpl class.</p>
+ * <p>
+ * CustomerServiceImpl class.
+ * </p>
  *
  * @author rajakolli
  * @version 0: 5
@@ -30,63 +32,65 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerRepository customerRepository;
-    private final JmsTemplate jmsTemplate;
+	private final CustomerRepository customerRepository;
 
-    /** {@inheritDoc} */
-    @Override
-    @Cacheable(value = "customer", key = "#customerId", unless = "#result == null")
-    public Customer getCustomer(Long customerId) throws EntityNotFoundException {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
-                        customerId.toString()));
-    }
+	private final JmsTemplate jmsTemplate;
 
-    /** {@inheritDoc} */
-    @Override
-    public List<Customer> getCustomers() {
-        return (List<Customer>) customerRepository.findAll();
-    }
+	/** {@inheritDoc} */
+	@Override
+	@Cacheable(value = "customer", key = "#customerId", unless = "#result == null")
+	public Customer getCustomer(Long customerId) throws EntityNotFoundException {
+		return customerRepository.findById(customerId)
+				.orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
+						customerId.toString()));
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
-    }
+	/** {@inheritDoc} */
+	@Override
+	public List<Customer> getCustomers() {
+		return (List<Customer>) customerRepository.findAll();
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    @CachePut(value = "customer", key = "#customerId", unless = "#result == null")
-    public Customer updateCustomer(Customer customer, Long customerId)
-            throws EntityNotFoundException {
-        final Customer currentUser = getCustomer(customerId);
-        currentUser.setFirstName(customer.getFirstName());
-        currentUser.setLastName(customer.getLastName());
-        currentUser.setDateOfBirth(customer.getDateOfBirth());
-        currentUser.setAddress(customer.getAddress());
-        return customerRepository.save(customer);
-    }
+	/** {@inheritDoc} */
+	@Override
+	public Customer createCustomer(Customer customer) {
+		return customerRepository.save(customer);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    @CacheEvict(value = "customer", key = "#customerId")
-    public void deleteCustomerById(Long customerId) throws EntityNotFoundException {
-        getCustomer(customerId);
-        // Using JMS Template as the call can be asynchronous
-        jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
-    }
+	/** {@inheritDoc} */
+	@Override
+	@CachePut(value = "customer", key = "#customerId", unless = "#result == null")
+	public Customer updateCustomer(Customer customer, Long customerId)
+			throws EntityNotFoundException {
+		final Customer currentUser = getCustomer(customerId);
+		currentUser.setFirstName(customer.getFirstName());
+		currentUser.setLastName(customer.getLastName());
+		currentUser.setDateOfBirth(customer.getDateOfBirth());
+		currentUser.setAddress(customer.getAddress());
+		return customerRepository.save(customer);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isCustomerExist(String firstName) {
-        final List<Customer> customerList = customerRepository.findByFirstName(firstName);
-        return !customerList.isEmpty();
-    }
+	/** {@inheritDoc} */
+	@Override
+	@CacheEvict(value = "customer", key = "#customerId")
+	public void deleteCustomerById(Long customerId) throws EntityNotFoundException {
+		getCustomer(customerId);
+		// Using JMS Template as the call can be asynchronous
+		jmsTemplate.convertAndSend("jms.message.endpoint", customerId);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    @CacheEvict(value = "customer", allEntries = true)
-    public void deleteAllCustomers() {
-        customerRepository.deleteAll();
-    }
+	/** {@inheritDoc} */
+	@Override
+	public boolean isCustomerExist(String firstName) {
+		final List<Customer> customerList = customerRepository.findByFirstName(firstName);
+		return !customerList.isEmpty();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	@CacheEvict(value = "customer", allEntries = true)
+	public void deleteAllCustomers() {
+		customerRepository.deleteAll();
+	}
+
 }

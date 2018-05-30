@@ -12,7 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>CaffeineConfiguration class.</p>
+ * <p>
+ * CaffeineConfiguration class.
+ * </p>
  *
  * @author rajakolli
  * @version 0 : 5
@@ -22,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CaffeineConfiguration extends CachingConfigurerSupport {
 
-    /** {@inheritDoc} */
-    @Bean
-    @Override
-    public CacheErrorHandler errorHandler() {
-        return new CustomCacheErrorHandler();
-    }
+	/** {@inheritDoc} */
+	@Bean
+	@Override
+	public CacheErrorHandler errorHandler() {
+		return new CustomCacheErrorHandler();
+	}
 
 }

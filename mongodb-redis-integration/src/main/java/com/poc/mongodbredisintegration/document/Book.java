@@ -21,7 +21,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>Book class.</p>
+ * <p>
+ * Book class.
+ * </p>
  *
  * @author rajakolli
  * @version 0 : 5
@@ -33,16 +35,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Id
-    private String id;
-    @Indexed
-    @NotBlank
-    @Size(max = 140)
-    private String title;
-    private String author;
-    private String text;
-    @Version
-    private int version;
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String id;
+
+	@Indexed
+	@NotBlank
+	@Size(max = 140)
+	private String title;
+
+	private String author;
+
+	private String text;
+
+	@Version
+	private int version;
+
 }

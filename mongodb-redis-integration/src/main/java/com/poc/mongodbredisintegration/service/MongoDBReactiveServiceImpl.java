@@ -22,39 +22,39 @@ import reactor.core.publisher.Mono;
 @Service
 public class MongoDBReactiveServiceImpl implements MongoDBReactiveService {
 
-    private final BookReactiveRepository reactiveRepository;
+	private final BookReactiveRepository reactiveRepository;
 
-    @Override
-    public Flux<Book> findAllBooks() {
-        return reactiveRepository.findAll();
-    }
+	@Override
+	public Flux<Book> findAllBooks() {
+		return reactiveRepository.findAll();
+	}
 
-    @Override
-    public Mono<Book> save(Book book) {
-        return reactiveRepository.save(book);
-    }
+	@Override
+	public Mono<Book> save(Book book) {
+		return reactiveRepository.save(book);
+	}
 
-    @Override
-    public Mono<ResponseEntity<Book>> getBookById(String bookId) {
-        return reactiveRepository.findById(bookId).map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
-    }
+	@Override
+	public Mono<ResponseEntity<Book>> getBookById(String bookId) {
+		return reactiveRepository.findById(bookId).map(ResponseEntity::ok)
+				.defaultIfEmpty(ResponseEntity.notFound().build());
+	}
 
-    @Override
-    public Mono<ResponseEntity<Book>> updateBook(String bookId, @Valid Book book) {
-        return reactiveRepository.findById(bookId).flatMap(existingBook -> {
-            existingBook.setText(book.getText());
-            return reactiveRepository.save(existingBook);
-        }).map(updatedTweet -> new ResponseEntity<>(updatedTweet, HttpStatus.OK))
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+	@Override
+	public Mono<ResponseEntity<Book>> updateBook(String bookId, @Valid Book book) {
+		return reactiveRepository.findById(bookId).flatMap(existingBook -> {
+			existingBook.setText(book.getText());
+			return reactiveRepository.save(existingBook);
+		}).map(updatedTweet -> new ResponseEntity<>(updatedTweet, HttpStatus.OK))
+				.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
 
-    @Override
-    public Mono<ResponseEntity<Void>> deleteBook(String bookId) {
-        return reactiveRepository.findById(bookId)
-                .flatMap(existingBook -> reactiveRepository.delete(existingBook)
-                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+	@Override
+	public Mono<ResponseEntity<Void>> deleteBook(String bookId) {
+		return reactiveRepository.findById(bookId)
+				.flatMap(existingBook -> reactiveRepository.delete(existingBook)
+						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+				.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
 
 }

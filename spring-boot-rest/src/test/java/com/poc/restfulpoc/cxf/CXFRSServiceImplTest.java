@@ -24,41 +24,42 @@ import com.poc.restfulpoc.entities.Customer;
 
 class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 
-    private static final String API_PATH = "/services/cxf";
+	private static final String API_PATH = "/services/cxf";
 
-    @LocalServerPort
-    private int port;
+	@LocalServerPort
+	private int port;
 
-    @Test
-    @DisplayName("Test Customers")
-    public void testGetCustomers() throws Exception {
-        final WebClient wc = WebClient.create("http://localhost:" + port + API_PATH, "username", "password", null);
-        wc.accept("application/json");
+	@Test
+	@DisplayName("Test Customers")
+	public void testGetCustomers() throws Exception {
+		final WebClient wc = WebClient.create("http://localhost:" + port + API_PATH,
+				"username", "password", null);
+		wc.accept("application/json");
 
-        wc.path("/customers/");
-        Response response = wc.get(Response.class);
-        assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
-        String replyString = response.readEntity(String.class);
-        final List<Customer> custList = convertJsonToCustomers(replyString);
-        assertThat(custList).isNotEmpty().size().isGreaterThan(1);
+		wc.path("/customers/");
+		Response response = wc.get(Response.class);
+		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
+		String replyString = response.readEntity(String.class);
+		final List<Customer> custList = convertJsonToCustomers(replyString);
+		assertThat(custList).isNotEmpty().size().isGreaterThan(1);
 
-        // Reverse to the starting URI
-        wc.back(true);
+		// Reverse to the starting URI
+		wc.back(true);
 
-        wc.path("/customers/").path(custList.get(0).getId());
-        response = wc.get(Response.class);
-        assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
-        replyString = response.readEntity(String.class);
-        final ObjectMapper mapper = new ObjectMapper();
-        final Customer cust = mapper.readValue(replyString, Customer.class);
-        assertThat(replyString).isNotNull();
-        assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
-    }
+		wc.path("/customers/").path(custList.get(0).getId());
+		response = wc.get(Response.class);
+		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
+		replyString = response.readEntity(String.class);
+		final ObjectMapper mapper = new ObjectMapper();
+		final Customer cust = mapper.readValue(replyString, Customer.class);
+		assertThat(replyString).isNotNull();
+		assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
+	}
 
-    private List<Customer> convertJsonToCustomers(String json) throws Exception {
-        final ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, TypeFactory.defaultInstance()
-                .constructCollectionType(List.class, Customer.class));
-    }
+	private List<Customer> convertJsonToCustomers(String json) throws Exception {
+		final ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(json, TypeFactory.defaultInstance()
+				.constructCollectionType(List.class, Customer.class));
+	}
 
 }

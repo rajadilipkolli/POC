@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * This will be used to load data in test environment
- * 
+ *
  * @author rajakolli
  *
  */
@@ -31,12 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DataBuilder {
 
-    private final CustomerRepository customerRepository;
+	private final CustomerRepository customerRepository;
 
-    public void run() throws Exception {
-        log.debug("Loading test data...");
-        final ZoneId defaultZoneId = ZoneId.of("UTC");
-        // @formatter:off
+	public void run() throws Exception {
+		log.debug("Loading test data...");
+		final ZoneId defaultZoneId = ZoneId.of("UTC");
+		// @formatter:off
 
         final Customer customer1 = Customer.builder()
                 .firstName("Raja")
@@ -76,12 +76,12 @@ public class DataBuilder {
                             .county("Down")
                             .postcode("BT359JK")
                             .build());
-        
+
        // @formatter:on
 
-        customerRepository.saveAll(
-                Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));
-        log.debug("Test data loaded...");
-    }
+		customerRepository.saveAll(
+				Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));
+		log.debug("Test data loaded...");
+	}
 
 }

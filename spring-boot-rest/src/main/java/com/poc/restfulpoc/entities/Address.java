@@ -21,7 +21,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * <p>Address class.</p>
+ * <p>
+ * Address class.
+ * </p>
  *
  * @author rajakolli
  * @version 1: 0
@@ -35,20 +37,20 @@ import lombok.ToString;
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
 public class Address {
 
-    @Id
-    private long id;
+	@Id
+	private long id;
 
-    private String street;
+	private String street;
 
-    private String town;
+	private String town;
 
-    private String county;
+	private String county;
 
-    private String postcode;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+	private String postcode;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 }

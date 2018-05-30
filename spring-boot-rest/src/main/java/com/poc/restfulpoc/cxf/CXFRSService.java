@@ -27,29 +27,24 @@ import io.swagger.annotations.ApiResponses;
 @Path("/cxf")
 public interface CXFRSService {
 
-    @GET
-    @Path(value = "/customers/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieves all customers from database", 
-        notes = "List of Customer details along with address is displayed", 
-        httpMethod = "GET", 
-        produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
-            @ApiResponse(code = 404, message = "Customer resource not found") })
-    Response getCustomers();
+	@GET
+	@Path(value = "/customers/")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Retrieves all customers from database", notes = "List of Customer details along with address is displayed", httpMethod = "GET", produces = "application/json")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
+			@ApiResponse(code = 404, message = "Customer resource not found") })
+	Response getCustomers();
 
-    @GET
-    @Path("/customers/{customerId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Gets a customer resource with provided Id.", 
-        notes = "Customer details along with address is displayed", 
-        httpMethod = "GET", 
-        produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
-            @ApiResponse(code = 404, message = "Customer resource not found") })
-    Response getCustomer(
-            @PathParam("customerId") @ApiParam(value = "The customerId") Long customerId)
-            throws EntityNotFoundException;
+	@GET
+	@Path("/customers/{customerId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Gets a customer resource with provided Id.", notes = "Customer details along with address is displayed", httpMethod = "GET", produces = "application/json")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Customer resource found", response = Customer.class),
+			@ApiResponse(code = 404, message = "Customer resource not found") })
+	Response getCustomer(
+			@PathParam("customerId") @ApiParam(value = "The customerId") Long customerId)
+			throws EntityNotFoundException;
+
 }

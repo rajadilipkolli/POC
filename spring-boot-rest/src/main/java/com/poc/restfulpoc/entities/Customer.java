@@ -30,7 +30,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * <p> Customer class. </p>
+ * <p>
+ * Customer class.
+ * </p>
  *
  * @author rajakolli
  * @version 1: 0
@@ -45,11 +47,11 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 
-    // @formatter:off
+	// @formatter:off
     @Id
     @Getter
     @GenericGenerator(
-            name = "sequenceGenerator", 
+            name = "sequenceGenerator",
             strategy = "enhanced-sequence",
             parameters = {
                 @org.hibernate.annotations.Parameter(
@@ -57,71 +59,73 @@ public class Customer {
                     value = "pooled-lo"
                 ),
                 @org.hibernate.annotations.Parameter(
-                    name = "initial_value", 
+                    name = "initial_value",
                     value = "1"
                 ),
                 @org.hibernate.annotations.Parameter(
-                    name = "increment_size", 
+                    name = "increment_size",
                     value = "5"
                 )
             }
         )
         @GeneratedValue(
-            strategy = GenerationType.SEQUENCE, 
+            strategy = GenerationType.SEQUENCE,
             generator = "sequenceGenerator"
         )
     // @formatter:on
-    private long id;
+	private long id;
 
-    @NotNull
-    private String firstName;
+	@NotNull
+	private String firstName;
 
-    private String lastName;
+	private String lastName;
 
-    private Date dateOfBirth;
+	private Date dateOfBirth;
 
-    @OneToOne(mappedBy = "customer", cascade = {
-            CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Address address;
+	@OneToOne(mappedBy = "customer", cascade = {
+			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
+	private Address address;
 
-    /**
-     * <p>
-     * Getter for the field <code>dateOfBirth</code>.
-     * </p>
-     *
-     * @return a {@link java.util.Date} object.
-     */
-    public Date getDateOfBirth() {
-        if (dateOfBirth == null) {
-            return null;
-        } else {
-            return new Date(dateOfBirth.getTime());
-        }
-    }
+	/**
+	 * <p>
+	 * Getter for the field <code>dateOfBirth</code>.
+	 * </p>
+	 * @return a {@link java.util.Date} object.
+	 */
+	public Date getDateOfBirth() {
+		if (dateOfBirth == null) {
+			return null;
+		}
+		else {
+			return new Date(dateOfBirth.getTime());
+		}
+	}
 
-    /**
-     * <p>
-     * Setter for the field <code>dateOfBirth</code>.
-     * </p>
-     *
-     * @param dateOfBirth a {@link java.util.Date} object.
-     */
-    public void setDateOfBirth(Date dateOfBirth) {
-        if (null == dateOfBirth) {
-            this.dateOfBirth = null;
-        } else {
-            this.dateOfBirth = (Date) dateOfBirth.clone();
-        }
-    }
-    
-    public void setAddress(Address address) {
-        if (address == null) {
-            if (this.address != null) {
-                this.address.setCustomer(null);
-            }
-        } else {
-            address.setCustomer(this);
-        }
-        this.address = address;
-    }
+	/**
+	 * <p>
+	 * Setter for the field <code>dateOfBirth</code>.
+	 * </p>
+	 * @param dateOfBirth a {@link java.util.Date} object.
+	 */
+	public void setDateOfBirth(Date dateOfBirth) {
+		if (null == dateOfBirth) {
+			this.dateOfBirth = null;
+		}
+		else {
+			this.dateOfBirth = (Date) dateOfBirth.clone();
+		}
+	}
+
+	public void setAddress(Address address) {
+		if (address == null) {
+			if (this.address != null) {
+				this.address.setCustomer(null);
+			}
+		}
+		else {
+			address.setCustomer(this);
+		}
+		this.address = address;
+	}
+
 }

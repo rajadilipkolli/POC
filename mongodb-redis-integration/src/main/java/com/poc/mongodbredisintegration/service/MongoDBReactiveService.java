@@ -14,14 +14,14 @@ import reactor.core.publisher.Mono;
 
 public interface MongoDBReactiveService {
 
-    Flux<Book> findAllBooks();
+	Flux<Book> findAllBooks();
 
-    Mono<Book> save(Book book);
+	Mono<Book> save(Book book);
 
-    Mono<ResponseEntity<Book>> getBookById(String bookId);
+	Mono<ResponseEntity<Book>> getBookById(String bookId);
 
-    Mono<ResponseEntity<Book>> updateBook(String bookId, Book book);
+	Mono<ResponseEntity<Book>> updateBook(String bookId, Book book);
 
-    Mono<ResponseEntity<Void>> deleteBook(String bookId);
+	Mono<ResponseEntity<Void>> deleteBook(String bookId);
 
 }

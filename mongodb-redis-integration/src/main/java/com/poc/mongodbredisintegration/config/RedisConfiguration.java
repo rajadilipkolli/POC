@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>RedisConfiguration class.</p>
+ * <p> RedisConfiguration class. </p>
  *
- * @author rajakolli
+ * @author Raja Kolli
  * @version 0 : 5
  * @since July 2017
  */
@@ -22,16 +22,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RedisConfiguration extends CachingConfigurerSupport {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.cache.annotation.CachingConfigurerSupport#errorHandler()
-     */
-    /** {@inheritDoc} */
-    @Bean
-    @Override
-    public CacheErrorHandler errorHandler() {
-        return new CustomCacheErrorHandler();
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.springframework.cache.annotation.CachingConfigurerSupport#errorHandler()
+	 */
+	/** {@inheritDoc} */
+	@Bean
+	@Override
+	public CacheErrorHandler errorHandler() {
+		return new CustomCacheErrorHandler();
+	}
 
 }

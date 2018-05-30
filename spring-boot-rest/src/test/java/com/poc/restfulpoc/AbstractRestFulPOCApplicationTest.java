@@ -18,29 +18,28 @@ import com.poc.restfulpoc.data.DataBuilder;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { RestFulPOCApplication.class,
-      DataBuilder.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+		DataBuilder.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class AbstractRestFulPOCApplicationTest {
 
-    
-    @Autowired
-    private Environment environment;
-    
-    protected TestRestTemplate restTemplate() {
-        return configure(new TestRestTemplate());
-    }
+	@Autowired
+	private Environment environment;
 
-    protected TestRestTemplate adminRestTemplate() {
-        return configure(new TestRestTemplate("admin", "admin"));
-    }
+	protected TestRestTemplate restTemplate() {
+		return configure(new TestRestTemplate());
+	}
 
-    protected TestRestTemplate userRestTemplate() {
-        return configure(new TestRestTemplate("username", "password"));
-    }
+	protected TestRestTemplate adminRestTemplate() {
+		return configure(new TestRestTemplate("admin", "admin"));
+	}
 
-    private TestRestTemplate configure(TestRestTemplate restTemplate) {
-        restTemplate
-                .setUriTemplateHandler(new LocalHostUriTemplateHandler(this.environment));
-        return restTemplate;
-    }
+	protected TestRestTemplate userRestTemplate() {
+		return configure(new TestRestTemplate("username", "password"));
+	}
+
+	private TestRestTemplate configure(TestRestTemplate restTemplate) {
+		restTemplate
+				.setUriTemplateHandler(new LocalHostUriTemplateHandler(this.environment));
+		return restTemplate;
+	}
 
 }
