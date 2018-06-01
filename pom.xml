@@ -40,16 +40,16 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
-		<spring-javaformat.version>0.0.2</spring-javaformat.version>
+
+		<spring-javaformat.version>0.0.3</spring-javaformat.version>
 		<maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 		<findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
 		<cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
 		<java.version>1.8</java.version>
-		
+
 		<main.basedir>${project.basedir}</main.basedir>
-		
+
 		<junit-jupiter.version>5.2.0</junit-jupiter.version>
 		<junit-platform.version>1.2.0</junit-platform.version>
 	</properties>
@@ -305,11 +305,14 @@
 						<configuration>
 							<rules>
 								<requireMavenVersion>
-									<version>3.3</version>
+									<version>[3.3.9,)</version>
 								</requireMavenVersion>
 								<requireJavaVersion>
-									<version>1.8</version>
+									<version>[1.8,)</version>
 								</requireJavaVersion>
+								<requireProperty>
+									<property>main.basedir</property>
+								</requireProperty>
 							</rules>
 						</configuration>
 					</execution>

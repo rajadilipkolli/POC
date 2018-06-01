@@ -29,3 +29,20 @@ After Setup import project as a maven project.
 
 To assign spring-formatter issue command mvnw io.spring.javaformat:spring-javaformat-maven-plugin:apply after adding plugin to pom.xml
 
+### How to release a multi module project to git 
+
+```
+git checkout -b release/v0.2.1
+
+mvn --batch-mode release:prepare release:perform -DreleaseVersion=0.2.1 -DdevelopmentVersion=0.2.2-SNAPSHOT
+
+git checkout development
+git merge --no-ff -m "v0.2.1-SNAPSHOT" release/v0.2.1
+
+git checkout master
+git merge --no-ff -m "v0.2.1" release/v0.2.1~1
+
+git branch -d release/v0.2.1
+
+git push --all && git push --tags
+```
