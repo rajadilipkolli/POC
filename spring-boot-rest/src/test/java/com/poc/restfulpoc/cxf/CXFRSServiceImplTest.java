@@ -29,6 +29,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +41,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 
 	private static final String API_PATH = "/services/cxf";
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	@LocalServerPort
 	private int port;
@@ -65,15 +69,13 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		response = wc.get(Response.class);
 		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
 		replyString = response.readEntity(String.class);
-		final ObjectMapper mapper = new ObjectMapper();
-		final Customer cust = mapper.readValue(replyString, Customer.class);
+		final Customer cust = this.mapper.readValue(replyString, Customer.class);
 		assertThat(replyString).isNotNull();
 		assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
 	}
 
 	private List<Customer> convertJsonToCustomers(String json) throws Exception {
-		final ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(json, TypeFactory.defaultInstance()
+		return this.mapper.readValue(json, TypeFactory.defaultInstance()
 				.constructCollectionType(List.class, Customer.class));
 	}
 

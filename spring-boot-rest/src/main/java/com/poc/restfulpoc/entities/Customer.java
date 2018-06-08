@@ -16,7 +16,7 @@
 
 package com.poc.restfulpoc.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,6 +29,10 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,41 +74,13 @@ public class Customer {
 
 	private String lastName;
 
-	private Date dateOfBirth;
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	private LocalDateTime dateOfBirth;
 
 	@OneToOne(mappedBy = "customer", cascade = {
 			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Address address;
-
-	/**
-	 * <p>
-	 * Getter for the field <code>dateOfBirth</code>.
-	 * </p>
-	 * @return a {@link java.util.Date} object.
-	 */
-	public Date getDateOfBirth() {
-		if (this.dateOfBirth == null) {
-			return null;
-		}
-		else {
-			return new Date(this.dateOfBirth.getTime());
-		}
-	}
-
-	/**
-	 * <p>
-	 * Setter for the field <code>dateOfBirth</code>.
-	 * </p>
-	 * @param dateOfBirth a {@link java.util.Date} object.
-	 */
-	public void setDateOfBirth(Date dateOfBirth) {
-		if (null == dateOfBirth) {
-			this.dateOfBirth = null;
-		}
-		else {
-			this.dateOfBirth = (Date) dateOfBirth.clone();
-		}
-	}
 
 	public void setAddress(Address address) {
 		if (address == null) {

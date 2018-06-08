@@ -84,8 +84,7 @@ public class CustomerController {
 	 * @return Retrieved customer.
 	 * @throws EntityNotFoundException if any.
 	 */
-	@GetMapping(value = "{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(value = "{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> getCustomer(
 			@PathVariable("customerId") @NotBlank Long customerId)
 			throws EntityNotFoundException {

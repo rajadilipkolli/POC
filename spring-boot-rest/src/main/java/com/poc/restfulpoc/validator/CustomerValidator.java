@@ -16,7 +16,9 @@
 
 package com.poc.restfulpoc.validator;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 import com.poc.restfulpoc.entities.Customer;
@@ -52,8 +54,9 @@ public class CustomerValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",
 				"message.firstName", "FirstName is Mandatory");
 		final Customer customer = (Customer) target;
-		final Date dob = customer.getDateOfBirth();
-		if (Objects.nonNull(dob) && dob.after(new Date())) {
+		final LocalDateTime dob = customer.getDateOfBirth();
+		if (Objects.nonNull(dob)
+				&& dob.isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.now()))) {
 			errors.rejectValue("dateOfBirth", ERROR_CODE,
 					"Date Of Birth Should be before today");
 			errors.reject(ERROR_CODE, "Entity Not Processable");

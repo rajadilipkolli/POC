@@ -16,10 +16,8 @@
 
 package com.poc.restfulpoc.controller;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -63,6 +61,9 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	@Autowired
 	private CacheManager cacheManager;
 
+	@Autowired
+	private ObjectMapper mapper;
+
 	private String base;
 
 	@BeforeEach
@@ -85,7 +86,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
 		assertThat(customer.getFirstName()).isEqualTo("Raja");
 		assertThat(customer.getLastName()).isEqualTo("Kolli");
-		assertThat(customer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1).hasYear(1982);
+		assertThat(customer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
 		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
 		assertThat(customer.getAddress().getCounty()).isEqualTo("India");
@@ -121,9 +122,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	@DisplayName("Creating Customer")
 	public void testCreateCustomer() throws Exception {
 		final Customer customer = Customer.builder().firstName("Gary").lastName("Steale")
-				.dateOfBirth(Date.from(LocalDate.of(1984, Month.MARCH, 8)
-						.atStartOfDay(ZoneId.of("UTC")).toInstant()))
-				.build();
+				.dateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0)).build();
 		customer.setAddress(Address.builder().street("Main Street").town("Portadown")
 				.county("Armagh").postcode("BT359JK").build());
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
@@ -177,8 +176,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	@DisplayName("Tests InValid Customer")
 	public void testInValidCustomer() {
 		Customer newCustomer = Customer.builder().firstName(" ").lastName("Steale")
-				.dateOfBirth(new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(100)))
-				.build();
+				.dateOfBirth(LocalDateTime.now()).build();
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
 				newCustomer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -201,8 +199,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 		final Customer persistedCustomer = getCustomerResponse.getBody();
 		assertThat(persistedCustomer.getFirstName()).isEqualTo("Raja");
 		assertThat(persistedCustomer.getLastName()).isEqualTo("Kolli");
-		assertThat(persistedCustomer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1)
-				.hasYear(1982);
+		assertThat(persistedCustomer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(persistedCustomer.getAddress().getStreet()).isEqualTo("High Street");
 		assertThat(persistedCustomer.getAddress().getTown()).isEqualTo("Belfast");
 		assertThat(persistedCustomer.getAddress().getCounty()).isEqualTo("India");
@@ -226,8 +223,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 		final Customer updatedCustomer = response.getBody();
 		assertThat(updatedCustomer.getFirstName()).isEqualTo("Wayne");
 		assertThat(updatedCustomer.getLastName()).isEqualTo("Rooney");
-		assertThat(updatedCustomer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1)
-				.hasYear(1982);
+		assertThat(updatedCustomer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(updatedCustomer.getAddress().getStreet()).isEqualTo("High Street");
 		assertThat(updatedCustomer.getAddress().getTown()).isEqualTo("Belfast");
 		assertThat(updatedCustomer.getAddress().getCounty()).isEqualTo("India");
@@ -260,7 +256,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 		final Customer customer = response.getBody();
 		assertThat(customer.getFirstName()).isEqualTo("Raja");
 		assertThat(customer.getLastName()).isEqualTo("Kolli");
-		assertThat(customer.getDateOfBirth()).hasDayOfMonth(10).hasMonth(1).hasYear(1982);
+		assertThat(customer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
 		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
 		assertThat(customer.getAddress().getCounty()).isEqualTo("India");
@@ -325,8 +321,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	}
 
 	private List<Customer> convertJsonToCustomers(String json) throws Exception {
-		final ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(json, TypeFactory.defaultInstance()
+		return this.mapper.readValue(json, TypeFactory.defaultInstance()
 				.constructCollectionType(List.class, Customer.class));
 	}
 
