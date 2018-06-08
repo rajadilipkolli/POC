@@ -52,7 +52,6 @@
 
 		<junit-jupiter.version>5.2.0</junit-jupiter.version>
 		<junit-platform.version>1.2.0</junit-platform.version>
-		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
 	</properties>
 
 	<dependencies>
