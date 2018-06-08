@@ -1,10 +1,7 @@
 language: java
 
 jdk:
-  - oraclejdk8
   - oraclejdk10
-  - oraclejdk-ea
-  - openjdk10
   - openjdk11
 
 services:
@@ -14,9 +11,6 @@ install: true
 
 script:
   - ./mvnw clean package
-before_cache:
-  - rm -fr  $HOME/.embedmongo
-  - rm -fr  $HOME/.m2
 cache:
   directories:
     - '$HOME/.m2/repository'
