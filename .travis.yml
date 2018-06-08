@@ -2,7 +2,6 @@ language: java
 
 jdk:
   - oraclejdk10
-  - openjdk11
 
 services:
   - mongodb
