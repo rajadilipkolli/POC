@@ -1,16 +1,31 @@
 language: java
-jdk:
-  - oraclejdk8
+
+dist: trusty
+sudo: false
+
+# Get latest install-jdk.sh script
+before_install:
+  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+
+matrix:
+  include:
+# Java 10 "Oracle JDK"
+    - env: JDK='Oracle JDK 10'
+      install: . ./install-jdk.sh -F 10 -L BCL
+# Java 10 "OpenJDK"
+    - env: JDK='OpenJDK 10'
+      install: . ./install-jdk.sh -F 10 -L GPL
+
 services:
   - mongodb
   - redis
 install: true
+
 script:
   - ./mvnw clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'
-    - '$HOME/.m2/wrapper'
     - '$HOME/.embedmongo'
     
 after_success:
