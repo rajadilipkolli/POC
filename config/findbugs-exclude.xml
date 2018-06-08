@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<FindBugsFilter>
-	<Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
-	<Bug pattern="EI_EXPOSE_REP2" />
-</FindBugsFilter>
