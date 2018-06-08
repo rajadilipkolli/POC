@@ -65,7 +65,7 @@ class CustomerJsonTest {
 	@Test
 	public void testDeserialize() throws Exception {
 		assertThat(this.json.parseObject(CUSTOMER_JSON).getFirstName()).isEqualTo("Raja");
-//		assertThat(this.json.parse(CUSTOMER_JSON)).isEqualTo(customerObj);
+		// assertThat(this.json.parse(CUSTOMER_JSON)).isEqualTo(customerObj);
 	}
 
 }
