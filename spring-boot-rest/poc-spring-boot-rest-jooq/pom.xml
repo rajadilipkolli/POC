@@ -53,6 +53,9 @@
 									<includes>.*</includes>
 								</database>
 								<generate>
+									<deprecated>false</deprecated>
+                                    <instanceFields>true</instanceFields>
+                                    <pojos>true</pojos>
 								</generate>
 								<target>
 									<packageName>com.poc.restfulpoc.jooq</packageName>

@@ -13,13 +13,18 @@
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>
 		<datasourceproxy.version>1.4.9</datasourceproxy.version>
 		<cxf.version>3.2.4</cxf.version>
-		<swagger-ui.version>3.14.2</swagger-ui.version>
+		<swagger-ui.version>3.17.0</swagger-ui.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.example.poc</groupId>
 			<artifactId>poc-spring-boot-rest-entities</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.example.poc</groupId>
+			<artifactId>poc-spring-boot-rest-jooq</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

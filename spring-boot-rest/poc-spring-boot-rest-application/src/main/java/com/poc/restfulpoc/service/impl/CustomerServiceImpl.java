@@ -29,6 +29,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -63,6 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	/** {@inheritDoc} */
 	@Override
+	@Transactional
 	public Customer createCustomer(Customer customer) {
 		return this.customerRepository.save(customer);
 	}

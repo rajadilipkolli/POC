@@ -19,6 +19,7 @@ package com.poc.restfulpoc.entities;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -70,12 +71,15 @@ public class Customer {
 	private long id;
 
 	@NotNull
+	@Column(name = "FIRST_NAME")
 	private String firstName;
 
+	@Column(name = "LAST_NAME")
 	private String lastName;
 
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@Column(name = "DATE_OF_BIRTH")
 	private LocalDateTime dateOfBirth;
 
 	@OneToOne(mappedBy = "customer", cascade = {
