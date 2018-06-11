@@ -56,7 +56,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 		final List<Book> bookList = new ArrayList<>();
 		for (int i = 0; i < 1000; i++) {
 			final Book book = new Book();
-			book.setTitle(TITLE + String.valueOf(i));
+			book.setTitle(RandomStringUtils.randomAlphabetic(10));
 			bookList.add(book);
 		}
 		this.bookReactiveRepository.saveAll(bookList);
@@ -65,15 +65,15 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 	@Test
 	public void testCreateBook() {
 		final Book book = Book.builder().author("Raja").text("This is a Test Book")
-				.title("JUNIT_TITLE").build();
+				.title(TITLE).build();
 
-		this.webTestClient.post().uri("/Books")
+		this.webTestClient.post().uri("/books")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
 				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
 				.exchange().expectStatus().isOk().expectHeader()
 				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.id").isNotEmpty().jsonPath("$.text")
-				.isEqualTo("This is a Test Book");
+				.jsonPath("$.bookId").isNotEmpty().jsonPath("$.text")
+				.isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 		Book book = Book.builder().author("Raja").text("This is a Test Book")
 				.title(RandomStringUtils.randomAlphanumeric(200)).build();
 
-		this.webTestClient.post().uri("/Books")
+		this.webTestClient.post().uri("/books")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
 				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
 				.exchange().expectStatus().isBadRequest().expectHeader()
@@ -93,7 +93,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 				.isEqualTo("size must be between 0 and 140");
 
 		book = Book.builder().build();
-		this.webTestClient.post().uri("/Books")
+		this.webTestClient.post().uri("/books")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
 				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
 				.exchange().expectStatus().isBadRequest().expectHeader()
@@ -105,7 +105,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
 	@Test
 	public void testGetAllBooks() {
-		this.webTestClient.get().uri("/Books").accept(MediaType.APPLICATION_JSON_UTF8)
+		this.webTestClient.get().uri("/books").accept(MediaType.APPLICATION_JSON_UTF8)
 				.exchange().expectStatus().isOk().expectHeader()
 				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBodyList(Book.class);
 	}
@@ -113,10 +113,10 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 	@Test
 	public void testGetSingleBook() {
 		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title("JUNIT_TITLE").build()).block();
+				.text("This is a Test Book").title(TITLE).build()).block();
 
 		this.webTestClient.get()
-				.uri("/Books/{id}", Collections.singletonMap("id", book.getId()))
+				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
 				.exchange().expectStatus().isOk().expectBody().consumeWith(
 						(response) -> assertThat(response.getResponseBody()).isNotNull());
 	}
@@ -124,13 +124,13 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 	@Test
 	public void testUpdateBook() {
 		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title("JUNIT_TITLE").build()).block();
+				.text("This is a Test Book").title(TITLE).build()).block();
 
 		final Book newBookData = Book.builder().author("Raja").text("Updated Book")
-				.title("JUNIT_TITLE").build();
+				.title(TITLE).build();
 
 		this.webTestClient.put()
-				.uri("/Books/{id}", Collections.singletonMap("id", book.getId()))
+				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
 				.accept(MediaType.APPLICATION_JSON_UTF8)
 				.body(Mono.just(newBookData), Book.class).exchange().expectStatus().isOk()
@@ -141,11 +141,15 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 	@Test
 	public void testDeleteBook() {
 		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title("JUNIT_TITLE").build()).block();
+				.text("This is a Test Book").title(TITLE).build()).block();
 
 		this.webTestClient.delete()
-				.uri("/Books/{id}", Collections.singletonMap("id", book.getId()))
+				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
 				.exchange().expectStatus().isOk();
+
+		this.webTestClient.get()
+				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
+				.exchange().expectStatus().isNotFound();
 	}
 
 	@Test
@@ -153,6 +157,15 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 		this.webTestClient.get().uri("/actuator/health")
 				.accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk()
 				.expectBody().json("{\"status\":\"UP\"}");
+	}
+
+	@Test
+	@DisplayName("Test case for EventStream Value")
+	public void testTextEventStreamValue() {
+		this.webTestClient.get().uri("/books/stream").exchange().expectStatus()
+				.is2xxSuccessful().expectHeader()
+				.contentType("text/event-stream;charset=UTF-8")
+				.expectBodyList(Book.class);
 	}
 
 }

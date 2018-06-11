@@ -16,8 +16,6 @@
 
 package com.poc.mongodbredisintegration.service.impl;
 
-import javax.validation.Valid;
-
 import com.poc.mongodbredisintegration.document.Book;
 import com.poc.mongodbredisintegration.repository.BookReactiveRepository;
 import com.poc.mongodbredisintegration.service.MongoDBReactiveService;
@@ -58,7 +56,7 @@ public class MongoDBReactiveServiceImpl implements MongoDBReactiveService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Book>> updateBook(String bookId, @Valid Book book) {
+	public Mono<ResponseEntity<Book>> updateBook(String bookId, Book book) {
 		return this.reactiveRepository.findById(bookId).flatMap((existingBook) -> {
 			existingBook.setText(book.getText());
 			return this.reactiveRepository.save(existingBook);

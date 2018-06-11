@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Customer;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.jupiter.api.DisplayName;
@@ -74,7 +73,7 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		final Customer cust = this.mapper.readValue(replyString, Customer.class);
 		assertThat(replyString).isNotNull();
 		assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
-		
+
 		// Reverse to the starting URI
 		wc.back(true);
 		wc.path("/customers/").path(RandomUtils.nextLong(1000, 10000));

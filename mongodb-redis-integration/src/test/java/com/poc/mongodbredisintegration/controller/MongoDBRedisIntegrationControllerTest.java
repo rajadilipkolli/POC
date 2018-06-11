@@ -61,7 +61,7 @@ public class MongoDBRedisIntegrationControllerTest {
 	public void setUp() throws Exception {
 		this.controller = new MongoDBRedisIntegrationController(this.service);
 		this.dummyBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-				.id("JUNIT").text("JUNIT_TEXT").version(1).build();
+				.bookId("JUNIT").text("JUNIT_TEXT").version(1).build();
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class MongoDBRedisIntegrationControllerTest {
 				.perform(put("/book/updateByTitle/title/author")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
-				.andExpect(content().string("{\"id\":\"JUNIT\",\"title\":\"JUNIT_TITLE\","
+				.andExpect(content().string("{\"bookId\":\"JUNIT\",\"title\":\"JUNIT_TITLE\","
 						+ "\"author\":\"JUNIT_AUTHOR\",\"text\":\"JUNIT_TEXT\",\"version\":1}"));
 	}
 

@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -42,39 +43,40 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/books")
 public class MongoDBReactiveController {
 
 	private final MongoDBReactiveService reactiveService;
 
-	@GetMapping("/Books")
+	@GetMapping
 	public Flux<Book> getAllBooks() {
 		return this.reactiveService.findAllBooks();
 	}
 
-	@GetMapping("/Books/{id}")
+	@GetMapping("/{id}")
 	public Mono<ResponseEntity<Book>> getBookById(@PathVariable("id") String bookId) {
 		return this.reactiveService.getBookById(bookId);
 	}
 
-	@PostMapping("/Books")
+	@PostMapping
 	public Mono<Book> createTweets(@Valid @RequestBody Book book) {
 		return this.reactiveService.save(book);
 	}
 
-	@PutMapping("/Books/{id}")
+	@PutMapping("/{id}")
 	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String bookId,
 			@Valid @RequestBody Book book) {
 		return this.reactiveService.updateBook(bookId, book);
 	}
 
-	@DeleteMapping("/Books/{id}")
+	@DeleteMapping("/{id}")
 	public Mono<ResponseEntity<Void>> deleteBook(@PathVariable("id") String bookId) {
 		return this.reactiveService.deleteBook(bookId);
 	}
 
 	// Books are Sent to the client as Server Sent Events
-	@GetMapping(value = "/stream/Books", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<Book> streamAllTweets() {
+	@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<Book> streamAllBooks() {
 		return this.reactiveService.findAllBooks();
 	}
 

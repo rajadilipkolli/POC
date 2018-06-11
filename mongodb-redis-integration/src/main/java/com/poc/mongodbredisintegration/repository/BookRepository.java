@@ -51,4 +51,6 @@ public interface BookRepository extends MongoRepository<Book, String> {
 	 */
 	Optional<Book> findById(String id);
 
+	void deleteByTitle(String title);
+
 }

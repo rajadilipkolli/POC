@@ -50,7 +50,7 @@ public class MongoDBRedisIntegrationApplicationTest
 				.text("MongoDB Data Book").author("Raja").build();
 		final Book response = this.controller.saveBook(book);
 		assertThat(response).isNotNull();
-		assertThat(response.getId()).isNotBlank();
+		assertThat(response.getBookId()).isNotBlank();
 		assertThat(response.getAuthor()).isEqualTo("Raja");
 		final Book updatedBook = this.controller.updateAuthorByTitle("MongoDbCookBook",
 				"Raja1");

@@ -24,6 +24,9 @@ import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -64,6 +67,7 @@ public class MongoDBRedisIntegrationServiceImpl
 	}
 
 	/** {@inheritDoc} */
+	@Cacheable(value = "book", key = "#title", unless = "#result == null")
 	@Override
 	public Book findBookByTitle(String title) {
 		log.info("Finding Book by Title :{}", title);
@@ -71,6 +75,7 @@ public class MongoDBRedisIntegrationServiceImpl
 	}
 
 	/** {@inheritDoc} */
+	@CachePut(value = "book", key = "#title")
 	@Override
 	public Book updateByTitle(String title, String author) {
 		log.info("Updating Book Author by Title :{} with {}", title, author);
@@ -81,19 +86,22 @@ public class MongoDBRedisIntegrationServiceImpl
 	}
 
 	/** {@inheritDoc} */
+	@CachePut(value = "book", key = "#title")
 	@Override
-	public void deleteBook(String id) {
-		log.info("deleting Books by id :{}", id);
-		this.repository.deleteById(id);
+	public void deleteBook(String title) {
+		log.info("deleting Books by title :{}", title);
+		this.repository.deleteByTitle(title);
 	}
 
 	/** {@inheritDoc} */
+	@CacheEvict(value = "book", allEntries = true)
 	@Override
 	public void deleteAllCache() {
 		log.info("Deleting Cache");
 	}
 
 	/** {@inheritDoc} */
+	@CacheEvict(value = "book", allEntries = true)
 	@Override
 	public void deleteAllCollections() {
 		this.repository.deleteAll();

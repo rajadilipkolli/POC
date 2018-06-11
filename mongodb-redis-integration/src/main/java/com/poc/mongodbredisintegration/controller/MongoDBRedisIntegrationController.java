@@ -22,9 +22,6 @@ import com.poc.mongodbredisintegration.document.Book;
 import com.poc.mongodbredisintegration.service.MongoDBRedisIntegrationService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +68,6 @@ public class MongoDBRedisIntegrationController {
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
 	@GetMapping("/findByTitle/{title}")
-	@Cacheable(value = "book", key = "#title", unless = "#result == null")
 	public Book findBookByTitle(@PathVariable String title) {
 		return this.service.findBookByTitle(title);
 	}
@@ -85,7 +81,6 @@ public class MongoDBRedisIntegrationController {
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
 	@PutMapping("/updateByTitle/{title}/{author}")
-	@CachePut(value = "book", key = "#title")
 	public Book updateAuthorByTitle(@PathVariable("title") String title,
 			@PathVariable("author") String author) {
 		return this.service.updateByTitle(title, author);
@@ -99,11 +94,10 @@ public class MongoDBRedisIntegrationController {
 	 * @return a {@link java.lang.String} object.
 	 */
 	@DeleteMapping("/deleteByTitle/{title}")
-	@CacheEvict(value = "book", key = "#title")
 	public String deleteBookByTitle(@PathVariable("title") String title) {
 		final Book book = this.findBookByTitle(title);
 		if (null != book) {
-			this.service.deleteBook(book.getId());
+			this.service.deleteBook(title);
 			return "Book with title " + title + " deleted";
 		}
 		else {
@@ -115,7 +109,6 @@ public class MongoDBRedisIntegrationController {
 	 * Deletes all cache.
 	 */
 	@GetMapping("/deleteCache")
-	@CacheEvict(value = "book", allEntries = true)
 	public void deleteCache() {
 		this.service.deleteAllCache();
 	}
