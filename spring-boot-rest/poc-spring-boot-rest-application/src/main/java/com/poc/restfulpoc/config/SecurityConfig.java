@@ -55,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 				.permitAll().antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
 				.antMatchers("/**").hasRole("USER").and().httpBasic();
+		// H2 database console runs inside a frame, So we need to disable X-Frame-Options
+		// in Spring Security.
+		http.headers().frameOptions().disable();
 	}
 
 }
