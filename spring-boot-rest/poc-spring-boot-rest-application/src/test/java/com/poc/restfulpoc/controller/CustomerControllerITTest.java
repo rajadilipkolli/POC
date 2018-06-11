@@ -176,7 +176,7 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	@DisplayName("Tests InValid Customer")
 	public void testInValidCustomer() {
 		Customer newCustomer = Customer.builder().firstName(" ").lastName("Steale")
-				.dateOfBirth(LocalDateTime.now()).build();
+				.dateOfBirth(LocalDateTime.now().plusDays(1)).build();
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
 				newCustomer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);

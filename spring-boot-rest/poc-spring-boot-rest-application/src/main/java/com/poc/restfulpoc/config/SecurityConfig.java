@@ -36,13 +36,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@SuppressWarnings("deprecation")
 	@Bean
 	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		return new InMemoryUserDetailsManager(
-				User.withDefaultPasswordEncoder().username("username")
-						.password("password").authorities("ROLE_USER").build(),
-				User.withDefaultPasswordEncoder().username("admin").password("admin")
+				User.withUsername("username").password("{noop}password")
+						.authorities("ROLE_USER").build(),
+				User.withUsername("admin").password("{noop}admin")
 						.authorities("ROLE_ACTUATOR", "ROLE_USER", "ROLE_ADMIN").build());
 	}
 
