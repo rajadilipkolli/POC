@@ -19,7 +19,6 @@ package com.poc.mongodbredisintegration.config;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +49,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class CustomCacheErrorHandlerTest extends AbstractMongoDBRedisIntegrationTest {
+public class CustomCacheErrorHandlerTest {
 
 	private Cache cache;
 

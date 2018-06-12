@@ -35,7 +35,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  * WebFlux API Routing Configuration.
  *
  * @author Raja Kolli
- * @version $Id: $Id
+ * @since 0.2.1
  */
 @Configuration
 public class RoutingConfiguration {

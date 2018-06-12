@@ -32,7 +32,7 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
  * Handler which handles Routes.
  *
  * @author Raja Kolli
- * @version $Id: $Id
+ * @since 0.2.1
  */
 @Component
 public class BookHandler {
@@ -135,7 +135,7 @@ public class BookHandler {
 		Mono<String> responseMono = Mono.just("Delete Succesfully!");
 
 		// build response
-		return responseMono.flatMap(strMono -> ServerResponse.ok()
+		return responseMono.flatMap(strMono -> ServerResponse.accepted()
 				.contentType(MediaType.TEXT_PLAIN).body(fromObject(strMono)));
 
 	}

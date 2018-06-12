@@ -29,13 +29,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>
- * DataLoader class.
- * </p>
+ * <p>DataLoader class.</p>
  *
  * @author Raja Kolli
- * @version 0 : 5
- * @since July 2017
+ * @since 0.0.5
  */
 @Component
 @RequiredArgsConstructor
@@ -50,7 +47,7 @@ public class DataLoader implements ApplicationRunner {
 		if (cnt == 0) {
 			this.controller.deleteCache();
 			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")
-					.author("Raja").build();
+					.author("Raja").bookId("1").build();
 			this.controller.saveBook(book);
 
 			final List<Book> bookList = new ArrayList<>();

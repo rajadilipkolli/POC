@@ -32,13 +32,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * <p>
- * Book class.
- * </p>
+ * <p>Book class.</p>
  *
  * @author Raja Kolli
- * @version 0 : 5
- * @since July 2017
+ * @since 0.0.5
  */
 @Data
 @Document
@@ -62,6 +59,6 @@ public class Book implements Serializable {
 	private String text;
 
 	@Version
-	private int version;
+	private Long version;
 
 }

@@ -61,7 +61,7 @@ public class MongoDBRedisIntegrationControllerTest {
 	public void setUp() throws Exception {
 		this.controller = new MongoDBRedisIntegrationController(this.service);
 		this.dummyBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-				.bookId("JUNIT").text("JUNIT_TEXT").version(1).build();
+				.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build();
 	}
 
 	@Test

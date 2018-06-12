@@ -89,8 +89,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 				.body(BodyInserters.fromObject(book)).exchange().expectStatus()
 				.isBadRequest().expectHeader()
 				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.message")
-				.isEqualTo("Validation failed for object='book'. Error count: 1")
+				.jsonPath("$.message").isNotEmpty()
 				.jsonPath("$.errors.[0].defaultMessage")
 				.isEqualTo("size must be between 0 and 140");
 
@@ -100,8 +99,7 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
 				.exchange().expectStatus().isBadRequest().expectHeader()
 				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.message")
-				.isEqualTo("Validation failed for object='book'. Error count: 1")
+				.jsonPath("$.message").isNotEmpty()
 				.jsonPath("$.errors.[0].defaultMessage").isEqualTo("must not be blank");
 	}
 

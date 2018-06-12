@@ -15,13 +15,15 @@
 	To Start client use redis-cli.exe
 	To find all keys issue keys *
 	To remove all keys use flushall
-	
+
+----	
 ## Why Caching?
 
   Caching is becoming an integral part of most of the web and mobile applications to enhance the speed of providing data. It helps reduce roundtrip calls to the datastore (Database, REST service, file, etc.). Spring provides cache abstraction, which enables integrating caching providers (EhCache, Hazelcast, Infinispan, Couchbase, Redis, etc.) with the existing Spring application.
 
   In a scenario where the application is up but the cache you are connected to fails, how do you continue to function without an outage? And how do you continue to use the cache once it is brought up without any interruptions? There are multiple solutions for this problem, but we will go through how to short circuit the cache in the Spring environment.
 
+----
 ## Use case : A Spring application is up, but the Cache goes down.
 
 Spring Cache framework provides an interceptor for cache errors, org.springframework.cache.interceptor.CacheErrorHandler, for the application to take action upon. We will go through this setup in a Spring Boot application, where the application class has to implement org.springframework.cache.annotation.CachingConfigurer, and it can override the errorHandler method.
@@ -72,14 +74,14 @@ Here unless is used to not cache null value
   Once the cache is back up, the call to **findBookByTitle** would invoke the CacheManager, which would work this time. Data is fetched from the cache or backend store (and stored in the cache if it is not present already). This way, the application functions seamlessly even if the cache stops functioning itself.
 
   This strategy works well for the use case where a Spring application is up but the cache goes down. In case a cache is down during app startup, Spring won't be able to create a CacheManager object and would not start. You can intercept this error and make use of org.springframework.cache.support.NoOpCacheManager, which will bypass the cache and let the application to be brought up **(not a recommended way, though)** or try an alternate cache manager setup on a different server.
-	
+
+----	
 ## Spring WebFlux Functional
 Spring Framework 5.0 supports WebFlux with fully asynchronous and non-blocking and does NOT require the Servlet API(Unlike Spring MVC).
 
 Spring WebFlux supports 2 distinct programming models:
-
-    1. Annotation-based with @Controller
-    2. Functional with Java 8 lambda style
+  - Annotation-based with @Controller
+  - Functional with Java 8 lambda style
 
 With Spring WebFlux Functional, we use **{HandlerFunctions, RouterFunctions}** to develop.
 
@@ -91,8 +93,9 @@ HandlerFunctions will handle incoming HTTP requests through ServerRequest, and r
 
 RouterFunction handle all incoming requests. It takes a ServerRequest, and returns a Mono. If a request matches a particular route, a handler function is returned; otherwise it returns an empty Mono.
 
-#### TO-DO
- Perform Load Test and check if keys are removed	
+----
+### TO-DO
+Perform Load Test and check if keys are removed	
 	
 #### Reference 
   - http://caseyscarborough.com/blog/2014/12/18/caching-data-in-spring-using-redis/ 

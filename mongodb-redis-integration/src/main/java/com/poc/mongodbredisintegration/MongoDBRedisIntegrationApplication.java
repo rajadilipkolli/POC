@@ -17,20 +17,16 @@
 package com.poc.mongodbredisintegration;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
- * <p>
- * MongoDBRedisIntegrationApplication class.
- * </p>
+ * <p>MongoDBRedisIntegrationApplication class.</p>
  *
  * @author Raja Kolli
- * @since July 2017
- * @version 0 : 5
+ * @since 0.0.5
  */
 @SpringBootApplication
-@EnableWebFlux
 public class MongoDBRedisIntegrationApplication {
 
 	/**
@@ -39,7 +35,10 @@ public class MongoDBRedisIntegrationApplication {
 	 * @param args an array of {@link java.lang.String} objects.
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(MongoDBRedisIntegrationApplication.class, args);
+		SpringApplication app = new SpringApplication(
+				MongoDBRedisIntegrationApplication.class);
+		app.setWebApplicationType(WebApplicationType.REACTIVE);
+		app.run(args);
 	}
 
 }
