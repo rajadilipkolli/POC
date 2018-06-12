@@ -107,6 +107,7 @@ public class MongoDBRedisIntegrationServiceImpl
 		this.repository.deleteAll();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void saveAllBooks(List<Book> bookList) {
 		this.repository.saveAll(bookList);

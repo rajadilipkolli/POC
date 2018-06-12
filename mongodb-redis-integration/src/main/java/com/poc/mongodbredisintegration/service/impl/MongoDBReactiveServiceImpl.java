@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
  * Service layer which interacts with reactive repository.
  *
  * @author Raja Kolli
- *
+ * @version 0: 11
  */
 @Service
 @RequiredArgsConstructor
@@ -39,22 +39,26 @@ public class MongoDBReactiveServiceImpl implements MongoDBReactiveService {
 
 	private final BookReactiveRepository reactiveRepository;
 
+	/** {@inheritDoc} */
 	@Override
 	public Flux<Book> findAllBooks() {
 		return this.reactiveRepository.findAll();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Mono<Book> save(Book book) {
 		return this.reactiveRepository.save(book);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Mono<ResponseEntity<Book>> getBookById(String bookId) {
 		return this.reactiveRepository.findById(bookId).map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Mono<ResponseEntity<Book>> updateBook(String bookId, Book book) {
 		return this.reactiveRepository.findById(bookId).flatMap((existingBook) -> {
@@ -64,6 +68,7 @@ public class MongoDBReactiveServiceImpl implements MongoDBReactiveService {
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Mono<ResponseEntity<Void>> deleteBook(String bookId) {
 		return this.reactiveRepository.findById(bookId)

@@ -23,9 +23,7 @@ import com.poc.mongodbredisintegration.document.Book;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * <p>
- * BookRepository interface.
- * </p>
+ * <p>BookRepository interface.</p>
  *
  * @author Raja Kolli
  * @since July 2017
@@ -34,23 +32,26 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface BookRepository extends MongoRepository<Book, String> {
 
 	/**
-	 * <p>
-	 * findByTitle.
-	 * </p>
+	 * <p>findByTitle.</p>
+	 *
 	 * @param title a {@link java.lang.String} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
 	Book findByTitle(String title);
 
 	/**
-	 * <p>
-	 * findById.
-	 * </p>
+	 * <p>findById.</p>
+	 *
 	 * @param id a {@link java.lang.String} object.
 	 * @return a {@link java.util.Optional} object.
 	 */
 	Optional<Book> findById(String id);
 
+	/**
+	 * <p>deleteByTitle.</p>
+	 *
+	 * @param title a {@link java.lang.String} object.
+	 */
 	void deleteByTitle(String title);
 
 }

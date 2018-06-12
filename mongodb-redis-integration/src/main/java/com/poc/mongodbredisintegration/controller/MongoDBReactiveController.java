@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
  * MongoDB Reactive Controller.
  *
  * @author Raja Kolli
- *
+ * @version 0 : 11
  */
 @RestController
 @RequiredArgsConstructor
@@ -48,33 +48,68 @@ public class MongoDBReactiveController {
 
 	private final MongoDBReactiveService reactiveService;
 
+	/**
+	 * <p>getAllBooks.</p>
+	 *
+	 * @return a {@link reactor.core.publisher.Flux} object.
+	 */
 	@GetMapping
 	public Flux<Book> getAllBooks() {
 		return this.reactiveService.findAllBooks();
 	}
 
+	/**
+	 * <p>getBookById.</p>
+	 *
+	 * @param bookId a {@link java.lang.String} object.
+	 * @return a {@link reactor.core.publisher.Mono} object.
+	 */
 	@GetMapping("/{id}")
 	public Mono<ResponseEntity<Book>> getBookById(@PathVariable("id") String bookId) {
 		return this.reactiveService.getBookById(bookId);
 	}
 
+	/**
+	 * <p>createBook.</p>
+	 *
+	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
+	 * @return a {@link reactor.core.publisher.Mono} object.
+	 */
 	@PostMapping
-	public Mono<Book> createTweets(@Valid @RequestBody Book book) {
+	public Mono<Book> createBook(@Valid @RequestBody Book book) {
 		return this.reactiveService.save(book);
 	}
 
+	/**
+	 * <p>updateBook.</p>
+	 *
+	 * @param bookId a {@link java.lang.String} object.
+	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
+	 * @return a {@link reactor.core.publisher.Mono} object.
+	 */
 	@PutMapping("/{id}")
 	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String bookId,
 			@Valid @RequestBody Book book) {
 		return this.reactiveService.updateBook(bookId, book);
 	}
 
+	/**
+	 * <p>deleteBook.</p>
+	 *
+	 * @param bookId a {@link java.lang.String} object.
+	 * @return a {@link reactor.core.publisher.Mono} object.
+	 */
 	@DeleteMapping("/{id}")
 	public Mono<ResponseEntity<Void>> deleteBook(@PathVariable("id") String bookId) {
 		return this.reactiveService.deleteBook(bookId);
 	}
 
 	// Books are Sent to the client as Server Sent Events
+	/**
+	 * <p>streamAllBooks.</p>
+	 *
+	 * @return a {@link reactor.core.publisher.Flux} object.
+	 */
 	@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Book> streamAllBooks() {
 		return this.reactiveService.findAllBooks();

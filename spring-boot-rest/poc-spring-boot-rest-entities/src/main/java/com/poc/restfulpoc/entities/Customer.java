@@ -86,6 +86,11 @@ public class Customer {
 			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Address address;
 
+	/**
+	 * <p>Setter for the field <code>address</code>.</p>
+	 *
+	 * @param address a {@link com.poc.restfulpoc.entities.Address} object.
+	 */
 	public void setAddress(Address address) {
 		if (address == null) {
 			if (this.address != null) {

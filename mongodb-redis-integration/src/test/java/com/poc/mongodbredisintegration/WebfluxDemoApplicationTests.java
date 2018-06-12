@@ -33,6 +33,7 @@ import reactor.core.publisher.Mono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -84,8 +85,9 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
 		this.webTestClient.post().uri("/books")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
-				.exchange().expectStatus().isBadRequest().expectHeader()
+				.accept(MediaType.APPLICATION_JSON_UTF8)
+				.body(BodyInserters.fromObject(book)).exchange().expectStatus()
+				.isBadRequest().expectHeader()
 				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
 				.jsonPath("$.message")
 				.isEqualTo("Validation failed for object='book'. Error count: 1")

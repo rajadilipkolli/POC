@@ -34,9 +34,8 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 public class MongoDBRedisIntegrationApplication {
 
 	/**
-	 * <p>
-	 * main.
-	 * </p>
+	 * <p>Application main method.</p>
+	 *
 	 * @param args an array of {@link java.lang.String} objects.
 	 */
 	public static void main(String[] args) {

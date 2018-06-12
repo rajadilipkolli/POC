@@ -73,6 +73,24 @@ Here unless is used to not cache null value
 
   This strategy works well for the use case where a Spring application is up but the cache goes down. In case a cache is down during app startup, Spring won't be able to create a CacheManager object and would not start. You can intercept this error and make use of org.springframework.cache.support.NoOpCacheManager, which will bypass the cache and let the application to be brought up **(not a recommended way, though)** or try an alternate cache manager setup on a different server.
 	
+## Spring WebFlux Functional
+Spring Framework 5.0 supports WebFlux with fully asynchronous and non-blocking and does NOT require the Servlet API(Unlike Spring MVC).
+
+Spring WebFlux supports 2 distinct programming models:
+
+    1. Annotation-based with @Controller
+    2. Functional with Java 8 lambda style
+
+With Spring WebFlux Functional, we use **{HandlerFunctions, RouterFunctions}** to develop.
+
+**1. HandlerFunctions**
+
+HandlerFunctions will handle incoming HTTP requests through ServerRequest, and return a Mono
+
+**2. RouterFunction**
+
+RouterFunction handle all incoming requests. It takes a ServerRequest, and returns a Mono. If a request matches a particular route, a handler function is returned; otherwise it returns an empty Mono.
+
 #### TO-DO
  Perform Load Test and check if keys are removed	
 	

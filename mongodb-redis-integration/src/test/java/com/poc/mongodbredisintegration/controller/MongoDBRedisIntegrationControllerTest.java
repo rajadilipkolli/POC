@@ -80,8 +80,9 @@ public class MongoDBRedisIntegrationControllerTest {
 				.perform(put("/book/updateByTitle/title/author")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
-				.andExpect(content().string("{\"bookId\":\"JUNIT\",\"title\":\"JUNIT_TITLE\","
-						+ "\"author\":\"JUNIT_AUTHOR\",\"text\":\"JUNIT_TEXT\",\"version\":1}"));
+				.andExpect(content()
+						.string("{\"bookId\":\"JUNIT\",\"title\":\"JUNIT_TITLE\","
+								+ "\"author\":\"JUNIT_AUTHOR\",\"text\":\"JUNIT_TEXT\",\"version\":1}"));
 	}
 
 	@Test
