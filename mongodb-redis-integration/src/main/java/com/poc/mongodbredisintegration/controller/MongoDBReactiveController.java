@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
  * MongoDB Reactive Controller.
  *
  * @author Raja Kolli
- * @version 0 : 11
+ * @version 0.1.1
  */
 @RestController
 @RequiredArgsConstructor
@@ -49,8 +49,9 @@ public class MongoDBReactiveController {
 	private final MongoDBReactiveService reactiveService;
 
 	/**
-	 * <p>getAllBooks.</p>
-	 *
+	 * <p>
+	 * getAllBooks.
+	 * </p>
 	 * @return a {@link reactor.core.publisher.Flux} object.
 	 */
 	@GetMapping
@@ -59,8 +60,9 @@ public class MongoDBReactiveController {
 	}
 
 	/**
-	 * <p>getBookById.</p>
-	 *
+	 * <p>
+	 * getBookById.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
@@ -70,8 +72,9 @@ public class MongoDBReactiveController {
 	}
 
 	/**
-	 * <p>createBook.</p>
-	 *
+	 * <p>
+	 * createBook.
+	 * </p>
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
@@ -81,8 +84,9 @@ public class MongoDBReactiveController {
 	}
 
 	/**
-	 * <p>updateBook.</p>
-	 *
+	 * <p>
+	 * updateBook.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
@@ -94,8 +98,9 @@ public class MongoDBReactiveController {
 	}
 
 	/**
-	 * <p>deleteBook.</p>
-	 *
+	 * <p>
+	 * deleteBook.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
@@ -106,8 +111,9 @@ public class MongoDBReactiveController {
 
 	// Books are Sent to the client as Server Sent Events
 	/**
-	 * <p>streamAllBooks.</p>
-	 *
+	 * <p>
+	 * streamAllBooks.
+	 * </p>
 	 * @return a {@link reactor.core.publisher.Flux} object.
 	 */
 	@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

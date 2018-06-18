@@ -47,8 +47,9 @@ public class MongoDBRedisIntegrationController {
 	private final MongoDBRedisIntegrationService service;
 
 	/**
-	 * <p>saveBook.</p>
-	 *
+	 * <p>
+	 * saveBook.
+	 * </p>
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
@@ -58,10 +59,11 @@ public class MongoDBRedisIntegrationController {
 	}
 
 	/**
-	 * <p>findBookByTitle.</p>
+	 * <p>
+	 * findBookByTitle.
+	 * </p>
 	 *
 	 * unless is specified to not cache null values
-	 *
 	 * @param title a {@link java.lang.String} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
@@ -71,8 +73,9 @@ public class MongoDBRedisIntegrationController {
 	}
 
 	/**
-	 * <p>updateByTitle.</p>
-	 *
+	 * <p>
+	 * updateByTitle.
+	 * </p>
 	 * @param title a {@link java.lang.String} object.
 	 * @param author a {@link java.lang.String} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
@@ -84,8 +87,9 @@ public class MongoDBRedisIntegrationController {
 	}
 
 	/**
-	 * <p>deleteBookByTitle.</p>
-	 *
+	 * <p>
+	 * deleteBookByTitle.
+	 * </p>
 	 * @param title a {@link java.lang.String} object.
 	 * @return a {@link java.lang.String} object.
 	 */
@@ -111,7 +115,6 @@ public class MongoDBRedisIntegrationController {
 
 	/**
 	 * count.
-	 *
 	 * @return a {@link java.lang.Long} object.
 	 */
 	public Long count() {
@@ -119,15 +122,18 @@ public class MongoDBRedisIntegrationController {
 	}
 
 	/**
-	 * <p>deleteAll.</p>
+	 * <p>
+	 * deleteAll.
+	 * </p>
 	 */
 	public void deleteAll() {
 		this.service.deleteAllCollections();
 	}
 
 	/**
-	 * <p>saveAllBooks.</p>
-	 *
+	 * <p>
+	 * saveAllBooks.
+	 * </p>
 	 * @param bookList a {@link java.util.List} object.
 	 */
 	public void saveAllBooks(List<Book> bookList) {

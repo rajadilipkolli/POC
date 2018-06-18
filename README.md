@@ -27,7 +27,7 @@ After Setup import project as a maven project.
 
 ### How to apply spring-formatter
 
-To assign spring-formatter issue command mvnw io.spring.javaformat:spring-javaformat-maven-plugin:apply after adding plugin to pom.xml
+To assign spring-formatter issue command `mvnw io.spring.javaformat:spring-javaformat-maven-plugin:apply` after adding plugin to pom.xml
 
 ### How to release a multi module project to git 
 

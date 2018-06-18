@@ -26,36 +26,40 @@ import org.springframework.http.ResponseEntity;
  * Interface for MongoDBReactiveService.
  *
  * @author Raja Kolli
- * @version 0 : 11
+ * @since 0.1.1
  */
 public interface MongoDBReactiveService {
 
 	/**
-	 * <p>findAllBooks.</p>
-	 *
+	 * <p>
+	 * findAllBooks.
+	 * </p>
 	 * @return a {@link reactor.core.publisher.Flux} object.
 	 */
 	Flux<Book> findAllBooks();
 
 	/**
-	 * <p>save.</p>
-	 *
+	 * <p>
+	 * save.
+	 * </p>
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	Mono<Book> save(Book book);
 
 	/**
-	 * <p>getBookById.</p>
-	 *
+	 * <p>
+	 * getBookById.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	Mono<ResponseEntity<Book>> getBookById(String bookId);
 
 	/**
-	 * <p>updateBook.</p>
-	 *
+	 * <p>
+	 * updateBook.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
@@ -63,8 +67,9 @@ public interface MongoDBReactiveService {
 	Mono<ResponseEntity<Book>> updateBook(String bookId, Book book);
 
 	/**
-	 * <p>deleteBook.</p>
-	 *
+	 * <p>
+	 * deleteBook.
+	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */

@@ -29,7 +29,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>DataLoader class.</p>
+ * <p>
+ * DataLoader class.
+ * </p>
  *
  * @author Raja Kolli
  * @since 0.0.5

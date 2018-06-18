@@ -24,7 +24,7 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
  * BookReactiveRepository interface.
  *
  * @author Raja Kolli
- * @version 0 : 11
+ * @since 0.1.1
  */
 public interface BookReactiveRepository extends ReactiveMongoRepository<Book, String> {
 

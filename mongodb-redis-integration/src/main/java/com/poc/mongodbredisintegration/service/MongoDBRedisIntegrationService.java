@@ -21,7 +21,9 @@ import java.util.List;
 import com.poc.mongodbredisintegration.document.Book;
 
 /**
- * <p>MongoDBRedisIntegrationService interface.</p>
+ * <p>
+ * MongoDBRedisIntegrationService interface.
+ * </p>
  *
  * @author Raja Kolli
  * @since July 2017
@@ -30,31 +32,35 @@ import com.poc.mongodbredisintegration.document.Book;
 public interface MongoDBRedisIntegrationService {
 
 	/**
-	 * <p>count.</p>
-	 *
+	 * <p>
+	 * count.
+	 * </p>
 	 * @return a {@link java.lang.Long} object.
 	 */
 	Long count();
 
 	/**
-	 * <p>save.</p>
-	 *
+	 * <p>
+	 * save.
+	 * </p>
 	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
 	Book save(Book book);
 
 	/**
-	 * <p>findBookByTitle.</p>
-	 *
+	 * <p>
+	 * findBookByTitle.
+	 * </p>
 	 * @param title a {@link java.lang.String} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
 	 */
 	Book findBookByTitle(String title);
 
 	/**
-	 * <p>updateByTitle.</p>
-	 *
+	 * <p>
+	 * updateByTitle.
+	 * </p>
 	 * @param title a {@link java.lang.String} object.
 	 * @param author a {@link java.lang.String} object.
 	 * @return a {@link com.poc.mongodbredisintegration.document.Book} object.
@@ -62,25 +68,31 @@ public interface MongoDBRedisIntegrationService {
 	Book updateByTitle(String title, String author);
 
 	/**
-	 * <p>deleteBook.</p>
-	 *
+	 * <p>
+	 * deleteBook.
+	 * </p>
 	 * @param id a {@link java.lang.String} object.
 	 */
 	void deleteBook(String id);
 
 	/**
-	 * <p>deleteAllCache.</p>
+	 * <p>
+	 * deleteAllCache.
+	 * </p>
 	 */
 	void deleteAllCache();
 
 	/**
-	 * <p>deleteAllCollections.</p>
+	 * <p>
+	 * deleteAllCollections.
+	 * </p>
 	 */
 	void deleteAllCollections();
 
 	/**
-	 * <p>saveAllBooks.</p>
-	 *
+	 * <p>
+	 * saveAllBooks.
+	 * </p>
 	 * @param bookList a {@link java.util.List} object.
 	 */
 	void saveAllBooks(List<Book> bookList);

@@ -21,7 +21,9 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * <p>MongoDBRedisIntegrationApplication class.</p>
+ * <p>
+ * MongoDBRedisIntegrationApplication class.
+ * </p>
  *
  * @author Raja Kolli
  * @since 0.0.5
@@ -30,8 +32,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MongoDBRedisIntegrationApplication {
 
 	/**
-	 * <p>Application main method.</p>
-	 *
+	 * <p>
+	 * Application main method.
+	 * </p>
 	 * @param args an array of {@link java.lang.String} objects.
 	 */
 	public static void main(String[] args) {

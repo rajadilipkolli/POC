@@ -41,10 +41,13 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class RoutingConfiguration {
 
 	/**
-	 * <p>monoRouterFunction.</p>
-	 *
-	 * @param bookHandler a {@link com.poc.mongodbredisintegration.handler.BookHandler} object.
-	 * @return a {@link org.springframework.web.reactive.function.server.RouterFunction} object.
+	 * <p>
+	 * monoRouterFunction.
+	 * </p>
+	 * @param bookHandler a {@link com.poc.mongodbredisintegration.handler.BookHandler}
+	 * object.
+	 * @return a {@link org.springframework.web.reactive.function.server.RouterFunction}
+	 * object.
 	 */
 	@Bean
 	public RouterFunction<ServerResponse> monoRouterFunction(BookHandler bookHandler) {

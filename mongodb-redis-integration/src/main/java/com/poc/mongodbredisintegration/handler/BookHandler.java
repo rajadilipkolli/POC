@@ -40,9 +40,11 @@ public class BookHandler {
 	private final BookReactiveRepository bookReactiveRepository;
 
 	/**
-	 * <p>Constructor for BookHandler.</p>
-	 *
-	 * @param repository a {@link com.poc.mongodbredisintegration.repository.BookReactiveRepository} object.
+	 * <p>
+	 * Constructor for BookHandler.
+	 * </p>
+	 * @param repository a
+	 * {@link com.poc.mongodbredisintegration.repository.BookReactiveRepository} object.
 	 */
 	public BookHandler(BookReactiveRepository repository) {
 		this.bookReactiveRepository = repository;
@@ -50,8 +52,8 @@ public class BookHandler {
 
 	/**
 	 * GET ALL Books.
-	 *
-	 * @param request a {@link org.springframework.web.reactive.function.server.ServerRequest} object.
+	 * @param request a
+	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	public Mono<ServerResponse> getAll(ServerRequest request) {
@@ -65,8 +67,8 @@ public class BookHandler {
 
 	/**
 	 * GET a Book by ID.
-	 *
-	 * @param request a {@link org.springframework.web.reactive.function.server.ServerRequest} object.
+	 * @param request a
+	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	public Mono<ServerResponse> getBook(ServerRequest request) {
@@ -88,8 +90,8 @@ public class BookHandler {
 
 	/**
 	 * POST a Book.
-	 *
-	 * @param request a {@link org.springframework.web.reactive.function.server.ServerRequest} object.
+	 * @param request a
+	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	public Mono<ServerResponse> postBook(ServerRequest request) {
@@ -100,8 +102,8 @@ public class BookHandler {
 
 	/**
 	 * PUT a Book.
-	 *
-	 * @param request a {@link org.springframework.web.reactive.function.server.ServerRequest} object.
+	 * @param request a
+	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	public Mono<ServerResponse> putBook(ServerRequest request) {
@@ -122,7 +124,6 @@ public class BookHandler {
 
 	/**
 	 * DELETE a Book.
-	 *
 	 * @param request a ServerRequest object
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
