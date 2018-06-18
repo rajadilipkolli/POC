@@ -16,9 +16,17 @@
 
 package com.poc.mongodbredisintegration.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
+import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +37,34 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  * @author Raja Kolli
  *
  */
+@TestInstance(Lifecycle.PER_CLASS)
 class BookHandlerTest extends AbstractMongoDBRedisIntegrationTest {
 
 	@Autowired
 	private WebTestClient webTestClient;
+
+	@Autowired
+	private MongoDBRedisIntegrationController controller;
+
+	@BeforeAll
+	public void init() {
+
+		if (this.controller.count() == 0) {
+			this.controller.deleteCache();
+			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")
+					.author("Raja").bookId("1").build();
+			this.controller.saveBook(book);
+
+			final List<Book> bookList = new ArrayList<>();
+			for (int i = 0; i < 100; i++) {
+				book = new Book();
+				book.setTitle(RandomStringUtils.randomAlphanumeric(20));
+				book.setText(RandomStringUtils.randomAlphanumeric(30));
+				bookList.add(book);
+			}
+			this.controller.saveAllBooks(bookList);
+		}
+	}
 
 	@Test
 	void testGetAll() {

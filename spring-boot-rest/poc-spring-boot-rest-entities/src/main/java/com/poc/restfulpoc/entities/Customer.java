@@ -87,8 +87,9 @@ public class Customer {
 	private Address address;
 
 	/**
-	 * <p>Setter for the field <code>address</code>.</p>
-	 *
+	 * <p>
+	 * Setter for the field <code>address</code>.
+	 * </p>
 	 * @param address a {@link com.poc.restfulpoc.entities.Address} object.
 	 */
 	public void setAddress(Address address) {

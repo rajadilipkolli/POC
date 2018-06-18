@@ -54,13 +54,15 @@ public class WebfluxDemoApplicationTests extends AbstractMongoDBRedisIntegration
 
 	@BeforeAll
 	public void setUp() {
-		final List<Book> bookList = new ArrayList<>();
-		for (int i = 0; i < 1000; i++) {
-			final Book book = new Book();
-			book.setTitle(RandomStringUtils.randomAlphabetic(10));
-			bookList.add(book);
+		if (this.bookReactiveRepository.count().block() <= 0) {
+			final List<Book> bookList = new ArrayList<>();
+			for (int i = 0; i < 1000; i++) {
+				final Book book = new Book();
+				book.setTitle(RandomStringUtils.randomAlphabetic(10));
+				bookList.add(book);
+			}
+			this.bookReactiveRepository.saveAll(bookList);
 		}
-		this.bookReactiveRepository.saveAll(bookList);
 	}
 
 	@Test
