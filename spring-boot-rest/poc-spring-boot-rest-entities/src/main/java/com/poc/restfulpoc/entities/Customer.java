@@ -16,6 +16,7 @@
 
 package com.poc.restfulpoc.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * <p>
@@ -58,11 +57,13 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor // Only to be compliant with JPA
 @ToString
 @Builder
+@NoArgsConstructor // Only to be compliant with JPA
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
-public class Customer {
+public class Customer implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Getter
@@ -87,7 +88,6 @@ public class Customer {
 
 	@OneToOne(mappedBy = "customer", cascade = {
 			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonManagedReference
 	private Address address;
 

@@ -16,6 +16,8 @@
 
 package com.poc.restfulpoc.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -44,12 +46,14 @@ import lombok.ToString;
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor // Only to be compliant with JPA
 @ToString
 @Builder
+@NoArgsConstructor // Only to be compliant with JPA
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Address {
+public class Address implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private long id;
