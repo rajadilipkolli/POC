@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.data;
+package com.poc.restfulpoc.jooq;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
+import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.Assertions;

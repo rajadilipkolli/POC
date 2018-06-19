@@ -40,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 0: 5
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 

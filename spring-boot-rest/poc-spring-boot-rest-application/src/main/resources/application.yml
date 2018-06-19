@@ -29,6 +29,7 @@ spring:
           batch_versioned_data: true
         order_inserts: true
         order_updates: true
+        enable_lazy_load_no_trans: true
   cache:
     type: CAFFEINE
     caffeine:
@@ -36,6 +37,7 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
+      fail-on-empty-beans: false
 
 management:
   endpoints:

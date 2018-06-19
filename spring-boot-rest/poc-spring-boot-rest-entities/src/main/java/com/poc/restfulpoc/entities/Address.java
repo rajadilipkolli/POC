@@ -23,6 +23,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +48,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Address {
 
 	@Id
@@ -59,6 +62,7 @@ public class Address {
 
 	private String postcode;
 
+	@JsonBackReference
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "customer_id")

@@ -46,10 +46,14 @@ class CustomerJsonTest {
 
 	@BeforeAll
 	public void init() {
+		final Address address = Address.builder().county("India").postcode("BT893PY")
+				.street("High Street").town("Belfast").build();
+		final Order order = new Order();
+		order.setOrderNumber("ORD1");
 		this.customerObj = Customer.builder().firstName("Raja").lastName("Kolli")
 				.dateOfBirth(LocalDateTime.of(1982, Month.JANUARY, 10, 0, 0, 0)).build();
-		this.customerObj.setAddress(Address.builder().county("India").postcode("BT893PY")
-				.street("High Street").town("Belfast").build());
+		this.customerObj.setAddress(address);
+		this.customerObj.addOrder(order);
 	}
 
 	@Test

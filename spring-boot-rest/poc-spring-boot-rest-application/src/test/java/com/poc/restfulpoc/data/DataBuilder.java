@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.entities.Order;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,9 @@ public class DataBuilder {
 				.dateOfBirth(LocalDateTime.of(1982, Month.JANUARY, 10, 0, 0)).build();
 		customer1.setAddress(Address.builder().county("India").postcode("BT893PY")
 				.street("High Street").town("Belfast").build());
+		Order order = new Order();
+		order.setOrderNumber("ORD1");
+		customer1.addOrder(order);
 
 		final Customer customer2 = Customer.builder().firstName("Paul").lastName("Jones")
 				.dateOfBirth(LocalDateTime.of(1973, Month.JANUARY, 03, 0, 0)).build();
@@ -62,6 +66,7 @@ public class DataBuilder {
 
 		this.customerRepository.saveAll(
 				Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));
+
 		log.debug("Test data loaded...");
 	}
 

@@ -21,8 +21,6 @@ import java.time.Month;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Address;
@@ -60,9 +58,6 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 
 	@Autowired
 	private CacheManager cacheManager;
-
-	@Autowired
-	private ObjectMapper mapper;
 
 	private String base;
 
@@ -318,11 +313,6 @@ public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest 
 	private Long getCustomerIdByFirstName(String firstName) {
 		return this.customerRepository.findByFirstName(firstName).stream().findAny().get()
 				.getId();
-	}
-
-	private List<Customer> convertJsonToCustomers(String json) throws Exception {
-		return this.mapper.readValue(json, TypeFactory.defaultInstance()
-				.constructCollectionType(List.class, Customer.class));
 	}
 
 }

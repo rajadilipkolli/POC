@@ -22,7 +22,6 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Customer;
 import org.apache.commons.lang3.RandomUtils;
@@ -79,11 +78,6 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		wc.path("/customers/").path(RandomUtils.nextLong(1000, 10000));
 		response = wc.get(Response.class);
 		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_NOT_FOUND);
-	}
-
-	private List<Customer> convertJsonToCustomers(String json) throws Exception {
-		return this.mapper.readValue(json, TypeFactory.defaultInstance()
-				.constructCollectionType(List.class, Customer.class));
 	}
 
 }

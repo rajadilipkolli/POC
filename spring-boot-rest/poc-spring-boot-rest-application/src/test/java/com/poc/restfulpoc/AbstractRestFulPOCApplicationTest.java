@@ -16,7 +16,12 @@
 
 package com.poc.restfulpoc;
 
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.poc.restfulpoc.data.DataBuilder;
+import com.poc.restfulpoc.entities.Customer;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +44,9 @@ public abstract class AbstractRestFulPOCApplicationTest {
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	private ObjectMapper mapper;
+
 	protected TestRestTemplate restTemplate() {
 		return configure(new TestRestTemplate());
 	}
@@ -55,6 +63,11 @@ public abstract class AbstractRestFulPOCApplicationTest {
 		restTemplate
 				.setUriTemplateHandler(new LocalHostUriTemplateHandler(this.environment));
 		return restTemplate;
+	}
+
+	protected List<Customer> convertJsonToCustomers(String json) throws Exception {
+		return this.mapper.readValue(json, TypeFactory.defaultInstance()
+				.constructCollectionType(List.class, Customer.class));
 	}
 
 	@TestConfiguration

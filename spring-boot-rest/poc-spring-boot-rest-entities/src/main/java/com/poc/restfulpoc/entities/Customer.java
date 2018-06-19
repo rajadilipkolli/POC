@@ -17,6 +17,8 @@
 package com.poc.restfulpoc.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,11 +27,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -42,6 +44,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * <p>
@@ -58,7 +62,6 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 
 	@Id
@@ -84,7 +87,14 @@ public class Customer {
 
 	@OneToOne(mappedBy = "customer", cascade = {
 			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonManagedReference
 	private Address address;
+
+	@Builder.Default
+	@JsonManagedReference
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Order> orders = new ArrayList<>();
 
 	/**
 	 * <p>
@@ -102,6 +112,25 @@ public class Customer {
 			address.setCustomer(this);
 		}
 		this.address = address;
+	}
+
+	public void addOrder(Order order) {
+		if (this.orders == null) {
+			this.orders = new ArrayList<>();
+		}
+		this.orders.add(order);
+		order.setCustomer(this);
+	}
+
+	public void removeOrder(Order order) {
+		this.orders.remove(order);
+		order.setCustomer(null);
+	}
+
+	public void setOrders(List<Order> orders) {
+		for (Order order : orders) {
+			addOrder(order);
+		}
 	}
 
 }

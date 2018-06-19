@@ -29,3 +29,11 @@ VALUES
       'Down', 'BT359JK', 'Main Street', 'Newry', 3
    )
 ;
+
+INSERT INTO
+    ORDERS(created_on, customer_id, order_number, status, ORDER_ID)
+VALUES
+    (
+        '2018-06-19',1,'ORD1','NEW',1
+    )
+;

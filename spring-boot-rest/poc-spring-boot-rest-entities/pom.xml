@@ -15,8 +15,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -27,5 +27,26 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 	</dependencies>
-	
+
+	<build>
+		<plugins>
+			<!-- https://vladmihalcea.com/how-to-enable-bytecode-enhancement-dirty-checking-in-hibernate/ -->
+			<plugin>
+				<groupId>org.hibernate.orm.tooling</groupId>
+				<artifactId>hibernate-enhance-maven-plugin</artifactId>
+				<version>${hibernate.version}</version>
+				<executions>
+					<execution>
+						<configuration>
+							<enableDirtyTracking>true</enableDirtyTracking>
+						</configuration>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
