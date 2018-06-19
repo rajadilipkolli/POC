@@ -43,7 +43,7 @@ class CustomerRepositoryTest extends AbstractRestFulPOCApplicationTest {
 	private OrderRepository orderRepository;
 
 	@BeforeAll
-	public void deleteAll() {
+	void deleteAll() {
 		this.orderRepository.deleteAll();
 		this.customerRepository.deleteAll();
 	}

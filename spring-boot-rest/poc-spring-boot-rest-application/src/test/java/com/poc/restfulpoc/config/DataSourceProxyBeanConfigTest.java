@@ -16,6 +16,8 @@
 
 package com.poc.restfulpoc.config;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
@@ -32,15 +34,16 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Raja Kolli
  *
  */
-public class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplicationTest {
+class DataSourceProxyBeanConfigTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
 	private DataSource datasource;
 
 	@Test
-	public void test() {
+	void testDataSourceProxyBean() throws SQLException {
 		assertThat(this.datasource).isNotNull();
 		assertThat(this.datasource).isInstanceOf(HikariDataSource.class);
+		assertThat(this.datasource.getLoginTimeout()).isEqualTo(30);
 	}
 
 }

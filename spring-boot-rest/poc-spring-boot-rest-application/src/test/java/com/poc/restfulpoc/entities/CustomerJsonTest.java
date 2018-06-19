@@ -45,7 +45,7 @@ class CustomerJsonTest {
 	private JacksonTester<Customer> json;
 
 	@BeforeAll
-	public void init() {
+	void init() {
 		final Address address = Address.builder().county("India").postcode("BT893PY")
 				.street("High Street").town("Belfast").build();
 		final Order order = new Order();

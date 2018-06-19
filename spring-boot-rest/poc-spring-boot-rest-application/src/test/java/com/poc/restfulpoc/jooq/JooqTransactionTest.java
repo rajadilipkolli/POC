@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -56,19 +57,19 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 	private DataSourceTransactionManager txMgr;
 
 	@BeforeAll
-	public void init() {
+	void init() {
 		this.txMgr = new DataSourceTransactionManager(
 				new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build());
 	}
 
 	@BeforeEach
-	public void setUp() throws Exception {
+	void setUp() throws Exception {
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();
 	}
 
 	@Test
-	public void testExplicitTransactions() {
+	void testExplicitTransactions() {
 		boolean rollback = false;
 
 		TransactionStatus tx = this.txMgr
@@ -96,7 +97,7 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void testjOOQTransactionsSimple() {
+	void testjOOQTransactionsSimple() {
 		boolean rollback = false;
 
 		try {
@@ -125,7 +126,8 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 
 	@Test
 	@Disabled
-	public void testjOOQTransactionsNested() {
+	@DisplayName("As H2 doesn't support Nested Transaction we have disable it.")
+	void testjOOQTransactionsNested() {
 		AtomicBoolean rollback1 = new AtomicBoolean(false);
 		AtomicBoolean rollback2 = new AtomicBoolean(false);
 

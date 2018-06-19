@@ -48,7 +48,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Raja Kolli
  *
  */
-public class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
+class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
 	private CustomerRepository customerRepository;
