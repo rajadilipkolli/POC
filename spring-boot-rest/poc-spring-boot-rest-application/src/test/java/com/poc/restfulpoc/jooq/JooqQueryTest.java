@@ -43,7 +43,6 @@ import static com.poc.restfulpoc.jooq.tables.Address.ADDRESS;
 import static com.poc.restfulpoc.jooq.tables.Customer.CUSTOMER;
 import static com.poc.restfulpoc.jooq.tables.Orders.ORDERS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(Lifecycle.PER_CLASS)
 class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
@@ -73,14 +72,14 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 				.select(c.FIRST_NAME, c.LAST_NAME).from(c).join(a)
 				.on(a.CUSTOMER_ID.eq(c.ID)).orderBy(c.FIRST_NAME.desc()).fetch();
 
-		assertEquals(3, result.size());
-		assertEquals("Steve", result.getValue(0, c.FIRST_NAME));
-		assertEquals("Raja", result.getValue(1, c.FIRST_NAME));
-		assertEquals("Paul", result.getValue(2, c.FIRST_NAME));
+		assertThat(result.size()).isEqualTo(3);
+		assertThat(result.getValue(0, c.FIRST_NAME)).isEqualTo("Steve");
+		assertThat(result.getValue(1, c.FIRST_NAME)).isEqualTo("Raja");
+		assertThat(result.getValue(2, c.FIRST_NAME)).isEqualTo("Paul");
 
-		assertEquals("Toale", result.getValue(0, c.LAST_NAME));
-		assertEquals("Kolli", result.getValue(1, c.LAST_NAME));
-		assertEquals("Jones", result.getValue(2, c.LAST_NAME));
+		assertThat(result.getValue(0, c.LAST_NAME)).isEqualTo("Toale");
+		assertThat(result.getValue(1, c.LAST_NAME)).isEqualTo("Kolli");
+		assertThat(result.getValue(2, c.LAST_NAME)).isEqualTo("Jones");		
 	}
 
 	@Test
@@ -112,7 +111,7 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 		Result<CustomerRecord> result = this.context.selectFrom(CUSTOMER)
 				.orderBy(CUSTOMER.ID).fetch();
 
-		assertEquals(3, result.size());
+		assertThat(result.size()).isEqualTo(3);
 	}
 
 }

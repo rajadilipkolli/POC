@@ -47,7 +47,7 @@ class BookHandlerTest extends AbstractMongoDBRedisIntegrationTest {
 	private MongoDBRedisIntegrationController controller;
 
 	@BeforeAll
-	public void init() {
+	void init() {
 
 		if (this.controller.count() == 0) {
 			this.controller.deleteCache();

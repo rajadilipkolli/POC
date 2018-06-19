@@ -8,7 +8,7 @@
 - [DatasourceProxy](https://github.com/ttddyy/datasource-proxy)
 - [Flyway](https://flywaydb.org/)
 - [ActiveMQ](http://activemq.apache.org/)
-- Apache CXF
+- [Apache CXF](http://cxf.apache.org/index.html)
 
 ### Notes
 
@@ -21,7 +21,7 @@ Steps in building application
  - define controller end points and always code to Interface so that it can be extended easily later
  - add datasource proxy for pretty printing SQL queries
 
-We want to display all SQL queries so take advantage of spring boot autoconfiguration we will implement BeanPostProcessor and for the initilization of Bean configure DataSourceProxy
+We want to display all SQL queries so take advantage of spring boot autoconfiguration we will implement BeanPostProcessor and for the initilization of Bean configure DataSourceProxy and also solve N+1 Query.
 
 ``` java
 @Configuration
@@ -89,6 +89,14 @@ public class JMSReceiver {
     }
 }
 ```
+
+### Enable JDBC Batching.
+To Enable JDBC Batching you need to add below hibernate properties
+
+ - spring.jpa.properties.hibernate.jdbc.batch_size=20
+ - spring.jpa.properties.hibernate.order_inserts=true
+ - spring.jpa.properties.hibernate.order_updates=true
+ - spring.jpa.properties.hibernate.jdbc.batch_versioned_data=true
 
 ### Exception Handling 
 Reference :: [Guide to Spring Boot REST API Error Handling](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
