@@ -23,6 +23,7 @@ import com.poc.mongodbredisintegration.AbstractApplicationTest;
 import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -30,8 +31,12 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Raja Kolli
@@ -48,7 +53,6 @@ class BookHandlerTest extends AbstractApplicationTest {
 
 	@BeforeAll
 	void init() {
-
 		if (this.controller.count() == 0) {
 			this.controller.deleteCache();
 			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")
@@ -66,10 +70,19 @@ class BookHandlerTest extends AbstractApplicationTest {
 		}
 	}
 
+	@AfterAll
+	void destroy() {
+		this.controller.deleteAll();
+	}
+
 	@Test
 	void testGetAll() {
-		this.webTestClient.get().uri("/api/book").accept(MediaType.APPLICATION_JSON)
-				.exchange().expectBodyList(Book.class).hasSize(101);
+		EntityExchangeResult<List<Book>> result = this.webTestClient.get()
+				.uri("/api/book").accept(MediaType.APPLICATION_JSON).exchange()
+				.expectBodyList(Book.class).returnResult();
+		assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(101);
+		assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
+		assertThat(result.getUriTemplate()).isEqualTo("/api/book");
 	}
 
 	@Test

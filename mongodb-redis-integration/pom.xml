@@ -7,7 +7,7 @@
 	<artifactId>poc-mongodb-redis-integration</artifactId>
 	<packaging>jar</packaging>
 
-	<name>MongoDBRedisIntegration</name>
+	<name>MongoDB-RedisIntegration</name>
 	<description>This project demonstrates how to add fault torrent caching using Redis with MongoDB</description>
 
 	<parent>

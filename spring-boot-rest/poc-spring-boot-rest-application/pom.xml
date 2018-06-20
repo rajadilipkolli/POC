@@ -8,6 +8,7 @@
 		<version>0.2.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>poc-spring-boot-rest-application</artifactId>
+	<description>REST API Implementation.</description>
 
 	<properties>
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>

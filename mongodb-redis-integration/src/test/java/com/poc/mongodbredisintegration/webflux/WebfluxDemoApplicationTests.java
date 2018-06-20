@@ -24,6 +24,7 @@ import com.poc.mongodbredisintegration.AbstractApplicationTest;
 import com.poc.mongodbredisintegration.document.Book;
 import com.poc.mongodbredisintegration.repository.BookReactiveRepository;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,11 @@ public class WebfluxDemoApplicationTests extends AbstractApplicationTest {
 			}
 			this.bookReactiveRepository.saveAll(bookList);
 		}
+	}
+
+	@AfterAll
+	void destroy() {
+		this.bookReactiveRepository.deleteAll().block();
 	}
 
 	@Test
