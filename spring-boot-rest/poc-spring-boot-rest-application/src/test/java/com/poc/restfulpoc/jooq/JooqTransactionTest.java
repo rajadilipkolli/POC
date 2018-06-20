@@ -179,7 +179,7 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 		}
 
 		assertThat(this.dsl.fetchCount(CUSTOMER)).isEqualTo(4);
-		assertThat(rollback2.get()).isTrue();
+		assertThat(rollback1.get()).isTrue();
 		assertThat(rollback2.get()).isTrue();
 	}
 

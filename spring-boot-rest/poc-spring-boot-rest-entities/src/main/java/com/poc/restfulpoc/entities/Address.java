@@ -33,7 +33,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * <p>
@@ -45,12 +44,11 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@Entity
-@ToString
 @Builder
 @NoArgsConstructor // Only to be compliant with JPA
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // Required for Builder
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@Entity
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;

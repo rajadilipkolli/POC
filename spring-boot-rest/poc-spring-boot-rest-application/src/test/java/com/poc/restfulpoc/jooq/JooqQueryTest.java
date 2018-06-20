@@ -16,7 +16,10 @@
 
 package com.poc.restfulpoc.jooq;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.data.DataBuilder;
@@ -28,6 +31,7 @@ import com.poc.restfulpoc.jooq.tables.records.CustomerRecord;
 import com.poc.restfulpoc.jooq.tables.records.OrdersRecord;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import org.jooq.DSLContext;
+import org.jooq.Query;
 import org.jooq.Record2;
 import org.jooq.Record8;
 import org.jooq.Result;
@@ -38,6 +42,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import static com.poc.restfulpoc.jooq.tables.Address.ADDRESS;
 import static com.poc.restfulpoc.jooq.tables.Customer.CUSTOMER;
@@ -49,6 +55,9 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
 	private DSLContext context;
+
+	@Autowired
+	private JdbcTemplate jdbc;
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -68,18 +77,19 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 		Customer c = CUSTOMER.as("c");
 		Address a = ADDRESS.as("a");
 
-		Result<Record2<String, String>> result = this.context
+		Result<Record2<String, String>> results = this.context
 				.select(c.FIRST_NAME, c.LAST_NAME).from(c).join(a)
 				.on(a.CUSTOMER_ID.eq(c.ID)).orderBy(c.FIRST_NAME.desc()).fetch();
 
-		assertThat(result.size()).isEqualTo(3);
-		assertThat(result.getValue(0, c.FIRST_NAME)).isEqualTo("Steve");
-		assertThat(result.getValue(1, c.FIRST_NAME)).isEqualTo("Raja");
-		assertThat(result.getValue(2, c.FIRST_NAME)).isEqualTo("Paul");
+		assertThat(results.size()).isEqualTo(3);
+		assertThat(results.getValue(0, c.FIRST_NAME)).isEqualTo("Steve");
+		assertThat(results.getValue(1, c.FIRST_NAME)).isEqualTo("Raja");
+		assertThat(results.getValue(2, c.FIRST_NAME)).isEqualTo("Paul");
 
-		assertThat(result.getValue(0, c.LAST_NAME)).isEqualTo("Toale");
-		assertThat(result.getValue(1, c.LAST_NAME)).isEqualTo("Kolli");
-		assertThat(result.getValue(2, c.LAST_NAME)).isEqualTo("Jones");
+		assertThat(results.getValue(0, c.LAST_NAME)).isEqualTo("Toale");
+		assertThat(results.getValue(1, c.LAST_NAME)).isEqualTo("Kolli");
+		assertThat(results.getValue(2, c.LAST_NAME)).isEqualTo("Jones");
+
 	}
 
 	@Test
@@ -104,6 +114,29 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(order.getValue(o.ORDER_ID)).isNotNull();
 		assertThat(address.getValue(a.CUSTOMER_ID)).isEqualTo(customer.getValue(c.ID));
 
+	}
+
+	@Test
+	void jooqSql() {
+		Query query = this.context
+				.select(CUSTOMER.ID, CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME,
+						CUSTOMER.DATE_OF_BIRTH, ORDERS.ORDER_ID, ORDERS.ORDER_NUMBER,
+						ORDERS.STATUS, ADDRESS.COUNTY)
+				.from(CUSTOMER).join(ADDRESS).on(ADDRESS.CUSTOMER_ID.eq(CUSTOMER.ID))
+				.join(ORDERS).on(ORDERS.CUSTOMER_ID.eq(CUSTOMER.ID))
+				.where(ORDERS.STATUS.eq("NEW"));
+		Object[] bind = query.getBindValues().toArray(new Object[0]);
+		List<String> list = this.jdbc.query(query.getSQL(), bind,
+				new RowMapper<String>() {
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getLong(1) + " : " + rs.getString(2) + " "
+								+ rs.getString(3) + "-" + rs.getTimestamp(4) + "-"
+								+ rs.getLong(5) + "-" + rs.getString(6) + "-"
+								+ rs.getString(7) + "-" + rs.getString(8);
+					}
+				});
+		assertThat(list).size().isEqualTo(1);
 	}
 
 	@Test
