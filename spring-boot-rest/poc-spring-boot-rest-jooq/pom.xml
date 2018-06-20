@@ -21,8 +21,14 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jooq</artifactId>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -54,8 +60,8 @@
 								</database>
 								<generate>
 									<deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>true</pojos>
+									<instanceFields>true</instanceFields>
+									<pojos>true</pojos>
 								</generate>
 								<target>
 									<packageName>com.poc.restfulpoc.jooq</packageName>

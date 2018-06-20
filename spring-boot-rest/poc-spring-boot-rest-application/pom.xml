@@ -19,11 +19,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.example.poc</groupId>
-			<artifactId>poc-spring-boot-rest-entities</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.example.poc</groupId>
 			<artifactId>poc-spring-boot-rest-jooq</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -64,6 +59,10 @@
 		</dependency>
 		<!-- end::actuator[] -->
 
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>net.ttddyy</groupId>
 			<artifactId>datasource-proxy</artifactId>
