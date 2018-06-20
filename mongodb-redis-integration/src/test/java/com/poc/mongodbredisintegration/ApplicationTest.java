@@ -27,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Raja Kolli
+ * @since 0.0.5
  *
  */
-public class MongoDBRedisIntegrationApplicationTest
-		extends AbstractMongoDBRedisIntegrationTest {
+public class ApplicationTest extends AbstractApplicationTest {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -44,7 +44,7 @@ public class MongoDBRedisIntegrationApplicationTest
 	}
 
 	@Test
-	public void insertData() {
+	void verifyAllOperations() {
 		this.controller.deleteAll();
 		final Book book = Book.builder().title("MongoDbCookBook")
 				.text("MongoDB Data Book").author("Raja").build();

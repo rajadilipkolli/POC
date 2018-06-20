@@ -30,21 +30,18 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 /**
- * <p>
  * JMSApplicationConfig class.
- * </p>
  *
  * @author Raja Kolli
- * @version 0: 5
+ * @since 0.0.5
  */
-@Configuration
+
 @EnableJms
+@Configuration
 public class JMSApplicationConfig {
 
 	/**
-	 * <p>
 	 * myJMSFactory.
-	 * </p>
 	 * @param connectionFactory a {@link javax.jms.ConnectionFactory} object.
 	 * @param configurer a
 	 * {@link org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer}
@@ -65,9 +62,7 @@ public class JMSApplicationConfig {
 	}
 
 	/**
-	 * <p>
 	 * jacksonJmsMessageConverter.
-	 * </p>
 	 * @return a {@link org.springframework.jms.support.converter.MessageConverter}
 	 * object.
 	 */

@@ -22,8 +22,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * @author Raja Kolli
+ * @since 0.0.5
+ *
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = "spring.main.web-application-type=reactive", webEnvironment = WebEnvironment.RANDOM_PORT)
-public abstract class AbstractMongoDBRedisIntegrationTest {
+public abstract class AbstractApplicationTest {
 
 }

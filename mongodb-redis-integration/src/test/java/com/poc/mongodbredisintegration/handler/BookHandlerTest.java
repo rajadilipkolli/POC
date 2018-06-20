@@ -19,7 +19,7 @@ package com.poc.mongodbredisintegration.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.poc.mongodbredisintegration.AbstractMongoDBRedisIntegrationTest;
+import com.poc.mongodbredisintegration.AbstractApplicationTest;
 import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -38,7 +38,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  *
  */
 @TestInstance(Lifecycle.PER_CLASS)
-class BookHandlerTest extends AbstractMongoDBRedisIntegrationTest {
+class BookHandlerTest extends AbstractApplicationTest {
 
 	@Autowired
 	private WebTestClient webTestClient;

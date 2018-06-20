@@ -23,17 +23,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>
  * CaffeineConfiguration class.
- * </p>
  *
  * @author Raja Kolli
- * @since July 2017
- * @version 0 : 5
+ * @since 0.0.5
  */
 @EnableCaching
 @Configuration
-public class CaffeineConfiguration extends CachingConfigurerSupport {
+public class CaffeineConfig extends CachingConfigurerSupport {
 
 	/** {@inheritDoc} */
 	@Bean
