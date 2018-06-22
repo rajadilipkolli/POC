@@ -54,6 +54,7 @@
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
 
 		<main.basedir>${project.basedir}</main.basedir>
+		<java.version>10</java.version>
 
 		<junit-jupiter.version>5.2.0</junit-jupiter.version>
 		<junit-platform.version>1.2.0</junit-platform.version>

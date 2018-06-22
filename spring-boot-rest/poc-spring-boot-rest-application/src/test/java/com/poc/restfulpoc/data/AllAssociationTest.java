@@ -18,14 +18,18 @@ package com.poc.restfulpoc.data;
 
 import java.util.List;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -40,44 +44,50 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AllAssociationTest {
 
 	@Autowired
-	EntityManager entityManager;
+	private EntityManager entityManager;
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Test
 	void test() {
-		Post post = new Post(1L);
+		Post post = new Post(3L);
 		post.setTitle("Postit");
 
 		PostComment comment1 = new PostComment();
-		comment1.setId(1L);
+		comment1.setId(3L);
 		comment1.setReview("Good");
 
 		PostComment comment2 = new PostComment();
-		comment2.setId(2L);
+		comment2.setId(4L);
 		comment2.setReview("Excellent");
 
 		post.addComment(comment1);
 		post.addComment(comment2);
 		this.entityManager.persist(post);
 
-		Session session = this.entityManager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Post.class)
-				.add(Restrictions.eq("title", "post"));
-		assertThat(criteria.list()).isEmpty();
+		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<Post> query = builder.createQuery(Post.class);
+		Root<Post> root = query.from(Post.class);
 
-		Session session1 = this.entityManager.unwrap(Session.class);
-		List<Post> posts = session1.createCriteria(Post.class)
-				.setFetchMode("comments", FetchMode.JOIN)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-				.add(Restrictions.eq("title", "Postit")).list();
-		assertThat(posts).isNotEmpty().size().isEqualTo(1);
+		Predicate cond = builder.equal(root.get("title"), "post");
+		query.where(cond);
 
-		Session session11 = this.entityManager.unwrap(Session.class);
-		List<Post> posts1 = session11.createCriteria(Post.class, "post")
-				.setFetchMode("post.comments", FetchMode.JOIN)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-				.add(Restrictions.eq("post.title", "Postit")).list();
-		assertThat(posts1).isNotEmpty().size().isEqualTo(1);
+		TypedQuery<Post> q = this.entityManager.createQuery(query);
+		List<Post> resultList = q.getResultList();
+
+		assertThat(resultList).isEmpty();
+
+		CriteriaQuery<Post> query1 = builder.createQuery(Post.class);
+		Root<Post> root1 = query1.from(Post.class);
+		// comments should be available in post entity
+		Join<Post, PostComment> join = root1.join("comments", JoinType.LEFT);
+		query1.select(root1).where(builder.equal(join.get("review"), "Excellent"));
+
+		EntityGraph<Post> fetchGraph = this.entityManager.createEntityGraph(Post.class);
+		fetchGraph.addSubgraph("comments");
+		TypedQuery<Post> q1 = this.entityManager.createQuery(query1)
+				.setHint("javax.persistence.loadgraph", fetchGraph);
+		resultList = q1.getResultList();
+		assertThat(resultList).isNotEmpty().size().isEqualTo(2);
+
 	}
 
 }
