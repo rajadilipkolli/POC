@@ -42,13 +42,13 @@ public class PostComment {
 	@Id
 	private Long id;
 
-	@ManyToOne
-	private Post post;
-
 	private String review;
 
 	public PostComment(String review) {
 		this.review = review;
 	}
+
+	@ManyToOne
+	private Post post;
 
 }

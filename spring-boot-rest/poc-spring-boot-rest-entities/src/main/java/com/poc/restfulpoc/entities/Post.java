@@ -60,7 +60,7 @@ public class Post {
 	private PostDetails details;
 
 	@ManyToMany
-	@JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "ID"))
 	private List<Tag> tags = new ArrayList<>();
 
 	public Post(Long id) {

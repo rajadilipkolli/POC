@@ -34,6 +34,30 @@ INSERT INTO
     ORDERS(created_on, customer_id, order_number, status, ORDER_ID)
 VALUES
     (
-        '2018-06-19',1,'ORD1','NEW',1
+        '2018-06-19', 1, 'ORD1', 'NEW', 1
+    )
+;
+
+INSERT INTO
+    POST (TITLE, ID)
+VALUES
+    (
+        'A Beautiful Post', 1
+    )
+,
+    (
+        'Second Post', 2
+    )
+;
+
+INSERT INTO
+    POST_COMMENT (POST_ID, REVIEW, ID)
+VALUES
+    (
+        1, 'Good' , 1
+    )
+,
+    (
+        1, 'Excellent' , 2
     )
 ;
