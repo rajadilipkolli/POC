@@ -360,7 +360,7 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<pushChanges>false</pushChanges>
 					<localCheckout>true</localCheckout>
-					<tagNameFormat>${project.artifact}-v@{project.version}</tagNameFormat>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -368,8 +368,8 @@
 
 	<modules>
 		<module>mongodb-redis-integration</module>
-		<module>spring-boot-rest</module>
 		<module>poc-springboot-mongodb-security</module>
+		<module>spring-boot-rest</module>
 	</modules>
 
 	<profiles>
