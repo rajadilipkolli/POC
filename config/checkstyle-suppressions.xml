@@ -10,4 +10,5 @@
 	<suppress files="JooqTransactionTest.java" checks="AvoidStaticImport"/>
 	<suppress files="BookHandler.java" checks="AvoidStaticImport"/>
 	<suppress files="BookHandler.java" checks="Lambda"/>
+	<suppress files="CustomerControllerMVCTest.java" checks="AvoidStaticImport"/>
 </suppressions>

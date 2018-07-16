@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.entities.Order;
+import com.poc.restfulpoc.entities.OrderStatus;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,17 +53,26 @@ public class DataBuilder {
 				.street("High Street").town("Belfast").build());
 		Order order = new Order();
 		order.setOrderNumber("ORD1");
+		order.setStatus(OrderStatus.NEW);
 		customer1.addOrder(order);
 
 		final Customer customer2 = Customer.builder().firstName("Paul").lastName("Jones")
 				.dateOfBirth(LocalDateTime.of(1973, Month.JANUARY, 03, 0, 0)).build();
 		customer2.setAddress(Address.builder().street("Main Street").town("Lurgan")
 				.county("Armagh").postcode("BT283FG").build());
+		Order order1 = new Order();
+		order1.setOrderNumber("ORD2");
+		order1.setStatus(OrderStatus.IN_PROCESS);
+		customer2.addOrder(order1);
 
 		final Customer customer3 = Customer.builder().firstName("Steve").lastName("Toale")
 				.dateOfBirth(LocalDateTime.of(1979, Month.MARCH, 8, 0, 0)).build();
 		customer3.setAddress(Address.builder().street("Main Street").town("Newry")
 				.county("Down").postcode("BT359JK").build());
+		Order order11 = new Order();
+		order11.setOrderNumber("ORD3");
+		order11.setStatus(OrderStatus.COMPLETED);
+		customer3.addOrder(order11);
 
 		this.customerRepository.saveAll(
 				Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));

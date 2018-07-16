@@ -103,7 +103,8 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 				.select(c.ID, c.FIRST_NAME, c.LAST_NAME, c.DATE_OF_BIRTH, o.ORDER_ID,
 						o.ORDER_NUMBER, o.STATUS, a.CUSTOMER_ID)
 				.from(c).join(a).on(a.CUSTOMER_ID.eq(c.ID)).join(o)
-				.on(o.CUSTOMER_ID.eq(c.ID)).orderBy(c.FIRST_NAME.desc());
+				.on(o.CUSTOMER_ID.eq(c.ID)).where(o.STATUS.eq("NEW"))
+				.orderBy(c.FIRST_NAME.desc());
 
 		CustomerRecord customer = sql.fetchOneInto(CUSTOMER);
 		AddressRecord address = sql.fetchOneInto(ADDRESS);

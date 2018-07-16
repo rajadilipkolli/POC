@@ -34,9 +34,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(DataBuilder.class)
 public abstract class AbstractRestFulPOCApplicationTest {
