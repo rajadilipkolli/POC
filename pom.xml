@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example.poc</groupId>
 	<artifactId>poc-parent</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<packaging>pom</packaging>
 
 	<name>POC by Example</name>
@@ -18,7 +16,7 @@
 		<connection>scm:git:git://github.com/rajadilipkolli/POC</connection>
 		<developerConnection>scm:git:git@github.com:rajadilipkolli/POC</developerConnection>
 		<url>https://github.com/rajadilipkolli/POC</url>
-		<tag>HEAD</tag>
+		<tag>v0.2.1</tag>
 	</scm>
 
 	<issueManagement>
