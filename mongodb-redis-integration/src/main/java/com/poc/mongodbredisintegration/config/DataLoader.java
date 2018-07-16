@@ -22,7 +22,7 @@ import java.util.List;
 import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomStringUtils;
+import net.bytebuddy.utility.RandomString;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -55,8 +55,8 @@ public class DataLoader implements ApplicationRunner {
 			final List<Book> bookList = new ArrayList<>();
 			for (int i = 0; i < 100; i++) {
 				book = new Book();
-				book.setTitle(RandomStringUtils.randomAlphanumeric(20));
-				book.setText(RandomStringUtils.randomAlphanumeric(30));
+				book.setTitle(RandomString.make(30));
+				book.setText(RandomString.make(30));
 				bookList.add(book);
 			}
 			this.controller.saveAllBooks(bookList);
