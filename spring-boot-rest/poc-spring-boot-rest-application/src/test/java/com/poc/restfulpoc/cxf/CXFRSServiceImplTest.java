@@ -88,8 +88,8 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		// Reverse to the starting URI
 		wc.back(true);
 		wc.path("/customers/");
-		final Customer customer = Customer.builder().firstName("firstName").lastName("lastName")
-				.dateOfBirth(LocalDateTime.now()).build();
+		final Customer customer = Customer.builder().firstName("firstName")
+				.lastName("lastName").dateOfBirth(LocalDateTime.now()).build();
 		customer.setOrders(Collections.emptyList());
 		response = wc.post(customer);
 		replyString = response.readEntity(String.class);

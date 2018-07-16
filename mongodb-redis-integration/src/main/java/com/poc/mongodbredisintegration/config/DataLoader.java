@@ -22,8 +22,8 @@ import java.util.List;
 import com.poc.mongodbredisintegration.controller.MongoDBRedisIntegrationController;
 import com.poc.mongodbredisintegration.document.Book;
 import lombok.RequiredArgsConstructor;
-
 import org.apache.commons.lang3.RandomStringUtils;
+
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
