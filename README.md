@@ -25,6 +25,24 @@ Pull requests are welcome. To open your own pull request, click [here](https://g
 This project is using lombok so you need to prepare your IDE as described [here](http://www.vogella.com/tutorials/Lombok/article.html).
 After Setup import project as a maven project.
 
+### Jacoco
+**Code coverage** is a software metric used to measure how many lines of our code are executed during automated tests.
+JaCoCo reports help you visually analyze code coverage by using diamonds with colors for branches and background colors for lines:
+
+ - **Red diamond** means that no branches have been exercised during the test phase.
+ - **Yellow diamond** shows that the code is partially covered – some branches have not been exercised.
+ - **Green diamond** means that all branches have been exercised during the test.
+The same color code applies to the background color, but for lines coverage.
+
+JaCoCo mainly provides three important metrics:
+
+ - **Lines coverage** reflects the amount of code that has been exercised based on the number of Java byte code instructions called by the tests.
+ - **Branches coverage** shows the percent of exercised branches in the code – typically related to if/else and switch statements.
+- **Cyclomatic complexity** reflects the complexity of code by giving the number of paths needed to cover all the possible paths in a code through linear combination.
+To take a trivial example, if there is no if or switch statements in the code, the cyclomatic complexity will be 1, as we only need one execution path to cover the entire code.
+
+Generally the cyclomatic complexity reflects the number of test cases we need to implement in order to cover the entire code.
+
 ### How to apply spring-formatter
 
 To assign spring-formatter issue command `mvnw io.spring.javaformat:spring-javaformat-maven-plugin:apply` after adding plugin to pom.xml
