@@ -1,0 +1,73 @@
+= Getting started with Spring Boot REST Application
+rajadilipkolli
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toc-title: Index
+:toclevels: 4
+:sectlinks:
+
+This is the documentation of all resource API available.
+
+[[index-customer-API]]
+== Customer API
+	
+This section describes all options that can be performed in Customer API.
+
+[[index-find-all-customers-API]]
+=== GET /rest/customers/
+
+.Request sample with curl
+include::{snippets}/find-all-customers/curl-request.adoc[]
+.HTTP response
+include::{snippets}/find-all-customers/http-response.adoc[]
+.Response sample
+include::{snippets}/find-all-customers/response-body.adoc[]
+.Output fields
+include::{snippets}/find-all-customers/response-fields.adoc[]
+
+[[index-get-customer-API]]
+=== GET /rest/customers/{customerId}
+
+.Request sample with curl
+include::{snippets}/get-customer/curl-request.adoc[]
+.HTTP response
+include::{snippets}/get-customer/http-response.adoc[]
+.Response sample
+include::{snippets}/get-customer/response-body.adoc[]
+.Path parameters
+include::{snippets}/get-customer/path-parameters.adoc[]
+.Output fields
+include::{snippets}/get-customer/response-fields.adoc[]
+
+[[index-create-customer-full-pay-load-API]]
+=== POST /rest/customers/
+
+.Request sample with curl
+include::{snippets}/create-customer-full-pay-load/curl-request.adoc[]
+.HTTP response
+include::{snippets}/create-customer-full-pay-load/http-response.adoc[]
+.Input fields
+include::{snippets}/create-customer-full-pay-load/request-fields.adoc[]
+.Response Header
+include::{snippets}/create-customer-full-pay-load/response-headers.adoc[]
+
+[[index-update-customer-API]]
+=== PUT /rest/customers/{customerId}
+
+.Request sample with curl
+include::{snippets}/update-customer/curl-request.adoc[]
+.HTTP response
+include::{snippets}/update-customer/http-response.adoc[]
+.Response sample
+include::{snippets}/update-customer/response-body.adoc[]
+.Path parameters
+include::{snippets}/update-customer/path-parameters.adoc[]
+.Request Headers
+include::{snippets}/update-customer/request-headers.adoc[]
+.Request Body
+include::{snippets}/update-customer/request-body.adoc[]
+.Output fields
+include::{snippets}/update-customer/response-fields.adoc[]
+
