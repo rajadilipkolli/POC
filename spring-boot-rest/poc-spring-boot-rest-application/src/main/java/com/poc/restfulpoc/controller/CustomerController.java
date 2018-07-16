@@ -138,7 +138,14 @@ public class CustomerController {
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
 			@PathVariable("customerId") Long customerId) throws EntityNotFoundException {
 		log.info("Updating Customer {}", customerId);
-
+		final Customer currentUser = this.customerService.getCustomer(customerId);
+		if (currentUser.equals(customer)) {
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+		}
+		currentUser.setFirstName(customer.getFirstName());
+		currentUser.setLastName(customer.getLastName());
+		currentUser.setDateOfBirth(customer.getDateOfBirth());
+		currentUser.setAddress(customer.getAddress());
 		final Customer updatedCustomer = this.customerService.updateCustomer(customer,
 				customerId);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);

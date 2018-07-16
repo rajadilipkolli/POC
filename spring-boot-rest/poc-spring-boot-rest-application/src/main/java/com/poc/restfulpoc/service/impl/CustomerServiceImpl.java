@@ -75,11 +75,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@CachePut(value = "customer", key = "#customerId", unless = "#result == null")
 	public Customer updateCustomer(Customer customer, Long customerId)
 			throws EntityNotFoundException {
-		final Customer currentUser = getCustomer(customerId);
-		currentUser.setFirstName(customer.getFirstName());
-		currentUser.setLastName(customer.getLastName());
-		currentUser.setDateOfBirth(customer.getDateOfBirth());
-		currentUser.setAddress(customer.getAddress());
 		return this.customerRepository.save(customer);
 	}
 

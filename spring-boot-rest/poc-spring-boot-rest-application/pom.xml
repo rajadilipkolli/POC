@@ -13,7 +13,7 @@
 	<properties>
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>
 		<datasourceproxy.version>1.4.9</datasourceproxy.version>
-		<cxf.version>3.2.4</cxf.version>
+		<cxf.version>3.2.5</cxf.version>
 		<swagger-ui.version>3.17.0</swagger-ui.version>
 	</properties>
 
@@ -79,11 +79,6 @@
 		</dependency>
 
 		<!--********* Apache CXF Dependency ********* -->
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>

@@ -17,11 +17,15 @@
 package com.poc.restfulpoc.cxf;
 
 import java.net.HttpURLConnection;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Customer;
 import org.apache.commons.lang3.RandomUtils;
@@ -52,8 +56,10 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 	@DisplayName("Test Customers")
 	void testGetCustomers() throws Exception {
 		final WebClient wc = WebClient.create("http://localhost:" + port + API_PATH,
-				"username", "password", null);
-		wc.accept("application/json");
+				Collections.singletonList(new JacksonJaxbJsonProvider()), "username",
+				"password", null);
+		wc.accept(MediaType.APPLICATION_JSON_TYPE);
+		wc.type(MediaType.APPLICATION_JSON_TYPE);
 
 		wc.path("/customers/");
 		Response response = wc.get(Response.class);
@@ -69,7 +75,7 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		response = wc.get(Response.class);
 		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_OK);
 		replyString = response.readEntity(String.class);
-		final Customer cust = this.mapper.readValue(replyString, Customer.class);
+		Customer cust = this.mapper.readValue(replyString, Customer.class);
 		assertThat(replyString).isNotNull();
 		assertThat(cust.getId()).isEqualTo(custList.get(0).getId());
 
@@ -78,6 +84,18 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 		wc.path("/customers/").path(RandomUtils.nextLong(1000, 10000));
 		response = wc.get(Response.class);
 		assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_NOT_FOUND);
+
+		// Reverse to the starting URI
+		wc.back(true);
+		wc.path("/customers/");
+		final Customer customer = Customer.builder().firstName("firstName").lastName("lastName")
+				.dateOfBirth(LocalDateTime.now()).build();
+		customer.setOrders(Collections.emptyList());
+		response = wc.post(customer);
+		replyString = response.readEntity(String.class);
+		cust = this.mapper.readValue(replyString, Customer.class);
+		assertThat(cust.getFirstName()).isEqualTo("firstName");
+
 	}
 
 }

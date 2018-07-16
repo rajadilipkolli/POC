@@ -128,8 +128,10 @@ public class Customer implements Serializable {
 	}
 
 	public void setOrders(List<Order> orders) {
-		for (Order order : orders) {
-			addOrder(order);
+		if (orders != null) {
+			for (Order order : orders) {
+				addOrder(order);
+			}
 		}
 	}
 
