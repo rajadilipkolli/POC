@@ -354,14 +354,24 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<!-- Keep changes in the local repo, push will be done afterwards -->
 					<pushChanges>false</pushChanges>
 					<localCheckout>true</localCheckout>
+					<!-- Use a better name for the tag -->
 					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<tagBase>https://github.com/rajadilipkolli/POC/tags</tagBase>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.9</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

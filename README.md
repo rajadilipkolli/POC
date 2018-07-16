@@ -49,18 +49,11 @@ To assign spring-formatter issue command `mvnw io.spring.javaformat:spring-javaf
 
 ### How to release a multi module project to git 
 
-```
-git checkout -b release/v0.2.1
-
-mvn --batch-mode release:prepare release:perform -DreleaseVersion=0.2.1 -DdevelopmentVersion=0.2.2-SNAPSHOT
-
-git checkout development
-git merge --no-ff -m "v0.2.1-SNAPSHOT" release/v0.2.1
-
-git checkout master
-git merge --no-ff -m "v0.2.1" release/v0.2.1~1
-
-git branch -d release/v0.2.1
-
-git push --all && git push --tags
-```
+__Release using maven and git flow__
+  - git checkout -b release master(create branch release from master)
+  - mvn --batch-mode release:prepare release:perform -DscmCommentPrefix="bumping versions" -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.2-SNAPSHOT(sets comments, release version and development version)
+  - git checkout master(get lastest master in local)
+  - git merge --no-ff -m "Release Merge release into master" release (merge master with release/0.0.1 branch) or use git merge branchname
+  - git branch -D release(delete branch release)
+  - git push --all && git push --tags(push master and tags to repository)
+  - mvn release:clean(deleted backupfiles from local env)
