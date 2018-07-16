@@ -31,8 +31,6 @@ import com.poc.restfulpoc.repository.CustomerRepository;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -62,7 +60,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -74,7 +71,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 0.2.1
  *
  */
-@TestInstance(Lifecycle.PER_CLASS)
 public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest {
 
 	private static final String CUSTOMERRESOURCEURL = "/rest/customers/";
@@ -179,7 +175,7 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 						.with(httpBasic("username", "password"))
 						.content(this.objectMapper.writeValueAsString(customer))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andDo(print()).andExpect(status().isOk())
+				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.firstName", equalTo(firstName)))
 				.andDo(document("update-customer",
@@ -221,8 +217,6 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 				fieldWithPath("dateOfBirth")
 						.description("The date of birth of the customer")
 						.type(String.class.getSimpleName()),
-				fieldWithPath("address").description("The Address of the customer")
-						.type(Address.class.getSimpleName()),
 				fieldWithPath("address.id").description("Unique Id of the address")
 						.type(Long.class.getSimpleName()),
 				fieldWithPath("address.county").description("Country of the address")

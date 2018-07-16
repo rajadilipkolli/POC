@@ -62,14 +62,14 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	private String base;
 
 	@BeforeEach
-	public void setUp() throws Exception {
+	void setUp() throws Exception {
 		this.base = "/rest/customers/";
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();
 	}
 
 	@Test
-	public void testGetCustomerById() throws Exception {
+	void testGetCustomerById() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
 				String.format("%s%s", this.base, customerId), Customer.class);
@@ -89,7 +89,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void testGetCustomerByNullId() throws Exception {
+	void testGetCustomerByNullId() throws Exception {
 		final ResponseEntity<String> response = userRestTemplate()
 				.getForEntity(String.format("%s/%s", this.base, null), String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -97,14 +97,14 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Test
 	@DisplayName("Test with Id that doesn't exist")
-	public void testGetCustomerByIdWhichDoesntExist() throws Exception {
+	void testGetCustomerByIdWhichDoesntExist() throws Exception {
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
 				String.format("%s/%s", this.base, Long.MAX_VALUE), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	public void testGetAllCustomers() throws Exception {
+	void testGetAllCustomers() throws Exception {
 		final ResponseEntity<String> response = userRestTemplate().getForEntity(this.base,
 				String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -115,7 +115,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Test
 	@DisplayName("Creating Customer")
-	public void testCreateCustomer() throws Exception {
+	void testCreateCustomer() throws Exception {
 		final Customer customer = Customer.builder().firstName("Gary").lastName("Steale")
 				.dateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0)).build();
 		customer.setAddress(Address.builder().street("Main Street").town("Portadown")
@@ -169,7 +169,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Test
 	@DisplayName("Tests InValid Customer")
-	public void testInValidCustomer() {
+	void testInValidCustomer() {
 		Customer newCustomer = Customer.builder().firstName(" ").lastName("Steale")
 				.dateOfBirth(LocalDateTime.now().plusDays(1)).build();
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
@@ -182,7 +182,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void testUpdateCustomer() throws Exception {
+	void testUpdateCustomer() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> getCustomerResponse = userRestTemplate()
 				.getForEntity(String.format("%s/%s", this.base, customerId),
@@ -226,21 +226,21 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void testUpdateCustomerInValid() throws Exception {
+	void testUpdateCustomerInValid() throws Exception {
 		final ResponseEntity<Customer> getCustomerResponse = userRestTemplate()
 				.getForEntity(String.format("%s/%s", this.base, 999), Customer.class);
 		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	public void testRemoveInValidCustomer() throws Exception {
+	void testRemoveInValidCustomer() throws Exception {
 		final ResponseEntity<Customer> response = userRestTemplate()
 				.getForEntity(String.format("%s/%s", this.base, 999), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	public void testRemoveCustomer() throws Exception {
+	void testRemoveCustomer() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
 				String.format("%s/%s", this.base, customerId), Customer.class);
@@ -277,7 +277,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void testDeleteAllCustomers() throws Exception {
+	void testDeleteAllCustomers() throws Exception {
 		/* delete customer */
 		adminRestTemplate().delete(this.base);
 
@@ -287,7 +287,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	public void validateCache() {
+	void validateCache() {
 		final Cache customersCache = this.cacheManager.getCache("customer");
 		assertThat(customersCache).isNotNull();
 		customersCache.clear(); // Simple test assuming the cache is empty
