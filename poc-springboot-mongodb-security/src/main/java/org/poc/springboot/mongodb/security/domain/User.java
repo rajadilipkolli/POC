@@ -34,9 +34,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @since 0.2.1
  *
  */
-@Document(collection = "user")
+
 @Getter
 @Setter
+@Document(collection = "user")
 public class User {
 
 	@Id

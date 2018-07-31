@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
@@ -87,7 +87,7 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 	private MockMvc mockMvc;
 
 	@BeforeEach
-	void setUp(RestDocumentationExtension restDocumentation) {
+	void setUp(RestDocumentationContextProvider restDocumentation) {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
 				.apply(documentationConfiguration(restDocumentation))
 				.alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()),

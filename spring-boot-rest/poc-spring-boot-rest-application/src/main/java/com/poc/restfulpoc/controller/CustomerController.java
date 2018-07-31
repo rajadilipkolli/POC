@@ -81,7 +81,7 @@ public class CustomerController {
 	/**
 	 * Get customer using id. Returns HTTP 404 if customer not found.
 	 * @param customerId a {@link java.lang.Long} object.
-	 * @return Retrieved customer.
+	 * @return retrieved customer.
 	 * @throws EntityNotFoundException if any.
 	 */
 	@GetMapping(value = "{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)

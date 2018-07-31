@@ -57,3 +57,9 @@ __Release using maven and git flow__
   - git branch -D release(delete branch release)
   - git push --all && git push --tags(push master and tags to repository)
   - mvn release:clean(deleted backupfiles from local env)
+  
+  
+### Commands to ensure that dependencies are upgraded
+
+mvn versions:display-plugin-updates
+mvn versions:display-property-updates 

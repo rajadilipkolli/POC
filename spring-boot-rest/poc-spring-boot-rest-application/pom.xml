@@ -12,7 +12,7 @@
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>
 		<datasourceproxy.version>1.4.9</datasourceproxy.version>
 		<cxf.version>3.2.5</cxf.version>
-		<swagger-ui.version>3.17.0</swagger-ui.version>
+		<swagger-ui.version>3.17.6</swagger-ui.version>
 		<asciidoctor-maven-plugin.version>1.5.6</asciidoctor-maven-plugin.version>
 	</properties>
 
