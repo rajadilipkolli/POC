@@ -61,5 +61,5 @@ __Release using maven and git flow__
   
 ### Commands to ensure that dependencies are upgraded
 
-mvn versions:display-plugin-updates
-mvn versions:display-property-updates 
+ - mvn versions:display-plugin-updates
+ - mvn versions:display-property-updates 

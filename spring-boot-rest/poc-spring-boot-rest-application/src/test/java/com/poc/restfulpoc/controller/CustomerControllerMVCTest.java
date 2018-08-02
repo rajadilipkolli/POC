@@ -192,12 +192,19 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 			customer.setFirstName(RandomString.make(10));
 			customer.setLastName(RandomString.make(10));
 			customer.setDateOfBirth(LocalDateTime.now());
+
 			Address address = new Address();
 			address.setCounty(RandomString.make(10));
 			address.setPostcode(RandomString.make(10));
 			address.setStreet(RandomString.make(10));
 			address.setTown(RandomString.make(10));
 			customer.setAddress(address);
+
+			Order order = new Order();
+			order.setOrderNumber("ORD1");
+			order.setStatus(OrderStatus.NEW);
+			customer.addOrder(order);
+
 			return this.repository.save(customer).getId();
 		}
 		else {
