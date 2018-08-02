@@ -97,6 +97,7 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 
 	@Test
 	void findAllCustomers() throws JsonProcessingException, Exception {
+		this.repository.deleteAll();
 		createData();
 		this.mockMvc
 				.perform(get(CUSTOMERRESOURCEURL).with(httpBasic("username", "password"))
