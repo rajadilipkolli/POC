@@ -202,6 +202,7 @@ public class CustomerControllerMVCTest extends AbstractRestFulPOCApplicationTest
 
 			Order order = new Order();
 			order.setOrderNumber("ORD1");
+			order.setCreatedOn(LocalDateTime.now());
 			order.setStatus(OrderStatus.NEW);
 			customer.addOrder(order);
 
