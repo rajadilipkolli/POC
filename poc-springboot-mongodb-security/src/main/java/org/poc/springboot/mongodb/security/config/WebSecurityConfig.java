@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+	private CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
 
 	@Bean
 	public UserDetailsService mongoUserDetails() {
