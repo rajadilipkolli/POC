@@ -163,6 +163,37 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>module-main-class</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>jar</executable>
+							<arguments>
+								<argument>
+									--update
+								</argument>
+								<argument>
+									--file=${project.build.directory}/modules/${project.build.finalName}.jar
+								</argument>
+								<argument>
+									--main-class=org.poc.springboot.mongodb.security.App
+								</argument>
+								<argument>
+									--module-version=${project.version}
+								</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
