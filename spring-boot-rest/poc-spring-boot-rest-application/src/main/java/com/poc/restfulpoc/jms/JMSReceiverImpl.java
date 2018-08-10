@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.service.impl;
+package com.poc.restfulpoc.jms;
 
 import com.poc.restfulpoc.repository.CustomerRepository;
-import com.poc.restfulpoc.service.JMSReceiver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

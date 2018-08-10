@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.cxf;
-
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package com.poc.restfulpoc.jms;
 
 /**
- * Important: Including jackson-jaxrs-json-provider dependency along with a
- * JacksonJsonProvider bean fixed ERROR JAXRSUtils:1793 - No message body writer has been
- * found for class java.util.ArrayList, ContentType: application/json.
+ * <p>
+ * JMSReceiver interface.
+ * </p>
  *
  * @author Raja Kolli
+ * @version 0: 5
  */
-@Configuration
-public class ProvidersConfig {
+public interface JMSReceiver {
 
-	@Bean
-	public JacksonJsonProvider jsonProvider() {
-		return new JacksonJsonProvider();
-	}
+	/**
+	 * <p>
+	 * receiveMessage.
+	 * </p>
+	 * @param customerId a {@link java.lang.String} object.
+	 */
+	void receiveMessage(String customerId);
 
 }

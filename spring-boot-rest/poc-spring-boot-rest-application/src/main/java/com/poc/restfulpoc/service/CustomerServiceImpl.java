@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.service.impl;
+package com.poc.restfulpoc.service;
 
 import java.util.List;
 
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
-import com.poc.restfulpoc.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.cxf.impl;
+package com.poc.restfulpoc.cxf.service;
 
 import java.net.URI;
 import java.util.List;
@@ -23,14 +23,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import com.poc.restfulpoc.cxf.CXFRSService;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.cxf.feature.Features;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,8 +42,12 @@ import org.springframework.stereotype.Service;
 @Features(features = "org.apache.cxf.feature.LoggingFeature")
 public class CXFRSServiceImpl implements CXFRSService {
 
-	@Autowired
-	private CustomerService customerService;
+	private final CustomerService customerService;
+
+	public CXFRSServiceImpl(CustomerService customerService) {
+		super();
+		this.customerService = customerService;
+	}
 
 	@Override
 	public Response getCustomers() {

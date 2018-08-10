@@ -27,7 +27,6 @@ import org.poc.springboot.mongodb.security.domain.User;
 import org.poc.springboot.mongodb.security.repository.RoleRepository;
 import org.poc.springboot.mongodb.security.repository.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,14 +45,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	@Autowired
-	private RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public CustomUserDetailsService(UserRepository userRepository,
+			RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		super();
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
 	public User findUserByEmail(String email) {
 		return this.userRepository.findByEmail(email);

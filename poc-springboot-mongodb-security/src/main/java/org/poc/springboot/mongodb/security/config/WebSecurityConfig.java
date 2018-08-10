@@ -18,7 +18,6 @@ package org.poc.springboot.mongodb.security.config;
 
 import org.poc.springboot.mongodb.security.service.CustomUserDetailsService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,15 +40,24 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
-	private CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+	private final CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+
+	private final CustomUserDetailsService customUserDetailsService;
+
+	public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder,
+			CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler,
+			CustomUserDetailsService customUserDetailsService) {
+		super();
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.customizeAuthenticationSuccessHandler = customizeAuthenticationSuccessHandler;
+		this.customUserDetailsService = customUserDetailsService;
+	}
 
 	@Bean
 	public UserDetailsService mongoUserDetails() {
-		return new CustomUserDetailsService();
+		return this.customUserDetailsService;
 	}
 
 	@Override

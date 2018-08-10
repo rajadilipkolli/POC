@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.cxf;
+package com.poc.restfulpoc.cxf.service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

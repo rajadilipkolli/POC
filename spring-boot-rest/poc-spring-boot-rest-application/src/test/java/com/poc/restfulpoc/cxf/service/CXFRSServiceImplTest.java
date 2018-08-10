@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.cxf;
+package com.poc.restfulpoc.cxf.service;
 
 import java.net.HttpURLConnection;
 import java.time.LocalDateTime;

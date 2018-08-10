@@ -21,7 +21,6 @@ import javax.validation.Valid;
 import org.poc.springboot.mongodb.security.domain.User;
 import org.poc.springboot.mongodb.security.service.CustomUserDetailsService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -40,8 +39,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	@Autowired
-	private CustomUserDetailsService userService;
+	private final CustomUserDetailsService userService;
+
+	public LoginController(CustomUserDetailsService userService) {
+		super();
+		this.userService = userService;
+	}
 
 	@GetMapping("/login")
 	public ModelAndView login() {
