@@ -38,7 +38,7 @@ public class Role {
 	private String role;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id) {
@@ -46,7 +46,7 @@ public class Role {
 	}
 
 	public String getRole() {
-		return role;
+		return this.role;
 	}
 
 	public void setRole(String role) {

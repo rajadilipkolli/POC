@@ -51,7 +51,7 @@ public class User {
 	private Set<Role> roles;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id) {
@@ -59,7 +59,7 @@ public class User {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -67,7 +67,7 @@ public class User {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -75,7 +75,7 @@ public class User {
 	}
 
 	public String getFullname() {
-		return fullname;
+		return this.fullname;
 	}
 
 	public void setFullname(String fullname) {
@@ -83,7 +83,7 @@ public class User {
 	}
 
 	public boolean isEnabled() {
-		return enabled;
+		return this.enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -91,7 +91,7 @@ public class User {
 	}
 
 	public Set<Role> getRoles() {
-		return roles;
+		return this.roles;
 	}
 
 	public void setRoles(Set<Role> roles) {
