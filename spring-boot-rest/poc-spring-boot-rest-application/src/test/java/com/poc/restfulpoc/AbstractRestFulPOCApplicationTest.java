@@ -16,6 +16,7 @@
 
 package com.poc.restfulpoc;
 
+import java.time.Duration;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,7 +77,8 @@ public abstract class AbstractRestFulPOCApplicationTest {
 
 		@Bean
 		public RestTemplateBuilder restTemplateBuilder() {
-			return new RestTemplateBuilder().setConnectTimeout(1000).setReadTimeout(1000);
+			return new RestTemplateBuilder().setConnectTimeout(Duration.ofSeconds(1))
+					.setReadTimeout(Duration.ofSeconds(1));
 		}
 
 	}
