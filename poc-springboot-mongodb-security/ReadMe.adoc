@@ -1,0 +1,13 @@
+= Spring Boot, Security, and Data MongoDB Authentication Example
+
+This project aims to walk through an example of creating the authentication or log in using Spring Boot, Spring Security, Spring Data and MongoDB for Java web application with custom User Details Service. Using Spring Boot will make web development more compact and faster. Now, we'll be adding security to the web application using Spring Security.
+
+Spring Security is one of the most used Security frameworks for Java Web Application. For this project, the following tools and framework are required:
+ * https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java Development Kit (JDK) 8]
+ * Spring
+ - http://spring.io/projects/spring-boot[Spring Boot]
+ - https://spring.io/guides/gs/serving-web-content/[Spring MVC]
+ - https://projects.spring.io/spring-data-mongodb/[Spring Data MongoDB]
+ - https://spring.io/projects/spring-security[Spring Security Core]
+ * https://www.thymeleaf.org[Thymeleaf]
+ * https://start.spring.io/[Spring Initializer]
