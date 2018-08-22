@@ -6,14 +6,27 @@
     <artifactId>poc-parent</artifactId>
     <version>0.3.0-SNAPSHOT</version>
   </parent>
+
   <artifactId>poc-mongodb-redis-integration</artifactId>
   <packaging>jar</packaging>
   <name>MongoDB-RedisIntegration</name>
   <description>This project demonstrates how to add fault torrent caching using Redis with MongoDB</description>
+
   <properties>
     <main.basedir>${project.parent.basedir}</main.basedir>
   </properties>
+
   <dependencies>
+    <!-- Don't commit -->
+    <!-- <dependency>
+      <groupId>de.flapdoodle.embed</groupId>
+      <artifactId>de.flapdoodle.embed.mongo</artifactId>
+    </dependency> -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
     <!-- tag::actuator[] -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -40,15 +53,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <!-- Don't commit -->
-    <!-- <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-    </dependency> -->
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -64,20 +69,7 @@
       <artifactId>reactor-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- tag::tests[] -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <!-- Exclude JUnit 4 from starter-test (and all other related test-starter, 
-				i.e those for security and project reactor -->
-      <exclusions>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+
     <!-- Provide JUnit 5 API -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -99,6 +91,20 @@
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-launcher</artifactId>
       <scope>test</scope>
+    </dependency>
+    <!-- tag::tests[] -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+      <!-- Exclude JUnit 4 from starter-test (and all other related test-starter, 
+				i.e those for security and project reactor -->
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- end::tests[] -->
   </dependencies>

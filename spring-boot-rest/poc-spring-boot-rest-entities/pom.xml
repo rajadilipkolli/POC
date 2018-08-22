@@ -10,10 +10,11 @@
   <properties>
     <main.basedir>${project.parent.parent.basedir}</main.basedir>
   </properties>
+
   <dependencies>
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -22,8 +23,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
