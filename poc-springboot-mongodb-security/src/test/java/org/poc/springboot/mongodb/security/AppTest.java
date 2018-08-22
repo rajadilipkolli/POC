@@ -17,10 +17,8 @@
 package org.poc.springboot.mongodb.security;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Unit test for simple App.
@@ -28,7 +26,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * @author Raja Kolli
  * @since 0.2.1
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class AppTest {
 
