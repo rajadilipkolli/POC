@@ -43,7 +43,7 @@
       <groupId>javax.xml.ws</groupId>
       <artifactId>jaxws-api</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>net.ttddyy</groupId>
       <artifactId>datasource-proxy</artifactId>
@@ -62,7 +62,7 @@
       <version>${cxf.version}</version>
     </dependency>
     <!--********* ./ Apache CXF Dependency ********* -->
-    
+
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
