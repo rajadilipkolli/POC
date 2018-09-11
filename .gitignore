@@ -31,3 +31,4 @@ hs_err_pid*
 *.sts4-cache
 *.springBeans
 spring-boot-rest/poc-spring-boot-rest-jooq/src/main/java/com/poc/restfulpoc/jooq/*
+*.bak

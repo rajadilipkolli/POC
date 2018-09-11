@@ -3,7 +3,8 @@
 == Introduction
 This repo is for all POC which I does and learnings I learnt
 Below are the projects that I have completed POC
- - link:mongodb-redis-integration/README.md[mongodb-redis-integration] -> adding fault tolerant caching layer to MongoDB.
+
+ - link:mongodb-redis-integration/ReadMe.adoc[mongodb-redis-integration] -> adding fault tolerant caching layer to MongoDB.
  - link:spring-boot-rest/README.md[spring-boot-rest-poc] -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
  - link:poc-springboot-mongodb-security/ReadMe.adoc[springboot-mongodb-security]  -> Spring Boot, Security, and Data MongoDB Authentication Example
 
@@ -52,6 +53,7 @@ To assign spring-formatter issue command after adding plugin to pom.xml
 === How to release a multi module project to git 
 
 __Release using maven and git flow__
+
   - git checkout -b release master(create branch release from master)
   - mvn --batch-mode release:prepare release:perform -DscmCommentPrefix="bumping versions" -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.2-SNAPSHOT(sets comments, release version and development version)
   - git checkout master(get lastest master in local)
