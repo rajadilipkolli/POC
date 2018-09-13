@@ -1,17 +1,34 @@
-package com.poc.restfulpoc.controller;
+/*
+ * Copyright 2015-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+package com.poc.restfulpoc.controller;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.service.CustomerService;
+import com.poc.restfulpoc.validator.CustomerValidator;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,11 +38,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.poc.restfulpoc.entities.Customer;
-import com.poc.restfulpoc.service.CustomerService;
-import com.poc.restfulpoc.validator.CustomerValidator;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CustomerController.class)
 @AutoConfigureMockMvc(secure = false)
@@ -48,9 +63,9 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetCustomers() throws Exception {
-		given(customerService.getCustomers()).willReturn(Arrays.asList(customer));
+		given(this.customerService.getCustomers()).willReturn(Arrays.asList(this.customer));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/"))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("[0].firstName").value("firstName"))
 				.andExpect(jsonPath("[0].lastName").value("lastName"));
@@ -59,10 +74,10 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetCustomer() throws Exception {
-		given(customerService.getCustomer(ArgumentMatchers.anyLong()))
-				.willReturn(customer);
+		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
+				.willReturn(this.customer);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}",
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}",
 				RandomUtils.nextLong())).andExpect(status().isOk())
 				.andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"));
@@ -70,34 +85,34 @@ class CustomerControllerTest {
 
 	@Test
 	void testCreateCustomer() throws JsonProcessingException, Exception {
-		BDDMockito.willDoNothing().given(customerValidator)
+		BDDMockito.willDoNothing().given(this.customerValidator)
 				.validate(ArgumentMatchers.any(), ArgumentMatchers.any());
-		given(customerService.isCustomerExist(ArgumentMatchers.anyString()))
+		given(this.customerService.isCustomerExist(ArgumentMatchers.anyString()))
 				.willReturn(false);
 		BDDMockito
-				.given(customerService
+				.given(this.customerService
 						.createCustomer(ArgumentMatchers.any(Customer.class)))
 				.willReturn(null);
 
 		this.mockMvc
-				.perform(post("/rest/customers/")
-						.content(this.objectMapper.writeValueAsString(customer))
+				.perform(MockMvcRequestBuilders.post("/rest/customers/")
+						.content(this.objectMapper.writeValueAsString(this.customer))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isCreated());
 	}
 
 	@Test
 	void testUpdateCustomer() throws Exception {
-		given(customerService.getCustomer(ArgumentMatchers.anyLong()))
-				.willReturn(customer);
+		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
+				.willReturn(this.customer);
 		LocalDateTime dateOfBirth = LocalDateTime.now();
-		customer.setDateOfBirth(dateOfBirth);
-		given(customerService.updateCustomer(ArgumentMatchers.any(Customer.class),
-				ArgumentMatchers.anyLong())).willReturn(customer);
+		this.customer.setDateOfBirth(dateOfBirth);
+		given(this.customerService.updateCustomer(ArgumentMatchers.any(Customer.class),
+				ArgumentMatchers.anyLong())).willReturn(this.customer);
 
-		mockMvc.perform(MockMvcRequestBuilders
+		this.mockMvc.perform(MockMvcRequestBuilders
 				.put("/rest/customers/{customerId}", RandomUtils.nextLong())
-				.content(this.objectMapper.writeValueAsString(customer))
+				.content(this.objectMapper.writeValueAsString(this.customer))
 				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
 				.andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"))
@@ -106,16 +121,16 @@ class CustomerControllerTest {
 
 	@Test
 	void testRemoveCustomer() throws Exception {
-		BDDMockito.willDoNothing().given(customerService)
+		BDDMockito.willDoNothing().given(this.customerService)
 				.deleteCustomerById(ArgumentMatchers.anyLong());
-		mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/{customerId}",
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/{customerId}",
 				RandomUtils.nextLong())).andExpect(status().isNoContent());
 	}
 
 	@Test
 	void testDeleteAllUsers() throws Exception {
-		BDDMockito.willDoNothing().given(customerService).deleteAllCustomers();
-		mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/"))
+		BDDMockito.willDoNothing().given(this.customerService).deleteAllCustomers();
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/"))
 				.andExpect(status().isNoContent());
 	}
 
