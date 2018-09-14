@@ -29,7 +29,7 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void getCarDetails_returnCarInfo() {
+	public void getBookDetails_returnBookInfo() {
 		given(bookRepository.findBookByTitle("JUNIT_TITLE"))
 				.willReturn(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
 						.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build());
@@ -42,7 +42,7 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void getCarDetails_whenCarNotFound() throws Exception {
+	public void getBookDetails_whenBookNotFound() throws Exception {
 		given(bookRepository.findBookByTitle("JUNIT_TITLE")).willReturn(null);
 
 		bookService.findBookByTitle("prius");

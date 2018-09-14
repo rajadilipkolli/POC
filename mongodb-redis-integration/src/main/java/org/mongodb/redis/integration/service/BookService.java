@@ -6,4 +6,6 @@ public interface BookService {
 
 	Book findBookByTitle(String titleName);
 
+	Book saveBook(Book book);
+
 }
