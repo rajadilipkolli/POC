@@ -38,8 +38,6 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import org.springframework.jms.core.JmsTemplate;
 
@@ -49,14 +47,13 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
 @RunWith(JUnitPlatform.class)
-@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class CustomerServiceTest {
 
 	@Mock
-	CustomerRepository customerRepository;
+	private CustomerRepository customerRepository;
 
 	@Mock
-	JmsTemplate jmsTemplate;
+	private JmsTemplate jmsTemplate;
 
 	private CustomerService customerService;
 
