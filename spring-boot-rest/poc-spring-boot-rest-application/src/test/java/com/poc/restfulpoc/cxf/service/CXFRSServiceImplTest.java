@@ -27,9 +27,12 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
+import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.repository.CustomerRepository;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,9 +55,21 @@ class CXFRSServiceImplTest extends AbstractRestFulPOCApplicationTest {
 	@LocalServerPort
 	private int port;
 
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private DataBuilder dataBuilder;
+
+	@BeforeEach
+	void setUp() throws Exception {
+		this.customerRepository.deleteAll();
+		this.dataBuilder.run();
+	}
+
 	@Test
 	@DisplayName("Test Customers")
-	void testGetCustomers() throws Exception {
+	void testCustomerAPI() throws Exception {
 		final WebClient wc = WebClient.create("http://localhost:" + port + API_PATH,
 				Collections.singletonList(new JacksonJaxbJsonProvider()), "username",
 				"password", null);

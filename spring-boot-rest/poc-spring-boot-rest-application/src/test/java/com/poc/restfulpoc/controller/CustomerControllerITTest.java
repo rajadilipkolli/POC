@@ -26,9 +26,13 @@ import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.FixMethodOrder;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.runners.MethodSorters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -48,6 +52,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Raja Kolli
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestInstance(Lifecycle.PER_CLASS)
 class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
@@ -59,20 +65,19 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	@Autowired
 	private CacheManager cacheManager;
 
-	private String base;
+	private static final String BASEURL = "/rest/customers/";
 
-	@BeforeEach
+	@BeforeAll
 	void setUp() throws Exception {
-		this.base = "/rest/customers/";
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();
 	}
 
 	@Test
-	void testGetCustomerById() throws Exception {
+	void test01_GetCustomerById() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
-				String.format("%s%s", this.base, customerId), Customer.class);
+				String.format("%s%s", BASEURL, customerId), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getHeaders().getContentType().toString())
 				.isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
@@ -89,43 +94,43 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	void testGetCustomerByNullId() throws Exception {
+	void test02_GetCustomerByNullId() throws Exception {
 		final ResponseEntity<String> response = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, null), String.class);
+				.getForEntity(String.format("%s/%s", BASEURL, null), String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 
 	@Test
 	@DisplayName("Test with Id that doesn't exist")
-	void testGetCustomerByIdWhichDoesntExist() throws Exception {
+	void test03_GetCustomerByIdWhichDoesntExist() throws Exception {
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
-				String.format("%s/%s", this.base, Long.MAX_VALUE), Customer.class);
+				String.format("%s/%s", BASEURL, Long.MAX_VALUE), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	void testGetAllCustomers() throws Exception {
-		final ResponseEntity<String> response = userRestTemplate().getForEntity(this.base,
+	void test04_GetAllCustomers() throws Exception {
+		final ResponseEntity<String> response = userRestTemplate().getForEntity(BASEURL,
 				String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		final List<Customer> customers = convertJsonToCustomers(response.getBody());
-		assertThat(customers.size()).isEqualTo(3);
+		assertThat(customers.size()).isGreaterThanOrEqualTo(3);
 	}
 
 	@Test
 	@DisplayName("Creating Customer")
-	void testCreateCustomer() throws Exception {
+	void test05_CreateCustomer() throws Exception {
 		final Customer customer = Customer.builder().firstName("Gary").lastName("Steale")
 				.dateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0)).build();
 		customer.setAddress(Address.builder().street("Main Street").town("Portadown")
 				.county("Armagh").postcode("BT359JK").build());
-		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
+		ResponseEntity<Customer> response = userRestTemplate().postForEntity(BASEURL,
 				customer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 		assertThat(response.getHeaders().getContentLength()).isEqualTo(0);
 		String location = response.getHeaders().getFirst("Location");
-		assertThat(location).contains(this.base);
+		assertThat(location).contains(BASEURL);
 
 		response = userRestTemplate().getForEntity(location, Customer.class);
 		Customer returnedCustomer = response.getBody();
@@ -146,13 +151,13 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 				.build();
 		newCustomer.setAddress(Address.builder().street("Main Street").town("Portadown")
 				.county("Armagh").postcode("BT359JK").build());
-		response = userRestTemplate().postForEntity(this.base, newCustomer,
+		response = userRestTemplate().postForEntity(BASEURL, newCustomer,
 				Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 		assertThat(response.getHeaders().getContentLength()).isEqualTo(0);
 
 		location = response.getHeaders().getFirst("Location");
-		assertThat(location).contains(this.base);
+		assertThat(location).contains(BASEURL);
 
 		response = userRestTemplate().getForEntity(location, Customer.class);
 		returnedCustomer = response.getBody();
@@ -162,30 +167,30 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 				.address(Address.builder().street("Main Street").town("Portadown")
 						.county("Armagh").postcode("BT359JK").build())
 				.build();
-		response = userRestTemplate().postForEntity(this.base, newCustomer,
+		response = userRestTemplate().postForEntity(BASEURL, newCustomer,
 				Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 	}
 
 	@Test
 	@DisplayName("Tests InValid Customer")
-	void testInValidCustomer() {
+	void test06_InValidCustomer() {
 		Customer newCustomer = Customer.builder().firstName(" ").lastName("Steale")
 				.dateOfBirth(LocalDateTime.now().plusDays(1)).build();
-		ResponseEntity<Customer> response = userRestTemplate().postForEntity(this.base,
+		ResponseEntity<Customer> response = userRestTemplate().postForEntity(BASEURL,
 				newCustomer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
 		newCustomer = Customer.builder().firstName(null).lastName("Steale").build();
-		response = userRestTemplate().postForEntity(this.base, newCustomer,
+		response = userRestTemplate().postForEntity(BASEURL, newCustomer,
 				Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 
 	@Test
-	void testUpdateCustomer() throws Exception {
+	void test07_UpdateCustomer() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> getCustomerResponse = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, customerId),
+				.getForEntity(String.format("%s/%s", BASEURL, customerId),
 						Customer.class);
 		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(getCustomerResponse.getHeaders().getContentType().toString())
@@ -200,7 +205,6 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(persistedCustomer.getAddress().getCounty()).isEqualTo("India");
 		assertThat(persistedCustomer.getAddress().getPostcode()).isEqualTo("BT893PY");
 
-		persistedCustomer.setFirstName("Wayne");
 		persistedCustomer.setLastName("Rooney");
 
 		/* PUT updated customer */
@@ -209,14 +213,14 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		final HttpEntity<Customer> entity = new HttpEntity<Customer>(persistedCustomer,
 				headers);
 		final ResponseEntity<Customer> response = userRestTemplate().exchange(
-				String.format("%s/%s", this.base, customerId), HttpMethod.PUT, entity,
-				Customer.class, customerId);
+				String.format("%s/%s", BASEURL, customerId), HttpMethod.PUT, entity,
+				Customer.class);
 
 		assertThat(response.getBody()).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		final Customer updatedCustomer = response.getBody();
-		assertThat(updatedCustomer.getFirstName()).isEqualTo("Wayne");
+		assertThat(updatedCustomer.getFirstName()).isEqualTo("Raja");
 		assertThat(updatedCustomer.getLastName()).isEqualTo("Rooney");
 		assertThat(updatedCustomer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(updatedCustomer.getAddress().getStreet()).isEqualTo("High Street");
@@ -226,31 +230,59 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	void testUpdateCustomerInValid() throws Exception {
-		final ResponseEntity<Customer> getCustomerResponse = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, 999), Customer.class);
+	void test08_UpdateCustomerInValid() throws Exception {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		final HttpEntity<Customer> entity = new HttpEntity<>(
+				Customer.builder().build(), headers);
+		final ResponseEntity<Customer> getCustomerResponse = userRestTemplate().exchange(
+				String.format("%s/%s", BASEURL, 999), HttpMethod.PUT, entity,
+				Customer.class);
+
 		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	void testRemoveInValidCustomer() throws Exception {
-		final ResponseEntity<Customer> response = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, 999), Customer.class);
+	void test09_RemoveInValidCustomer() throws Exception {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		final ResponseEntity<Object> response = adminRestTemplate().exchange(
+				String.format("%s/%s", BASEURL, 999), HttpMethod.DELETE,
+				new HttpEntity<Customer>(Customer.builder().build(), headers),
+				Object.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	void testRemoveCustomer() throws Exception {
+	void test10_validateCache() {
+		final Cache customersCache = this.cacheManager.getCache("customer");
+		assertThat(customersCache).isNotNull();
+		customersCache.clear(); // Simple test assuming the cache is empty
+		final Long custId = getCustomerIdByFirstName("Raja");
+		assertThat(customersCache.get(custId)).isNull();
+		final ResponseEntity<Customer> response = userRestTemplate()
+				.getForEntity(String.format("%s/%s", BASEURL, custId), Customer.class);
+		final Customer customer = response.getBody();
+		final Customer cacheCustomer = (Customer) customersCache.get(custId).get();
+		assertThat(cacheCustomer.getFirstName()).isEqualTo(customer.getFirstName());
+		assertThat(cacheCustomer.getLastName()).isEqualTo(customer.getLastName());
+		assertThat(cacheCustomer.getDateOfBirth()).isEqualTo(customer.getDateOfBirth());
+		assertThat(cacheCustomer.getAddress().getCounty())
+				.isEqualTo(customer.getAddress().getCounty());
+	}
+
+	@Test
+	void test11_RemoveCustomer() throws Exception {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> response = userRestTemplate().getForEntity(
-				String.format("%s/%s", this.base, customerId), Customer.class);
+				String.format("%s/%s", BASEURL, customerId), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getHeaders().getContentType().toString())
 				.isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
 		final Customer customer = response.getBody();
 		assertThat(customer.getFirstName()).isEqualTo("Raja");
-		assertThat(customer.getLastName()).isEqualTo("Kolli");
+		assertThat(customer.getLastName()).isEqualTo("Rooney");
 		assertThat(customer.getDateOfBirth()).isEqualTo("1982-01-10T00:00:00");
 		assertThat(customer.getAddress().getStreet()).isEqualTo("High Street");
 		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
@@ -258,7 +290,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(customer.getAddress().getPostcode()).isEqualTo("BT893PY");
 
 		/* delete customer */
-		adminRestTemplate().delete(String.format("%s/%s", this.base, customerId),
+		adminRestTemplate().delete(String.format("%s/%s", BASEURL, customerId),
 				Customer.class);
 
 		// Sleeping for 1 second so that JMS message is consumed
@@ -271,37 +303,19 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 		/* attempt to get customer and ensure we get a 404 */
 		final ResponseEntity<Customer> secondCallResponse = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, customerId),
+				.getForEntity(String.format("%s/%s", BASEURL, customerId),
 						Customer.class);
 		assertThat(secondCallResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test
-	void testDeleteAllCustomers() throws Exception {
+	void test12_DeleteAllCustomers() throws Exception {
 		/* delete customer */
-		adminRestTemplate().delete(this.base);
+		adminRestTemplate().delete(BASEURL);
 
 		final ResponseEntity<Customer> response = userRestTemplate()
-				.getForEntity(this.base, Customer.class);
+				.getForEntity(BASEURL, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-	}
-
-	@Test
-	void validateCache() {
-		final Cache customersCache = this.cacheManager.getCache("customer");
-		assertThat(customersCache).isNotNull();
-		customersCache.clear(); // Simple test assuming the cache is empty
-		final Long custId = getCustomerIdByFirstName("Raja");
-		assertThat(customersCache.get(custId)).isNull();
-		final ResponseEntity<Customer> response = userRestTemplate()
-				.getForEntity(String.format("%s/%s", this.base, custId), Customer.class);
-		final Customer customer = response.getBody();
-		final Customer cacheCustomer = (Customer) customersCache.get(custId).get();
-		assertThat(cacheCustomer.getFirstName()).isEqualTo(customer.getFirstName());
-		assertThat(cacheCustomer.getLastName()).isEqualTo(customer.getLastName());
-		assertThat(cacheCustomer.getDateOfBirth()).isEqualTo(customer.getDateOfBirth());
-		assertThat(cacheCustomer.getAddress().getCounty())
-				.isEqualTo(customer.getAddress().getCounty());
 	}
 
 	/**
