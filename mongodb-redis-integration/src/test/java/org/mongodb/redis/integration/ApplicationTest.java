@@ -1,38 +1,44 @@
 package org.mongodb.redis.integration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.mongodb.redis.integration.document.Book;
+import org.mongodb.redis.integration.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 /**
- * Unit test for simple App.
+ * Integration test for simple App.
  */
-public class ApplicationTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public ApplicationTest( String testName )
-    {
-        super( testName );
-    }
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class ApplicationTest {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( ApplicationTest.class );
-    }
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+	@Autowired
+	private BookRepository bookRepository;
+
+	@Test
+	public void getBook_returnsBookDetails() throws Exception {
+		// arrange
+		Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
+		this.bookRepository.save(book);
+
+		// act
+		ResponseEntity<Book> response = restTemplate
+				.getForEntity("/book/findByTitle/MongoDbCookBook", Book.class);
+
+		// assert
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
+		assertThat(response.getBody().getAuthor()).isEqualTo("Raja");
+
+	}
+
 }
