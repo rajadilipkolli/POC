@@ -5,8 +5,8 @@
 
 	<groupId>com.example.poc</groupId>
 	<artifactId>poc-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<version>0.3.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<name>poc-parent</name>
 	<description>Demo project for Spring Boot</description>
@@ -134,4 +134,7 @@
 	</pluginRepositories>
 
 
+	<modules>
+		<module>mongodb-redis-integration</module>
+	</modules>
 </project>
