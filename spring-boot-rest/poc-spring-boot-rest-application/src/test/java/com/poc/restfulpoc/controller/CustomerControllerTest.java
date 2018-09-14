@@ -30,11 +30,11 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CustomerController.class)
-@AutoConfigureMockMvc(secure = false)
+@WithMockUser(roles = "USER")
 class CustomerControllerTest {
 
 	@Autowired
@@ -63,7 +63,8 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetCustomers() throws Exception {
-		given(this.customerService.getCustomers()).willReturn(Arrays.asList(this.customer));
+		given(this.customerService.getCustomers())
+				.willReturn(Arrays.asList(this.customer));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/"))
 				.andExpect(status().isOk())
@@ -77,8 +78,10 @@ class CustomerControllerTest {
 		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
 				.willReturn(this.customer);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}",
-				RandomUtils.nextLong())).andExpect(status().isOk())
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}",
+						RandomUtils.nextLong()))
+				.andExpect(status().isOk())
 				.andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"));
 	}
@@ -110,16 +113,19 @@ class CustomerControllerTest {
 		given(this.customerService.updateCustomer(ArgumentMatchers.any(Customer.class),
 				ArgumentMatchers.anyLong())).willReturn(this.customer);
 
-		this.mockMvc.perform(MockMvcRequestBuilders
-				.put("/rest/customers/{customerId}", RandomUtils.nextLong())
-				.content(this.objectMapper.writeValueAsString(this.customer))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+		this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.put("/rest/customers/{customerId}", RandomUtils.nextLong())
+						.content(this.objectMapper.writeValueAsString(this.customer))
+						.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk())
 				.andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"))
 				.andExpect(jsonPath("dateOfBirth").value(dateOfBirth.toString()));
 	}
 
 	@Test
+	@WithMockUser(roles = "ADMIN")
 	void testRemoveCustomer() throws Exception {
 		BDDMockito.willDoNothing().given(this.customerService)
 				.deleteCustomerById(ArgumentMatchers.anyLong());
@@ -128,6 +134,7 @@ class CustomerControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = "ADMIN")
 	void testDeleteAllUsers() throws Exception {
 		BDDMockito.willDoNothing().given(this.customerService).deleteAllCustomers();
 		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/"))

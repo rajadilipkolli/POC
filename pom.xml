@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>2.1.0.M2</version>
+    <version>2.1.0.M3</version>
   </parent>
 
   <groupId>com.example.poc</groupId>
@@ -47,6 +47,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <release>${java.version}</release>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
         <dependencies>
@@ -56,23 +58,6 @@
             <version>6.2</version>
           </dependency>
         </dependencies>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <show>private</show>
-          <failOnError>false</failOnError>
-        </configuration>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
 
       <plugin>
