@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BookServiceImpl implements BookService {
 
 	private final BookRepository bookRepository;
+
 	private final MongoTemplate mongoTemplate;
 
 	@Override

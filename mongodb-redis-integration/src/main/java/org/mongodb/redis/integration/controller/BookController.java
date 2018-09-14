@@ -61,7 +61,7 @@ public class BookController {
 	public String deleteCache() {
 		return this.bookService.deleteAllCache();
 	}
-	
+
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	private void bookNotFoundHandler(BookNotFoundException ex) {

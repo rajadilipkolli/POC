@@ -15,5 +15,5 @@ public class RedisCachingConfig extends CachingConfigurerSupport {
 	public CacheErrorHandler errorHandler() {
 		return new CustomCacheErrorHandler();
 	}
-	
+
 }

@@ -49,14 +49,20 @@ public class ApplicationTest {
 		assertThat(response.getBody().getAuthor()).isEqualTo("Raja1");
 
 		// act by Delete
-		restTemplate.delete("/book/deleteByTitle/MongoDbCookBook");
+		ResponseEntity<String> resp = restTemplate.exchange(
+				"/book/deleteByTitle/MongoDbCookBook", HttpMethod.DELETE, null,
+				String.class);
+		assertThat(resp).isNotNull();
+		assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
+		assertThat(resp.getBody()).isEqualTo("Book with title MongoDbCookBook deleted");
+
 		response = restTemplate.getForEntity("/book/findByTitle/MongoDbCookBook",
 				Book.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-		
-		ResponseEntity<String> cacheResponse = restTemplate.getForEntity("/book/deleteCache", String.class);
-		assertThat(cacheResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(cacheResponse.getBody()).isEqualTo("Deleted Full Cache");
+
+		resp = restTemplate.getForEntity("/book/deleteCache", String.class);
+		assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(resp.getBody()).isEqualTo("Deleted Full Cache");
 	}
 
 }
