@@ -4,10 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.BDDMockito.given;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.redis.integration.document.Book;
@@ -25,14 +28,15 @@ class BookServiceTest {
 	@BeforeAll
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		bookService = new BookServiceImpl(bookRepository);
+		bookService = new BookServiceImpl(bookRepository, null);
 	}
 
 	@Test
-	public void getBookDetails_returnBookInfo() {
-		given(bookRepository.findBookByTitle("JUNIT_TITLE"))
-				.willReturn(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-						.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build());
+	public void getBookDetails_returnBookInfo() throws BookNotFoundException {
+		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
+				.willReturn(Optional
+						.of(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
+								.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build()));
 
 		Book book = bookService.findBookByTitle("JUNIT_TITLE");
 
@@ -42,13 +46,19 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void getBookDetails_whenBookNotFound() throws Exception {
-		given(bookRepository.findBookByTitle("JUNIT_TITLE")).willReturn(null);
+	public void getBookDetailsWhenBookNotFound() {
+		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("prius")))
+				.willReturn(Optional.empty());
+		try {
+			bookService.findBookByTitle("prius");
+		}
+		catch (BookNotFoundException e) {
+			assertThat(e.getMessage()).isEqualTo("Book with Title prius NotFound!");
+			assertThatExceptionOfType(BookNotFoundException.class).isThrownBy(() -> {
+				throw new BookNotFoundException("Book with Title prius NotFound!");
+			}).withMessage("%s!", "Book with Title prius NotFound").withNoCause();
+		}
 
-		bookService.findBookByTitle("prius");
-		assertThatExceptionOfType(BookNotFoundException.class).isThrownBy(() -> {
-			throw new BookNotFoundException("boom!");
-		}).withMessage("%s!", "boom").withMessageContaining("boom").withNoCause();
 	}
 
 }

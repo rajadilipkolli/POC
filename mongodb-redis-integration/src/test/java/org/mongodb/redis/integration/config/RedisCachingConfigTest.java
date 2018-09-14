@@ -5,6 +5,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.mongodb.redis.integration.Application;
 import org.mongodb.redis.integration.document.Book;
@@ -13,11 +15,9 @@ import org.mongodb.redis.integration.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { Application.class,
-		ConcurrentMapCacheManagerServer.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { Application.class, ConcurrentMapCacheManagerServer.class })
 @AutoConfigureCache
 public class RedisCachingConfigTest {
 
@@ -38,7 +38,7 @@ public class RedisCachingConfigTest {
 	public void caching() throws Exception {
 
 		given(bookRepository.findBookByTitle(anyString()))
-				.willReturn(Book.builder().title("prius").build());
+				.willReturn(Optional.of(Book.builder().title("prius").build()));
 
 		this.service.findBookByTitle("prius");
 		this.service.findBookByTitle("prius");

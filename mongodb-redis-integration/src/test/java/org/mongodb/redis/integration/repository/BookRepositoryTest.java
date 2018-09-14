@@ -56,7 +56,7 @@ class BookRepositoryTest {
 		assertThat(bookRepository).isNotNull();
 		Book savedLogRecord = bookRepository.save(bookRecToInsert);
 		assertThat(bookRepository.findById(savedLogRecord.getBookId())).isNotNull();
-		Book foundBook = bookRepository.findBookByTitle("JUNIT_TITLE");
+		Book foundBook = bookRepository.findBookByTitle("JUNIT_TITLE").get();
 		assertThat(foundBook).isNotNull();
 		assertThat(foundBook.getTitle()).isEqualTo("JUNIT_TITLE");
 

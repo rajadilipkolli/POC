@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 public class ConcurrentMapCacheManagerServer {
 
 	@Bean
-	CacheManager cacheManager() {
+	public CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager("books");
 	}
 
