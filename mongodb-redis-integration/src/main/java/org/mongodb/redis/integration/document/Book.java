@@ -32,15 +32,13 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * <p>
  * Book class.
- * </p>
  *
  * @author Raja Kolli
  * @since 0.0.5
  */
-@Data
 @Document
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

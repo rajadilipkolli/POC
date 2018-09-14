@@ -25,7 +25,7 @@ public class ApplicationTest {
 	private BookRepository bookRepository;
 
 	@Test
-	public void getBook_returnsBookDetails() throws Exception {
+	public void getBookByTitle_returnsBookDetails() throws Exception {
 		// arrange
 		Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
 		this.bookRepository.save(book);
