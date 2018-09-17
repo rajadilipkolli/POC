@@ -9,7 +9,7 @@
 		<artifactId>poc-parent</artifactId>
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>mongodb-redis-integration</artifactId>
+	<artifactId>poc-mongodb-redis-integration</artifactId>
 	<name>mongodb-redis-integration</name>
 	<url>http://maven.apache.org</url>
 	<properties>

@@ -25,3 +25,4 @@
 /.nb-gradle/
 
 **/target/
+spring-boot-rest/poc-spring-boot-rest-jooq/src/
