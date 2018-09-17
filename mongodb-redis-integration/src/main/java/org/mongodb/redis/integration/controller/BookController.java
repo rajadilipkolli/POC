@@ -89,7 +89,7 @@ public class BookController {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	private void bookNotFoundHandler(BookNotFoundException ex) {
 		log.error("Entering and leaving BookController : bookNotFoundHandler ",
-				ex.getMessage());
+				ex.getMsg());
 	}
 
 	public long count() {
