@@ -1,9 +1,20 @@
-package org.mongodb.redis.integration.config;
+/*
+ * Copyright 2015-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+package org.mongodb.redis.integration.config;
 
 import java.util.Optional;
 
@@ -12,10 +23,16 @@ import org.mongodb.redis.integration.Application;
 import org.mongodb.redis.integration.document.Book;
 import org.mongodb.redis.integration.repository.BookRepository;
 import org.mongodb.redis.integration.service.BookService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(classes = { Application.class, ConcurrentMapCacheManagerServer.class })
 @AutoConfigureCache
@@ -37,14 +54,14 @@ class RedisCachingConfigTest {
 	@Test
 	void caching() throws Exception {
 
-		given(bookRepository.findBookByTitle(anyString()))
+		given(this.bookRepository.findBookByTitle(anyString()))
 				.willReturn(Optional.of(Book.builder().title("prius").build()));
 
 		this.service.findBookByTitle("prius");
 		this.service.findBookByTitle("prius");
 		this.service.findBookByTitle("prius");
 
-		verify(bookRepository, times(1)).findBookByTitle("prius");
+		verify(this.bookRepository, times(1)).findBookByTitle("prius");
 	}
 
 }

@@ -1,11 +1,24 @@
-package org.mongodb.redis.integration.service;
+/*
+ * Copyright 2015-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.BDDMockito.given;
+package org.mongodb.redis.integration.service;
 
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,6 +30,11 @@ import org.mongodb.redis.integration.document.Book;
 import org.mongodb.redis.integration.exception.BookNotFoundException;
 import org.mongodb.redis.integration.repository.BookRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.BDDMockito.given;
+
+@Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
 class BookServiceTest {
 
@@ -26,19 +44,20 @@ class BookServiceTest {
 	private BookService bookService;
 
 	@BeforeAll
-	public void setUp() throws Exception {
+	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		bookService = new BookServiceImpl(bookRepository, null);
+		this.bookService = new BookServiceImpl(this.bookRepository, null);
 	}
 
 	@Test
 	void getBookDetailsReturnBookInfo() throws BookNotFoundException {
-		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
-				.willReturn(Optional
-						.of(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-								.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build()));
+		Book builderBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
+				.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build();
+		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
+				.willReturn(Optional.of(builderBook));
+		log.debug("Will return ", builderBook.toString());
 
-		Book book = bookService.findBookByTitle("JUNIT_TITLE");
+		Book book = this.bookService.findBookByTitle("JUNIT_TITLE");
 
 		assertThat(book.getTitle()).isEqualTo("JUNIT_TITLE");
 		assertThat(book.getAuthor()).isEqualTo("JUNIT_AUTHOR");
@@ -47,13 +66,13 @@ class BookServiceTest {
 
 	@Test
 	void getBookDetailsWhenBookNotFound() {
-		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("prius")))
+		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("prius")))
 				.willReturn(Optional.empty());
 		try {
-			bookService.findBookByTitle("prius");
+			this.bookService.findBookByTitle("prius");
 		}
-		catch (BookNotFoundException e) {
-			assertThat(e.getMessage()).isEqualTo("Book with Title prius NotFound!");
+		catch (BookNotFoundException ex) {
+			assertThat(ex.getMessage()).isEqualTo("Book with Title prius NotFound!");
 			assertThatExceptionOfType(BookNotFoundException.class).isThrownBy(() -> {
 				throw new BookNotFoundException("Book with Title prius NotFound!");
 			}).withMessage("%s!", "Book with Title prius NotFound").withNoCause();
