@@ -92,4 +92,12 @@ public class BookController {
 				ex.getMessage());
 	}
 
+	public long count() {
+		return this.bookService.count();
+	}
+
+	public void deleteAll() {
+		this.bookService.deleteAll();
+	}
+
 }

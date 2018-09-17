@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.mongodb.redis.integration.service;
+package org.mongodb.redis.integration.reactiveservice;
 
 import org.mongodb.redis.integration.document.Book;
-import org.mongodb.redis.integration.exception.BookNotFoundException;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import org.springframework.http.ResponseEntity;
 
 /**
  * MongoDB Redis Integration Book Service interface.
@@ -25,20 +28,18 @@ import org.mongodb.redis.integration.exception.BookNotFoundException;
  * @author Raja Kolli
  *
  */
-public interface BookService {
+public interface ReactiveBookService {
 
-	Book findBookByTitle(String titleName) throws BookNotFoundException;
+	Mono<Book> findByTitle(String title);
 
-	Book saveBook(Book book);
+	Mono<ResponseEntity<Book>> updateBook(String bookId, Book book);
 
-	Book updateAuthorByTitle(String title, String author);
+	Flux<Book> findAllBooks();
 
-	void deleteBook(String title) throws BookNotFoundException;
+	Mono<ResponseEntity<Book>> getBookById(String bookId);
 
-	String deleteAllCache();
+	Mono<Book> createBook(Book book);
 
-	long count();
-
-	void deleteAll();
+	Mono<ResponseEntity<Void>> deleteBook(String bookId);
 
 }

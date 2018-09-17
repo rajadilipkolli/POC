@@ -87,4 +87,14 @@ public class BookServiceImpl implements BookService {
 		return "Deleted Full Cache";
 	}
 
+	@Override
+	public long count() {
+		return this.bookRepository.count();
+	}
+
+	@Override
+	public void deleteAll() {
+		this.bookRepository.deleteAll();
+	}
+
 }
