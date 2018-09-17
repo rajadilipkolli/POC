@@ -169,5 +169,6 @@
 
 	<modules>
 		<module>mongodb-redis-integration</module>
+		<module>spring-boot-rest</module>
 	</modules>
 </project>
