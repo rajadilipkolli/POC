@@ -33,19 +33,19 @@ class BookRepositoryTest {
 	private Book bookRecToInsert;
 
 	@BeforeAll
-	public void before() {
+	void before() {
 		collectionName = "books";
 		bookRecToInsert = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
 				.bookId("JUNIT").text("JUNIT_TEXT").build();
 	}
 
 	@AfterAll
-	public void after() {
+	void after() {
 		mongoTemplate.dropCollection(collectionName);
 	}
 
 	@Test
-	public void checkMongoTemplateAndPerFormOperations() {
+	void checkMongoTemplateAndPerFormOperations() {
 
 		assertThat(mongoTemplate).isNotNull();
 		MongoCollection<Document> createdCollection = mongoTemplate

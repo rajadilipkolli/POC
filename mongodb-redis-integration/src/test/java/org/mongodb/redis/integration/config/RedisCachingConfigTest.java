@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest(classes = { Application.class, ConcurrentMapCacheManagerServer.class })
 @AutoConfigureCache
-public class RedisCachingConfigTest {
+class RedisCachingConfigTest {
 
 	// Will require the spring application content for testing on the cache.
 	// Therefore, will need to include the spring boot test.
@@ -35,7 +35,7 @@ public class RedisCachingConfigTest {
 	private BookRepository bookRepository;
 
 	@Test
-	public void caching() throws Exception {
+	void caching() throws Exception {
 
 		given(bookRepository.findBookByTitle(anyString()))
 				.willReturn(Optional.of(Book.builder().title("prius").build()));

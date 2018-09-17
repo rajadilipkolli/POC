@@ -32,7 +32,7 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void getBookDetails_returnBookInfo() throws BookNotFoundException {
+	void getBookDetailsReturnBookInfo() throws BookNotFoundException {
 		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
 				.willReturn(Optional
 						.of(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
@@ -46,7 +46,7 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void getBookDetailsWhenBookNotFound() {
+	void getBookDetailsWhenBookNotFound() {
 		given(bookRepository.findBookByTitle(ArgumentMatchers.eq("prius")))
 				.willReturn(Optional.empty());
 		try {

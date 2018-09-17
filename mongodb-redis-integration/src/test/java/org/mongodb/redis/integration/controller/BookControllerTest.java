@@ -2,6 +2,8 @@ package org.mongodb.redis.integration.controller;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,7 +34,7 @@ class BookControllerTest {
 	private BookService bookService;
 
 	@Test
-	public void getBook_ShouldReturnBook() throws Exception {
+	void getBookShouldReturnBook() throws Exception {
 		given(bookService.findBookByTitle(anyString()))
 				.willReturn(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
 						.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build());
@@ -44,7 +46,7 @@ class BookControllerTest {
 	}
 
 	@Test
-	public void getBookNotFound() throws Exception {
+	void getBookNotFound() throws Exception {
 		given(bookService.findBookByTitle(anyString()))
 				.willThrow(new BookNotFoundException());
 
@@ -53,7 +55,7 @@ class BookControllerTest {
 	}
 
 	@Test
-	public void saveBookShouldReturnBook() throws Exception {
+	void saveBookShouldReturnBook() throws Exception {
 		Book book = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
 				.bookId("JUNIT").text("JUNIT_TEXT").build();
 		given(bookService.saveBook(ArgumentMatchers.any(Book.class))).willReturn(book);
@@ -68,7 +70,7 @@ class BookControllerTest {
 	}
 
 	@Test
-	public void updateBookShouldReturnBook() throws Exception {
+	void updateBookShouldReturnBook() throws Exception {
 		Book book = Book.builder().title("MongoDbCookBook").author("JUNIT_AUTHOR")
 				.bookId("JUNIT").text("JUNIT_TEXT").build();
 		given(bookService.updateAuthorByTitle(ArgumentMatchers.eq("MongoDbCookBook"),
@@ -81,6 +83,27 @@ class BookControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("title").value("MongoDbCookBook"))
 				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
+	}
+
+	@Test
+	void deleteBookShouldReturnError() throws Exception {
+		willThrow(new BookNotFoundException()).given(this.bookService)
+				.deleteBook(anyString());
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.delete("/book/deleteByTitle/MongoDbCookBook"))
+				.andExpect(status().isNotFound());
+	}
+
+	@Test
+	void deleteBookShouldReturnValue() throws Exception {
+		willDoNothing().given(this.bookService).deleteBook(anyString());
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.delete("/book/deleteByTitle/MongoDbCookBook"))
+				.andExpect(status().isAccepted());
 	}
 
 }

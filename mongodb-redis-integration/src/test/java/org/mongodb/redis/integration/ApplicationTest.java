@@ -22,7 +22,7 @@ public class ApplicationTest {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	public void getBookByTitle_returnsBookDetails() throws Exception {
+	void getBookByTitle_returnsBookDetails() throws Exception {
 		// arrange
 		Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
 		ResponseEntity<Book> response = restTemplate.postForEntity("/book/saveBook", book,
