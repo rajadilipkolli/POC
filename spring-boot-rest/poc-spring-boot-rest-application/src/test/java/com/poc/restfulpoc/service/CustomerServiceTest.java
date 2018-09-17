@@ -17,6 +17,7 @@
 package com.poc.restfulpoc.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +67,11 @@ class CustomerServiceTest {
 				.willReturn(this.customer);
 		given(this.customerRepository.findByFirstName(ArgumentMatchers.anyString()))
 				.willReturn(Arrays.asList(this.customer));
+		given(this.customerRepository.findByFirstName(ArgumentMatchers.eq("asdfg")))
+				.willReturn(new ArrayList<>());
+
+		given(this.customerRepository.findById(ArgumentMatchers.eq(0L)))
+				.willReturn(Optional.empty());
 
 		BDDMockito.willDoNothing().given(this.jmsTemplate).convertAndSend(
 				ArgumentMatchers.eq("jms.message.endpoint"), ArgumentMatchers.anyLong());
@@ -76,6 +82,13 @@ class CustomerServiceTest {
 		Customer cust = this.customerService.getCustomer(RandomUtils.nextLong());
 		assertThat(cust).isNotNull();
 		assertThat(cust.getFirstName()).isEqualTo("firstName");
+
+		try {
+			this.customerService.getCustomer(0L);
+		}
+		catch (EntityNotFoundException ex) {
+			assertThat(ex).isExactlyInstanceOf(EntityNotFoundException.class);
+		}
 	}
 
 	@Test
@@ -112,6 +125,8 @@ class CustomerServiceTest {
 		boolean response = this.customerService
 				.isCustomerExist(RandomStringUtils.random(5));
 		assertThat(response).isEqualTo(true);
+		response = this.customerService.isCustomerExist("asdfg");
+		assertThat(response).isEqualTo(false);
 	}
 
 	@Test
