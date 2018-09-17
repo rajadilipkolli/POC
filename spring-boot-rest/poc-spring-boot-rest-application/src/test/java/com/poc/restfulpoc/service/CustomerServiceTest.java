@@ -16,7 +16,6 @@
 
 package com.poc.restfulpoc.service;
 
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +42,7 @@ import static org.mockito.BDDMockito.given;
 
 @TestInstance(Lifecycle.PER_CLASS)
 class CustomerServiceTest {
+
 	@Mock
 	private CustomerRepository customerRepository;
 
@@ -118,4 +118,5 @@ class CustomerServiceTest {
 	void testDeleteAllCustomers() {
 		this.customerService.deleteAllCustomers();
 	}
+
 }
