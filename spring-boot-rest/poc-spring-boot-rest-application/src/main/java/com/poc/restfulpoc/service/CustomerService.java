@@ -7,18 +7,19 @@ import com.poc.restfulpoc.exception.EntityNotFoundException;
 
 public interface CustomerService {
 
-	void deleteCustomerById(Long customerId) throws EntityNotFoundException;
-
-	void deleteAllCustomers();
-
-	boolean isCustomerExist(String firstName);
+	Customer getCustomer(Long customerId) throws EntityNotFoundException;
 
 	List<Customer> getCustomers();
 
 	Customer createCustomer(Customer customer);
 
-	Customer updateCustomer(Customer customer, Long customerId) throws EntityNotFoundException;
+	Customer updateCustomer(Customer customer, Long customerId)
+			throws EntityNotFoundException;
 
-	Customer getCustomer(Long customerId) throws EntityNotFoundException;
+	void deleteCustomerById(Long customerId) throws EntityNotFoundException;
+
+	boolean isCustomerExist(String firstName);
+
+	void deleteAllCustomers();
 
 }
