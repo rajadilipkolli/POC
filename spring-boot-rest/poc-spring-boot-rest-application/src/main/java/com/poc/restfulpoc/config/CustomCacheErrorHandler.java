@@ -31,7 +31,7 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
  * @version 0 : 5
  */
 @Slf4j
-public class CustomCacheErrorHandler implements CacheErrorHandler {
+class CustomCacheErrorHandler implements CacheErrorHandler {
 
 	/** {@inheritDoc} */
 	@Override

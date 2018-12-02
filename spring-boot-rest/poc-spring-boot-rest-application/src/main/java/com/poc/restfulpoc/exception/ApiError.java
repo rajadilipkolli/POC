@@ -176,7 +176,7 @@ public class ApiError {
 	 * @author Raja kolli
 	 *
 	 */
-	interface ApiSubError {
+	private interface ApiSubError {
 
 	}
 
@@ -187,7 +187,7 @@ public class ApiError {
 	 *
 	 */
 	@Data
-	@EqualsAndHashCode(callSuper = false)
+	@EqualsAndHashCode
 	@AllArgsConstructor
 	static class ApiValidationError implements ApiSubError {
 

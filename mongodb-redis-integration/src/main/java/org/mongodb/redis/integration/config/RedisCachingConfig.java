@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableCaching
-public class RedisCachingConfig extends CachingConfigurerSupport {
+class RedisCachingConfig extends CachingConfigurerSupport {
 
 	@Bean
 	@Override
