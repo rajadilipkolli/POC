@@ -10,6 +10,7 @@
 	<artifactId>poc-spring-boot-rest-application</artifactId>
 	<properties>
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>
+        <datasource-proxy.version>1.4.9</datasource-proxy.version>
 	</properties>
 
 	<dependencies>
@@ -119,6 +120,12 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>net.ttddyy</groupId>
+            <artifactId>datasource-proxy</artifactId>
+            <version>${datasource-proxy.version}</version>
+            <scope>test</scope>
+        </dependency>
 
 	</dependencies>
 </project>

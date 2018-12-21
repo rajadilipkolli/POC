@@ -18,8 +18,7 @@ package com.poc.restfulpoc.data;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
 
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
@@ -74,8 +73,7 @@ public class DataBuilder {
 		order11.setStatus(OrderStatus.COMPLETED);
 		customer3.addOrder(order11);
 
-		this.customerRepository.saveAll(
-				Stream.of(customer1, customer2, customer3).collect(Collectors.toList()));
+		this.customerRepository.saveAll(List.of(customer1, customer2, customer3));
 
 		log.debug("Test data loaded...");
 	}
