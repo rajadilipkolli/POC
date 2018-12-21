@@ -36,7 +36,7 @@ import lombok.Setter;
 @Table(name = "post_comment")
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor // Only to be compliant with JPA
 public class PostComment {
 
 	@Id

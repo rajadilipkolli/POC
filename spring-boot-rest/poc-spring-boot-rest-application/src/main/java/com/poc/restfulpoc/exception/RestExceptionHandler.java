@@ -16,6 +16,8 @@
 
 package com.poc.restfulpoc.exception;
 
+import java.util.Objects;
+
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -36,8 +38,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.util.Objects;
 
 /**
  * <p>
@@ -80,7 +80,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		builder.append(ex.getContentType());
 		builder.append(" media type is not supported. Supported media types are ");
 		ex.getSupportedMediaTypes()
-				.forEach((mediaType) -> builder.append(mediaType).append(", "));
+				.forEach(mediaType -> builder.append(mediaType).append(", "));
 		return buildResponseEntity(new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
 				builder.substring(0, builder.length() - 2), ex));
 	}
@@ -199,7 +199,8 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 		apiError.setMessage(String.format(
 				"The parameter '%s' of value '%s' could not be converted to type '%s'",
-				ex.getName(), ex.getValue(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
+				ex.getName(), ex.getValue(),
+				Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
 		apiError.setDebugMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
 	}

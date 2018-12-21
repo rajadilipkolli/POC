@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.example.poc</groupId>
-			<artifactId>poc-spring-boot-rest-jooq</artifactId>
+			<artifactId>poc-spring-boot-rest-entities</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

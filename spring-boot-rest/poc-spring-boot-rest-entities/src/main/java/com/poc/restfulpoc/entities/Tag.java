@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -32,6 +33,7 @@ import lombok.Setter;
  */
 @Entity(name = "Tag")
 @Table(name = "tag")
+@NoArgsConstructor // Only to be compliant with JPA
 public class Tag {
 
 	@Id

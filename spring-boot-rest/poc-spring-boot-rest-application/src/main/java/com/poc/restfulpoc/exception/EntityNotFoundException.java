@@ -58,7 +58,7 @@ public class EntityNotFoundException extends Exception {
 		if (entries.length % 2 == 1) {
 			throw new IllegalArgumentException("Invalid entries");
 		}
-		return IntStream.range(0, entries.length / 2).map((i) -> (i * 2)).collect(
+		return IntStream.range(0, entries.length / 2).map(i -> (i * 2)).collect(
 				HashMap::new,
 				(m, i) -> m.put(keyType.cast(entries[i]), valueType.cast(entries[i + 1])),
 				Map::putAll);

@@ -6,4 +6,5 @@
 	<suppress files="SpringApplicationTests\.java" checks="FinalClass" />
 	<suppress files=".+Configuration\.java" checks="HideUtilityClassConstructor" />
 	<suppress files=".+Application\.java" checks="HideUtilityClassConstructor" />
+    <suppress files=".\.java" checks="SpringLambda" />
 </suppressions>
