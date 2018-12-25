@@ -22,16 +22,14 @@ import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * Defines Web Requests related configuration.
+ * defines Web Requests related configuration.
  *
  * @author Raja Kolli
  *
  */
 @Configuration
-@EnableAspectJAutoProxy
 public class WebConfig {
 
 	private static final String PLACEHOLDER_METHOD_NAME = "$[methodName]";
@@ -44,7 +42,7 @@ public class WebConfig {
 
 	/**
 	 * Creates a trace interceptor for logging entry into and exit from methods.
-	 * @return The created trace interceptor
+	 * @return the created trace interceptor
 	 */
 	@Bean
 	public CustomizableTraceInterceptor customizableTraceInterceptor() {
