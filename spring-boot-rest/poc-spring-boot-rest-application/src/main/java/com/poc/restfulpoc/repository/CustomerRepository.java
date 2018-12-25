@@ -17,10 +17,14 @@
 package com.poc.restfulpoc.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.poc.restfulpoc.entities.Customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -33,12 +37,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	/**
-	 * <p>
-	 * findByFirstName.
-	 * </p>
+	 * finds {@link Customer} By FirstName.
 	 * @param firstName a {@link java.lang.String} object.
 	 * @return a {@link java.util.List} object.
 	 */
 	List<Customer> findByFirstName(String firstName);
+
+	@Transactional(readOnly = true)
+	@Query("select id from Customer c where c.firstName = :firstName")
+	Optional<Long> findOptionalIdByFirstName(@Param("firstName") String firstName);
 
 }

@@ -11,6 +11,7 @@
     <properties>
         <main.basedir>${project.parent.parent.basedir}</main.basedir>
         <datasource-proxy.version>1.4.9</datasource-proxy.version>
+        <db-util.version>1.0.4</db-util.version>
     </properties>
 
     <dependencies>
@@ -136,10 +137,15 @@
             <version>${datasource-proxy.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>db-util</artifactId>
+            <version>${db-util.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

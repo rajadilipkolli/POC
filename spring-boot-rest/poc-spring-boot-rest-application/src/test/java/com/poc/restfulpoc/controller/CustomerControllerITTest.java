@@ -26,6 +26,7 @@ import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
+import com.vladmihalcea.sql.SQLStatementCountValidator;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -324,8 +325,14 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	 * @return customer Id
 	 */
 	private Long getCustomerIdByFirstName(String firstName) {
-		return this.customerRepository.findByFirstName(firstName).stream().findAny().get()
-				.getId();
+		SQLStatementCountValidator.reset();
+		long customerId = this.customerRepository.findOptionalIdByFirstName(firstName)
+				.orElse(0L);
+		SQLStatementCountValidator.assertInsertCount(0);
+		SQLStatementCountValidator.assertUpdateCount(0);
+		SQLStatementCountValidator.assertDeleteCount(0);
+		SQLStatementCountValidator.assertSelectCount(1);
+		return customerId;
 	}
 
 }
