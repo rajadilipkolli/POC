@@ -17,6 +17,7 @@
 package com.poc.restfulpoc.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -69,5 +70,25 @@ public class Address implements Serializable {
 	@MapsId
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Address address = (Address) o;
+		return Objects.equals(getStreet(), address.getStreet())
+				&& Objects.equals(getTown(), address.getTown())
+				&& Objects.equals(getCounty(), address.getCounty())
+				&& Objects.equals(getPostcode(), address.getPostcode());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getStreet(), getTown(), getCounty(), getPostcode());
+	}
 
 }

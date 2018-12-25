@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -132,6 +133,27 @@ public class Customer implements Serializable {
 				addOrder(order);
 			}
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Customer)) {
+			return false;
+		}
+		Customer customer = (Customer) o;
+		return Objects.equals(getFirstName(), customer.getFirstName())
+				&& Objects.equals(getLastName(), customer.getLastName())
+				&& Objects.equals(getDateOfBirth(), customer.getDateOfBirth())
+				&& Objects.equals(getAddress(), customer.getAddress());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getFirstName(), getLastName(), getDateOfBirth(),
+				getAddress());
 	}
 
 }

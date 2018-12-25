@@ -59,8 +59,8 @@ class CustomerControllerTest {
 	@SpyBean
 	private CustomerValidator customerValidator;
 
-	Customer customer = Customer.builder().firstName("firstName").lastName("lastName")
-			.build();
+	private Customer customer = Customer.builder().firstName("firstName")
+			.lastName("lastName").build();
 
 	@Test
 	void testGetCustomers() throws Exception {
@@ -115,18 +115,33 @@ class CustomerControllerTest {
 	}
 
 	@Test
-	void testUpdateCustomer() throws Exception {
+	void testUpdateSameCustomer() throws Exception {
 		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
 				.willReturn(this.customer);
-		LocalDateTime dateOfBirth = LocalDateTime.now();
-		this.customer.setDateOfBirth(dateOfBirth);
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.put("/rest/customers/{customerId}", this.customer.getId())
+						.content(this.objectMapper.writeValueAsString(this.customer))
+						.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotModified());
+	}
+
+	@Test
+	void testUpdateCustomer() throws Exception {
+		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
+				.willReturn(Customer.builder().firstName("firstName").build());
+
+		final Customer updateRequest = this.customer;
+		final LocalDateTime dateOfBirth = LocalDateTime.now();
+		updateRequest.setDateOfBirth(dateOfBirth);
 		given(this.customerService.updateCustomer(ArgumentMatchers.any(Customer.class),
 				ArgumentMatchers.anyLong())).willReturn(this.customer);
 
 		this.mockMvc
 				.perform(MockMvcRequestBuilders
 						.put("/rest/customers/{customerId}", RandomUtils.nextLong())
-						.content(this.objectMapper.writeValueAsString(this.customer))
+						.content(this.objectMapper.writeValueAsString(updateRequest))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("firstName").value("firstName"))
