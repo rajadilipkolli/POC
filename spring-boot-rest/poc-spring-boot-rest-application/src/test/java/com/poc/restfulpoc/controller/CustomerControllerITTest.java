@@ -213,8 +213,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		/* PUT updated customer */
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		final HttpEntity<Customer> entity = new HttpEntity<Customer>(persistedCustomer,
-				headers);
+		final HttpEntity<Customer> entity = new HttpEntity<>(persistedCustomer, headers);
 		final ResponseEntity<Customer> response = userRestTemplate().exchange(
 				String.format("%s/%s", BASEURL, customerId), HttpMethod.PUT, entity,
 				Customer.class);
@@ -251,8 +250,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		final ResponseEntity<Object> response = adminRestTemplate().exchange(
 				String.format("%s/%s", BASEURL, 999), HttpMethod.DELETE,
-				new HttpEntity<Customer>(Customer.builder().build(), headers),
-				Object.class);
+				new HttpEntity<>(Customer.builder().build(), headers), Object.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 

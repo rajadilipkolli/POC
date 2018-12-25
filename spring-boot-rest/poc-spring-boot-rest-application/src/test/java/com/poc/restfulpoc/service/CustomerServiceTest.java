@@ -18,7 +18,7 @@ package com.poc.restfulpoc.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,21 +52,22 @@ class CustomerServiceTest {
 
 	private CustomerService customerService;
 
-	Customer customer = Customer.builder().firstName("firstName").lastName("lastName")
-			.build();
+	private final Customer customer = Customer.builder().firstName("firstName")
+			.lastName("lastName").build();
 
 	@BeforeAll
-	public void setUp() throws Exception {
+	void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.customerService = new CustomerServiceImpl(this.customerRepository,
 				this.jmsTemplate);
-		given(this.customerRepository.findAll()).willReturn(Arrays.asList(this.customer));
+		given(this.customerRepository.findAll())
+				.willReturn(Collections.singletonList(this.customer));
 		given(this.customerRepository.findById(ArgumentMatchers.anyLong()))
 				.willReturn(Optional.of(this.customer));
 		given(this.customerRepository.save(ArgumentMatchers.any(Customer.class)))
 				.willReturn(this.customer);
 		given(this.customerRepository.findByFirstName(ArgumentMatchers.anyString()))
-				.willReturn(Arrays.asList(this.customer));
+				.willReturn(Collections.singletonList(this.customer));
 		given(this.customerRepository.findByFirstName(ArgumentMatchers.eq("asdfg")))
 				.willReturn(new ArrayList<>());
 
@@ -105,7 +106,7 @@ class CustomerServiceTest {
 	}
 
 	@Test
-	void testUpdateCustomer() throws EntityNotFoundException {
+	void testUpdateCustomer() {
 		LocalDateTime dateOfBirth = LocalDateTime.now();
 		this.customer.setDateOfBirth(dateOfBirth);
 		Customer res = this.customerService.updateCustomer(this.customer,

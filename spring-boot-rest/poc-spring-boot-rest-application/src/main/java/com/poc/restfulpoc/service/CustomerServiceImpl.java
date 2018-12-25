@@ -72,8 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
 	/** {@inheritDoc} */
 	@Override
 	@CachePut(value = "customer", key = "#customerId", unless = "#result == null")
-	public Customer updateCustomer(Customer customer, Long customerId)
-			throws EntityNotFoundException {
+	public Customer updateCustomer(Customer customer, Long customerId) {
 		return this.customerRepository.save(customer);
 	}
 

@@ -43,7 +43,7 @@ public class DataBuilder {
 
 	private final CustomerRepository customerRepository;
 
-	public void run() throws Exception {
+	public void run() {
 		log.debug("Loading test data...");
 
 		final Customer customer1 = Customer.builder().firstName("Raja").lastName("Kolli")
@@ -55,7 +55,7 @@ public class DataBuilder {
 		customer1.addOrder(order);
 
 		final Customer customer2 = Customer.builder().firstName("Paul").lastName("Jones")
-				.dateOfBirth(LocalDateTime.of(1973, Month.JANUARY, 03, 0, 0)).build();
+				.dateOfBirth(LocalDateTime.of(1973, Month.JANUARY, 3, 0, 0)).build();
 		customer2.setAddress(Address.builder().street("Main Street").town("Lurgan")
 				.county("Armagh").postcode("BT283FG").build());
 		Order order1 = new Order();

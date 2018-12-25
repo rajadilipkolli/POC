@@ -17,7 +17,7 @@
 package com.poc.restfulpoc.controller;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,13 +59,13 @@ class CustomerControllerTest {
 	@SpyBean
 	private CustomerValidator customerValidator;
 
-	private Customer customer = Customer.builder().firstName("firstName")
+	private final Customer customer = Customer.builder().firstName("firstName")
 			.lastName("lastName").build();
 
 	@Test
 	void testGetCustomers() throws Exception {
 		given(this.customerService.getCustomers())
-				.willReturn(Arrays.asList(this.customer));
+				.willReturn(Collections.singletonList(this.customer));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/"))
 				.andExpect(status().isOk())

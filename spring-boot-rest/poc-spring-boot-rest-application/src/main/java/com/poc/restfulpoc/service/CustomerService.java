@@ -37,8 +37,7 @@ public interface CustomerService {
 
 	Customer createCustomer(Customer customer);
 
-	Customer updateCustomer(Customer customer, Long customerId)
-			throws EntityNotFoundException;
+	Customer updateCustomer(Customer customer, Long customerId);
 
 	void deleteCustomerById(Long customerId) throws EntityNotFoundException;
 
