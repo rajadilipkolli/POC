@@ -52,7 +52,7 @@ class CustomerValidatorTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Customer> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("firstName");
-		assertThat(violation.getMessage()).isEqualTo("must not be blank");
+		assertThat(violation.getMessage()).isEqualTo("Customer firstName is mandatory");
 	}
 
 }

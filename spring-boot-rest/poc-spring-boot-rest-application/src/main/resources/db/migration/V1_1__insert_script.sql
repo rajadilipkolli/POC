@@ -34,7 +34,7 @@ VALUES
 
 INSERT INTO
     ORDERS
-    (created_on, customer_id, order_number, status, ORDER_ID)
+    (created_on, customer_id, order_number, order_status, ORDER_ID)
 VALUES
     (
         '2018-06-19', 1, 'ORD1', 'NEW', 1

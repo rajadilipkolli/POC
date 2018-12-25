@@ -93,6 +93,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(customer.getAddress().getTown()).isEqualTo("Belfast");
 		assertThat(customer.getAddress().getCounty()).isEqualTo("India");
 		assertThat(customer.getAddress().getPostcode()).isEqualTo("BT893PY");
+		assertThat(customer.getOrders()).isNotEmpty().hasSize(1);
 	}
 
 	@Test
@@ -123,12 +124,15 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	@Test
 	@DisplayName("Creating Customer")
 	void test05_CreateCustomer() throws Exception {
-		final Customer customer = Customer.builder().firstName("Gary").lastName("Steale")
-				.dateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0)).build();
+		Customer customer = Customer.builder().firstName("Gary").lastName("Steale")
+				.dateOfBirth(LocalDateTime.now().plusDays(3)).build();
 		customer.setAddress(Address.builder().street("Main Street").town("Portadown")
 				.county("Armagh").postcode("BT359JK").build());
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(BASEURL,
 				customer, Customer.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+		customer.setDateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0));
+		response = userRestTemplate().postForEntity(BASEURL, customer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 		assertThat(response.getHeaders().getContentLength()).isEqualTo(0);
 		String location = response.getHeaders().getFirst("Location");

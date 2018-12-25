@@ -74,8 +74,8 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private long id;
 
-	@NotBlank
-	@Column(name = "FIRST_NAME")
+	@NotBlank(message = "Customer firstName is mandatory")
+	@Column(name = "FIRST_NAME", nullable = false, unique = true)
 	private String firstName;
 
 	@Column(name = "LAST_NAME")
@@ -86,8 +86,7 @@ public class Customer implements Serializable {
 	@Column(name = "DATE_OF_BIRTH")
 	private LocalDateTime dateOfBirth;
 
-	@OneToOne(mappedBy = "customer", cascade = {
-			CascadeType.ALL }, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JsonManagedReference
 	private Address address;
 

@@ -163,7 +163,7 @@ public class CustomerController {
 		log.info("Fetching & Deleting User with id {}", customerId);
 
 		this.customerService.deleteCustomerById(customerId);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.accepted().build();
 	}
 
 	/**

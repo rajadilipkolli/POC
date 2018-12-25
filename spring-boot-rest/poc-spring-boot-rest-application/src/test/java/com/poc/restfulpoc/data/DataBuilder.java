@@ -52,7 +52,6 @@ public class DataBuilder {
 				.street("High Street").town("Belfast").build());
 		Order order = new Order();
 		order.setOrderNumber("ORD1");
-		order.setStatus(OrderStatus.NEW);
 		customer1.addOrder(order);
 
 		final Customer customer2 = Customer.builder().firstName("Paul").lastName("Jones")
@@ -61,7 +60,7 @@ public class DataBuilder {
 				.county("Armagh").postcode("BT283FG").build());
 		Order order1 = new Order();
 		order1.setOrderNumber("ORD2");
-		order1.setStatus(OrderStatus.IN_PROCESS);
+		order1.setOrderStatus(OrderStatus.IN_PROCESS);
 		customer2.addOrder(order1);
 
 		final Customer customer3 = Customer.builder().firstName("Steve").lastName("Toale")
@@ -70,7 +69,7 @@ public class DataBuilder {
 				.county("Down").postcode("BT359JK").build());
 		Order order11 = new Order();
 		order11.setOrderNumber("ORD3");
-		order11.setStatus(OrderStatus.COMPLETED);
+		order11.setOrderStatus(OrderStatus.COMPLETED);
 		customer3.addOrder(order11);
 
 		this.customerRepository.saveAll(List.of(customer1, customer2, customer3));

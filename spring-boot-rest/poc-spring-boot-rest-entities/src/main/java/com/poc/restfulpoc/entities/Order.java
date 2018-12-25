@@ -70,7 +70,7 @@ public class Order implements Serializable {
 	private String orderNumber;
 
 	@Enumerated(EnumType.STRING)
-	private OrderStatus status;
+	private OrderStatus orderStatus;
 
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -83,7 +83,7 @@ public class Order implements Serializable {
 	private Customer customer;
 
 	public Order() {
-		this.status = OrderStatus.NEW;
+		this.orderStatus = OrderStatus.NEW;
 		this.createdOn = LocalDateTime.now();
 	}
 

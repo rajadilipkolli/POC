@@ -103,6 +103,15 @@ class CustomerControllerTest {
 						.content(this.objectMapper.writeValueAsString(this.customer))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isCreated());
+
+		final Customer invalidCustomer = this.customer;
+		invalidCustomer.setFirstName(null);
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/rest/customers/")
+						.content(this.objectMapper.writeValueAsString(invalidCustomer))
+						.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -131,7 +140,7 @@ class CustomerControllerTest {
 		BDDMockito.willDoNothing().given(this.customerService)
 				.deleteCustomerById(ArgumentMatchers.anyLong());
 		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/{customerId}",
-				RandomUtils.nextLong())).andExpect(status().isNoContent());
+				RandomUtils.nextLong())).andExpect(status().isAccepted());
 	}
 
 	@Test
