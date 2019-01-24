@@ -167,9 +167,7 @@ public class CustomerController {
 	}
 
 	/**
-	 * <p>
-	 * deleteAllUsers.
-	 * </p>
+	 * deletes All Users.
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
 	 */
 	@DeleteMapping
