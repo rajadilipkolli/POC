@@ -44,7 +44,8 @@ import org.springframework.validation.ObjectError;
  * @version 1: 0
  */
 @Data
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error",
+		visible = true)
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
 
@@ -110,8 +111,7 @@ public class ApiError {
 		this.subErrors.add(subError);
 	}
 
-	private void addValidationError(String object, String field, Object rejectedValue,
-			String message) {
+	private void addValidationError(String object, String field, Object rejectedValue, String message) {
 		addSubError(new ApiValidationError(object, field, rejectedValue, message));
 	}
 
@@ -120,8 +120,8 @@ public class ApiError {
 	}
 
 	private void addValidationError(FieldError fieldError) {
-		this.addValidationError(fieldError.getObjectName(), fieldError.getField(),
-				fieldError.getRejectedValue(), fieldError.getDefaultMessage());
+		this.addValidationError(fieldError.getObjectName(), fieldError.getField(), fieldError.getRejectedValue(),
+				fieldError.getDefaultMessage());
 	}
 
 	/**
@@ -135,8 +135,7 @@ public class ApiError {
 	}
 
 	private void addValidationError(ObjectError objectError) {
-		this.addValidationError(objectError.getObjectName(),
-				objectError.getDefaultMessage());
+		this.addValidationError(objectError.getObjectName(), objectError.getDefaultMessage());
 	}
 
 	/**
@@ -156,8 +155,7 @@ public class ApiError {
 	 */
 	private void addValidationError(ConstraintViolation<?> cv) {
 		this.addValidationError(cv.getRootBeanClass().getSimpleName(),
-				((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
-				cv.getInvalidValue(), cv.getMessage());
+				((PathImpl) cv.getPropertyPath()).getLeafNode().asString(), cv.getInvalidValue(), cv.getMessage());
 	}
 
 	/**

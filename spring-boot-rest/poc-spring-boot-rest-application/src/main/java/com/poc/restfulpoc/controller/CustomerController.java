@@ -85,8 +85,7 @@ public class CustomerController {
 	 * @throws EntityNotFoundException if any.
 	 */
 	@GetMapping(value = "{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Customer> getCustomer(
-			@PathVariable("customerId") @NotBlank Long customerId)
+	public ResponseEntity<Customer> getCustomer(@PathVariable("customerId") @NotBlank Long customerId)
 			throws EntityNotFoundException {
 		log.info("Fetching Customer with id {}", customerId);
 		final Customer user = this.customerService.getCustomer(customerId);
@@ -102,14 +101,13 @@ public class CustomerController {
 	 * @param errors a {@link org.springframework.validation.Errors} object.
 	 */
 	@PostMapping
-	public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer,
-			UriComponentsBuilder ucBuilder, Errors errors) {
+	public ResponseEntity<Object> createCustomer(@Valid @RequestBody Customer customer, UriComponentsBuilder ucBuilder,
+			Errors errors) {
 		this.customerValidator.validate(customer, errors);
 		if (errors.hasErrors()) {
-			final String errorMessage = errors.getAllErrors().stream()
-					.map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
-			final ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY,
-					new Throwable(errorMessage));
+			final String errorMessage = errors.getAllErrors().stream().map(ObjectError::getDefaultMessage)
+					.collect(Collectors.joining(","));
+			final ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, new Throwable(errorMessage));
 			log.error("Detailed Error while processing request :{}", apiError.toString());
 			return new ResponseEntity<>(apiError, apiError.getStatus());
 		}
@@ -122,8 +120,7 @@ public class CustomerController {
 		this.customerService.createCustomer(customer);
 
 		final HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/rest/customers/{customerId}")
-				.buildAndExpand(customer.getId()).toUri());
+		headers.setLocation(ucBuilder.path("/rest/customers/{customerId}").buildAndExpand(customer.getId()).toUri());
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 
@@ -146,8 +143,7 @@ public class CustomerController {
 		currentUser.setLastName(customer.getLastName());
 		currentUser.setDateOfBirth(customer.getDateOfBirth());
 		currentUser.setAddress(customer.getAddress());
-		final Customer updatedCustomer = this.customerService.updateCustomer(customer,
-				customerId);
+		final Customer updatedCustomer = this.customerService.updateCustomer(customer, customerId);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
 	}
 
@@ -158,8 +154,8 @@ public class CustomerController {
 	 * @throws EntityNotFoundException if any.
 	 */
 	@DeleteMapping("{customerId}")
-	public ResponseEntity<Customer> removeCustomer(
-			@PathVariable("customerId") Long customerId) throws EntityNotFoundException {
+	public ResponseEntity<Customer> removeCustomer(@PathVariable("customerId") Long customerId)
+			throws EntityNotFoundException {
 		log.info("Fetching & Deleting User with id {}", customerId);
 
 		this.customerService.deleteCustomerById(customerId);

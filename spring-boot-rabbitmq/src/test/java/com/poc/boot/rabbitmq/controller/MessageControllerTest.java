@@ -50,15 +50,11 @@ public class MessageControllerTest {
 	@Test
 	public void testHandleMessage() throws Exception {
 
-		willDoNothing().given(this.orderMessageSender)
-				.sendOrder(ArgumentMatchers.any(Order.class));
+		willDoNothing().given(this.orderMessageSender).sendOrder(ArgumentMatchers.any(Order.class));
 		Order order = new Order("1", "P1", 10D);
 
-		this.mockMvc
-				.perform(post("/sendMsg")
-						.content(this.objectMapper.writeValueAsString(order))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isFound());
+		this.mockMvc.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(order))
+				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isFound());
 	}
 
 }

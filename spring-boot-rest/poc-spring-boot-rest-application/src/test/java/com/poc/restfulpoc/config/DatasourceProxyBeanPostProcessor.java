@@ -59,17 +59,16 @@ public class DatasourceProxyBeanPostProcessor implements BeanPostProcessor {
 
 		ProxyDataSourceInterceptor(final DataSource dataSource) {
 			super();
-			this.dataSource = ProxyDataSourceBuilder.create(dataSource)
-					.name("DATA_SOURCE_PROXY").logQueryBySlf4j(SLF4JLogLevel.INFO)
-					.multiline().countQuery().logSlowQueryBySlf4j(5, TimeUnit.SECONDS)
-					.build();
+			this.dataSource = ProxyDataSourceBuilder.create(dataSource).name("DATA_SOURCE_PROXY")
+					.logQueryBySlf4j(SLF4JLogLevel.INFO).multiline().countQuery()
+					.logSlowQueryBySlf4j(5, TimeUnit.SECONDS).build();
 		}
 
 		@Override
 		public Object invoke(final MethodInvocation invocation) throws Throwable {
 
-			final Method proxyMethod = ReflectionUtils.findMethod(
-					this.dataSource.getClass(), invocation.getMethod().getName());
+			final Method proxyMethod = ReflectionUtils.findMethod(this.dataSource.getClass(),
+					invocation.getMethod().getName());
 
 			if (proxyMethod != null) {
 				return proxyMethod.invoke(this.dataSource, invocation.getArguments());

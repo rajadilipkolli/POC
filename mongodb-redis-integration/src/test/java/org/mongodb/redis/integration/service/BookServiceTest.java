@@ -51,8 +51,8 @@ class BookServiceTest {
 
 	@Test
 	void getBookDetailsReturnBookInfo() throws BookNotFoundException {
-		Book builderBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-				.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build();
+		Book builderBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").bookId("JUNIT").text("JUNIT_TEXT")
+				.version(1L).build();
 		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
 				.willReturn(Optional.of(builderBook));
 		log.debug("Will return ", builderBook.toString());
@@ -66,8 +66,7 @@ class BookServiceTest {
 
 	@Test
 	void getBookDetailsWhenBookNotFound() {
-		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("prius")))
-				.willReturn(Optional.empty());
+		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("prius"))).willReturn(Optional.empty());
 		try {
 			this.bookService.findBookByTitle("prius");
 		}

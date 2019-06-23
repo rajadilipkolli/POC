@@ -52,8 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Cacheable(value = "customer", key = "#customerId", unless = "#result == null")
 	public Customer getCustomer(Long customerId) throws EntityNotFoundException {
 		return this.customerRepository.findById(customerId)
-				.orElseThrow(() -> new EntityNotFoundException(Customer.class, "id",
-						customerId.toString()));
+				.orElseThrow(() -> new EntityNotFoundException(Customer.class, "id", customerId.toString()));
 	}
 
 	/** {@inheritDoc} */
@@ -88,8 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 	/** {@inheritDoc} */
 	@Override
 	public boolean isCustomerExist(String firstName) {
-		final List<Customer> customerList = this.customerRepository
-				.findByFirstName(firstName);
+		final List<Customer> customerList = this.customerRepository.findByFirstName(firstName);
 		return !customerList.isEmpty();
 	}
 

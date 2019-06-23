@@ -42,14 +42,12 @@ public class ApplicationTest {
 	void getBookByTitle_returnsBookDetails() throws Exception {
 		// arrange
 		Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
-		ResponseEntity<Book> response = this.restTemplate.postForEntity("/book/saveBook",
-				book, Book.class);
+		ResponseEntity<Book> response = this.restTemplate.postForEntity("/book/saveBook", book, Book.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
 
 		// act
-		response = this.restTemplate.getForEntity("/book/findByTitle/MongoDbCookBook",
-				Book.class);
+		response = this.restTemplate.getForEntity("/book/findByTitle/MongoDbCookBook", Book.class);
 
 		// assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -57,8 +55,8 @@ public class ApplicationTest {
 		assertThat(response.getBody().getAuthor()).isEqualTo("Raja");
 
 		// act by Update
-		response = this.restTemplate.exchange("/book/updateByTitle/MongoDbCookBook/Raja1",
-				HttpMethod.PUT, null, Book.class);
+		response = this.restTemplate.exchange("/book/updateByTitle/MongoDbCookBook/Raja1", HttpMethod.PUT, null,
+				Book.class);
 
 		// assert After Update
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -66,15 +64,13 @@ public class ApplicationTest {
 		assertThat(response.getBody().getAuthor()).isEqualTo("Raja1");
 
 		// act by Delete
-		ResponseEntity<String> resp = this.restTemplate.exchange(
-				"/book/deleteByTitle/MongoDbCookBook", HttpMethod.DELETE, null,
-				String.class);
+		ResponseEntity<String> resp = this.restTemplate.exchange("/book/deleteByTitle/MongoDbCookBook",
+				HttpMethod.DELETE, null, String.class);
 		assertThat(resp).isNotNull();
 		assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
 		assertThat(resp.getBody()).isEqualTo("Book with title MongoDbCookBook deleted");
 
-		response = this.restTemplate.getForEntity("/book/findByTitle/MongoDbCookBook",
-				Book.class);
+		response = this.restTemplate.getForEntity("/book/findByTitle/MongoDbCookBook", Book.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
 		resp = this.restTemplate.getForEntity("/book/deleteCache", String.class);

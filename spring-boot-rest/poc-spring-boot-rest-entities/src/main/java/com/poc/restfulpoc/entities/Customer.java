@@ -68,10 +68,10 @@ public class Customer implements Serializable {
 
 	@Id
 	@Getter
-	@GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence", parameters = {
-			@org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
-			@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-			@org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+	@GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence",
+			parameters = { @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+					@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+					@org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private long id;
 
@@ -87,7 +87,8 @@ public class Customer implements Serializable {
 	@Column(name = "DATE_OF_BIRTH")
 	private LocalDateTime dateOfBirth;
 
-	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY,
+			orphanRemoval = true)
 	@JsonManagedReference
 	private Address address;
 
@@ -152,8 +153,7 @@ public class Customer implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getFirstName(), getLastName(), getDateOfBirth(),
-				getAddress());
+		return Objects.hash(getFirstName(), getLastName(), getDateOfBirth(), getAddress());
 	}
 
 }

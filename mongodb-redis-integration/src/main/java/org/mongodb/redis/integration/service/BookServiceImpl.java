@@ -52,8 +52,7 @@ public class BookServiceImpl implements BookService {
 	public Book findBookByTitle(String title) throws BookNotFoundException {
 		log.info("Finding Book by Title :{}", title);
 		return this.bookRepository.findBookByTitle(title)
-				.orElseThrow(() -> new BookNotFoundException(
-						"Book with Title " + title + " NotFound!"));
+				.orElseThrow(() -> new BookNotFoundException("Book with Title " + title + " NotFound!"));
 	}
 
 	@Override
@@ -68,8 +67,8 @@ public class BookServiceImpl implements BookService {
 		log.info("Updating Book Author by Title :{} with {}", title, author);
 		final Query query = new Query(Criteria.where("title").is(title));
 		final Update update = new Update().set("author", author);
-		return this.mongoTemplate.findAndModify(query, update,
-				new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
+		return this.mongoTemplate.findAndModify(query, update, new FindAndModifyOptions().returnNew(true).upsert(false),
+				Book.class);
 	}
 
 	@Override

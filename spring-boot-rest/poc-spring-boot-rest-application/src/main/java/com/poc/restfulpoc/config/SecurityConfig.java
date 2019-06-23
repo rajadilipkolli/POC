@@ -39,22 +39,18 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		return new InMemoryUserDetailsManager(
-				User.withUsername("username").password("{noop}password")
-						.authorities("ROLE_USER").build(),
+				User.withUsername("username").password("{noop}password").authorities("ROLE_USER").build(),
 				User.withUsername("admin").password("{noop}admin")
 						.authorities("ROLE_ACTUATOR", "ROLE_USER", "ROLE_ADMIN").build());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
-				.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
-				.requestMatchers(
-						EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class))
-				.hasRole("ACTUATOR")
-				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-				.permitAll().antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-				.antMatchers("/**").hasRole("USER").and().httpBasic();
+		http.csrf().disable().authorizeRequests().requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+				.requestMatchers(EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class)).hasRole("ACTUATOR")
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+				.antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN").antMatchers("/**").hasRole("USER").and()
+				.httpBasic();
 		// H2 database console runs inside a frame, So we need to disable X-Frame-Options
 		// in Spring Security.
 		http.headers().frameOptions().disable();

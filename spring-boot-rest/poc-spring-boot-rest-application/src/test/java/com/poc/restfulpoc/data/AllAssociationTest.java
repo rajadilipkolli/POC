@@ -80,8 +80,7 @@ class AllAssociationTest {
 
 		EntityGraph<Post> fetchGraph = this.entityManager.createEntityGraph(Post.class);
 		fetchGraph.addSubgraph("comments");
-		TypedQuery<Post> q1 = this.entityManager.createQuery(query1)
-				.setHint("javax.persistence.loadgraph", fetchGraph);
+		TypedQuery<Post> q1 = this.entityManager.createQuery(query1).setHint("javax.persistence.loadgraph", fetchGraph);
 		resultList = q1.getResultList();
 		assertThat(resultList).isNotEmpty().size().isGreaterThanOrEqualTo(1);
 

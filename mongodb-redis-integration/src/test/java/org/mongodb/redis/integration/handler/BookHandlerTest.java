@@ -51,8 +51,8 @@ class BookHandlerTest {
 	void init() {
 		if (this.controller.count() == 0) {
 			this.controller.deleteCache();
-			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book")
-					.author("Raja").bookId("1").build();
+			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1")
+					.build();
 			this.controller.saveBook(book);
 		}
 	}
@@ -64,9 +64,8 @@ class BookHandlerTest {
 
 	@Test
 	void testGetAll() {
-		EntityExchangeResult<List<Book>> result = this.webTestClient.get()
-				.uri("/api/book").accept(MediaType.APPLICATION_JSON).exchange()
-				.expectBodyList(Book.class).returnResult();
+		EntityExchangeResult<List<Book>> result = this.webTestClient.get().uri("/api/book")
+				.accept(MediaType.APPLICATION_JSON).exchange().expectBodyList(Book.class).returnResult();
 		assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(1);
 		assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
 		assertThat(result.getUriTemplate()).isEqualTo("/api/book");
@@ -75,9 +74,8 @@ class BookHandlerTest {
 
 	@Test
 	void testGetBook() {
-		Book response = this.webTestClient.get().uri("/api/book/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON).exchange().expectBody(Book.class)
-				.returnResult().getResponseBody();
+		Book response = this.webTestClient.get().uri("/api/book/{id}", 1).accept(MediaType.APPLICATION_JSON).exchange()
+				.expectBody(Book.class).returnResult().getResponseBody();
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("MongoDbCookBook");
 		assertThat(response.getAuthor()).isEqualTo("Raja");
@@ -86,31 +84,25 @@ class BookHandlerTest {
 
 	@Test
 	void testPostBook() {
-		final Book book = Book.builder().author("Raja").text("This is a Test Book")
-				.title("JUNIT_TITLE").build();
+		final Book book = Book.builder().author("Raja").text("This is a Test Book").title("JUNIT_TITLE").build();
 
-		this.webTestClient.post().uri("/api/book/post")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class)
-				.exchange().expectStatus().isOk();
+		this.webTestClient.post().uri("/api/book/post").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk();
 	}
 
 	@Test
 	void testPutBook() {
-		Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book1")
-				.author("Raja").bookId("1").version(0L).build();
+		Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book1").author("Raja").bookId("1")
+				.version(0L).build();
 
-		this.webTestClient.put().uri("/api/book/put/{id}", 1)
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class)
-				.exchange().expectStatus().isOk();
+		this.webTestClient.put().uri("/api/book/put/{id}", 1).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk();
 	}
 
 	@Test
 	void testDeleteBook() {
-		this.webTestClient.delete().uri("/api/book/delete/{id}", 1).exchange()
-				.expectStatus().isAccepted().expectBody(String.class)
-				.isEqualTo("Delete Succesfully!");
+		this.webTestClient.delete().uri("/api/book/delete/{id}", 1).exchange().expectStatus().isAccepted()
+				.expectBody(String.class).isEqualTo("Delete Succesfully!");
 	}
 
 }

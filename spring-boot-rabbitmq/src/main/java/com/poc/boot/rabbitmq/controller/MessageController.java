@@ -39,8 +39,7 @@ public class MessageController {
 	@PostMapping("/sendMsg")
 	public String handleMessage(Order order, RedirectAttributes redirectAttributes) {
 		this.orderMessageSender.sendOrder(order);
-		redirectAttributes.addFlashAttribute("message",
-				"Order message sent successfully");
+		redirectAttributes.addFlashAttribute("message", "Order message sent successfully");
 		return "redirect:/";
 	}
 

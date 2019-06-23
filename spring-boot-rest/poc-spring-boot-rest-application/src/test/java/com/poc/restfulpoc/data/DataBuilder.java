@@ -48,16 +48,16 @@ public class DataBuilder {
 
 		final Customer customer1 = Customer.builder().firstName("Raja").lastName("Kolli")
 				.dateOfBirth(LocalDateTime.of(1982, Month.JANUARY, 10, 0, 0)).build();
-		customer1.setAddress(Address.builder().county("India").postcode("BT893PY")
-				.street("High Street").town("Belfast").build());
+		customer1.setAddress(
+				Address.builder().county("India").postcode("BT893PY").street("High Street").town("Belfast").build());
 		Order order = new Order();
 		order.setOrderNumber("ORD1");
 		customer1.addOrder(order);
 
 		final Customer customer2 = Customer.builder().firstName("Paul").lastName("Jones")
 				.dateOfBirth(LocalDateTime.of(1973, Month.JANUARY, 3, 0, 0)).build();
-		customer2.setAddress(Address.builder().street("Main Street").town("Lurgan")
-				.county("Armagh").postcode("BT283FG").build());
+		customer2.setAddress(
+				Address.builder().street("Main Street").town("Lurgan").county("Armagh").postcode("BT283FG").build());
 		Order order1 = new Order();
 		order1.setOrderNumber("ORD2");
 		order1.setOrderStatus(OrderStatus.IN_PROCESS);
@@ -65,8 +65,8 @@ public class DataBuilder {
 
 		final Customer customer3 = Customer.builder().firstName("Steve").lastName("Toale")
 				.dateOfBirth(LocalDateTime.of(1979, Month.MARCH, 8, 0, 0)).build();
-		customer3.setAddress(Address.builder().street("Main Street").town("Newry")
-				.county("Down").postcode("BT359JK").build());
+		customer3.setAddress(
+				Address.builder().street("Main Street").town("Newry").county("Down").postcode("BT359JK").build());
 		Order order11 = new Order();
 		order11.setOrderNumber("ORD3");
 		order11.setOrderStatus(OrderStatus.COMPLETED);

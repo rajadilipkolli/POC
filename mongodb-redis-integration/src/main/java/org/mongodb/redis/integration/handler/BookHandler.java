@@ -28,6 +28,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Handler which handles Routes.
  *
@@ -35,22 +37,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @since 0.2.1
  */
 @Component
+@RequiredArgsConstructor
 public class BookHandler {
 
 	private final ReactiveBookRepository bookReactiveRepository;
-
-	/**
-	 * <p>
-	 * Constructor for BookHandler.
-	 * </p>
-	 * @param repository a
-	 * {@link com.ReactiveBookRepository.mongodbredisintegration.repository.BookReactiveRepository}
-	 * object.
-	 */
-	@Autowired
-	public BookHandler(ReactiveBookRepository repository) {
-		this.bookReactiveRepository = repository;
-	}
 
 	/**
 	 * GET ALL Books.
@@ -63,8 +53,7 @@ public class BookHandler {
 		Flux<Book> books = this.bookReactiveRepository.findAll();
 
 		// build response
-		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(books,
-				Book.class);
+		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(books, Book.class);
 	}
 
 	/**
@@ -84,10 +73,8 @@ public class BookHandler {
 		Mono<Book> bookMono = this.bookReactiveRepository.findById(bookId);
 
 		// build response
-		return bookMono.flatMap(
-				(Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-						.body(BodyInserters.fromObject(book)))
-				.switchIfEmpty(notFound);
+		return bookMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+				.body(BodyInserters.fromObject(book))).switchIfEmpty(notFound);
 	}
 
 	/**
@@ -98,8 +85,7 @@ public class BookHandler {
 	 */
 	public Mono<ServerResponse> postBook(ServerRequest request) {
 		Mono<Book> monoBook = request.bodyToMono(Book.class);
-		return ServerResponse.ok()
-				.build(monoBook.doOnNext(this.bookReactiveRepository::save).then());
+		return ServerResponse.ok().build(monoBook.doOnNext(this.bookReactiveRepository::save).then());
 	}
 
 	/**
@@ -120,9 +106,8 @@ public class BookHandler {
 		Mono<Book> responseMono = monoBook.doOnNext(this.bookReactiveRepository::save);
 
 		// build response
-		return responseMono.flatMap(
-				(Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-						.body(BodyInserters.fromObject(book)));
+		return responseMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+				.body(BodyInserters.fromObject(book)));
 	}
 
 	/**
@@ -139,8 +124,7 @@ public class BookHandler {
 		Mono<String> responseMono = Mono.just("Delete Succesfully!");
 
 		// build response
-		return responseMono.flatMap((String strMono) -> ServerResponse.accepted()
-				.contentType(MediaType.TEXT_PLAIN)
+		return responseMono.flatMap((String strMono) -> ServerResponse.accepted().contentType(MediaType.TEXT_PLAIN)
 				.body(BodyInserters.fromObject(strMono)));
 
 	}

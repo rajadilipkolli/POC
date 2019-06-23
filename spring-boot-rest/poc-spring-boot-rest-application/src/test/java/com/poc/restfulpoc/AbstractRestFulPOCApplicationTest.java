@@ -39,8 +39,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.restdocs.RestDocumentationExtension;
 
 @ExtendWith({ RestDocumentationExtension.class })
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = {
-		Application.class, DatasourceProxyBeanPostProcessor.class })
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
+		classes = { Application.class, DatasourceProxyBeanPostProcessor.class })
 @Import(DataBuilder.class)
 public abstract class AbstractRestFulPOCApplicationTest {
 
@@ -63,14 +63,13 @@ public abstract class AbstractRestFulPOCApplicationTest {
 	}
 
 	private TestRestTemplate configure(TestRestTemplate restTemplate) {
-		restTemplate
-				.setUriTemplateHandler(new LocalHostUriTemplateHandler(this.environment));
+		restTemplate.setUriTemplateHandler(new LocalHostUriTemplateHandler(this.environment));
 		return restTemplate;
 	}
 
 	protected List<Customer> convertJsonToCustomers(String json) throws Exception {
-		return this.mapper.readValue(json, TypeFactory.defaultInstance()
-				.constructCollectionType(List.class, Customer.class));
+		return this.mapper.readValue(json,
+				TypeFactory.defaultInstance().constructCollectionType(List.class, Customer.class));
 	}
 
 	@TestConfiguration

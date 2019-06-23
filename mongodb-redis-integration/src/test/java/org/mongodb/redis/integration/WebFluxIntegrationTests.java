@@ -61,12 +61,12 @@ public class WebFluxIntegrationTests {
 	@BeforeAll
 	void setUp() throws Exception {
 		if (!this.operations.collectionExists(Book.class).block()) {
-			this.operations.createCollection(Book.class, CollectionOptions.empty()
-					.size(1024 * 1024).maxDocuments(100).capped()).then().block();
+			this.operations.createCollection(Book.class,
+					CollectionOptions.empty().size(1024 * 1024).maxDocuments(100).capped()).then().block();
 		}
-		this.bookRepository.save(Book.builder().title("MongoDbCookBook")
-				.text("MongoDB Data Book").author("Raja").bookId("1").build()).then()
-				.block();
+		this.bookRepository.save(
+				Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1").build())
+				.then().block();
 	}
 
 	@AfterAll
@@ -76,8 +76,7 @@ public class WebFluxIntegrationTests {
 
 	@Test
 	void getBook_WithName_ReturnsBook() {
-		Book book = this.webTestClient.get()
-				.uri("/books/title/{title}", "MongoDbCookBook").exchange().expectStatus()
+		Book book = this.webTestClient.get().uri("/books/title/{title}", "MongoDbCookBook").exchange().expectStatus()
 				.isOk().expectBody(Book.class).returnResult().getResponseBody();
 		assertThat(book.getTitle()).isEqualTo("MongoDbCookBook");
 		assertThat(book.getAuthor()).isEqualTo("Raja");
@@ -85,16 +84,12 @@ public class WebFluxIntegrationTests {
 
 	@Test
 	void testCreateBook() {
-		final Book book = Book.builder().author("Raja").text("This is a Test Book")
-				.title(TITLE).build();
+		final Book book = Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build();
 
-		this.webTestClient.post().uri("/books")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
-				.exchange().expectStatus().isOk().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.bookId").isNotEmpty().jsonPath("$.text")
-				.isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
+				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class).exchange().expectStatus()
+				.isOk().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody().jsonPath("$.bookId")
+				.isNotEmpty().jsonPath("$.text").isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
 	}
 
 	@Test
@@ -103,82 +98,66 @@ public class WebFluxIntegrationTests {
 		Book book = Book.builder().author("Raja").text("This is a Test Book")
 				.title(RandomStringUtils.randomAlphanumeric(200)).build();
 
-		this.webTestClient.post().uri("/books")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8)
-				.body(BodyInserters.fromObject(book)).exchange().expectStatus()
-				.isBadRequest().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.message").isNotEmpty()
-				.jsonPath("$.errors.[0].defaultMessage")
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
+				.accept(MediaType.APPLICATION_JSON_UTF8).body(BodyInserters.fromObject(book)).exchange().expectStatus()
+				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
 				.isEqualTo("size must be between 0 and 140");
 
 		book = Book.builder().build();
-		this.webTestClient.post().uri("/books")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class)
-				.exchange().expectStatus().isBadRequest().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.message").isNotEmpty()
-				.jsonPath("$.errors.[0].defaultMessage").isEqualTo("must not be blank");
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
+				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class).exchange().expectStatus()
+				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
+				.isEqualTo("must not be blank");
 	}
 
 	@Test
 	void testGetAllBooks() {
-		this.webTestClient.get().uri("/books").accept(MediaType.APPLICATION_JSON_UTF8)
-				.exchange().expectStatus().isOk().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBodyList(Book.class);
+		this.webTestClient.get().uri("/books").accept(MediaType.APPLICATION_JSON_UTF8).exchange().expectStatus().isOk()
+				.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBodyList(Book.class);
 	}
 
 	@Test
 	void testGetSingleBook() {
-		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title(TITLE).build()).block();
+		final Book book = this.bookReactiveRepository
+				.save(Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build()).block();
 
-		this.webTestClient.get()
-				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
-				.exchange().expectStatus().isOk().expectBody().consumeWith(
-						(response) -> assertThat(response.getResponseBody()).isNotNull());
+		this.webTestClient.get().uri("/books/{id}", Collections.singletonMap("id", book.getBookId())).exchange()
+				.expectStatus().isOk().expectBody()
+				.consumeWith((response) -> assertThat(response.getResponseBody()).isNotNull());
 	}
 
 	@Test
 	void testUpdateBook() {
-		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title(TITLE).build()).block();
+		final Book book = this.bookReactiveRepository
+				.save(Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build()).block();
 
-		final Book newBookData = Book.builder().author("Raja").text("Updated Book")
-				.title(TITLE).build();
+		final Book newBookData = Book.builder().author("Raja").text("Updated Book").title(TITLE).build();
 
-		this.webTestClient.put()
-				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8)
-				.body(Mono.just(newBookData), Book.class).exchange().expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
-				.jsonPath("$.text").isEqualTo("Updated Book");
+		this.webTestClient.put().uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
+				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
+				.body(Mono.just(newBookData), Book.class).exchange().expectStatus().isOk().expectHeader()
+				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody().jsonPath("$.text").isEqualTo("Updated Book");
 	}
 
 	@Test
 	void testDeleteBook() {
-		final Book book = this.bookReactiveRepository.save(Book.builder().author("Raja")
-				.text("This is a Test Book").title(TITLE).build()).block();
+		final Book book = this.bookReactiveRepository
+				.save(Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build()).block();
 
-		this.webTestClient.delete()
-				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
-				.exchange().expectStatus().isOk();
+		this.webTestClient.delete().uri("/books/{id}", Collections.singletonMap("id", book.getBookId())).exchange()
+				.expectStatus().isOk();
 
-		this.webTestClient.get()
-				.uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
-				.exchange().expectStatus().isNotFound();
+		this.webTestClient.get().uri("/books/{id}", Collections.singletonMap("id", book.getBookId())).exchange()
+				.expectStatus().isNotFound();
 	}
 
 	@Test
 	@DisplayName("Test case for EventStream Value")
 	void testTextEventStreamValue() {
-		this.webTestClient.get().uri("/books/stream").exchange().expectStatus()
-				.is2xxSuccessful().expectHeader()
-				.contentType("text/event-stream;charset=UTF-8")
-				.expectBodyList(Book.class);
+		this.webTestClient.get().uri("/books/stream").exchange().expectStatus().is2xxSuccessful().expectHeader()
+				.contentType("text/event-stream;charset=UTF-8").expectBodyList(Book.class);
 	}
 
 }

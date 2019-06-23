@@ -71,8 +71,7 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	@Override
 	public Mono<ResponseEntity<Void>> deleteBook(String bookId) {
 		return this.reactiveRepository.findById(bookId)
-				.flatMap((Book existingBook) -> this.reactiveRepository
-						.delete(existingBook)
+				.flatMap((Book existingBook) -> this.reactiveRepository.delete(existingBook)
 						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
