@@ -6,7 +6,8 @@ Below are the projects that I have completed POC
 
  - link:mongodb-redis-integration/ReadMe.adoc[mongodb-redis-integration] -> adding fault tolerant caching layer to MongoDB.
  - link:spring-boot-rest/README.md[spring-boot-rest-poc] -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
- - link:springboot-mongodb-security/ReadMe.adoc[springboot-mongodb-security]  -> Spring Boot, Security, and Data MongoDB Authentication Example
+ - link:springboot-mongodb-security-ui/ReadMe.adoc[spring-boot-mongodb-security]  -> Spring Boot, Security, and Data MongoDB Authentication Example
+ - link:spring-boot-rabbitmq/README.md[spring-boot-rabbit-mq] -> Sample to produce and consume Messages in RabbitMQ
 
 === Filing Issues
 
