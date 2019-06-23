@@ -23,6 +23,7 @@ import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -40,6 +41,7 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
  * @author Raja Kolli
  *
  */
+@EnableRabbit
 @Configuration
 public class RabbitConfig implements RabbitListenerConfigurer {
 
@@ -58,6 +60,7 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 	 */
 	public static final String EXCHANGE_ORDERS = "orders-exchange";
 
+	/* Creating a bean for the Message queue */
 	@Bean
 	Queue ordersQueue() {
 		return QueueBuilder.durable(QUEUE_ORDERS)
@@ -76,11 +79,13 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 		return ExchangeBuilder.topicExchange(EXCHANGE_ORDERS).build();
 	}
 
+	/* Binding between Exchange and Queue using routing key */
 	@Bean
 	Binding binding(Queue ordersQueue, TopicExchange ordersExchange) {
 		return BindingBuilder.bind(ordersQueue).to(ordersExchange).with(QUEUE_ORDERS);
 	}
 
+	/* Bean for rabbitTemplate */
 	@Bean
 	public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
 		final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);

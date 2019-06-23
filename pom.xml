@@ -185,7 +185,8 @@
 
 	<modules>
 		<module>mongodb-redis-integration</module>
-        <module>spring-boot-rabbitmq</module>
 		<module>spring-boot-rest</module>
+		<module>springboot-mongodb-security-ui</module>
+		<module>spring-boot-rabbitmq</module>
 	</modules>
 </project>
