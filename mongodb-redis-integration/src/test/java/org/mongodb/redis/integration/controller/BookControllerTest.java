@@ -51,14 +51,11 @@ class BookControllerTest {
 
 	@Test
 	void getBookShouldReturnBook() throws Exception {
-		given(this.bookService.findBookByTitle(anyString()))
-				.willReturn(Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-						.bookId("JUNIT").text("JUNIT_TEXT").version(1L).build());
+		given(this.bookService.findBookByTitle(anyString())).willReturn(Book.builder().title("JUNIT_TITLE")
+				.author("JUNIT_AUTHOR").bookId("JUNIT").text("JUNIT_TEXT").version(1L).build());
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/book/findByTitle/JUNIT_TITLE"))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("title").value("JUNIT_TITLE"))
-				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/book/findByTitle/JUNIT_TITLE")).andExpect(status().isOk())
+				.andExpect(jsonPath("title").value("JUNIT_TITLE")).andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
 	}
 
 	@Test
@@ -72,44 +69,38 @@ class BookControllerTest {
 
 	@Test
 	void saveBookShouldReturnBook() throws Exception {
-		Book book = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-				.bookId("JUNIT").text("JUNIT_TEXT").build();
-		given(this.bookService.saveBook(ArgumentMatchers.any(Book.class)))
-				.willReturn(book);
+		Book book = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").bookId("JUNIT").text("JUNIT_TEXT")
+				.build();
+		given(this.bookService.saveBook(ArgumentMatchers.any(Book.class))).willReturn(book);
 
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.post("/book/saveBook")
 						.content(this.objectMapper.writeValueAsString(book))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("title").value("JUNIT_TITLE"))
+				.andExpect(status().isOk()).andExpect(jsonPath("title").value("JUNIT_TITLE"))
 				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
 	}
 
 	@Test
 	void updateBookShouldReturnBook() throws Exception {
-		Book book = Book.builder().title("MongoDbCookBook").author("JUNIT_AUTHOR")
-				.bookId("JUNIT").text("JUNIT_TEXT").build();
-		given(this.bookService.updateAuthorByTitle(ArgumentMatchers.eq("MongoDbCookBook"),
-				anyString())).willReturn(book);
+		Book book = Book.builder().title("MongoDbCookBook").author("JUNIT_AUTHOR").bookId("JUNIT").text("JUNIT_TEXT")
+				.build();
+		given(this.bookService.updateAuthorByTitle(ArgumentMatchers.eq("MongoDbCookBook"), anyString()))
+				.willReturn(book);
 
 		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.put("/book/updateByTitle/MongoDbCookBook/Raja1")
+				.perform(MockMvcRequestBuilders.put("/book/updateByTitle/MongoDbCookBook/Raja1")
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("title").value("MongoDbCookBook"))
+				.andExpect(status().isOk()).andExpect(jsonPath("title").value("MongoDbCookBook"))
 				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
 	}
 
 	@Test
 	void deleteBookShouldReturnError() throws Exception {
-		willThrow(new BookNotFoundException("Book with Title Not Found"))
-				.given(this.bookService).deleteBook(anyString());
+		willThrow(new BookNotFoundException("Book with Title Not Found")).given(this.bookService)
+				.deleteBook(anyString());
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.delete("/book/deleteByTitle/MongoDbCookBook"))
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/book/deleteByTitle/MongoDbCookBook"))
 				.andExpect(status().isNotFound());
 	}
 
@@ -117,9 +108,7 @@ class BookControllerTest {
 	void deleteBookShouldReturnValue() throws Exception {
 		willDoNothing().given(this.bookService).deleteBook(anyString());
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.delete("/book/deleteByTitle/MongoDbCookBook"))
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/book/deleteByTitle/MongoDbCookBook"))
 				.andExpect(status().isAccepted());
 	}
 

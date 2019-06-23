@@ -46,8 +46,7 @@ class CustomerValidatorTest {
 		customer.setLastName("kolli");
 
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Customer>> constraintViolations = validator
-				.validate(customer);
+		Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(customer);
 
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Customer> violation = constraintViolations.iterator().next();

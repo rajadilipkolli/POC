@@ -59,16 +59,13 @@ class CustomerControllerTest {
 	@SpyBean
 	private CustomerValidator customerValidator;
 
-	private final Customer customer = Customer.builder().firstName("firstName")
-			.lastName("lastName").build();
+	private final Customer customer = Customer.builder().firstName("firstName").lastName("lastName").build();
 
 	@Test
 	void testGetCustomers() throws Exception {
-		given(this.customerService.getCustomers())
-				.willReturn(Collections.singletonList(this.customer));
+		given(this.customerService.getCustomers()).willReturn(Collections.singletonList(this.customer));
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/"))
-				.andExpect(status().isOk())
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/")).andExpect(status().isOk())
 				.andExpect(jsonPath("[0].firstName").value("firstName"))
 				.andExpect(jsonPath("[0].lastName").value("lastName"));
 
@@ -76,55 +73,39 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetCustomer() throws Exception {
-		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
-				.willReturn(this.customer);
+		given(this.customerService.getCustomer(ArgumentMatchers.anyLong())).willReturn(this.customer);
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}",
-						RandomUtils.nextLong()))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("firstName").value("firstName"))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/rest/customers/{customerId}", RandomUtils.nextLong()))
+				.andExpect(status().isOk()).andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"));
 	}
 
 	@Test
 	void testCreateCustomer() throws JsonProcessingException, Exception {
-		BDDMockito.willDoNothing().given(this.customerValidator)
-				.validate(ArgumentMatchers.any(), ArgumentMatchers.any(Errors.class));
-		given(this.customerService.isCustomerExist(ArgumentMatchers.anyString()))
-				.willReturn(false);
-		BDDMockito
-				.given(this.customerService
-						.createCustomer(ArgumentMatchers.any(Customer.class)))
-				.willReturn(null);
+		BDDMockito.willDoNothing().given(this.customerValidator).validate(ArgumentMatchers.any(),
+				ArgumentMatchers.any(Errors.class));
+		given(this.customerService.isCustomerExist(ArgumentMatchers.anyString())).willReturn(false);
+		BDDMockito.given(this.customerService.createCustomer(ArgumentMatchers.any(Customer.class))).willReturn(null);
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders.post("/rest/customers/")
-						.content(this.objectMapper.writeValueAsString(this.customer))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isCreated());
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/rest/customers/")
+				.content(this.objectMapper.writeValueAsString(this.customer))
+				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
 
 		final Customer invalidCustomer = this.customer;
 		invalidCustomer.setFirstName(null);
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders.post("/rest/customers/")
-						.content(this.objectMapper.writeValueAsString(invalidCustomer))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isBadRequest());
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/rest/customers/")
+				.content(this.objectMapper.writeValueAsString(invalidCustomer))
+				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isBadRequest());
 	}
 
 	@Test
 	void testUpdateSameCustomer() throws Exception {
-		given(this.customerService.getCustomer(ArgumentMatchers.anyLong()))
-				.willReturn(this.customer);
+		given(this.customerService.getCustomer(ArgumentMatchers.anyLong())).willReturn(this.customer);
 
-		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.put("/rest/customers/{customerId}", this.customer.getId())
-						.content(this.objectMapper.writeValueAsString(this.customer))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isNotModified());
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/rest/customers/{customerId}", this.customer.getId())
+				.content(this.objectMapper.writeValueAsString(this.customer))
+				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotModified());
 	}
 
 	@Test
@@ -135,16 +116,14 @@ class CustomerControllerTest {
 		final Customer updateRequest = this.customer;
 		final LocalDateTime dateOfBirth = LocalDateTime.now();
 		updateRequest.setDateOfBirth(dateOfBirth);
-		given(this.customerService.updateCustomer(ArgumentMatchers.any(Customer.class),
-				ArgumentMatchers.anyLong())).willReturn(this.customer);
+		given(this.customerService.updateCustomer(ArgumentMatchers.any(Customer.class), ArgumentMatchers.anyLong()))
+				.willReturn(this.customer);
 
 		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.put("/rest/customers/{customerId}", RandomUtils.nextLong())
+				.perform(MockMvcRequestBuilders.put("/rest/customers/{customerId}", RandomUtils.nextLong())
 						.content(this.objectMapper.writeValueAsString(updateRequest))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("firstName").value("firstName"))
+				.andExpect(status().isOk()).andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"))
 				.andExpect(jsonPath("dateOfBirth").value(dateOfBirth.toString()));
 	}
@@ -152,18 +131,16 @@ class CustomerControllerTest {
 	@Test
 	@WithMockUser(roles = "ADMIN")
 	void testRemoveCustomer() throws Exception {
-		BDDMockito.willDoNothing().given(this.customerService)
-				.deleteCustomerById(ArgumentMatchers.anyLong());
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/{customerId}",
-				RandomUtils.nextLong())).andExpect(status().isAccepted());
+		BDDMockito.willDoNothing().given(this.customerService).deleteCustomerById(ArgumentMatchers.anyLong());
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/{customerId}", RandomUtils.nextLong()))
+				.andExpect(status().isAccepted());
 	}
 
 	@Test
 	@WithMockUser(roles = "ADMIN")
 	void testDeleteAllUsers() throws Exception {
 		BDDMockito.willDoNothing().given(this.customerService).deleteAllCustomers();
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/"))
-				.andExpect(status().isNoContent());
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/rest/customers/")).andExpect(status().isNoContent());
 	}
 
 }

@@ -38,8 +38,7 @@ class ReactiveBookRepositoryTest {
 
 	@BeforeAll
 	void setUp() throws Exception {
-		this.bookRepository.save(Book.builder().title("prius").author("hybrid").build())
-				.then().block();
+		this.bookRepository.save(Book.builder().title("prius").author("hybrid").build()).then().block();
 	}
 
 	@AfterAll
@@ -49,11 +48,10 @@ class ReactiveBookRepositoryTest {
 
 	@Test
 	void findByTitleReturnsBook() {
-		StepVerifier.create(this.bookRepository.findByTitle("prius"))
-				.consumeNextWith((Book book) -> {
-					assertThat(book.getTitle()).isEqualTo("prius");
-					assertThat(book.getAuthor()).isEqualTo("hybrid");
-				}).verifyComplete();
+		StepVerifier.create(this.bookRepository.findByTitle("prius")).consumeNextWith((Book book) -> {
+			assertThat(book.getTitle()).isEqualTo("prius");
+			assertThat(book.getAuthor()).isEqualTo("hybrid");
+		}).verifyComplete();
 	}
 
 }

@@ -52,30 +52,23 @@ class CustomerServiceTest {
 
 	private CustomerService customerService;
 
-	private final Customer customer = Customer.builder().firstName("firstName")
-			.lastName("lastName").build();
+	private final Customer customer = Customer.builder().firstName("firstName").lastName("lastName").build();
 
 	@BeforeAll
 	void setUp() {
 		MockitoAnnotations.initMocks(this);
-		this.customerService = new CustomerServiceImpl(this.customerRepository,
-				this.jmsTemplate);
-		given(this.customerRepository.findAll())
-				.willReturn(Collections.singletonList(this.customer));
-		given(this.customerRepository.findById(ArgumentMatchers.anyLong()))
-				.willReturn(Optional.of(this.customer));
-		given(this.customerRepository.save(ArgumentMatchers.any(Customer.class)))
-				.willReturn(this.customer);
+		this.customerService = new CustomerServiceImpl(this.customerRepository, this.jmsTemplate);
+		given(this.customerRepository.findAll()).willReturn(Collections.singletonList(this.customer));
+		given(this.customerRepository.findById(ArgumentMatchers.anyLong())).willReturn(Optional.of(this.customer));
+		given(this.customerRepository.save(ArgumentMatchers.any(Customer.class))).willReturn(this.customer);
 		given(this.customerRepository.findByFirstName(ArgumentMatchers.anyString()))
 				.willReturn(Collections.singletonList(this.customer));
-		given(this.customerRepository.findByFirstName(ArgumentMatchers.eq("asdfg")))
-				.willReturn(new ArrayList<>());
+		given(this.customerRepository.findByFirstName(ArgumentMatchers.eq("asdfg"))).willReturn(new ArrayList<>());
 
-		given(this.customerRepository.findById(ArgumentMatchers.eq(0L)))
-				.willReturn(Optional.empty());
+		given(this.customerRepository.findById(ArgumentMatchers.eq(0L))).willReturn(Optional.empty());
 
-		BDDMockito.willDoNothing().given(this.jmsTemplate).convertAndSend(
-				ArgumentMatchers.eq("jms.message.endpoint"), ArgumentMatchers.anyLong());
+		BDDMockito.willDoNothing().given(this.jmsTemplate).convertAndSend(ArgumentMatchers.eq("jms.message.endpoint"),
+				ArgumentMatchers.anyLong());
 	}
 
 	@Test
@@ -109,8 +102,7 @@ class CustomerServiceTest {
 	void testUpdateCustomer() {
 		LocalDateTime dateOfBirth = LocalDateTime.now();
 		this.customer.setDateOfBirth(dateOfBirth);
-		Customer res = this.customerService.updateCustomer(this.customer,
-				RandomUtils.nextLong());
+		Customer res = this.customerService.updateCustomer(this.customer, RandomUtils.nextLong());
 		assertThat(res).isNotNull();
 		assertThat(res.getFirstName()).isNotNull().isEqualTo("firstName");
 		assertThat(res.getDateOfBirth()).isNotNull().isEqualTo(dateOfBirth.toString());
@@ -123,8 +115,7 @@ class CustomerServiceTest {
 
 	@Test
 	void testIsCustomerExist() {
-		boolean response = this.customerService
-				.isCustomerExist(RandomStringUtils.random(5));
+		boolean response = this.customerService.isCustomerExist(RandomStringUtils.random(5));
 		assertThat(response).isEqualTo(true);
 		response = this.customerService.isCustomerExist("asdfg");
 		assertThat(response).isEqualTo(false);

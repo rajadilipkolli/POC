@@ -97,8 +97,7 @@ public class ReactiveBookController {
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	@PutMapping("/{id}")
-	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String bookId,
-			@Valid @RequestBody Book book) {
+	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String bookId, @Valid @RequestBody Book book) {
 		return this.reactiveBookService.updateBook(bookId, book);
 	}
 

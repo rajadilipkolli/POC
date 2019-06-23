@@ -51,8 +51,8 @@ class CustomerRepositoryTest extends AbstractRestFulPOCApplicationTest {
 	@Test
 	@DisplayName("Test that deletion of customer will delete entries in order and customer")
 	void testDeleteCustomer() {
-		final Address address = Address.builder().county("India").postcode("BT893PY")
-				.street("High Street").town("Belfast").build();
+		final Address address = Address.builder().county("India").postcode("BT893PY").street("High Street")
+				.town("Belfast").build();
 		final Order order = new Order();
 		order.setOrderNumber("ORD1");
 		final Customer customer = Customer.builder().firstName("Raja").lastName("Kolli")

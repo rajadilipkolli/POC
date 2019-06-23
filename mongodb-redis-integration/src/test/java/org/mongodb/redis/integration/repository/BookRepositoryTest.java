@@ -51,8 +51,8 @@ class BookRepositoryTest {
 	@BeforeAll
 	void before() {
 		this.collectionName = "books";
-		this.bookRecToInsert = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR")
-				.bookId("JUNIT").text("JUNIT_TEXT").build();
+		this.bookRecToInsert = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").bookId("JUNIT")
+				.text("JUNIT_TEXT").build();
 	}
 
 	@AfterAll
@@ -64,8 +64,7 @@ class BookRepositoryTest {
 	void checkMongoTemplateAndPerFormOperations() {
 
 		assertThat(this.mongoTemplate).isNotNull();
-		MongoCollection<Document> createdCollection = this.mongoTemplate
-				.createCollection(this.collectionName);
+		MongoCollection<Document> createdCollection = this.mongoTemplate.createCollection(this.collectionName);
 		assertThat(createdCollection.countDocuments()).isEqualTo(0);
 		assertThat(this.mongoTemplate.collectionExists(this.collectionName)).isTrue();
 

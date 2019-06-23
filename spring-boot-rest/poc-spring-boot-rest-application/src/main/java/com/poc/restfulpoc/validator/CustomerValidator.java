@@ -49,13 +49,11 @@ public class CustomerValidator implements Validator {
 	/** {@inheritDoc} */
 	@Override
 	public void validate(@NonNull Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",
-				"message.firstName", "FirstName is Mandatory");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "message.firstName", "FirstName is Mandatory");
 		final Customer customer = (Customer) target;
 		final LocalDateTime dob = customer.getDateOfBirth();
 		if (Objects.nonNull(dob) && dob.isAfter(LocalDateTime.now())) {
-			errors.rejectValue("dateOfBirth", ERROR_CODE,
-					"Date Of Birth Should be before today");
+			errors.rejectValue("dateOfBirth", ERROR_CODE, "Date Of Birth Should be before today");
 			errors.reject(ERROR_CODE, "Entity Not Processable");
 		}
 	}

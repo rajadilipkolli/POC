@@ -80,8 +80,7 @@ public class Address implements Serializable {
 			return false;
 		}
 		Address address = (Address) o;
-		return Objects.equals(getStreet(), address.getStreet())
-				&& Objects.equals(getTown(), address.getTown())
+		return Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getTown(), address.getTown())
 				&& Objects.equals(getCounty(), address.getCounty())
 				&& Objects.equals(getPostcode(), address.getPostcode());
 	}

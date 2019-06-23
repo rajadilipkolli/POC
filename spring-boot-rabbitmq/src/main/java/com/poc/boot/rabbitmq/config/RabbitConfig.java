@@ -63,10 +63,9 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 	/* Creating a bean for the Message queue */
 	@Bean
 	Queue ordersQueue() {
-		return QueueBuilder.durable(QUEUE_ORDERS)
-				.withArgument("x-dead-letter-exchange", "")
-				.withArgument("x-dead-letter-routing-key", QUEUE_DEAD_ORDERS)
-				.withArgument("x-message-ttl", 5000).build();
+		return QueueBuilder.durable(QUEUE_ORDERS).withArgument("x-dead-letter-exchange", "")
+				.withArgument("x-dead-letter-routing-key", QUEUE_DEAD_ORDERS).withArgument("x-message-ttl", 5000)
+				.build();
 	}
 
 	@Bean
@@ -101,8 +100,7 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 	@Bean
 	MessageHandlerMethodFactory messageHandlerMethodFactory() {
 		DefaultMessageHandlerMethodFactory messageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
-		messageHandlerMethodFactory
-				.setMessageConverter(consumerJackson2MessageConverter());
+		messageHandlerMethodFactory.setMessageConverter(consumerJackson2MessageConverter());
 		return messageHandlerMethodFactory;
 	}
 

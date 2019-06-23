@@ -53,8 +53,7 @@ public class BookController {
 	private final BookService bookService;
 
 	@GetMapping("/findByTitle/{title}")
-	public Book findBookByTitle(@NotNull @PathVariable String title)
-			throws BookNotFoundException {
+	public Book findBookByTitle(@NotNull @PathVariable String title) throws BookNotFoundException {
 		return this.bookService.findBookByTitle(title);
 	}
 
@@ -64,14 +63,12 @@ public class BookController {
 	}
 
 	@PutMapping("/updateByTitle/{title}/{author}")
-	public Book updateAuthorByTitle(@PathVariable("title") String title,
-			@PathVariable("author") String author) {
+	public Book updateAuthorByTitle(@PathVariable("title") String title, @PathVariable("author") String author) {
 		return this.bookService.updateAuthorByTitle(title, author);
 	}
 
 	@DeleteMapping("/deleteByTitle/{title}")
-	public ResponseEntity<String> deleteBookByTitle(@PathVariable("title") String title)
-			throws BookNotFoundException {
+	public ResponseEntity<String> deleteBookByTitle(@PathVariable("title") String title) throws BookNotFoundException {
 		this.bookService.deleteBook(title);
 		return ResponseEntity.accepted().body("Book with title " + title + " deleted");
 	}
@@ -88,8 +85,7 @@ public class BookController {
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	private void bookNotFoundHandler(BookNotFoundException ex) {
-		log.error("Entering and leaving BookController : bookNotFoundHandler ",
-				ex.getMsg());
+		log.error("Entering and leaving BookController : bookNotFoundHandler ", ex.getMsg());
 	}
 
 	public long count() {

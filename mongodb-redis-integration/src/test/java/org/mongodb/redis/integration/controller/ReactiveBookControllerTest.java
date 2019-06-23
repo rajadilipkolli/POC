@@ -39,12 +39,10 @@ public class ReactiveBookControllerTest {
 	@Test
 	public void getBook_WithName_returnsBook() throws Exception {
 		Book book = Book.builder().title("prius").author("hybrid").build();
-		BDDMockito.given(this.reactiveBookService.findByTitle("prius"))
-				.willReturn(Mono.just(book));
+		BDDMockito.given(this.reactiveBookService.findByTitle("prius")).willReturn(Mono.just(book));
 
-		this.webTestClient.get().uri("/books/title/{title}", "prius").exchange()
-				.expectStatus().isOk().expectBody().jsonPath("title").isEqualTo("prius")
-				.jsonPath("author").isEqualTo("hybrid");
+		this.webTestClient.get().uri("/books/title/{title}", "prius").exchange().expectStatus().isOk().expectBody()
+				.jsonPath("title").isEqualTo("prius").jsonPath("author").isEqualTo("hybrid");
 	}
 
 }

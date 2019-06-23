@@ -48,12 +48,10 @@ public class WebConfig {
 	public CustomizableTraceInterceptor customizableTraceInterceptor() {
 		CustomizableTraceInterceptor cti = new CustomizableTraceInterceptor();
 		cti.setUseDynamicLogger(true);
-		cti.setEnterMessage("Entering method '" + PLACEHOLDER_METHOD_NAME + "("
-				+ PLACEHOLDER_ARGUMENTS + ")' of class [" + PLACEHOLDER_TARGET_CLASS_NAME
-				+ "]");
-		cti.setExitMessage("Exiting method '" + PLACEHOLDER_METHOD_NAME + "' of class ["
-				+ PLACEHOLDER_TARGET_CLASS_NAME + "] took " + PLACEHOLDER_INVOCATION_TIME
-				+ "ms.");
+		cti.setEnterMessage("Entering method '" + PLACEHOLDER_METHOD_NAME + "(" + PLACEHOLDER_ARGUMENTS
+				+ ")' of class [" + PLACEHOLDER_TARGET_CLASS_NAME + "]");
+		cti.setExitMessage("Exiting method '" + PLACEHOLDER_METHOD_NAME + "' of class [" + PLACEHOLDER_TARGET_CLASS_NAME
+				+ "] took " + PLACEHOLDER_INVOCATION_TIME + "ms.");
 		return cti;
 	}
 
