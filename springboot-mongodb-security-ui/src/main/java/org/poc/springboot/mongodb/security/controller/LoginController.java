@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -63,7 +64,7 @@ public class LoginController {
 	}
 
 	@PostMapping("/signup")
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid @RequestBody User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = this.userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
@@ -75,8 +76,7 @@ public class LoginController {
 		}
 		else {
 			this.userService.saveUser(user);
-			modelAndView.addObject("successMessage",
-					"User has been registered successfully");
+			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("login");
 
@@ -91,8 +91,7 @@ public class LoginController {
 		User user = this.userService.findUserByEmail(auth.getName());
 		modelAndView.addObject("currentUser", user);
 		modelAndView.addObject("fullName", "Welcome " + user.getFullname());
-		modelAndView.addObject("adminMessage",
-				"Content Available Only for Users with Admin Role");
+		modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("dashboard");
 		return modelAndView;
 	}

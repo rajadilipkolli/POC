@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package org.mongodb.redis.integration;
+package org.poc.springboot.mongodb.security.util;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.poc.springboot.mongodb.security.domain.User;
 
-/**
- * MongoDB Redis Integration Application!
- *
- * @author Raja Kolli
- *
- */
-@SpringBootApplication
-public class Application {
+public final class MockObjectCreator {
 
-	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(Application.class);
-		app.setWebApplicationType(WebApplicationType.REACTIVE);
-		app.run(args);
+	private MockObjectCreator() {
+		throw new UnsupportedOperationException("cannot be initilized");
+	}
+
+	public static User getUser() {
+		User user = new User();
+		user.setEmail("junit@email.com");
+		return user;
 	}
 
 }

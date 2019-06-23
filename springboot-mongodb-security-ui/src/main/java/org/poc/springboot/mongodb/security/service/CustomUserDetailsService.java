@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,8 +51,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public CustomUserDetailsService(UserRepository userRepository,
-			RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public CustomUserDetailsService(UserRepository userRepository, RoleRepository roleRepository,
+			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
@@ -86,16 +86,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
 		Set<GrantedAuthority> roles = new HashSet<>();
-		userRoles
-				.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.getRole())));
+		userRoles.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.getRole())));
 
 		return new ArrayList<>(roles);
 	}
 
-	private UserDetails buildUserForAuthentication(User user,
-			List<GrantedAuthority> authorities) {
-		return new org.springframework.security.core.userdetails.User(user.getEmail(),
-				user.getPassword(), authorities);
+	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
 	}
 
 }

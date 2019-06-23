@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -68,6 +68,13 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 				.build();
 	}
 
+	/**
+	 * We may want to send invalid messages to a separate queue so that we can inspect and
+	 * reprocess them later. We can use DLQ concept to automatically do it instead of we
+	 * manually write the code to handle such scenarios. Now try to send an invalid JSON
+	 * message to orders-queue, it will be sent to dead-orders-queue.
+	 * @return rabbitMQ Queue.
+	 */
 	@Bean
 	Queue deadLetterQueue() {
 		return QueueBuilder.durable(QUEUE_DEAD_ORDERS).build();

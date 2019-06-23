@@ -107,7 +107,7 @@
 				</executions>
 			</plugin>
 			
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>${maven-checkstyle-plugin.version}</version>
@@ -115,7 +115,7 @@
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>[8.22,)</version>
+						<version>8.18</version>
 					</dependency>
 					<dependency>
 						<groupId>io.spring.javaformat</groupId>
@@ -138,7 +138,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin>
 		</plugins>
 	</build>
 	
