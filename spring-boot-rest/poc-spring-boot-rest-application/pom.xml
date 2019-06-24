@@ -10,7 +10,7 @@
     <artifactId>poc-spring-boot-rest-application</artifactId>
     <properties>
         <main.basedir>${project.parent.parent.basedir}</main.basedir>
-        <datasource-proxy.version>1.4.9</datasource-proxy.version>
+        <datasource-proxy.version>1.5.1</datasource-proxy.version>
         <db-util.version>1.0.4</db-util.version>
     </properties>
 

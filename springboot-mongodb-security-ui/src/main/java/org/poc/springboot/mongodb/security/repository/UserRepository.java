@@ -16,6 +16,8 @@
 
 package org.poc.springboot.mongodb.security.repository;
 
+import java.util.Optional;
+
 import org.poc.springboot.mongodb.security.domain.User;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -29,6 +31,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface UserRepository extends MongoRepository<User, String> {
 
-	User findByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 }

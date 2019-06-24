@@ -16,6 +16,10 @@
 
 package org.poc.springboot.mongodb.security.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.poc.springboot.mongodb.security.domain.Role;
 import org.poc.springboot.mongodb.security.domain.User;
 
 public final class MockObjectCreator {
@@ -27,7 +31,25 @@ public final class MockObjectCreator {
 	public static User getUser() {
 		User user = new User();
 		user.setEmail("junit@email.com");
+		user.setPassword("junitPassword");
+		user.setFullname("junitFullName");
+		user.setRoles(getRolesSet());
 		return user;
+	}
+
+	private static Set<Role> getRolesSet() {
+
+		Set<Role> rolesSet = new HashSet<>();
+		rolesSet.add(getRole());
+
+		return rolesSet;
+	}
+
+	public static Role getRole() {
+		Role role = new Role();
+		role.setRole("USER");
+		role.setId("1");
+		return role;
 	}
 
 }

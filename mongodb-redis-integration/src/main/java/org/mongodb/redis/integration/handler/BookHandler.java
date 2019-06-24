@@ -42,11 +42,9 @@ public class BookHandler {
 
 	/**
 	 * GET ALL Books.
-	 * @param request a
-	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
-	public Mono<ServerResponse> getAll(ServerRequest request) {
+	public Mono<ServerResponse> getAll() {
 		// fetch all books from repository
 		Flux<Book> books = this.bookReactiveRepository.findAll();
 

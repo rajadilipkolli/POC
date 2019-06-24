@@ -49,7 +49,7 @@ class RoutingConfiguration {
 	 */
 	@Bean
 	public RouterFunction<ServerResponse> monoRouterFunction(BookHandler bookHandler) {
-		return route(GET("/api/book").and(accept(MediaType.APPLICATION_JSON)), bookHandler::getAll)
+		return route(GET("/api/book").and(accept(MediaType.APPLICATION_JSON)), request -> bookHandler.getAll())
 				.andRoute(GET("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)), bookHandler::getBook)
 				.andRoute(POST("/api/book/post").and(accept(MediaType.APPLICATION_JSON)), bookHandler::postBook)
 				.andRoute(PUT("/api/book/put/{id}").and(accept(MediaType.APPLICATION_JSON)), bookHandler::putBook)

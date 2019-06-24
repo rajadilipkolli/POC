@@ -16,10 +16,12 @@
 
 package org.poc.springboot.mongodb.security.controller;
 
+import java.util.Optional;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.poc.springboot.mongodb.security.config.CustomizeAuthenticationSuccessHandler;
-import org.poc.springboot.mongodb.security.service.CustomUserDetailsService;
+import org.poc.springboot.mongodb.security.service.CustomUserDetailsServiceImpl;
 import org.poc.springboot.mongodb.security.util.MockObjectCreator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,7 @@ class LoginControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private CustomUserDetailsService userService;
+	private CustomUserDetailsServiceImpl userService;
 
 	@MockBean
 	CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
@@ -67,7 +69,7 @@ class LoginControllerTest {
 	@Test
 	void testCreateNewUser() throws Exception {
 
-		given(this.userService.findUserByEmail("junit@email.com")).willReturn(null);
+		given(this.userService.findUserByEmail("junit@email.com")).willReturn(Optional.empty());
 		willDoNothing().given(this.userService).saveUser(MockObjectCreator.getUser());
 
 		this.mockMvc
@@ -80,7 +82,7 @@ class LoginControllerTest {
 
 	@Test
 	void testCreateNewUser_whenUserExists() throws Exception {
-		given(this.userService.findUserByEmail("junit@email.com")).willReturn(MockObjectCreator.getUser());
+		given(this.userService.findUserByEmail("junit@email.com")).willReturn(Optional.of(MockObjectCreator.getUser()));
 
 		this.mockMvc
 				.perform(post("/signup").content(asJsonString(MockObjectCreator.getUser()))
@@ -91,10 +93,11 @@ class LoginControllerTest {
 	@Test
 	@WithMockUser(authorities = "ADMIN", username = "junitAdmin@email.com")
 	void testDashboard() throws Exception {
-		given(this.userService.findUserByEmail("junitAdmin@email.com")).willReturn(MockObjectCreator.getUser());
+		given(this.userService.findUserByEmail("junitAdmin@email.com"))
+				.willReturn(Optional.of(MockObjectCreator.getUser()));
 		this.mockMvc.perform(get("/dashboard")).andExpect(status().isOk()).andExpect(view().name("dashboard"))
 				.andExpect(model().attributeExists("currentUser"))
-				.andExpect(model().attribute("fullName", "Welcome null"))
+				.andExpect(model().attribute("fullName", "Welcome junitFullName"))
 				.andExpect(model().attribute("adminMessage", "Content Available Only for Users with Admin Role"))
 				.andExpect(model().errorCount(0)).andExpect(content().contentType("text/html;charset=UTF-8"));
 	}

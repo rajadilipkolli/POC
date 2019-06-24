@@ -16,10 +16,13 @@
 
 package org.poc.springboot.mongodb.security.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.poc.springboot.mongodb.security.domain.User;
 import org.poc.springboot.mongodb.security.service.CustomUserDetailsService;
+import org.poc.springboot.mongodb.security.service.CustomUserDetailsServiceImpl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +45,7 @@ public class LoginController {
 
 	private final CustomUserDetailsService userService;
 
-	public LoginController(CustomUserDetailsService userService) {
+	public LoginController(CustomUserDetailsServiceImpl userService) {
 		super();
 		this.userService = userService;
 	}
@@ -66,8 +69,8 @@ public class LoginController {
 	@PostMapping("/signup")
 	public ModelAndView createNewUser(@Valid @RequestBody User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		User userExists = this.userService.findUserByEmail(user.getEmail());
-		if (userExists != null) {
+		Optional<User> userExists = this.userService.findUserByEmail(user.getEmail());
+		if (userExists.isPresent()) {
 			bindingResult.rejectValue("email", "error.user",
 					"There is already a user registered with the username provided");
 		}
@@ -88,9 +91,9 @@ public class LoginController {
 	public ModelAndView dashboard() {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = this.userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("currentUser", user);
-		modelAndView.addObject("fullName", "Welcome " + user.getFullname());
+		Optional<User> user = this.userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("currentUser", user.get());
+		modelAndView.addObject("fullName", "Welcome " + user.get().getFullname());
 		modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("dashboard");
 		return modelAndView;

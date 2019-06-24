@@ -16,7 +16,7 @@
 
 package org.poc.springboot.mongodb.security.config;
 
-import org.poc.springboot.mongodb.security.service.CustomUserDetailsService;
+import org.poc.springboot.mongodb.security.service.CustomUserDetailsServiceImpl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,20 +41,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
 
-	private final CustomUserDetailsService customUserDetailsService;
+	private final CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
 
 	public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder,
 			CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler,
-			CustomUserDetailsService customUserDetailsService) {
+			CustomUserDetailsServiceImpl customUserDetailsServiceImpl) {
 		super();
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.customizeAuthenticationSuccessHandler = customizeAuthenticationSuccessHandler;
-		this.customUserDetailsService = customUserDetailsService;
+		this.customUserDetailsServiceImpl = customUserDetailsServiceImpl;
 	}
 
 	@Bean
 	public UserDetailsService mongoUserDetails() {
-		return this.customUserDetailsService;
+		return this.customUserDetailsServiceImpl;
 	}
 
 	@Override
