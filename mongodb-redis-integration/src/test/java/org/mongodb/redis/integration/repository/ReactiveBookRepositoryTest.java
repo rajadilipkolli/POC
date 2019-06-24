@@ -37,12 +37,12 @@ class ReactiveBookRepositoryTest {
 	ReactiveBookRepository bookRepository;
 
 	@BeforeAll
-	void setUp() throws Exception {
+	void setUp() {
 		this.bookRepository.save(Book.builder().title("prius").author("hybrid").build()).then().block();
 	}
 
 	@AfterAll
-	void tearDown() throws Exception {
+	void tearDown() {
 		this.bookRepository.deleteAll().then().block();
 	}
 

@@ -39,7 +39,7 @@ class CustomerValidatorTest {
 	}
 
 	@Test
-	public void shouldNotValidateWhenFirstNameEmpty() {
+	void shouldNotValidateWhenFirstNameEmpty() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Customer customer = new Customer();

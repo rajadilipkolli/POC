@@ -35,7 +35,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 	RoleRepository roleRepository;
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		Role adminRole = this.roleRepository.findByRole("ADMIN");
 		if (adminRole == null) {
 			Role newAdminRole = new Role();

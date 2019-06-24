@@ -16,6 +16,8 @@
 
 package com.poc.boot.rabbitmq.controller;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poc.boot.rabbitmq.service.OrderMessageSender;
@@ -69,10 +71,10 @@ public class MessageControllerTest {
 		willThrow(new JsonProcessingException("Exception") {
 		}).given(this.orderMessageSender).sendOrder(MockObjectCreator.getOrder());
 
-		String exception = this.mockMvc
+		String exception = Objects.requireNonNull(this.mockMvc
 				.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
 						.contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isInternalServerError()).andReturn().getResolvedException().getMessage();
+				.andExpect(status().isInternalServerError()).andReturn().getResolvedException()).getMessage();
 
 		assertThat(exception).isEqualTo("500 INTERNAL_SERVER_ERROR \"Unable To Parse Order"
 				+ "(orderNumber=1, productId=P1, amount=10.0)\"; nested exception "

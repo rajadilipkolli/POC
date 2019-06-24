@@ -59,7 +59,7 @@ public class WebFluxIntegrationTests {
 	private ReactiveBookRepository bookReactiveRepository;
 
 	@BeforeAll
-	void setUp() throws Exception {
+	void setUp() {
 		if (!this.operations.collectionExists(Book.class).block()) {
 			this.operations.createCollection(Book.class,
 					CollectionOptions.empty().size(1024 * 1024).maxDocuments(100).capped()).then().block();

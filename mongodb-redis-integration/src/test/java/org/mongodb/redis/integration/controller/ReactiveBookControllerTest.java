@@ -37,7 +37,7 @@ public class ReactiveBookControllerTest {
 	private WebTestClient webTestClient;
 
 	@Test
-	public void getBook_WithName_returnsBook() throws Exception {
+	public void getBook_WithName_returnsBook() {
 		Book book = Book.builder().title("prius").author("hybrid").build();
 		BDDMockito.given(this.reactiveBookService.findByTitle("prius")).willReturn(Mono.just(book));
 

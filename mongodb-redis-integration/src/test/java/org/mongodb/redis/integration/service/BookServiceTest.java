@@ -18,7 +18,6 @@ package org.mongodb.redis.integration.service;
 
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,7 +33,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.BDDMockito.given;
 
-@Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
 class BookServiceTest {
 
@@ -44,7 +42,7 @@ class BookServiceTest {
 	private BookService bookService;
 
 	@BeforeAll
-	void setUp() throws Exception {
+	void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.bookService = new BookServiceImpl(this.bookRepository, null);
 	}
@@ -55,7 +53,6 @@ class BookServiceTest {
 				.version(1L).build();
 		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
 				.willReturn(Optional.of(builderBook));
-		log.debug("Will return ", builderBook.toString());
 
 		Book book = this.bookService.findBookByTitle("JUNIT_TITLE");
 

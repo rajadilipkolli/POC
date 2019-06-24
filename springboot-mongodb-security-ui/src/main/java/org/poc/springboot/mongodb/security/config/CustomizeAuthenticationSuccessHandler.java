@@ -18,7 +18,6 @@ package org.poc.springboot.mongodb.security.config;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,7 +38,7 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+			Authentication authentication) throws IOException {
 		// set our response to OK status
 		response.setStatus(HttpServletResponse.SC_OK);
 

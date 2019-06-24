@@ -19,7 +19,6 @@ package com.poc.restfulpoc.controller;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.service.CustomerService;
@@ -81,11 +80,11 @@ class CustomerControllerTest {
 	}
 
 	@Test
-	void testCreateCustomer() throws JsonProcessingException, Exception {
+	void testCreateCustomer() throws Exception {
 		BDDMockito.willDoNothing().given(this.customerValidator).validate(ArgumentMatchers.any(),
 				ArgumentMatchers.any(Errors.class));
 		given(this.customerService.isCustomerExist(ArgumentMatchers.anyString())).willReturn(false);
-		BDDMockito.given(this.customerService.createCustomer(ArgumentMatchers.any(Customer.class))).willReturn(null);
+		given(this.customerService.createCustomer(ArgumentMatchers.any(Customer.class))).willReturn(null);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/rest/customers/")
 				.content(this.objectMapper.writeValueAsString(this.customer))

@@ -17,7 +17,7 @@
 package org.poc.springboot.mongodb.security.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,7 +67,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setEnabled(true);
 		Role userRole = this.roleRepository.findByRole("ADMIN");
-		user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+		user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
 		this.userRepository.save(user);
 	}
 

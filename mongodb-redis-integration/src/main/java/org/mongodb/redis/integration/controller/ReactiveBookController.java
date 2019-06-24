@@ -80,7 +80,7 @@ public class ReactiveBookController {
 	 * <p>
 	 * createBook.
 	 * </p>
-	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
+	 * @param book a {@link Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	@PostMapping
@@ -93,7 +93,7 @@ public class ReactiveBookController {
 	 * updateBook.
 	 * </p>
 	 * @param bookId a {@link java.lang.String} object.
-	 * @param book a {@link com.poc.mongodbredisintegration.document.Book} object.
+	 * @param book a {@link Book} object.
 	 * @return a {@link reactor.core.publisher.Mono} object.
 	 */
 	@PutMapping("/{id}")
