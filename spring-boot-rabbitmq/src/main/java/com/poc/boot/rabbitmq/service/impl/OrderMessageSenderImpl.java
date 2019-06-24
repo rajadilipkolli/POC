@@ -44,19 +44,17 @@ public class OrderMessageSenderImpl implements OrderMessageSender {
 	private final ObjectMapper objectMapper;
 
 	@Override
-	public void sendOrder(Order order) {
+	public void sendOrder(Order order) throws JsonProcessingException {
 		// this.rabbitTemplate.convertAndSend(RabbitConfig.QUEUE_ORDERS, order);
 
-		try {
-			String orderJson = this.objectMapper.writeValueAsString(order);
-			Message message = MessageBuilder.withBody(orderJson.getBytes())
-					.setContentType(MessageProperties.CONTENT_TYPE_JSON).build();
-			this.rabbitTemplate.convertAndSend(RabbitConfig.QUEUE_ORDERS, message);
-		}
-		catch (JsonProcessingException ex) {
-			ex.printStackTrace();
-		}
+		String orderJson = this.objectMapper.writeValueAsString(order);
+		this.rabbitTemplate.convertAndSend(RabbitConfig.QUEUE_ORDERS, getRabbitMQMessage(orderJson));
 
+	}
+
+	protected Message getRabbitMQMessage(String orderJson) {
+		return MessageBuilder.withBody(orderJson.getBytes()).setContentType(MessageProperties.CONTENT_TYPE_JSON)
+				.build();
 	}
 
 }

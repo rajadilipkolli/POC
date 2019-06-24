@@ -16,12 +16,12 @@
 
 package com.poc.boot.rabbitmq.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.poc.boot.rabbitmq.model.Order;
 import com.poc.boot.rabbitmq.service.OrderMessageSender;
+import com.poc.boot.rabbitmq.util.MockObjectCreator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,8 +30,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -50,11 +54,29 @@ public class MessageControllerTest {
 	@Test
 	public void testHandleMessage() throws Exception {
 
-		willDoNothing().given(this.orderMessageSender).sendOrder(ArgumentMatchers.any(Order.class));
-		Order order = new Order("1", "P1", 10D);
+		willDoNothing().given(this.orderMessageSender).sendOrder(MockObjectCreator.getOrder());
 
-		this.mockMvc.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(order))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isFound());
+		this.mockMvc
+				.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
+						.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isFound())
+				.andExpect(flash().attribute("message", "Order message sent successfully"))
+				.andExpect(redirectedUrl("/"));
+	}
+
+	@Test
+	public void testHandleMessageThrowsException() throws Exception {
+		willThrow(new JsonProcessingException("Exception") {
+		}).given(this.orderMessageSender).sendOrder(MockObjectCreator.getOrder());
+
+		String exception = this.mockMvc
+				.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
+						.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isInternalServerError()).andReturn().getResolvedException().getMessage();
+
+		assertThat(exception).isEqualTo("500 INTERNAL_SERVER_ERROR \"Unable To Parse Order"
+				+ "(orderNumber=1, productId=P1, amount=10.0)\"; nested exception "
+				+ "is com.poc.boot.rabbitmq.controller.MessageControllerTest$1: Exception");
 	}
 
 }

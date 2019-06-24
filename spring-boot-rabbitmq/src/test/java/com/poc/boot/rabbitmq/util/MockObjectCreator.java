@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.poc.boot.rabbitmq.service;
+package com.poc.boot.rabbitmq.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.poc.boot.rabbitmq.model.Order;
 
-/**
- * Service implementation of Messaging Queue.
- *
- * @author Raja Kolli
- *
- */
-public interface OrderMessageSender {
+public final class MockObjectCreator {
 
-	void sendOrder(Order order) throws JsonProcessingException;
+	private MockObjectCreator() {
+		throw new UnsupportedOperationException("Cannot create object");
+	}
+
+	public static Order getOrder() {
+		return new Order("1", "P1", 10D);
+	}
 
 }
