@@ -5,9 +5,11 @@ jdk:
   
 services:
   - mongodb
+  - redis-server
+  - postgresql
  
 script:
-  - ./mvnw clean verify
+  - ./mvnw -T 1C clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'
