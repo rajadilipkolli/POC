@@ -60,7 +60,7 @@ public class MessageControllerTest {
 
 		this.mockMvc
 				.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isFound())
 				.andExpect(flash().attribute("message", "Order message sent successfully"))
 				.andExpect(redirectedUrl("/"));
@@ -73,7 +73,7 @@ public class MessageControllerTest {
 
 		String exception = Objects.requireNonNull(this.mockMvc
 				.perform(post("/sendMsg").content(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isInternalServerError()).andReturn().getResolvedException()).getMessage();
 
 		assertThat(exception).isEqualTo("500 INTERNAL_SERVER_ERROR \"Unable To Parse Order"

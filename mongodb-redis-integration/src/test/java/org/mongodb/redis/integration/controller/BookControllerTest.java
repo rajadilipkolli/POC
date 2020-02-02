@@ -75,8 +75,7 @@ class BookControllerTest {
 
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.post("/book/saveBook")
-						.content(this.objectMapper.writeValueAsString(book))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
+						.content(this.objectMapper.writeValueAsString(book)).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(jsonPath("title").value("JUNIT_TITLE"))
 				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
 	}
@@ -90,7 +89,7 @@ class BookControllerTest {
 
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.put("/book/updateByTitle/MongoDbCookBook/Raja1")
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(jsonPath("title").value("MongoDbCookBook"))
 				.andExpect(jsonPath("author").value("JUNIT_AUTHOR"));
 	}

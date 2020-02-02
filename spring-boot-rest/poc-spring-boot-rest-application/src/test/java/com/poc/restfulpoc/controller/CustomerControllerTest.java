@@ -87,15 +87,15 @@ class CustomerControllerTest {
 		given(this.customerService.createCustomer(ArgumentMatchers.any(Customer.class))).willReturn(null);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/rest/customers/")
-				.content(this.objectMapper.writeValueAsString(this.customer))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
+				.content(this.objectMapper.writeValueAsString(this.customer)).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isCreated());
 
 		final Customer invalidCustomer = this.customer;
 		invalidCustomer.setFirstName(null);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/rest/customers/")
-				.content(this.objectMapper.writeValueAsString(invalidCustomer))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isBadRequest());
+				.content(this.objectMapper.writeValueAsString(invalidCustomer)).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -103,8 +103,8 @@ class CustomerControllerTest {
 		given(this.customerService.getCustomer(ArgumentMatchers.anyLong())).willReturn(this.customer);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.put("/rest/customers/{customerId}", this.customer.getId())
-				.content(this.objectMapper.writeValueAsString(this.customer))
-				.contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotModified());
+				.content(this.objectMapper.writeValueAsString(this.customer)).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotModified());
 	}
 
 	@Test
@@ -121,7 +121,7 @@ class CustomerControllerTest {
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.put("/rest/customers/{customerId}", RandomUtils.nextLong())
 						.content(this.objectMapper.writeValueAsString(updateRequest))
-						.contentType(MediaType.APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(jsonPath("firstName").value("firstName"))
 				.andExpect(jsonPath("lastName").value("lastName"))
 				.andExpect(jsonPath("dateOfBirth").value(dateOfBirth.toString()));

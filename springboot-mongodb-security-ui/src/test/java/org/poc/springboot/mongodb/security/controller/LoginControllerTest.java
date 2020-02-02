@@ -74,7 +74,7 @@ class LoginControllerTest {
 
 		this.mockMvc
 				.perform(post("/signup").content(asJsonString(MockObjectCreator.getUser()))
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+						.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andExpect(view().name("login")).andExpect(model().attributeExists("user"))
 				.andExpect(model().attribute("successMessage", "User has been registered successfully"))
 				.andExpect(model().errorCount(0)).andExpect(content().contentType("text/html;charset=UTF-8"));
@@ -86,7 +86,7 @@ class LoginControllerTest {
 
 		this.mockMvc
 				.perform(post("/signup").content(asJsonString(MockObjectCreator.getUser()))
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+						.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andExpect(view().name("signup")).andExpect(model().errorCount(1));
 	}
 

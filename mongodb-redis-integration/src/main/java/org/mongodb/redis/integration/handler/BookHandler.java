@@ -70,7 +70,7 @@ public class BookHandler {
 
 		// build response
 		return bookMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-				.body(BodyInserters.fromObject(book))).switchIfEmpty(notFound);
+				.body(BodyInserters.fromValue(book))).switchIfEmpty(notFound);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class BookHandler {
 
 		// build response
 		return responseMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-				.body(BodyInserters.fromObject(book)));
+				.body(BodyInserters.fromValue(book)));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class BookHandler {
 
 		// build response
 		return responseMono.flatMap((String strMono) -> ServerResponse.accepted().contentType(MediaType.TEXT_PLAIN)
-				.body(BodyInserters.fromObject(strMono)));
+				.body(BodyInserters.fromValue(strMono)));
 
 	}
 

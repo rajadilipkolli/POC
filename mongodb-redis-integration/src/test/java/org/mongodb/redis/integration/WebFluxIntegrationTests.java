@@ -86,10 +86,10 @@ public class WebFluxIntegrationTests {
 	void testCreateBook() {
 		final Book book = Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build();
 
-		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class).exchange().expectStatus()
-				.isOk().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody().jsonPath("$.bookId")
-				.isNotEmpty().jsonPath("$.text").isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk()
+				.expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$.bookId").isNotEmpty()
+				.jsonPath("$.text").isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
 	}
 
 	@Test
@@ -98,24 +98,24 @@ public class WebFluxIntegrationTests {
 		Book book = Book.builder().author("Raja").text("This is a Test Book")
 				.title(RandomStringUtils.randomAlphanumeric(200)).build();
 
-		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(BodyInserters.fromObject(book)).exchange().expectStatus()
-				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(book)).exchange().expectStatus()
+				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
 				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
 				.isEqualTo("size must be between 0 and 140");
 
 		book = Book.builder().build();
-		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(book), Book.class).exchange().expectStatus()
-				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBody()
+		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus()
+				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
 				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
 				.isEqualTo("must not be blank");
 	}
 
 	@Test
 	void testGetAllBooks() {
-		this.webTestClient.get().uri("/books").accept(MediaType.APPLICATION_JSON_UTF8).exchange().expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8).expectBodyList(Book.class);
+		this.webTestClient.get().uri("/books").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk()
+				.expectHeader().contentType(MediaType.APPLICATION_JSON).expectBodyList(Book.class);
 	}
 
 	@Test
@@ -136,9 +136,9 @@ public class WebFluxIntegrationTests {
 		final Book newBookData = Book.builder().author("Raja").text("Updated Book").title(TITLE).build();
 
 		this.webTestClient.put().uri("/books/{id}", Collections.singletonMap("id", book.getBookId()))
-				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.body(Mono.just(newBookData), Book.class).exchange().expectStatus().isOk().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON_UTF8).expectBody().jsonPath("$.text").isEqualTo("Updated Book");
+				.contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$.text").isEqualTo("Updated Book");
 	}
 
 	@Test
