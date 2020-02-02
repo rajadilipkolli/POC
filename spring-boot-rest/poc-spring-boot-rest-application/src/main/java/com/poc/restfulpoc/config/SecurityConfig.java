@@ -37,7 +37,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
-	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+	InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		return new InMemoryUserDetailsManager(
 				User.withUsername("username").password("{noop}password").authorities("ROLE_USER").build(),
 				User.withUsername("admin").password("{noop}admin")

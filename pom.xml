@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
+		<version>2.2.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	
@@ -22,7 +22,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
 		<main.basedir>${project.basedir}</main.basedir>
-		<spring-javaformat.version>0.0.12</spring-javaformat.version>
+		<spring-javaformat.version>0.0.20</spring-javaformat.version>
 		<maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
 	</properties>
 	
@@ -50,7 +50,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.4</version>
+				<version>0.8.5</version>
 				<executions>
 					<execution>
 						<goals>
@@ -115,7 +115,7 @@
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>8.18</version>
+						<version>[8.29,)</version>
 					</dependency>
 					<dependency>
 						<groupId>io.spring.javaformat</groupId>

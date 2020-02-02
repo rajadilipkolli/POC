@@ -57,7 +57,7 @@ class AppTest {
 	}
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 		assertThat(this.mongoTemplate).isNotNull();
 	}
 

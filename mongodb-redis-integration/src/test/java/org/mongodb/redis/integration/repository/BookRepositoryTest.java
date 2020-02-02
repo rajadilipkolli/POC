@@ -18,13 +18,13 @@ package org.mongodb.redis.integration.repository;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.mongodb.redis.integration.document.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class BookRepositoryTest {
 

@@ -38,7 +38,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  * @since 0.2.1
  */
 @Configuration
-class RoutingConfiguration {
+public class RoutingConfiguration {
 
 	/**
 	 * monoRouterFunction.

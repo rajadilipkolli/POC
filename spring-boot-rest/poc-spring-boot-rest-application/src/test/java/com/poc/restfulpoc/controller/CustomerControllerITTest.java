@@ -28,14 +28,14 @@ import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import com.vladmihalcea.sql.SQLStatementCountValidator;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -55,7 +55,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Raja Kolli
  *
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 
@@ -83,7 +83,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 				.getForEntity(String.format("%s%s", BASEURL, customerId), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(Objects.requireNonNull(response.getHeaders().getContentType()).toString())
-				.isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				.isEqualTo(MediaType.APPLICATION_JSON_VALUE);
 
 		final Customer customer = response.getBody();
 
@@ -187,7 +187,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 				.getForEntity(String.format("%s/%s", BASEURL, customerId), Customer.class);
 		assertThat(getCustomerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(Objects.requireNonNull(getCustomerResponse.getHeaders().getContentType()).toString())
-				.isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				.isEqualTo(MediaType.APPLICATION_JSON_VALUE);
 
 		final Customer persistedCustomer = getCustomerResponse.getBody();
 		assertThat(Objects.requireNonNull(persistedCustomer).getFirstName()).isEqualTo("Raja");
@@ -266,7 +266,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 				.getForEntity(String.format("%s/%s", BASEURL, customerId), Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(Objects.requireNonNull(response.getHeaders().getContentType()).toString())
-				.isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				.isEqualTo(MediaType.APPLICATION_JSON_VALUE);
 
 		final Customer customer = response.getBody();
 		assertThat(Objects.requireNonNull(customer).getFirstName()).isEqualTo("Raja");

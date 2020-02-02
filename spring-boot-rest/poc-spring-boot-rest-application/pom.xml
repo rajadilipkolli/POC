@@ -10,7 +10,7 @@
     <artifactId>poc-spring-boot-rest-application</artifactId>
     <properties>
         <main.basedir>${project.parent.parent.basedir}</main.basedir>
-        <datasource-proxy.version>1.5.1</datasource-proxy.version>
+        <datasource-proxy.version>1.6</datasource-proxy.version>
         <db-util.version>1.0.4</db-util.version>
     </properties>
 
@@ -77,43 +77,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <!-- Exclude JUnit 4 from starter-test (and all other related 
-                test-starter, i.e those for security and project reactor -->
             <exclusions>
                 <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <!-- Provide JUnit 5 API -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- and the engine for surefire and failsafe -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Runs The Test cases -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Adds Runner and Mockito module -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
