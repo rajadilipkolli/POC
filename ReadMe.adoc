@@ -68,4 +68,10 @@ __Release using maven and git flow__
 === Commands to ensure that dependencies are upgraded
 
  - mvn versions:display-plugin-updates
- - mvn versions:display-property-updates 
+ - mvn versions:display-property-updates
+
+
+=== Topics to learn
+  Java Memory Model Very Important
+    -  https://www.youtube.com/watch?v=ZBJ0u9MaKtM
+    -  http://tutorials.jenkov.com/java-concurrency/java-memory-model.html
