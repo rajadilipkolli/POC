@@ -16,7 +16,7 @@
 
 package com.poc.restfulpoc.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,13 +45,13 @@ public class PostDetails {
 	private Long id;
 
 	@Column(name = "created_on")
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 	@Column(name = "created_by")
 	private String createdBy;
 
 	public PostDetails() {
-		this.createdOn = new Date();
+		this.createdOn = LocalDateTime.now();
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)

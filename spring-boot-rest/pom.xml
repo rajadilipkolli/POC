@@ -8,7 +8,7 @@
   </parent>
   <artifactId>poc-spring-boot-rest</artifactId>
   <packaging>pom</packaging>
-  <name>spring-boot-rest module poc</name>
+  <name>poc-spring-boot-rest module poc</name>
   <description>This project demonstrates how to use spring restful webservices deployed in undertow server along with database proxy</description>
   <modules>
     <module>poc-spring-boot-rest-entities</module>

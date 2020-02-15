@@ -27,6 +27,7 @@ import com.poc.restfulpoc.jooq.tables.Orders;
 import com.poc.restfulpoc.jooq.tables.records.AddressRecord;
 import com.poc.restfulpoc.jooq.tables.records.CustomerRecord;
 import com.poc.restfulpoc.jooq.tables.records.OrdersRecord;
+import com.poc.restfulpoc.repository.AddressRepository;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import org.jooq.DSLContext;
 import org.jooq.Query;
@@ -60,10 +61,14 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 	private CustomerRepository customerRepository;
 
 	@Autowired
+	private AddressRepository addressRepository;
+
+	@Autowired
 	private DataBuilder dataBuilder;
 
 	@BeforeAll
 	void setUp() throws Exception {
+		this.addressRepository.deleteAll();
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();
 	}

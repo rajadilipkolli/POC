@@ -16,6 +16,8 @@
 
 package com.poc.restfulpoc.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -44,8 +46,11 @@ public class PostComment {
 
 	private String review;
 
+	private LocalDateTime createdOn;
+
 	public PostComment(String review) {
 		this.review = review;
+		this.createdOn = LocalDateTime.now();
 	}
 
 	@ManyToOne

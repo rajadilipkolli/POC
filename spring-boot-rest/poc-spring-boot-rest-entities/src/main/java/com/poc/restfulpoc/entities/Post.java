@@ -16,6 +16,7 @@
 
 package com.poc.restfulpoc.entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,8 @@ public class Post {
 
 	private String title;
 
+	private LocalDateTime createdOn;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
 	private List<PostComment> comments = new ArrayList<>();
 
@@ -66,10 +69,12 @@ public class Post {
 
 	public Post(Long id) {
 		this.id = id;
+		this.createdOn = LocalDateTime.now();
 	}
 
 	public Post(String title) {
 		this.title = title;
+		this.createdOn = LocalDateTime.now();
 	}
 
 	public void addComment(PostComment comment) {

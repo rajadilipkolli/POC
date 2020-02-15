@@ -38,6 +38,7 @@ CREATE TABLE POST
 (
     ID BIGINT NOT NULL,
     TITLE VARCHAR(255),
+    created_on timestamp,
     PRIMARY KEY   (ID)
 );
 
@@ -45,6 +46,7 @@ create table POST_COMMENT
 (
     id bigint not null,
     review varchar(255),
+    created_on timestamp,
     POST_ID bigint,
     primary key (id),
     CONSTRAINT FK_POST_COMMENT FOREIGN KEY (POST_ID) REFERENCES POST(ID)
