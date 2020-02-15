@@ -70,6 +70,7 @@ public class Order implements Serializable {
 	private String orderNumber;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "ORDER_STATUS")
 	private OrderStatus orderStatus;
 
 	@JsonSerialize(using = ToStringSerializer.class)

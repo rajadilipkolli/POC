@@ -23,17 +23,14 @@ import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Address;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.entities.Order;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestInstance(Lifecycle.PER_CLASS)
 class CustomerRepositoryTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
@@ -42,10 +39,14 @@ class CustomerRepositoryTest extends AbstractRestFulPOCApplicationTest {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@BeforeAll
-	void deleteAll() {
-		this.orderRepository.deleteAll();
-		this.customerRepository.deleteAll();
+	@Autowired
+	private AddressRepository addressRepository;
+
+	@BeforeEach
+	void setUp() {
+		this.orderRepository.deleteAllInBatch();
+		this.addressRepository.deleteAllInBatch();
+		this.customerRepository.deleteAllInBatch();
 	}
 
 	@Test

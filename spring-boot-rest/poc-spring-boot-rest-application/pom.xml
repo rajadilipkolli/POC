@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.example.poc</groupId>
-            <artifactId>poc-spring-boot-rest-entities</artifactId>
+            <artifactId>poc-spring-boot-rest-jooq</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -27,6 +27,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
