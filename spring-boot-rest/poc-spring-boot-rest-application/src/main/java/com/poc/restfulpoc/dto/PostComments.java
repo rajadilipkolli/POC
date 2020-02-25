@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.repository;
+package com.poc.restfulpoc.dto;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import com.poc.restfulpoc.dto.PostCommentProjection;
-import com.poc.restfulpoc.entities.Post;
+@Data
+@AllArgsConstructor
+public class PostComments {
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
-public interface PostRepository extends JpaRepository<Post, Long> {
-
-	@Query("SELECT p.title as title, c.review as review FROM Post p JOIN p.comments c where p.title = ?1")
-	List<PostCommentProjection> findByTitle(String title);
+	String review;
 
 }
