@@ -22,9 +22,11 @@ import com.mongodb.redis.integration.controller.BookController;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(value = MethodOrderer.Alphanumeric.class)
 @SpringBootTest(properties = "spring.main.web-application-type=reactive", webEnvironment = WebEnvironment.RANDOM_PORT)
 class BookHandlerTest {
 
@@ -63,7 +66,7 @@ class BookHandlerTest {
 	}
 
 	@Test
-	void testGetAll() {
+	void test01GetAll() {
 		EntityExchangeResult<List<Book>> result = this.webTestClient.get().uri("/api/book")
 				.accept(MediaType.APPLICATION_JSON).exchange().expectBodyList(Book.class).returnResult();
 		assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(1);
@@ -73,7 +76,7 @@ class BookHandlerTest {
 	}
 
 	@Test
-	void testGetBook() {
+	void test02GetBook() {
 		Book response = this.webTestClient.get().uri("/api/book/{id}", 1).accept(MediaType.APPLICATION_JSON).exchange()
 				.expectBody(Book.class).returnResult().getResponseBody();
 		assertThat(response).isNotNull();
@@ -83,7 +86,7 @@ class BookHandlerTest {
 	}
 
 	@Test
-	void testPostBook() {
+	void test03PostBook() {
 		final Book book = Book.builder().author("Raja").text("This is a Test Book").title("JUNIT_TITLE").build();
 
 		this.webTestClient.post().uri("/api/book/post").contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +94,7 @@ class BookHandlerTest {
 	}
 
 	@Test
-	void testPutBook() {
+	void test04PutBook() {
 		Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book1").author("Raja").bookId("1")
 				.version(0L).build();
 
@@ -100,9 +103,9 @@ class BookHandlerTest {
 	}
 
 	@Test
-	void testDeleteBook() {
+	void test05DeleteBook() {
 		this.webTestClient.delete().uri("/api/book/delete/{id}", 1).exchange().expectStatus().isAccepted()
-				.expectBody(String.class).isEqualTo("Delete Succesfully!");
+				.expectBody(String.class).isEqualTo("Delete Successfully!");
 	}
 
 }

@@ -117,7 +117,7 @@ public class BookHandler {
 
 		this.bookReactiveRepository.deleteById(bookId);
 		// get book from repository
-		Mono<String> responseMono = Mono.just("Delete Succesfully!");
+		Mono<String> responseMono = Mono.just("Delete Successfully!");
 
 		// build response
 		return responseMono.flatMap((String strMono) -> ServerResponse.accepted().contentType(MediaType.TEXT_PLAIN)

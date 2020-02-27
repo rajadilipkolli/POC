@@ -8,16 +8,9 @@ import java.util.Arrays;
 public class BubbleSort {
 
   public static void main(String[] args) {
-    int[] arr = new int[7];
-    arr[0] = 20;
-    arr[1] = 35;
-    arr[2] = -15;
-    arr[3] = 7;
-    arr[4] = 55;
-    arr[5] = 1;
-    arr[6] = -22;
+    int[] intArray = {20, 35, -15, 7, 55, 1, -22};
 
-    bubbleSort(arr, arr.length);
+    bubbleSort(intArray, intArray.length);
   }
 
   private static void bubbleSort(int[] arr, int lastUnsortedPartitionIndex) {
