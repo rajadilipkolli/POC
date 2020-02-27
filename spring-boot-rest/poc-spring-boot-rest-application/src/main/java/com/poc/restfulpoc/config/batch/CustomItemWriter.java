@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.dto;
+package com.poc.restfulpoc.config.batch;
 
 import java.util.List;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.poc.restfulpoc.dto.PostDTO;
+import lombok.extern.slf4j.Slf4j;
 
-@Getter
-@Setter
-@Builder
-@ToString
-public class PostDTO {
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.stereotype.Component;
 
-	String title;
+@Component
+@Slf4j
+public class CustomItemWriter<L extends List<PostDTO>> implements ItemWriter<List<PostDTO>> {
 
-	@Builder.Default
-	List<PostComments> comments;
+	@Override
+	public void write(List<? extends List<PostDTO>> items) {
+		items.stream().flatMap(List::stream).forEach(item -> log.info("Writing Item :{}", item));
+	}
 
 }

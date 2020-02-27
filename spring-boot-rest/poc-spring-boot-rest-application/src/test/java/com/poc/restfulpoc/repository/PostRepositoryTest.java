@@ -66,8 +66,8 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		final Function<Entry<String, List<PostComments>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
 				.title(entry.getKey()).comments(entry.getValue()).build();
 		final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
-		final Function<PostCommentProjection, PostComments> mapToPostComments = postCommentProjection -> new PostComments(
-				postCommentProjection.getReview());
+		final Function<PostCommentProjection, PostComments> mapToPostComments = postCommentProjection -> PostComments
+				.builder().review(postCommentProjection.getReview()).build();
 		final Collector<PostCommentProjection, ?, List<PostComments>> downStreamCollector = Collectors
 				.mapping(mapToPostComments, Collectors.toList());
 
@@ -75,11 +75,12 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 				.collect(groupingBy(titleClassifier, downStreamCollector)).entrySet().stream().map(mapToPostDTO)
 				.collect(toUnmodifiableList());
 
+		assertThat(postDTOS).isNotEmpty().hasSize(1);
 		PostDTO postDTO = postDTOS.get(0);
-		assertThat(postDTO).isNotNull();
 		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
 		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2);
-		assertThat(postDTO.getComments()).contains(new PostComments("Review New"), new PostComments("Review Old"));
+		assertThat(postDTO.getComments()).contains(PostComments.builder().review("Review New").build(),
+				PostComments.builder().review("Review Old").build());
 	}
 
 }
