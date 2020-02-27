@@ -40,7 +40,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@TestMethodOrder(value = MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @SpringBootTest(properties = "spring.main.web-application-type=reactive", webEnvironment = WebEnvironment.RANDOM_PORT)
 class BookHandlerTest {
 
