@@ -75,3 +75,27 @@ __Release using maven and git flow__
   Java Memory Model Very Important
     -  https://www.youtube.com/watch?v=ZBJ0u9MaKtM
     -  http://tutorials.jenkov.com/java-concurrency/java-memory-model.html
+    -  https://walkingtree.tech/design-patterns-microservices/
+    -  https://springframework.guru/gang-of-four-design-patterns/state-pattern/ (State Pattern)
+    -  https://techburst.io/microservices-design-patterns-a9a03be3aa5e (Diagram of design pattern)
+    -  https://github.com/AnghelLeonard/Hibernate-SpringBoot (Hibernate)
+    -  https://www.youtube.com/channel/UCiz26UeGvcTy4_M3Zhgk7FQ (Defog Tech esp Threads)
+    -  https://www.youtube.com/channel/UCZCFT11CWBi3MHNlGf019nw (Algorithms)
+    -  https://dzone.com/articles/microservices-communication-zuul-api-gateway-1
+    -  https://microservices.io/patterns/microservices.html
+    -  https://microservices.io/patterns/data/api-composition.html
+    -  https://www.tutorialspoint.com/spring_boot/spring_boot_eureka_server.htm
+    -  https://dzone.com/articles/spring-boot-autoscaler
+    -  https://www.elastic.co/what-is/elk-stack 
+    -  https://dzone.com/articles/libraries-for-microservices-development
+    -  https://logz.io/blog/kibana-tutorial/
+    -  https://dzone.com/articles/magic-of-kafka-with-spring-boot
+    -  https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
+    -  https://jwt.io/introduction/
+    -  https://www.springboottutorial.com/introduction-to-centralized-logging-with-microservices
+    -  https://dzone.com/articles/microservices-architectures-centralized-configurat
+    -  https://developers.redhat.com/blog/2019/03/12/distributed-microservices-architecture-enterprise-integration-istio-and-managed-api-gateways/
+    -  https://docs.vmware.com/en/VMware-vSphere/6.7/Cloud-Native-Storage/GUID-CF1D7196-E49C-4430-8C50-F8E35CAAE060.html
+    -  https://pivotal.io/cloud-native
+    -  https://www.loomsystems.com/blog/single-post/2017/01/30/a-comparison-of-fluentd-vs-logstash-log-collector
+    -  https://logz.io/blog/fluentd-logstash/ 
