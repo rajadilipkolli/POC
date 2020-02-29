@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<poc-mongodb-redis-integration>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.mongodb.redis.integration.Application",
+            "projectName": "poc-mongodb-redis-integration",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-App<poc-springboot-mongodb-security-ui>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "org.poc.springboot.mongodb.security.App",
+            "projectName": "poc-springboot-mongodb-security-ui",
+            "args": ""
+        }
+    ]
+}

@@ -9,7 +9,7 @@ services:
   - postgresql
  
 script:
-  - ./mvnw -T 1C clean verify
+  - ./mvnw clean verify
 cache:
   directories:
     - '$HOME/.m2/repository'

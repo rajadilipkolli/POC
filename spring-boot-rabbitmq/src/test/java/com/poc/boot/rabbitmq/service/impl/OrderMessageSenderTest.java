@@ -64,6 +64,7 @@ public class OrderMessageSenderTest {
 	public void testSendOrderException() throws Exception {
 		given(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
 				.willThrow(new JsonProcessingException("Exception") {
+					private static final long serialVersionUID = 1L;
 				});
 		// when
 		assertThatThrownBy(() -> this.orderMessageSender.sendOrder(MockObjectCreator.getOrder()))

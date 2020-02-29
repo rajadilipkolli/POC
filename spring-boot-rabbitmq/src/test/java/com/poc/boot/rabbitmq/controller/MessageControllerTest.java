@@ -69,6 +69,7 @@ public class MessageControllerTest {
 	@Test
 	public void testHandleMessageThrowsException() throws Exception {
 		willThrow(new JsonProcessingException("Exception") {
+			private static final long serialVersionUID = 1L;
 		}).given(this.orderMessageSender).sendOrder(MockObjectCreator.getOrder());
 
 		String exception = Objects.requireNonNull(this.mockMvc
