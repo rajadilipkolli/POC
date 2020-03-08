@@ -43,6 +43,7 @@ import static com.poc.restfulpoc.jooq.tables.Customer.CUSTOMER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(Lifecycle.PER_CLASS)
+@Disabled
 class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
@@ -95,7 +96,6 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	@Disabled
 	void testJOOQTransactionsSimple() {
 		boolean rollback = false;
 

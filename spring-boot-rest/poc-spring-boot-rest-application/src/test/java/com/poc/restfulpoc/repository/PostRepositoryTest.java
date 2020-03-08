@@ -46,16 +46,13 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 	void testProjection() {
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		Post post = new Post();
-		post.setId(10_000L);
 		post.setCreatedOn(currentDateTime);
 		post.setTitle("Post Title");
 		PostComment postCommentOld = new PostComment();
-		postCommentOld.setId(10_000L);
 		postCommentOld.setCreatedOn(currentDateTime.minusDays(1));
 		postCommentOld.setReview("Review Old");
 		post.addComment(postCommentOld);
 		PostComment postCommentNew = new PostComment();
-		postCommentNew.setId(10_001L);
 		postCommentNew.setCreatedOn(currentDateTime);
 		postCommentNew.setReview("Review New");
 		post.addComment(postCommentNew);
@@ -78,9 +75,11 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(postDTOS).isNotEmpty().hasSize(1);
 		PostDTO postDTO = postDTOS.get(0);
 		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
-		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2);
+		assertThat(postDTO.getComments()).isNotEmpty().hasSizeGreaterThanOrEqualTo(2);
 		assertThat(postDTO.getComments()).contains(PostComments.builder().review("Review New").build(),
 				PostComments.builder().review("Review Old").build());
+
+		this.postRepository.deleteById(post.getId());
 	}
 
 }

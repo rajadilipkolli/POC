@@ -16,25 +16,11 @@
 
 package com.poc.restfulpoc.dto;
 
-import java.util.List;
+import lombok.Data;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+@Data
+public class TagDTO {
 
-@Getter
-@Setter
-@Builder
-@ToString
-public class PostDTO {
-
-	String title;
-
-	@Builder.Default
-	List<PostComments> comments;
-
-	@Builder.Default
-	List<TagDTO> tags;
+	private String name;
 
 }

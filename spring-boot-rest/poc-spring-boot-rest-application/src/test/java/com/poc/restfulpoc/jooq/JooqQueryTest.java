@@ -36,6 +36,7 @@ import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.SelectSeekStep1;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -49,6 +50,7 @@ import static com.poc.restfulpoc.jooq.tables.Orders.ORDERS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(Lifecycle.PER_CLASS)
+@Disabled
 class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
@@ -67,7 +69,7 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 	private DataBuilder dataBuilder;
 
 	@BeforeAll
-	void setUp() throws Exception {
+	void setUp() {
 		this.addressRepository.deleteAll();
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();

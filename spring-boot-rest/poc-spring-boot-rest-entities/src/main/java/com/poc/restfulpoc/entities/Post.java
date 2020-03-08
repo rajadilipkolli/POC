@@ -18,11 +18,15 @@ package com.poc.restfulpoc.entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -34,6 +38,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Post Entity Class.
@@ -50,6 +55,11 @@ import lombok.Setter;
 public class Post {
 
 	@Id
+	@GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence",
+			parameters = { @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+					@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+					@org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
 	private String title;
@@ -62,10 +72,10 @@ public class Post {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true, fetch = FetchType.LAZY)
 	private PostDetails details;
 
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "ID"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "ID"))
-	private List<Tag> tags = new ArrayList<>();
+	private Set<Tag> tags = new HashSet<>();
 
 	public Post(Long id) {
 		this.id = id;
@@ -90,6 +100,16 @@ public class Post {
 	public void removeDetails() {
 		this.details.setPost(null);
 		this.details = null;
+	}
+
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
+		tag.getPosts().add(this);
+	}
+
+	public void removeTag(Tag tag) {
+		this.tags.remove(tag);
+		tag.getPosts().remove(this);
 	}
 
 }

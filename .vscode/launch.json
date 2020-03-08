@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Application",
+            "request": "launch",
+            "mainClass": "com.poc.restfulpoc.Application",
+            "projectName": "poc-spring-boot-rest-application"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-Application<poc-mongodb-redis-integration>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

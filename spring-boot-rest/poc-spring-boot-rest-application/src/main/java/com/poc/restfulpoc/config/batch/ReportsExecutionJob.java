@@ -32,6 +32,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -44,12 +46,18 @@ public class ReportsExecutionJob extends JobExecutionListenerSupport {
 
 	private final StepBuilderFactory stepBuilderFactory;
 
+	@Bean
+	public TaskExecutor taskExecutor() {
+		return new SimpleAsyncTaskExecutor("spring_batch");
+	}
+
 	@Bean(name = "executionJob")
 	public Job reportsExecutionJob(CustomItemReader<List<Long>> reader, CustomItemProcessor processor,
-			CustomItemWriter<List<PostDTO>> writer) {
+			CustomItemWriter<List<PostDTO>> writer, TaskExecutor taskExecutor) {
 
 		Step step = this.stepBuilderFactory.get("execution-step").allowStartIfComplete(true)
-				.<List<Long>, List<PostDTO>>chunk(1).reader(reader).processor(processor).writer(writer).build();
+				.<List<Long>, List<PostDTO>>chunk(1).reader(reader).processor(processor).writer(writer)
+				.taskExecutor(taskExecutor).build();
 
 		Job job = this.jobBuilderFactory.get("reporting-job").incrementer(new RunIdIncrementer()).listener(this)
 				.start(step).build();

@@ -28,36 +28,44 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
+import com.poc.restfulpoc.entities.PostDetails;
+import com.poc.restfulpoc.entities.Tag;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-class AllAssociationTest {
+class AllAssociationTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
 	private EntityManager entityManager;
 
 	@Test
-	void test() {
-		Post post = new Post(3L);
+	@Transactional
+	void testAllAssociations() {
+		Post post = new Post();
 		post.setTitle("Postit");
 
 		PostComment comment1 = new PostComment();
-		comment1.setId(3L);
 		comment1.setReview("Good");
 
 		PostComment comment2 = new PostComment();
-		comment2.setId(4L);
 		comment2.setReview("Excellent");
 
 		post.addComment(comment1);
 		post.addComment(comment2);
+
+		PostDetails postDetails = new PostDetails();
+		postDetails.setCreatedBy("JUNIT");
+		post.addDetails(postDetails);
+
+		Tag tag = new Tag("firstPost");
+		post.addTag(tag);
 		this.entityManager.persist(post);
 
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();

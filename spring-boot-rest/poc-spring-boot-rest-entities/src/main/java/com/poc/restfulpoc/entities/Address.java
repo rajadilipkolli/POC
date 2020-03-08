@@ -21,6 +21,8 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -34,6 +36,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * <p>
@@ -55,6 +58,11 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence",
+			parameters = { @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+					@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+					@org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private long id;
 
 	private String street;
