@@ -1,4 +1,4 @@
-package com.learning.java.algorithm;
+package com.learning.java.algorithm.sorting;
 
 import java.util.Arrays;
 

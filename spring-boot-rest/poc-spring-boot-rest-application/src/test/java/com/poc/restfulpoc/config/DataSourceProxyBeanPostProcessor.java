@@ -34,7 +34,7 @@ import org.springframework.util.ReflectionUtils;
 
 @TestComponent
 @Slf4j
-public class DatasourceProxyBeanPostProcessor implements BeanPostProcessor {
+public class DataSourceProxyBeanPostProcessor implements BeanPostProcessor {
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) {

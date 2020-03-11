@@ -63,15 +63,68 @@ __Release using maven and git flow__
   - git push --all && git push --tags(push master and tags to repository)
   - mvn release:clean(deleted backupfiles from local env)
   
+== Notes:
 
+#In the context of imperative programming:#
+
+1. List-based functional programming is eagerly evaluated.
+2. Stream() introduced in Java 8 and is the seam showing we're not programming imperatively anymore. Is it required, though?
+    a. imperative - what and how
+    b. declarative - what and not how + higher order functions = FP. Code reads like the problem statement, through "internal iteration"/ "iteration on autopilot"
+    Mutability is OK, but shared mutability is not.
+3. In OOP we encapsulate moving parts - in FP, we eliminate them.
+4. Is stream API slow - you don't want a faster bicycle, but a rocket - EASIER TO PARALLELIZE
+5. List is bucket, Stream is pipeline. You don't store water in a pipeline, you just move it through there.
+6. Functional composition (builder pattern) is essential.
+7. Lazy evaluation example - removing the terminal (collect) method - functions not being called anymore, as result not needed.
+8. Many languages give programming pattern, such as Groovy, but laziness not there, as it depends on implementation.
+
+
+#Limitations of streams:#
+
+1. Single use only. Example where a stream is assigned to a variable, printed and then used with different filter condition. Result: IllegalStateException: stream has been operated on or closed.
+    a. Concept: streams like QTips - use once and throw away.
+2. Not possible to fork in the middle. Only a single terminal operation.
+3. How do you deal with exceptions: sorry :(. Exception handling is an imperative-style idea: call a function, which calls a function, etc. and destroys your callstack.
+    a. Scala has Mono monads and Either objects - provides safe handling, which is propagated and used in downstream stages. Lacks cohesion!
+    b. Still good luck - we want pure functions and exceptions normally come from impurity.
+
+
+#Reactive systems:#
+
+1. Came out of Microsoft research, but just a new name for old concept - system that reacts to stimuli
+2. Four pillars of reactive programming:
+    a. Elasticity
+    b. Message-driven
+    c. Responsive
+d. Resilience - circuit breakers built in, partial access to application
+3. Close to the 80's concept of dataflow computing: d → f → d →f
+    a. Instructions ready to fire when the data is available
+    b. Serverless computing (AWS Lambda) == dataflow programming. At the minute computation is ready and prepared it can run on ANY server with predefined affinity
+4. Reactive programming is FP++ - builds on lazy evaluation and functional composition
+a. Example with Flowable and subscribe on it
+5. Both Java Streams and Reactive ones push data, regular iterators pull. They are similar to Observable, you register to it and it pushes data to you.
+6. Both can return 0, 1 or more data.
+7. Java 8 Streams deal only with data. RS contain three channels (Data, Err, Complete). In RS error is just another form of data.
+8. RS are asynchronous, so you are not locked into parallelism (sync).
+9. RS can handle consumer back-pressure.
+10. Multiple subscribers in RS, where single pipeline in Java Streams
+11. Interface differences:
+    a. Reactive Stream:
+    - Publisher
+    - Subscriber
+    - Subscription - session between emitter and subscriber, can hold context
+    - Processor - publisher + subscriber
+    - Implementations: RxJava, Akka, Reactor (Spring 5), RSocket
+    b. Java reactive streams - same interface, since Java 9 - in the java.util.concurrent.Flow.* class
  
-=== Commands to ensure that dependencies are upgraded
+== Commands to ensure that dependencies are upgraded
 
  - mvn versions:display-plugin-updates
  - mvn versions:display-property-updates
 
 
-=== Topics to learn
+== Topics to learn
   Java Memory Model Very Important
     -  https://www.youtube.com/watch?v=ZBJ0u9MaKtM
     -  http://tutorials.jenkov.com/java-concurrency/java-memory-model.html
@@ -98,4 +151,5 @@ __Release using maven and git flow__
     -  https://docs.vmware.com/en/VMware-vSphere/6.7/Cloud-Native-Storage/GUID-CF1D7196-E49C-4430-8C50-F8E35CAAE060.html
     -  https://pivotal.io/cloud-native
     -  https://www.loomsystems.com/blog/single-post/2017/01/30/a-comparison-of-fluentd-vs-logstash-log-collector
-    -  https://logz.io/blog/fluentd-logstash/ 
+    -  https://logz.io/blog/fluentd-logstash/
+    -  https://codete.com/blog/5-common-spring-transactional-pitfalls/
