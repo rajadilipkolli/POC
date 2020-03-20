@@ -261,7 +261,6 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	@Disabled
 	void test11_RemoveCustomer() {
 		final Long customerId = getCustomerIdByFirstName("Raja");
 		final ResponseEntity<Customer> response = userRestTemplate()
