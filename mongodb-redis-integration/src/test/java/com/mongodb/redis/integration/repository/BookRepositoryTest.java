@@ -16,7 +16,6 @@
 
 package com.mongodb.redis.integration.repository;
 
-import com.mongodb.client.MongoCollection;
 import com.mongodb.redis.integration.document.Book;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
@@ -64,7 +63,8 @@ class BookRepositoryTest {
 	void checkMongoTemplateAndPerFormOperations() {
 
 		assertThat(this.mongoTemplate).isNotNull();
-		MongoCollection<Document> createdCollection = this.mongoTemplate.createCollection(this.collectionName);
+		com.mongodb.client.MongoCollection<Document> createdCollection = this.mongoTemplate
+				.createCollection(this.collectionName);
 		assertThat(createdCollection.countDocuments()).isEqualTo(0);
 		assertThat(this.mongoTemplate.collectionExists(this.collectionName)).isTrue();
 

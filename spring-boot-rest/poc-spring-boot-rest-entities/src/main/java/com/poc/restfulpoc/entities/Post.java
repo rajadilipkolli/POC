@@ -64,6 +64,8 @@ public class Post {
 
 	private String title;
 
+	private String content;
+
 	private LocalDateTime createdOn;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)

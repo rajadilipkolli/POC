@@ -18,6 +18,8 @@ package com.poc.restfulpoc.jooq;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.sql.DataSource;
+
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.repository.CustomerRepository;
@@ -34,8 +36,6 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -55,16 +55,18 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 	@Autowired
 	private DataBuilder dataBuilder;
 
+	@Autowired
+	private DataSource dataSource;
+
 	private DataSourceTransactionManager txMgr;
 
 	@BeforeAll
 	void init() {
-		this.txMgr = new DataSourceTransactionManager(
-				new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build());
+		this.txMgr = new DataSourceTransactionManager(this.dataSource);
 	}
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		this.customerRepository.deleteAll();
 		this.dataBuilder.run();
 	}
@@ -123,7 +125,6 @@ class JooqTransactionTest extends AbstractRestFulPOCApplicationTest {
 	}
 
 	@Test
-	@Disabled
 	@DisplayName("As H2 doesn't support Nested Transaction we have disable it.")
 	void testJOOQTransactionsNested() {
 		AtomicBoolean rollback1 = new AtomicBoolean(false);

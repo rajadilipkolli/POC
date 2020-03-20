@@ -16,7 +16,7 @@
 
 package com.poc.restfulpoc.jooq;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
@@ -102,7 +102,7 @@ class JooqQueryTest extends AbstractRestFulPOCApplicationTest {
 		Address a = ADDRESS.as("a");
 		Orders o = ORDERS.as("o");
 
-		SelectSeekStep1<Record8<Long, String, String, Timestamp, Long, String, String, Long>, String> sql = this.context
+		SelectSeekStep1<Record8<Long, String, String, LocalDateTime, Long, String, String, Long>, String> sql = this.context
 				.select(c.ID, c.FIRST_NAME, c.LAST_NAME, c.DATE_OF_BIRTH, o.ORDER_ID, o.ORDER_NUMBER, o.ORDER_STATUS,
 						a.CUSTOMER_ID)
 				.from(c).join(a).on(a.CUSTOMER_ID.eq(c.ID)).join(o).on(o.CUSTOMER_ID.eq(c.ID))

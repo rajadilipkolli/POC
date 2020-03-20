@@ -2,6 +2,9 @@ package com.learning.java.algorithm.sorting;
 
 import java.util.Arrays;
 
+/**
+ * Stable Sort
+ */
 public class RedixSort {
   public static void main(String[] args) {
 
@@ -40,9 +43,7 @@ public class RedixSort {
           input[tempIndex];
     }
 
-    for (int tempIndex = 0; tempIndex < numItems; tempIndex++) {
-      input[tempIndex] = temp[tempIndex];
-    }
+    System.arraycopy(temp, 0, input, 0, numItems);
 
     System.out.println(Arrays.toString(input));
   }

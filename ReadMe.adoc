@@ -152,4 +152,5 @@ a. Example with Flowable and subscribe on it
     -  https://pivotal.io/cloud-native
     -  https://www.loomsystems.com/blog/single-post/2017/01/30/a-comparison-of-fluentd-vs-logstash-log-collector
     -  https://logz.io/blog/fluentd-logstash/
+    -  https://www.callicoder.com/java-8-completablefuture-tutorial/
     -  https://codete.com/blog/5-common-spring-transactional-pitfalls/
