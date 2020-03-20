@@ -16,16 +16,15 @@
 
 package com.poc.reactivepoc.dataload;
 
-import java.time.LocalDateTime;
-
-import com.poc.reactivepoc.repository.PostRepository;
-import com.poc.restfulpoc.entities.Post;
-import com.poc.restfulpoc.entities.PostDetails;
+import com.poc.reactivepoc.entity.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,19 +32,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DataInitializer {
 
-	private final PostRepository postRepository;
+	private final DatabaseClient databaseClient;
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void init() {
 		log.info("start data initialization  ...");
-		Post post = new Post();
-		post.setTitle("First post title");
-		post.setContent("Content of my first post");
-		post.setCreatedOn(LocalDateTime.now());
-		PostDetails postDetails = new PostDetails();
-		postDetails.setCreatedBy("Junit");
-		post.setDetails(postDetails);
-		this.postRepository.save(post).map(post1 -> post.getId()).log().thenMany(this.postRepository.findAll().log())
+		this.databaseClient.delete().from("reactive_posts").then()
+				.and(this.databaseClient.insert().into("reactive_posts").value("title", "First post title")
+						.value("content", "Content of my first post").map((r, m) -> r.get("id", Integer.class)).all()
+						.log())
+				.thenMany(this.databaseClient.select().from("reactive_posts").orderBy(Sort.by(Order.desc("id")))
+						.as(Post.class).fetch().all().log())
 				.subscribe(null, null, () -> log.info("initialization is done..."));
 	}
 

@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.reactivepoc.repository;
+package com.poc.reactivepoc;
 
-import com.poc.reactivepoc.entity.Post;
-import reactor.core.publisher.Flux;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import org.springframework.data.r2dbc.repository.Query;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
-
-	@Query("select id, title, content from reactive_posts p where p.content = :content")
-	Flux<Post> findByContent(String content);
+@SpringBootApplication
+@EnableTransactionManagement
+public class InfrastructureConfiguration {
 
 }

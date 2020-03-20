@@ -9,11 +9,11 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgres:latest
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_USER: local
+          POSTGRES_PASSWORD: local
+          POSTGRES_DB: rest
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck

@@ -16,8 +16,8 @@
 
 package com.poc.reactivepoc.controller;
 
+import com.poc.reactivepoc.entity.Post;
 import com.poc.reactivepoc.repository.PostRepository;
-import com.poc.restfulpoc.entities.Post;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -36,36 +36,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
 
-	private final PostRepository posts;
+	private final PostRepository postRepository;
 
 	@GetMapping
 	public Flux<Post> all() {
-		return this.posts.findAll();
+		return this.postRepository.findAll();
 	}
 
 	@PostMapping
 	public Mono<Post> create(@RequestBody Post post) {
-		return this.posts.save(post);
+		return this.postRepository.save(post);
 	}
 
 	@GetMapping("/{id}")
-	public Mono<Post> get(@PathVariable("id") Long id) {
-		return this.posts.findById(id);
+	public Mono<Post> get(@PathVariable("id") Integer id) {
+		return this.postRepository.findById(id);
 	}
 
 	@PutMapping("/{id}")
-	public Mono<Post> update(@PathVariable("id") Long id, @RequestBody Post post) {
-		return this.posts.findById(id).map(p -> {
+	public Mono<Post> update(@PathVariable("id") Integer id, @RequestBody Post post) {
+		return this.postRepository.findById(id).map(p -> {
 			p.setTitle(post.getTitle());
 			p.setContent(post.getContent());
 
 			return p;
-		}).flatMap(this.posts::save);
+		}).flatMap(this.postRepository::save);
 	}
 
 	@DeleteMapping("/{id}")
-	public Mono<Void> delete(@PathVariable("id") Long id) {
-		return this.posts.deleteById(id);
+	public Mono<Void> delete(@PathVariable("id") Integer id) {
+		return this.postRepository.deleteById(id);
 	}
 
 }

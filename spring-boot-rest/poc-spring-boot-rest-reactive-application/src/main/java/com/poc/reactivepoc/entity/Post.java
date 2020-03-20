@@ -13,19 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.reactivepoc.repository;
+package com.poc.reactivepoc.entity;
 
-import com.poc.reactivepoc.entity.Post;
-import reactor.core.publisher.Flux;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import org.springframework.data.r2dbc.repository.Query;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Repository
-public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
+@Data
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table("reactive_posts")
+public class Post {
 
-	@Query("select id, title, content from reactive_posts p where p.content = :content")
-	Flux<Post> findByContent(String content);
+	@Id
+	@Column("id")
+	private Integer id;
+
+	@Column("title")
+	private String title;
+
+	@Column("content")
+	private String content;
 
 }
