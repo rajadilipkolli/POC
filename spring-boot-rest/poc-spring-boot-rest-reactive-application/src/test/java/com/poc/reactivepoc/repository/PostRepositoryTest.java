@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.poc.reactivepoc.InfrastructureConfiguration;
 import com.poc.reactivepoc.entity.Post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,10 +26,10 @@ import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 
-@SpringBootTest(classes = InfrastructureConfiguration.class)
+@DataR2dbcTest
 public class PostRepositoryTest {
 
 	@Autowired

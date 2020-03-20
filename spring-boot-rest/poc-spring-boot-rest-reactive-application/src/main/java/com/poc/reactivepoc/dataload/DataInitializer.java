@@ -16,6 +16,9 @@
 
 package com.poc.reactivepoc.dataload;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.poc.reactivepoc.entity.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +40,19 @@ public class DataInitializer {
 	@EventListener(ContextRefreshedEvent.class)
 	public void init() {
 		log.info("start data initialization  ...");
+		List<String> statements = Arrays.asList(//
+				"DROP TABLE IF EXISTS reactive_posts;",
+				"CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, title VARCHAR(100) NOT NULL, content VARCHAR(100) NOT NULL);");
+
+		statements.forEach(query -> this.databaseClient.execute(query).then().block());
+
 		this.databaseClient.delete().from("reactive_posts").then()
 				.and(this.databaseClient.insert().into("reactive_posts").value("title", "First post title")
 						.value("content", "Content of my first post").map((r, m) -> r.get("id", Integer.class)).all()
 						.log())
 				.thenMany(this.databaseClient.select().from("reactive_posts").orderBy(Sort.by(Order.desc("id")))
 						.as(Post.class).fetch().all().log())
-				.subscribe(null, null, () -> log.info("initialization is done..."));
+				.subscribe(null, e -> log.error(e.getMessage(), e), () -> log.info("initialization is done..."));
 	}
 
 }

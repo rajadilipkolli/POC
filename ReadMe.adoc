@@ -1,7 +1,7 @@
 = My POC image:https://travis-ci.org/rajadilipkolli/POC.svg?branch=master["Build Status",link="https://travis-ci.org/rajadilipkolli/POC"]  image:https://codecov.io/gh/rajadilipkolli/POC/branch/master/graph/badge.svg["Codecov",link="https://codecov.io/gh/rajadilipkolli/POC"] image:https://img.shields.io/:license-apache-blue.svg?style=flat-square["License",link="https://github.com/rajadilipkolli/POC/blob/master/LICENSE"]
 
 == Introduction
-This repo is for all POC which I does and learnings I learnt
+This repo is for all POC which I does and learning's I learnt
 Below are the projects that I have completed POC
 
  - link:mongodb-redis-integration/ReadMe.adoc[mongodb-redis-integration] -> adding fault tolerant caching layer to MongoDB.
