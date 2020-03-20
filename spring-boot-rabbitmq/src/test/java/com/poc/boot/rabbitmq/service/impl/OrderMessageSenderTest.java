@@ -20,48 +20,51 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poc.boot.rabbitmq.config.RabbitConfig;
 import com.poc.boot.rabbitmq.util.MockObjectCreator;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OrderMessageSenderTest {
+@ExtendWith(MockitoExtension.class)
+class OrderMessageSenderTest {
 
 	@Mock
-	RabbitTemplate rabbitTemplate;
+	private RabbitTemplate rabbitTemplate;
 
 	@Mock
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@InjectMocks
-	OrderMessageSenderImpl orderMessageSender;
+	private OrderMessageSenderImpl orderMessageSender;
 
 	@Test
-	public void testSendOrder() throws JsonProcessingException {
+	void testSendOrder() throws JsonProcessingException {
 		String convertedString = "{\"orderNumber\":\"1\",\"productId\":\"P1\"," + "\"amount\":10.0}";
 		// given
 		given(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder())).willReturn(convertedString);
-		willDoNothing().given(this.rabbitTemplate).convertAndSend(RabbitConfig.QUEUE_ORDERS,
-				this.orderMessageSender.getRabbitMQMessage(convertedString));
+		willDoNothing().given(this.rabbitTemplate).convertAndSend(eq(RabbitConfig.QUEUE_ORDERS),
+				eq(this.orderMessageSender.getRabbitMQMessage(convertedString)), any(CorrelationData.class));
 		// when
 		this.orderMessageSender.sendOrder(MockObjectCreator.getOrder());
-		verify(this.rabbitTemplate, times(1)).convertAndSend(RabbitConfig.QUEUE_ORDERS,
-				this.orderMessageSender.getRabbitMQMessage(convertedString));
+		verify(this.rabbitTemplate, times(1)).convertAndSend(eq(RabbitConfig.QUEUE_ORDERS),
+				eq(this.orderMessageSender.getRabbitMQMessage(convertedString)), any(CorrelationData.class));
 		verify(this.objectMapper, times(1)).writeValueAsString(MockObjectCreator.getOrder());
 	}
 
 	@Test
-	public void testSendOrderException() throws Exception {
+	void testSendOrderException() throws Exception {
 		given(this.objectMapper.writeValueAsString(MockObjectCreator.getOrder()))
 				.willThrow(new JsonProcessingException("Exception") {
 					private static final long serialVersionUID = 1L;

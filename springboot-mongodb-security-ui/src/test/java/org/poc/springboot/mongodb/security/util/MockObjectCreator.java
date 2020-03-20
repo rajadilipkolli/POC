@@ -25,7 +25,7 @@ import org.poc.springboot.mongodb.security.domain.User;
 public final class MockObjectCreator {
 
 	private MockObjectCreator() {
-		throw new UnsupportedOperationException("cannot be initilized");
+		throw new UnsupportedOperationException("cannot be initialised");
 	}
 
 	public static User getUser() {

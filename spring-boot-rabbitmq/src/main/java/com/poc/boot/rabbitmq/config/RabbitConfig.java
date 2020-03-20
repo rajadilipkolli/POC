@@ -16,6 +16,8 @@
 
 package com.poc.boot.rabbitmq.config;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Exchange;
@@ -43,6 +45,7 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
  */
 @EnableRabbit
 @Configuration
+@Slf4j
 public class RabbitConfig implements RabbitListenerConfigurer {
 
 	/**
@@ -96,6 +99,10 @@ public class RabbitConfig implements RabbitListenerConfigurer {
 	public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
 		final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
 		rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+		rabbitTemplate.setConfirmCallback((correlationData, acknowledgement, cause) -> {
+			log.info("correlation id {} , acknowledgement {}, cause {}", correlationData.getId(), acknowledgement,
+					cause);
+		});
 		return rabbitTemplate;
 	}
 
