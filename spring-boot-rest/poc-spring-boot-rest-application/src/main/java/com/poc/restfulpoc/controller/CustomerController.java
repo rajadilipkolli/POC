@@ -126,24 +126,20 @@ public class CustomerController {
 
 	/**
 	 * Update customer with given customer id.
-	 * @param customer the customer
+	 * @param updateCustomerRequest the customer
 	 * @param customerId a {@link java.lang.Long} object.
 	 * @return a {@link org.springframework.http.ResponseEntity} object.
 	 * @throws EntityNotFoundException if any.
 	 */
 	@PutMapping("{customerId}")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer,
+	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer updateCustomerRequest,
 			@PathVariable("customerId") Long customerId) throws EntityNotFoundException {
 		log.info("Updating Customer {}", customerId);
 		final Customer currentUser = this.customerService.getCustomer(customerId);
-		if (currentUser.equals(customer)) {
+		if (currentUser.equals(updateCustomerRequest)) {
 			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 		}
-		currentUser.setFirstName(customer.getFirstName());
-		currentUser.setLastName(customer.getLastName());
-		currentUser.setDateOfBirth(customer.getDateOfBirth());
-		currentUser.setAddress(customer.getAddress());
-		final Customer updatedCustomer = this.customerService.updateCustomer(customer, customerId);
+		final Customer updatedCustomer = this.customerService.updateCustomer(updateCustomerRequest, customerId);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
 	}
 

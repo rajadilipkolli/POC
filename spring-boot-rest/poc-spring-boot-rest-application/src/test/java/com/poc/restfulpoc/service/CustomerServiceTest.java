@@ -25,6 +25,7 @@ import java.util.Optional;
 import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.repository.OrderRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,6 +49,9 @@ class CustomerServiceTest {
 	private CustomerRepository customerRepository;
 
 	@Mock
+	private OrderRepository orderRepository;
+
+	@Mock
 	private JmsTemplate jmsTemplate;
 
 	private CustomerService customerService;
@@ -57,7 +61,7 @@ class CustomerServiceTest {
 	@BeforeAll
 	void setUp() {
 		MockitoAnnotations.initMocks(this);
-		this.customerService = new CustomerServiceImpl(this.customerRepository, this.jmsTemplate);
+		this.customerService = new CustomerServiceImpl(this.customerRepository, this.orderRepository, this.jmsTemplate);
 		given(this.customerRepository.findAll()).willReturn(Collections.singletonList(this.customer));
 		given(this.customerRepository.findById(ArgumentMatchers.anyLong())).willReturn(Optional.of(this.customer));
 		given(this.customerRepository.save(ArgumentMatchers.any(Customer.class))).willReturn(this.customer);
@@ -99,7 +103,7 @@ class CustomerServiceTest {
 	}
 
 	@Test
-	void testUpdateCustomer() {
+	void testUpdateCustomer() throws EntityNotFoundException {
 		LocalDateTime dateOfBirth = LocalDateTime.now();
 		this.customer.setDateOfBirth(dateOfBirth);
 		Customer res = this.customerService.updateCustomer(this.customer, RandomUtils.nextLong());

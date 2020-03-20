@@ -18,6 +18,7 @@ package com.poc.restfulpoc.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -86,6 +87,23 @@ public class Order implements Serializable {
 	public Order() {
 		this.orderStatus = OrderStatus.NEW;
 		this.createdOn = LocalDateTime.now();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Order)) {
+			return false;
+		}
+		Order order = (Order) obj;
+		return Objects.equals(order.orderNumber, this.orderNumber);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.orderNumber);
 	}
 
 }

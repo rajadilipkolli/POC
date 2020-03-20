@@ -148,12 +148,13 @@ public class Customer implements Serializable {
 		return Objects.equals(getFirstName(), customer.getFirstName())
 				&& Objects.equals(getLastName(), customer.getLastName())
 				&& Objects.equals(getDateOfBirth(), customer.getDateOfBirth())
-				&& Objects.equals(getAddress(), customer.getAddress());
+				&& Objects.equals(getAddress(), customer.getAddress())
+				&& Objects.equals(getOrders(), customer.getOrders());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getFirstName(), getLastName(), getDateOfBirth(), getAddress());
+		return 31;
 	}
 
 }

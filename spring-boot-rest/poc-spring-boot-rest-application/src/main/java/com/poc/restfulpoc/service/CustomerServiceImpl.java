@@ -17,10 +17,13 @@
 package com.poc.restfulpoc.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.poc.restfulpoc.entities.Customer;
+import com.poc.restfulpoc.entities.Order;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
+import com.poc.restfulpoc.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -44,6 +47,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerServiceImpl implements CustomerService {
 
 	private final CustomerRepository customerRepository;
+
+	private final OrderRepository orderRepository;
 
 	private final JmsTemplate jmsTemplate;
 
@@ -71,8 +76,36 @@ public class CustomerServiceImpl implements CustomerService {
 	/** {@inheritDoc} */
 	@Override
 	@CachePut(value = "customer", key = "#customerId", unless = "#result == null")
-	public Customer updateCustomer(Customer customer, Long customerId) {
-		return this.customerRepository.save(customer);
+	public Customer updateCustomer(Customer updateCustomerRequest, Long customerId) throws EntityNotFoundException {
+
+		Customer persistedCustomer = getCustomer(customerId);
+		persistedCustomer.setFirstName(updateCustomerRequest.getFirstName());
+		persistedCustomer.setLastName(updateCustomerRequest.getLastName());
+		persistedCustomer.setDateOfBirth(updateCustomerRequest.getDateOfBirth());
+		persistedCustomer.setAddress(updateCustomerRequest.getAddress());
+
+		// Remove the existing database rows that are no
+		// longer found in the incoming collection (updateCustomerRequest.getOrders())
+		List<Order> ordersToRemove = persistedCustomer.getOrders().stream()
+				.filter(order -> !updateCustomerRequest.getOrders().contains(order)).collect(Collectors.toList());
+		ordersToRemove.forEach(persistedCustomer::removeOrder);
+
+		// Update the existing database rows which can be found
+		// in the incoming collection (updateCustomerRequest.getOrders())
+		List<Order> newOrders = updateCustomerRequest.getOrders().stream()
+				.filter(order -> !persistedCustomer.getOrders().contains(order)).collect(Collectors.toList());
+
+		updateCustomerRequest.getOrders().stream().filter(order -> !newOrders.contains(order)).forEach((order) -> {
+			order.setCustomer(persistedCustomer);
+			Order mergedOrder = this.orderRepository.save(order);
+			persistedCustomer.getOrders().set(persistedCustomer.getOrders().indexOf(mergedOrder), mergedOrder);
+		});
+
+		// Add the rows found in the incoming collection,
+		// which cannot be found in the current database snapshot
+		newOrders.forEach(persistedCustomer::addOrder);
+
+		return this.customerRepository.save(persistedCustomer);
 	}
 
 	/** {@inheritDoc} */

@@ -31,11 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	@Transactional(readOnly = true)
-	@Query("select c from Customer c join fetch c.address join fetch c.orders where c.id = :id")
+	@Query("select c from Customer c join fetch c.address left join fetch c.orders where c.id = :id")
 	Optional<Customer> findById(@Param("id") Long id);
 
 	@Transactional(readOnly = true)
-	@Query("select c from Customer c join fetch c.address join fetch c.orders")
+	@Query("select c from Customer c join fetch c.address left join fetch c.orders")
 	List<Customer> findAll();
 
 	@Transactional(readOnly = true)
