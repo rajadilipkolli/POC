@@ -3,6 +3,7 @@ package com.learning.java.algorithm.list;
 public class EmployeeLinkedList {
 
   private EmployeeNode head;
+
   private int size;
 
   public boolean isEmpty() {
@@ -19,7 +20,7 @@ public class EmployeeLinkedList {
   public int getSize() {
     return size;
   }
-  
+
   public void printList() {
     EmployeeNode current = head;
     System.out.print("HEAD -> ");

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.poc.reactivepoc.entity.Post;
+import com.poc.reactivepoc.entity.ReactivePost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Hooks;
@@ -30,7 +30,7 @@ import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 
 @DataR2dbcTest
-public class PostRepositoryTest {
+public class ReactivePostRepositoryTest {
 
 	@Autowired
 	PostRepository postRepository;
@@ -58,8 +58,8 @@ public class PostRepositoryTest {
 	@Test
 	public void executesFindAll() throws IOException {
 
-		Post dave = new Post(null, "Dave", "Matthews");
-		Post carter = new Post(null, "Carter", "Beauford");
+		ReactivePost dave = new ReactivePost(null, "Dave", "Matthews");
+		ReactivePost carter = new ReactivePost(null, "Carter", "Beauford");
 
 		insertPosts(dave, carter);
 
@@ -73,8 +73,8 @@ public class PostRepositoryTest {
 	@Test
 	public void executesAnnotatedQuery() throws IOException {
 
-		Post dave = new Post(null, "Dave", "Matthews");
-		Post carter = new Post(null, "Carter", "Beauford");
+		ReactivePost dave = new ReactivePost(null, "Dave", "Matthews");
+		ReactivePost carter = new ReactivePost(null, "Carter", "Beauford");
 
 		insertPosts(dave, carter);
 
@@ -84,9 +84,9 @@ public class PostRepositoryTest {
 				.verifyComplete();
 	}
 
-	private void insertPosts(Post... posts) {
+	private void insertPosts(ReactivePost... reactivePosts) {
 
-		this.postRepository.saveAll(Arrays.asList(posts))//
+		this.postRepository.saveAll(Arrays.asList(reactivePosts))//
 				.as(StepVerifier::create) //
 				.expectNextCount(2) //
 				.verifyComplete();

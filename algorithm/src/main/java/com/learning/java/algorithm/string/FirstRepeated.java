@@ -15,7 +15,7 @@ public class FirstRepeated {
     for (int i = 0; i < str.length(); i++) {
       char asciiArrayPosition = str.charAt(i);
       if (asciiArray[asciiArrayPosition] == 1) {
-        return "char = "+ str.charAt(i) +", index=" +i;
+        return "char = " + str.charAt(i) + ", index=" + i;
       }
       asciiArray[asciiArrayPosition]++;
     }

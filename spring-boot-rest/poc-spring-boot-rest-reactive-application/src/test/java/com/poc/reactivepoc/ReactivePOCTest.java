@@ -15,7 +15,7 @@
  */
 package com.poc.reactivepoc;
 
-import com.poc.reactivepoc.entity.Post;
+import com.poc.reactivepoc.entity.ReactivePost;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +38,8 @@ public class ReactivePOCTest {
 
 	@Test
 	public void willLoadPosts() {
-		this.webClient.get().uri("/posts").exchange().expectStatus().is2xxSuccessful().expectBodyList(Post.class)
-				.hasSize(1);
+		this.webClient.get().uri("/posts").exchange().expectStatus().is2xxSuccessful()
+				.expectBodyList(ReactivePost.class).hasSize(1);
 	}
 
 }

@@ -15,7 +15,7 @@
  */
 package com.poc.reactivepoc.repository;
 
-import com.poc.reactivepoc.entity.Post;
+import com.poc.reactivepoc.entity.ReactivePost;
 import reactor.core.publisher.Flux;
 
 import org.springframework.data.r2dbc.repository.Query;
@@ -23,9 +23,9 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
+public interface PostRepository extends ReactiveCrudRepository<ReactivePost, Integer> {
 
 	@Query("select id, title, content from reactive_posts p where p.content = :content")
-	Flux<Post> findByContent(String content);
+	Flux<ReactivePost> findByContent(String content);
 
 }

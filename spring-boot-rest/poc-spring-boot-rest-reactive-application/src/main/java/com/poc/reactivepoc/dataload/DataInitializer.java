@@ -19,7 +19,7 @@ package com.poc.reactivepoc.dataload;
 import java.util.Arrays;
 import java.util.List;
 
-import com.poc.reactivepoc.entity.Post;
+import com.poc.reactivepoc.entity.ReactivePost;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +51,7 @@ public class DataInitializer {
 						.value("content", "Content of my first post").map((r, m) -> r.get("id", Integer.class)).all()
 						.log())
 				.thenMany(this.databaseClient.select().from("reactive_posts").orderBy(Sort.by(Order.desc("id")))
-						.as(Post.class).fetch().all().log())
+						.as(ReactivePost.class).fetch().all().log())
 				.subscribe(null, e -> log.error(e.getMessage(), e), () -> log.info("initialization is done..."));
 	}
 

@@ -16,7 +16,7 @@
 
 package com.poc.reactivepoc.controller;
 
-import com.poc.reactivepoc.entity.Post;
+import com.poc.reactivepoc.entity.ReactivePost;
 import com.poc.reactivepoc.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
@@ -39,25 +39,25 @@ public class PostController {
 	private final PostRepository postRepository;
 
 	@GetMapping
-	public Flux<Post> all() {
+	public Flux<ReactivePost> all() {
 		return this.postRepository.findAll();
 	}
 
 	@PostMapping
-	public Mono<Post> create(@RequestBody Post post) {
-		return this.postRepository.save(post);
+	public Mono<ReactivePost> create(@RequestBody ReactivePost reactivePost) {
+		return this.postRepository.save(reactivePost);
 	}
 
 	@GetMapping("/{id}")
-	public Mono<Post> get(@PathVariable("id") Integer id) {
+	public Mono<ReactivePost> get(@PathVariable("id") Integer id) {
 		return this.postRepository.findById(id);
 	}
 
 	@PutMapping("/{id}")
-	public Mono<Post> update(@PathVariable("id") Integer id, @RequestBody Post post) {
+	public Mono<ReactivePost> update(@PathVariable("id") Integer id, @RequestBody ReactivePost reactivePost) {
 		return this.postRepository.findById(id).map(p -> {
-			p.setTitle(post.getTitle());
-			p.setContent(post.getContent());
+			p.setTitle(reactivePost.getTitle());
+			p.setContent(reactivePost.getContent());
 
 			return p;
 		}).flatMap(this.postRepository::save);

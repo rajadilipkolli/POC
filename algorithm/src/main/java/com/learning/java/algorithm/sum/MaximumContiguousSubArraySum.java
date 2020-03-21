@@ -3,7 +3,7 @@ package com.learning.java.algorithm.sum;
 public class MaximumContiguousSubArraySum {
 
   public static void main(String[] args) {
-    int[] arr = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    int[] arr = new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
 
     int length = arr.length;
 
@@ -32,7 +32,8 @@ public class MaximumContiguousSubArraySum {
     }
 
     System.out.println(bestSum);
-    System.out.println("Continuous Array is from " + maxStart + " position to " + maxEnd + " position");
+    System.out.println(
+        "Continuous Array is from " + maxStart + " position to " + maxEnd + " position");
 
   }
 }

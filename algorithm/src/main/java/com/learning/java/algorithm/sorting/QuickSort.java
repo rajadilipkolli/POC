@@ -6,7 +6,7 @@ public class QuickSort {
 
   public static void main(String[] args) {
 
-    int[] intArray = {20, 35, -15, 7, 55, 1, -22};
+    int[] intArray = { 20, 35, -15, 7, 55, 1, -22 };
 
     quickSort(intArray, 0, intArray.length);
   }
@@ -27,11 +27,13 @@ public class QuickSort {
 
     while (i < j) {
 
-      while (i < j && intArray[--j] >= pivot) ;
+      while (i < j && intArray[--j] >= pivot)
+        ;
       if (i < j) {
         intArray[i] = intArray[j];
       }
-      while (i < j && intArray[++i] <= pivot) ;
+      while (i < j && intArray[++i] <= pivot)
+        ;
       if (i < j) {
         intArray[j] = intArray[i];
       }

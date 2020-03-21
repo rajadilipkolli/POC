@@ -3,16 +3,16 @@ package com.learning.java.algorithm.sorting;
 import java.util.Arrays;
 
 /**
- * Stable algorithm, O(nlogn) complexity as we are repeatedly dividing the array in half during splitting phase.
- * Not an in place sorting as it needs temporary array
+ * Stable algorithm, O(nlogn) complexity as we are repeatedly dividing the array in half
+ * during splitting phase. Not an in place sorting as it needs temporary array
  */
 public class MergeSort {
 
   public static void main(String[] args) {
 
-    int[] intArray = {20, 35, -15, 7, 55, 1, -22};
+    int[] intArray = { 20, 35, -15, 7, 55, 1, -22 };
 
-    if( intArray.length >2) {
+    if (intArray.length > 2) {
       mergeSort(intArray, 0, intArray.length);
     }
   }

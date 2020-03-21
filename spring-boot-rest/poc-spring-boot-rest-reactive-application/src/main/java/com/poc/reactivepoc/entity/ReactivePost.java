@@ -31,7 +31,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("reactive_posts")
-public class Post {
+public class ReactivePost {
 
 	@Id
 	@Column("id")

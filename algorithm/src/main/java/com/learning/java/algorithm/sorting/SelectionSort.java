@@ -3,19 +3,20 @@ package com.learning.java.algorithm.sorting;
 import java.util.Arrays;
 
 /**
- * Time Complexity is O(n2) , not preferable and it is unstable sort but better than BubbleSort as number of swaps reduce.
- * Number of Iterations = length -2;
+ * Time Complexity is O(n2) , not preferable and it is unstable sort but better than
+ * BubbleSort as number of swaps reduce. Number of Iterations = length -2;
  */
 public class SelectionSort {
 
   public static void main(String[] args) {
-    int[] intArray = {20, 35, -15, 7, 55, 1, -22};
+    int[] intArray = { 20, 35, -15, 7, 55, 1, -22 };
 
     selectionSort(intArray);
   }
 
   private static void selectionSort(int[] arr) {
-    for (int largestUnSortedIndex = arr.length - 1; largestUnSortedIndex > 1; largestUnSortedIndex--) {
+    for (int largestUnSortedIndex = arr.length - 1;
+         largestUnSortedIndex > 1; largestUnSortedIndex--) {
       int largestValue = 0;
       for (int j = 1; j <= largestUnSortedIndex; j++) {
         if (arr[largestValue] < arr[j]) {

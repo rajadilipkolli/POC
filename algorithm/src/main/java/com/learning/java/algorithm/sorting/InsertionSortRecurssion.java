@@ -3,10 +3,10 @@ package com.learning.java.algorithm.sorting;
 import java.util.Arrays;
 
 public class InsertionSortRecurssion {
-  
+
   public static void main(String[] args) {
 
-    int[] intArray = {20, 35, -15, 7, 55, 1, -22};
+    int[] intArray = { 20, 35, -15, 7, 55, 1, -22 };
 
     insertionSort(intArray, 1);
 
