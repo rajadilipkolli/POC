@@ -7,15 +7,16 @@ import lombok.Setter;
 @Setter
 public class EmployeeNode {
 
-  private Employee employee;
+	private Employee employee;
 
-  private EmployeeNode next;
+	private EmployeeNode next;
 
-  public EmployeeNode(Employee employee) {
-    this.employee = employee;
-  }
+	public EmployeeNode(Employee employee) {
+		this.employee = employee;
+	}
 
-  public String toString() {
-    return employee.toString();
-  }
+	public String toString() {
+		return employee.toString();
+	}
+
 }

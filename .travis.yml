@@ -5,7 +5,7 @@ jdk:
   
 services:
   - mongodb
-  - redis-server
+  - redis
   - postgresql
  
 script:

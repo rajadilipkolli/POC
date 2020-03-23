@@ -7,9 +7,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class Employee {
 
-  private String firstName;
+	private String firstName;
 
-  private String lastName;
+	private String lastName;
 
-  private int id;
+	private int id;
+
 }
