@@ -7,7 +7,7 @@
     <version>0.3.0-SNAPSHOT</version>
   </parent>
   <artifactId>poc-springboot-mongodb-security-ui</artifactId>
-  <name>poc-springboot-mongodb-security</name>
+  <name>poc-spring-boot-mongodb-security</name>
 
   <properties>
     <main.basedir>${project.parent.basedir}</main.basedir>
