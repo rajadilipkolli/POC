@@ -22,7 +22,6 @@ import com.mongodb.redis.integration.controller.BookController;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -78,7 +77,6 @@ class BookHandlerTest {
 	}
 
 	@Test
-	@Disabled
 	@DisplayName("Disabled temporarily to verify rest of the build")
 	void test02GetBook() {
 		Book response = this.webTestClient.get().uri("/api/book/{id}", 1).accept(MediaType.APPLICATION_JSON).exchange()

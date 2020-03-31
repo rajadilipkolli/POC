@@ -1,4 +1,4 @@
-= My POC image:https://travis-ci.org/rajadilipkolli/POC.svg?branch=master["Build Status",link="https://travis-ci.org/rajadilipkolli/POC"]  image:https://codecov.io/gh/rajadilipkolli/POC/branch/master/graph/badge.svg["Codecov",link="https://codecov.io/gh/rajadilipkolli/POC"] image:https://img.shields.io/:license-apache-blue.svg?style=flat-square["License",link="https://github.com/rajadilipkolli/POC/blob/master/LICENSE"]
+= My POC image:https://github.com/rajadilipkolli/POC/workflows/Java%20CI/badge.svg?branch=master["Build Status",link="https://github.com/rajadilipkolli/POC/actions?query=workflow%3A%22Java+CI%22"]  image:https://codecov.io/gh/rajadilipkolli/POC/branch/master/graph/badge.svg["Codecov",link="https://codecov.io/gh/rajadilipkolli/POC"] image:https://img.shields.io/:license-apache-blue.svg?style=flat-square["License",link="https://github.com/rajadilipkolli/POC/blob/master/LICENSE"]
 
 == Introduction
 This repo is for all POC which I does and learning's I learnt
