@@ -12,7 +12,7 @@
   <description>This project demonstrates how to use spring restful webservices deployed in undertow server along with database proxy</description>
   <modules>
     <module>poc-spring-boot-rest-entities</module>
-    <module>poc-spring-boot-rest-jooq</module>
+    <!-- <module>poc-spring-boot-rest-jooq</module> -->
     <module>poc-spring-boot-rest-application</module>
     <module>poc-spring-boot-rest-reactive-application</module>
   </modules>

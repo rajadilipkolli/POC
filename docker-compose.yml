@@ -1,7 +1,7 @@
 version: "3"
 services:
   #  Create a service named db.
-  db:
+  database:
     #   Use the Docker Image postgres. This will pull the newest release.
     image: postgres:latest
     #   Give the container the name postgres. You can changes to something else.
@@ -11,10 +11,19 @@ services:
       - POSTGRES_USER=local
       - POSTGRES_PASSWORD=local
       - POSTGRES_DB=rest
-    #   Maps port 54320 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
+    #   Maps port 5432 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
     ports:
-      - 54320:5432
+      - 5432:5432
     #   Set a volume some that database is not lost after shutting down the container.
     #   I used the name postgres-data but you can changed it to something else.
+    networks:
+      - postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres-data:
