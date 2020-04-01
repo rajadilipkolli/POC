@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.config;
+package com.poc.restfulpoc.config.cache;
 
 import lombok.extern.slf4j.Slf4j;
 

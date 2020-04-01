@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poc.restfulpoc.config;
+package com.poc.restfulpoc.config.cache;
 
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;

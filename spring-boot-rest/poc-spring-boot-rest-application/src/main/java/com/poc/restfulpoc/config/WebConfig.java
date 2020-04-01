@@ -22,6 +22,7 @@ import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 /**
  * defines Web Requests related configuration.
@@ -60,6 +61,15 @@ public class WebConfig {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		pointcut.setExpression("execution(public * com.poc.restfulpoc..*.*(..))");
 		return new DefaultPointcutAdvisor(pointcut, customizableTraceInterceptor());
+	}
+
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+		CommonsRequestLoggingFilter crlf = new CommonsRequestLoggingFilter();
+		crlf.setIncludeClientInfo(true);
+		crlf.setIncludeQueryString(true);
+		crlf.setIncludePayload(true);
+		return crlf;
 	}
 
 }
