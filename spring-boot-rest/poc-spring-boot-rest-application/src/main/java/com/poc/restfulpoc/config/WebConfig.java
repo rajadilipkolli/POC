@@ -69,6 +69,7 @@ public class WebConfig {
 		crlf.setIncludeClientInfo(true);
 		crlf.setIncludeQueryString(true);
 		crlf.setIncludePayload(true);
+		crlf.setIncludeHeaders(true);
 		return crlf;
 	}
 
