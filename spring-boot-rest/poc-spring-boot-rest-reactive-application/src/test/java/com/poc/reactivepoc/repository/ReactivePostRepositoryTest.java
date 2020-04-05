@@ -35,7 +35,7 @@ class ReactivePostRepositoryTest {
 	PostRepository postRepository;
 
 	@Autowired
-	DatabaseClient database;
+	DatabaseClient databaseClient;
 
 	@BeforeEach
 	void setUp() {
@@ -46,7 +46,7 @@ class ReactivePostRepositoryTest {
 				"DROP TABLE IF EXISTS reactive_posts;",
 				"CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, title VARCHAR(100) NOT NULL, content VARCHAR(100) NOT NULL);");
 
-		statements.forEach(it -> this.database.execute(it) //
+		statements.forEach(it -> this.databaseClient.execute(it) //
 				.fetch() //
 				.rowsUpdated() //
 				.as(StepVerifier::create) //

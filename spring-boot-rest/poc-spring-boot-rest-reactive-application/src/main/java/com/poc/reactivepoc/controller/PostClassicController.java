@@ -56,8 +56,8 @@ public class PostClassicController {
 
 	@PostMapping
 	public Publisher<ResponseEntity<ReactivePost>> create(@RequestBody ReactivePost reactivePost) {
-		return this.postService.savePost(reactivePost).map(
-				p -> ResponseEntity.created(URI.create("/posts/" + p.getId())).contentType(this.mediaType).build());
+		return this.postService.savePost(reactivePost).map(persistedPost -> ResponseEntity
+				.created(URI.create("/posts/" + persistedPost.getId())).contentType(this.mediaType).build());
 	}
 
 	@PutMapping("/{id}")

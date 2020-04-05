@@ -30,7 +30,7 @@ class PostsControllerEndpoints extends AbstractBasePostsEndpoints {
 
 	@BeforeAll
 	static void before() {
-		log.info("running non-classic tests");
+		log.info("running classic tests");
 	}
 
 	PostsControllerEndpoints(@Autowired WebTestClient client) {
