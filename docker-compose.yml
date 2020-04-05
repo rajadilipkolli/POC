@@ -1,7 +1,7 @@
 version: "3"
 services:
   #  Create a service named db.
-  database:
+  postgres:
     #   Use the Docker Image postgres. This will pull the newest release.
     image: postgres:latest
     #   Give the container the name postgres. You can changes to something else.
@@ -21,9 +21,17 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db/mongo
+    ports:
+      - "27017:27017"
+
 networks:
   postgres:
     driver: bridge
 
 volumes:
   postgres-data:
+  mongo-data:
