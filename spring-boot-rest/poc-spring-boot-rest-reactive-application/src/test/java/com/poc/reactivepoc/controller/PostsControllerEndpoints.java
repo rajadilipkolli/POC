@@ -13,33 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.reactivepoc;
+package com.poc.reactivepoc.controller;
 
-import com.poc.reactivepoc.entity.ReactivePost;
+import com.poc.reactivepoc.AbstractBasePostsEndpoints;
+import com.poc.reactivepoc.service.PostServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ReactivePOCTest {
-
-	@LocalServerPort
-	private int port;
-
-	private WebTestClient webClient;
+@Slf4j
+@Import({ PostController.class, PostServiceImpl.class })
+class PostsControllerEndpoints extends AbstractBasePostsEndpoints {
 
 	@BeforeAll
-	public void setup() {
-		this.webClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + this.port).build();
+	static void before() {
+		log.info("running non-classic tests");
 	}
 
-	@Test
-	public void willLoadPosts() {
-		this.webClient.get().uri("/posts").exchange().expectStatus().is2xxSuccessful()
-				.expectBodyList(ReactivePost.class);
+	PostsControllerEndpoints(@Autowired WebTestClient client) {
+		super(client);
 	}
 
 }

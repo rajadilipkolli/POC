@@ -52,7 +52,8 @@ public class DataInitializer {
 						.log())
 				.thenMany(this.databaseClient.select().from("reactive_posts").orderBy(Sort.by(Order.desc("id")))
 						.as(ReactivePost.class).fetch().all().log())
-				.subscribe(null, e -> log.error(e.getMessage(), e), () -> log.info("initialization is done..."));
+				.subscribe(post -> log.info("saving {}", post.toString()), e -> log.error(e.getMessage(), e),
+						() -> log.info("initialization is done..."));
 	}
 
 }

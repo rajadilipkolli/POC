@@ -15,7 +15,6 @@
  */
 package com.poc.reactivepoc.repository;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +29,7 @@ import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 
 @DataR2dbcTest
-public class ReactivePostRepositoryTest {
+class ReactivePostRepositoryTest {
 
 	@Autowired
 	PostRepository postRepository;
@@ -39,7 +38,7 @@ public class ReactivePostRepositoryTest {
 	DatabaseClient database;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 
 		Hooks.onOperatorDebug();
 
@@ -56,7 +55,7 @@ public class ReactivePostRepositoryTest {
 	}
 
 	@Test
-	public void executesFindAll() throws IOException {
+	void executesFindAll() {
 
 		ReactivePost dave = new ReactivePost(null, "Dave", "Matthews");
 		ReactivePost carter = new ReactivePost(null, "Carter", "Beauford");
@@ -71,7 +70,7 @@ public class ReactivePostRepositoryTest {
 	}
 
 	@Test
-	public void executesAnnotatedQuery() throws IOException {
+	void executesAnnotatedQuery() {
 
 		ReactivePost dave = new ReactivePost(null, "Dave", "Matthews");
 		ReactivePost carter = new ReactivePost(null, "Carter", "Beauford");

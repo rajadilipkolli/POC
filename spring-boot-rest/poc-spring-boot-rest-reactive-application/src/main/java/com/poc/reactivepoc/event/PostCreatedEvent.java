@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.reactivepoc;
+package com.poc.reactivepoc.event;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.poc.reactivepoc.entity.ReactivePost;
 
-@SpringBootApplication
-@EnableTransactionManagement
-public class ReactivePOC {
+import org.springframework.context.ApplicationEvent;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReactivePOC.class, args);
+public class PostCreatedEvent extends ApplicationEvent {
+
+	public PostCreatedEvent(ReactivePost post) {
+		super(post);
 	}
 
 }

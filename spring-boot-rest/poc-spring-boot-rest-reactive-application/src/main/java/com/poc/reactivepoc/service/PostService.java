@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.reactivepoc;
+package com.poc.reactivepoc.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.poc.reactivepoc.entity.ReactivePost;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-@SpringBootApplication
-@EnableTransactionManagement
-public class ReactivePOC {
+public interface PostService {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReactivePOC.class, args);
-	}
+	Flux<ReactivePost> findAllPosts();
+
+	Mono<ReactivePost> savePost(ReactivePost reactivePost);
+
+	Mono<ReactivePost> findPostById(Integer id);
+
+	Mono<ReactivePost> deletePostById(Integer id);
+
+	Mono<ReactivePost> update(Integer id, ReactivePost reactivePost);
 
 }

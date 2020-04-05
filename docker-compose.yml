@@ -28,6 +28,13 @@ services:
     ports:
       - "27017:27017"
 
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data/db/redis
+    ports:
+      - "6379:6379"
+
 networks:
   postgres:
     driver: bridge
@@ -35,3 +42,4 @@ networks:
 volumes:
   postgres-data:
   mongo-data:
+  redis-data:

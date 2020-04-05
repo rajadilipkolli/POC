@@ -16,12 +16,16 @@
 
 package com.poc.reactivepoc.controller;
 
+import java.net.URI;
+
 import com.poc.reactivepoc.entity.ReactivePost;
-import com.poc.reactivepoc.repository.PostRepository;
+import com.poc.reactivepoc.service.PostService;
 import lombok.RequiredArgsConstructor;
-import reactor.core.publisher.Flux;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,36 +40,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
 
-	private final PostRepository postRepository;
+	private final PostService postService;
+
+	private MediaType mediaType = MediaType.APPLICATION_JSON;
 
 	@GetMapping
-	public Flux<ReactivePost> all() {
-		return this.postRepository.findAll();
-	}
-
-	@PostMapping
-	public Mono<ReactivePost> create(@RequestBody ReactivePost reactivePost) {
-		return this.postRepository.save(reactivePost);
+	public Publisher<ReactivePost> all() {
+		return this.postService.findAllPosts();
 	}
 
 	@GetMapping("/{id}")
-	public Mono<ReactivePost> get(@PathVariable("id") Integer id) {
-		return this.postRepository.findById(id);
+	public Publisher<ReactivePost> get(@PathVariable("id") Integer id) {
+		return this.postService.findPostById(id);
+	}
+
+	@PostMapping
+	public Publisher<ResponseEntity<ReactivePost>> create(@RequestBody ReactivePost reactivePost) {
+		return this.postService.savePost(reactivePost).map(
+				p -> ResponseEntity.created(URI.create("/posts/" + p.getId())).contentType(this.mediaType).build());
 	}
 
 	@PutMapping("/{id}")
-	public Mono<ReactivePost> update(@PathVariable("id") Integer id, @RequestBody ReactivePost reactivePost) {
-		return this.postRepository.findById(id).map(p -> {
-			p.setTitle(reactivePost.getTitle());
-			p.setContent(reactivePost.getContent());
-
-			return p;
-		}).flatMap(this.postRepository::save);
+	public Mono<ResponseEntity<ReactivePost>> update(@PathVariable("id") Integer id,
+			@RequestBody ReactivePost reactivePost) {
+		return Mono.just(reactivePost).flatMap(post -> this.postService.update(id, post))
+				.map(p -> ResponseEntity.ok().contentType(this.mediaType).build());
 	}
 
 	@DeleteMapping("/{id}")
-	public Mono<Void> delete(@PathVariable("id") Integer id) {
-		return this.postRepository.deleteById(id);
+	public Publisher<ReactivePost> delete(@PathVariable("id") Integer id) {
+		return this.postService.deletePostById(id);
 	}
 
 }
