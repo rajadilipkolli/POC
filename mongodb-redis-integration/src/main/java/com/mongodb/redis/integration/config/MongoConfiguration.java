@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.config;
 
 import lombok.RequiredArgsConstructor;
@@ -23,20 +22,17 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
-import org.springframework.data.mongodb.core.mapping.BasicMongoPersistentEntity;
+import org.springframework.data.mongodb.core.index.IndexOperations;
+import org.springframework.data.mongodb.core.index.IndexResolver;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 @Slf4j
 @RequiredArgsConstructor
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class MongoConfiguration {
 
 	private final MongoTemplate mongoTemplate;
-
-	private final MongoConverter mongoConverter;
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void initIndicesAfterStartup() {
@@ -44,22 +40,18 @@ public class MongoConfiguration {
 		log.info("Mongo InitIndicesAfterStartup init");
 		var init = System.currentTimeMillis();
 
-		var mappingContext = this.mongoConverter.getMappingContext();
+		var mappingContext = this.mongoTemplate.getConverter().getMappingContext();
 
 		if (mappingContext instanceof MongoMappingContext) {
-			MongoMappingContext mongoMappingContext = (MongoMappingContext) mappingContext;
-			for (BasicMongoPersistentEntity<?> persistentEntity : mongoMappingContext.getPersistentEntities()) {
-				var clazz = persistentEntity.getType();
-				if (clazz.isAnnotationPresent(Document.class)) {
-					var resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
-
-					var indexOps = this.mongoTemplate.indexOps(clazz);
-					resolver.resolveIndexFor(clazz).forEach(indexOps::ensureIndex);
-				}
-			}
+			var resolver = IndexResolver.create(mappingContext);
+			mappingContext.getPersistentEntities().stream().filter(clazz -> clazz.isAnnotationPresent(Document.class))
+					.forEach(o -> {
+						IndexOperations indexOps = this.mongoTemplate.indexOps(o.getType());
+						resolver.resolveIndexFor(o.getType()).forEach(indexOps::ensureIndex);
+					});
 		}
 
-		log.info("Mongo InitIndicesAfterStartup take: {}", (System.currentTimeMillis() - init));
+		log.info("Mongo InitIndicesAfterStartup took: {}", (System.currentTimeMillis() - init));
 	}
 
 }

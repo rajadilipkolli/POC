@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration;
 
 import java.util.Collections;
@@ -50,9 +49,6 @@ public class WebFluxIntegrationTests {
 	private WebTestClient webTestClient;
 
 	@Autowired
-	private ReactiveBookRepository bookRepository;
-
-	@Autowired
 	private ReactiveMongoOperations operations;
 
 	@Autowired
@@ -64,7 +60,7 @@ public class WebFluxIntegrationTests {
 			this.operations.createCollection(Book.class,
 					CollectionOptions.empty().size(1024 * 1024).maxDocuments(100).capped()).then().block();
 		}
-		this.bookRepository.save(
+		this.bookReactiveRepository.save(
 				Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1").build())
 				.then().block();
 	}
@@ -78,6 +74,7 @@ public class WebFluxIntegrationTests {
 	void getBook_WithName_ReturnsBook() {
 		Book book = this.webTestClient.get().uri("/books/title/{title}", "MongoDbCookBook").exchange().expectStatus()
 				.isOk().expectBody(Book.class).returnResult().getResponseBody();
+		assertThat(book).isNotNull();
 		assertThat(book.getTitle()).isEqualTo("MongoDbCookBook");
 		assertThat(book.getAuthor()).isEqualTo("Raja");
 	}
@@ -87,9 +84,10 @@ public class WebFluxIntegrationTests {
 		final Book book = Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build();
 
 		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$.bookId").isNotEmpty()
-				.jsonPath("$.text").isEqualTo("This is a Test Book").jsonPath("$.title").isEqualTo(TITLE);
+				.accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(book)).exchange().expectStatus()
+				.isCreated().expectHeader().contentType(MediaType.APPLICATION_JSON).expectHeader().exists("location")
+				.expectBody().jsonPath("$.bookId").isNotEmpty().jsonPath("$.text").isEqualTo("This is a Test Book")
+				.jsonPath("$.title").isEqualTo(TITLE);
 	}
 
 	@Test
@@ -147,7 +145,7 @@ public class WebFluxIntegrationTests {
 				.save(Book.builder().author("Raja").text("This is a Test Book").title(TITLE).build()).block();
 
 		this.webTestClient.delete().uri("/books/{id}", Collections.singletonMap("id", book.getBookId())).exchange()
-				.expectStatus().isOk();
+				.expectStatus().isAccepted();
 
 		this.webTestClient.get().uri("/books/{id}", Collections.singletonMap("id", book.getBookId())).exchange()
 				.expectStatus().isNotFound();

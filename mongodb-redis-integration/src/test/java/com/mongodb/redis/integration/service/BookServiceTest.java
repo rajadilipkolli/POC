@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.service;
 
 import java.util.Optional;
@@ -25,12 +24,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -51,8 +50,7 @@ class BookServiceTest {
 	void getBookDetailsReturnBookInfo() throws BookNotFoundException {
 		Book builderBook = Book.builder().title("JUNIT_TITLE").author("JUNIT_AUTHOR").bookId("JUNIT").text("JUNIT_TEXT")
 				.version(1L).build();
-		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("JUNIT_TITLE")))
-				.willReturn(Optional.of(builderBook));
+		given(this.bookRepository.findBookByTitle(eq("JUNIT_TITLE"))).willReturn(Optional.of(builderBook));
 
 		Book book = this.bookService.findBookByTitle("JUNIT_TITLE");
 
@@ -63,7 +61,7 @@ class BookServiceTest {
 
 	@Test
 	void getBookDetailsWhenBookNotFound() {
-		given(this.bookRepository.findBookByTitle(ArgumentMatchers.eq("prius"))).willReturn(Optional.empty());
+		given(this.bookRepository.findBookByTitle(eq("prius"))).willReturn(Optional.empty());
 		try {
 			this.bookService.findBookByTitle("prius");
 		}

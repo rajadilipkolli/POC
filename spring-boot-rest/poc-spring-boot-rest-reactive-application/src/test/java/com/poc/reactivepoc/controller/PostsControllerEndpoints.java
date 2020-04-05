@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Slf4j
-@Import({ PostController.class, PostServiceImpl.class })
+@Import({ PostClassicController.class, PostServiceImpl.class })
 class PostsControllerEndpoints extends AbstractBasePostsEndpoints {
 
 	@BeforeAll

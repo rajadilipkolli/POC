@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.handler;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import com.mongodb.redis.integration.controller.BookController;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -77,7 +75,6 @@ class BookHandlerTest {
 	}
 
 	@Test
-	@DisplayName("Disabled temporarily to verify rest of the build")
 	void test02GetBook() {
 		Book response = this.webTestClient.get().uri("/api/book/{id}", 1).accept(MediaType.APPLICATION_JSON).exchange()
 				.expectBody(Book.class).returnResult().getResponseBody();
@@ -92,13 +89,14 @@ class BookHandlerTest {
 		final Book book = Book.builder().author("Raja").text("This is a Test Book").title("JUNIT_TITLE").build();
 
 		this.webTestClient.post().uri("/api/book/post").contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk();
+				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus()
+				.isCreated();
 	}
 
 	@Test
 	void test04PutBook() {
 		Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book1").author("Raja").bookId("1")
-				.version(0L).build();
+				.build();
 
 		this.webTestClient.put().uri("/api/book/put/{id}", 1).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk();
@@ -107,7 +105,7 @@ class BookHandlerTest {
 	@Test
 	void test05DeleteBook() {
 		this.webTestClient.delete().uri("/api/book/delete/{id}", 1).exchange().expectStatus().isAccepted()
-				.expectBody(String.class).isEqualTo("Delete Successfully!");
+				.expectBody(Book.class);
 	}
 
 }

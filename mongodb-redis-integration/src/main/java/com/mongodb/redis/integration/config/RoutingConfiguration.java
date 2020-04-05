@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.config;
 
 import com.mongodb.redis.integration.handler.BookHandler;
@@ -37,7 +36,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  * @author Raja Kolli
  * @since 0.2.1
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class RoutingConfiguration {
 
 	/**

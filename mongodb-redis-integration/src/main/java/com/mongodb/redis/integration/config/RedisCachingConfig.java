@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.config;
 
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -28,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Raja Kolli
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching
 class RedisCachingConfig extends CachingConfigurerSupport {
 

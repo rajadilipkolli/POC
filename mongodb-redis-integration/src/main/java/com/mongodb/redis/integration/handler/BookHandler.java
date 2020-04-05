@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.handler;
 
+import java.net.URI;
+
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.repository.ReactiveBookRepository;
+import com.mongodb.redis.integration.reactiveservice.ReactiveBookService;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -38,91 +40,65 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @RequiredArgsConstructor
 public class BookHandler {
 
-	private final ReactiveBookRepository bookReactiveRepository;
+	private final ReactiveBookService reactiveBookService;
 
-	/**
-	 * GET ALL Books.
-	 * @return a {@link reactor.core.publisher.Mono} object.
-	 */
 	public Mono<ServerResponse> getAll() {
-		// fetch all books from repository
-		Flux<Book> books = this.bookReactiveRepository.findAll();
-
-		// build response
-		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(books, Book.class);
+		return defaultReadResponse(this.reactiveBookService.findAllBooks());
 	}
 
-	/**
-	 * GET a Book by ID.
-	 * @param request a
-	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
-	 * @return a {@link reactor.core.publisher.Mono} object.
-	 */
 	public Mono<ServerResponse> getBook(ServerRequest request) {
-		// parse path-variable
-		String bookId = request.pathVariable("id");
-
 		// build notFound response
 		Mono<ServerResponse> notFound = ServerResponse.notFound().build();
 
 		// get book from repository
-		Mono<Book> bookMono = this.bookReactiveRepository.findById(bookId);
+		Mono<Book> bookMono = this.reactiveBookService.getBookById(id(request));
 
 		// build response
 		return bookMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
 				.body(BodyInserters.fromValue(book))).switchIfEmpty(notFound);
 	}
 
-	/**
-	 * POST a Book.
-	 * @param request a
-	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
-	 * @return a {@link reactor.core.publisher.Mono} object.
-	 */
 	public Mono<ServerResponse> postBook(ServerRequest request) {
-		Mono<Book> monoBook = request.bodyToMono(Book.class);
-		return ServerResponse.ok().build(monoBook.doOnNext(this.bookReactiveRepository::save).then());
+		Flux<Book> flux = request.bodyToFlux(Book.class).flatMap(this.reactiveBookService::createBook);
+		return defaultWriteResponse(flux);
 	}
 
-	/**
-	 * PUT a Book.
-	 * @param request a
-	 * {@link org.springframework.web.reactive.function.server.ServerRequest} object.
-	 * @return a {@link reactor.core.publisher.Mono} object.
-	 */
 	public Mono<ServerResponse> putBook(ServerRequest request) {
-		// parse id from path-variable
-		String bookId = request.pathVariable("id");
 
-		// get book data from request object
-		Mono<Book> monoBook = request.bodyToMono(Book.class);
-		monoBook.doOnNext((Book b) -> b.setBookId(bookId)).then();
-
-		// get book from repository
-		Mono<Book> responseMono = monoBook.doOnNext(this.bookReactiveRepository::save);
-
-		// build response
-		return responseMono.flatMap((Book book) -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-				.body(BodyInserters.fromValue(book)));
+		Flux<Book> id = request.bodyToFlux(Book.class)
+				.flatMap(p -> this.reactiveBookService.updateBook(id(request), p));
+		return defaultReadResponse(id);
 	}
 
-	/**
-	 * DELETE a Book.
-	 * @param request a ServerRequest object
-	 * @return a {@link reactor.core.publisher.Mono} object.
-	 */
 	public Mono<ServerResponse> deleteBook(ServerRequest request) {
+		return ServerResponse //
+				.accepted() //
+				.contentType(MediaType.APPLICATION_JSON) //
+				.body(this.reactiveBookService.deleteBook(id(request)), Book.class) //
+				.switchIfEmpty(ServerResponse.notFound().build());
+	}
+
+	private static Mono<ServerResponse> defaultWriteResponse(Publisher<Book> books) {
+		return Mono //
+				.from(books) //
+				.flatMap(book -> ServerResponse //
+						.created(URI.create("/api/book/" + book.getBookId())) //
+						.contentType(MediaType.APPLICATION_JSON) //
+						.build() //
+				); //
+	}
+
+	private Mono<ServerResponse> defaultReadResponse(Publisher<Book> books) {
+		return ServerResponse //
+				.ok() //
+				.contentType(MediaType.APPLICATION_JSON) //
+				.body(books, Book.class) //
+				.switchIfEmpty(ServerResponse.notFound().build()); //
+	}
+
+	private static String id(ServerRequest serverRequest) {
 		// parse id from path-variable
-		String bookId = request.pathVariable("id");
-
-		this.bookReactiveRepository.deleteById(bookId);
-		// get book from repository
-		Mono<String> responseMono = Mono.just("Delete Successfully!");
-
-		// build response
-		return responseMono.flatMap((String strMono) -> ServerResponse.accepted().contentType(MediaType.TEXT_PLAIN)
-				.body(BodyInserters.fromValue(strMono)));
-
+		return serverRequest.pathVariable("id");
 	}
 
 }

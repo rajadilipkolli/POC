@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mongodb.redis.integration.reactiveservice;
+package com.mongodb.redis.integration.reactiveevent;
 
 import com.mongodb.redis.integration.document.Book;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
-/**
- * MongoDB Redis Integration Book Service interface.
- *
- * @author Raja Kolli
- *
- */
-public interface ReactiveBookService {
+import org.springframework.context.ApplicationEvent;
 
-	Mono<Book> findByTitle(String title);
+public class BookCreatedEvent extends ApplicationEvent {
 
-	Mono<Book> updateBook(String bookId, Book book);
-
-	Flux<Book> findAllBooks();
-
-	Mono<Book> getBookById(String bookId);
-
-	Mono<Book> createBook(Book book);
-
-	Mono<Book> deleteBook(String bookId);
+	public BookCreatedEvent(Book book) {
+		super(book);
+	}
 
 }

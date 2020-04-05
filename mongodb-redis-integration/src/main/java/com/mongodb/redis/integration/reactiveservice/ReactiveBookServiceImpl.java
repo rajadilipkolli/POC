@@ -17,13 +17,13 @@
 package com.mongodb.redis.integration.reactiveservice;
 
 import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,18 +38,24 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 
 	private final ReactiveBookRepository reactiveRepository;
 
+	private final ApplicationEventPublisher publisher;
+
 	@Override
 	public Mono<Book> findByTitle(String title) {
 		return this.reactiveRepository.findByTitle(title);
 	}
 
 	@Override
-	public Mono<ResponseEntity<Book>> updateBook(String bookId, Book book) {
-		return this.reactiveRepository.findById(bookId).flatMap((Book existingBook) -> {
-			existingBook.setText(book.getText());
-			return this.reactiveRepository.save(existingBook);
-		}).map((Book updatedBook) -> new ResponseEntity<>(updatedBook, HttpStatus.OK))
-				.defaultIfEmpty(ResponseEntity.notFound().build());
+	public Mono<Book> updateBook(String bookId, Book requestedBook) {
+		return this.reactiveRepository //
+				.findById(bookId) //
+				.map(persistedBook -> {
+					persistedBook.setAuthor(requestedBook.getAuthor());
+					persistedBook.setText(requestedBook.getText());
+					persistedBook.setTitle(requestedBook.getTitle());
+					return persistedBook;
+				}) //
+				.flatMap(this.reactiveRepository::save); //
 	}
 
 	@Override
@@ -58,22 +64,21 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Book>> getBookById(String bookId) {
-		return this.reactiveRepository.findById(bookId).map(ResponseEntity::ok)
-				.defaultIfEmpty(ResponseEntity.notFound().build());
+	public Mono<Book> getBookById(String bookId) {
+		return this.reactiveRepository.findById(bookId);
 	}
 
 	@Override
 	public Mono<Book> createBook(Book book) {
-		return this.reactiveRepository.save(book);
+		return this.reactiveRepository.save(book) //
+				.doOnSuccess(persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook)));
 	}
 
 	@Override
-	public Mono<ResponseEntity<Void>> deleteBook(String bookId) {
-		return this.reactiveRepository.findById(bookId)
-				.flatMap((Book existingBook) -> this.reactiveRepository.delete(existingBook)
-						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
-				.defaultIfEmpty(ResponseEntity.notFound().build());
+	public Mono<Book> deleteBook(String bookId) {
+		return this.reactiveRepository //
+				.findById(bookId) //
+				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()).thenReturn(book)); //
 	}
 
 }
