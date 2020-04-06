@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 import com.mongodb.redis.integration.config.BookCreatedEventPublisher;
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
+import com.mongodb.redis.integration.event.BookCreatedEvent;
 import com.mongodb.redis.integration.service.ReactiveBookService;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;

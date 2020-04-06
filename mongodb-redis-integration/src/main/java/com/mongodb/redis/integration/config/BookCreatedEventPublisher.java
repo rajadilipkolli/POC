@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
-import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
+import com.mongodb.redis.integration.event.BookCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.FluxSink;
 
