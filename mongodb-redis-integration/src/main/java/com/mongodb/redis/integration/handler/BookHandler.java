@@ -18,7 +18,7 @@ package com.mongodb.redis.integration.handler;
 import java.net.URI;
 
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.reactiveservice.ReactiveBookService;
+import com.mongodb.redis.integration.service.ReactiveBookService;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;

@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import com.mongodb.redis.integration.config.BookCreatedEventPublisher;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
-import com.mongodb.redis.integration.reactiveservice.ReactiveBookService;
+import com.mongodb.redis.integration.service.ReactiveBookService;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -99,10 +99,10 @@ public class ReactiveBookController {
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}
 
-	// Books are Sent to the client as Server Sent Events
+	/* Books is being Sent to the client as Server Sent Events */
 	@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Book> streamAllBooks() {
-		// this.events.map(EventObject::getSource);
+		// return this.events.map(bce -> (Book)bce.getSource());
 		return this.reactiveBookService.findAllBooks();
 	}
 

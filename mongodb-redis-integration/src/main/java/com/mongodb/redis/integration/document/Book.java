@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.document;
 
 import java.io.Serializable;
@@ -64,12 +63,5 @@ public class Book implements Serializable {
 
 	@Version
 	private Long version;
-
-	public Book(String bookId, String title, String author, String text) {
-		this.bookId = bookId;
-		this.title = title;
-		this.author = author;
-		this.text = text;
-	}
 
 }

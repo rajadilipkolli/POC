@@ -18,7 +18,6 @@ package com.poc.reactivepoc.service;
 import com.poc.reactivepoc.dataload.DataInitializer;
 import com.poc.reactivepoc.entity.ReactivePost;
 import com.poc.reactivepoc.repository.PostRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -29,7 +28,6 @@ import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
 
-@Slf4j
 @DataR2dbcTest
 @Import({ PostServiceImpl.class, DataInitializer.class })
 class ReactivePostServiceTest {

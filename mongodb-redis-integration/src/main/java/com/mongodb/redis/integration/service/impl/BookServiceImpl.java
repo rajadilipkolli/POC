@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.mongodb.redis.integration.service;
+package com.mongodb.redis.integration.service.impl;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.BookRepository;
+import com.mongodb.redis.integration.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

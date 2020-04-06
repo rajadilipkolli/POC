@@ -17,10 +17,12 @@ package com.mongodb.redis.integration.config;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.FluxSink;
 
 import org.springframework.context.ApplicationListener;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 @Component
+@Slf4j
 public class BookCreatedEventPublisher
 		implements ApplicationListener<BookCreatedEvent>, Consumer<FluxSink<BookCreatedEvent>> {
 
@@ -35,8 +38,8 @@ public class BookCreatedEventPublisher
 
 	private final BlockingQueue<BookCreatedEvent> queue = new LinkedBlockingQueue<>(); // <3>
 
-	BookCreatedEventPublisher(Executor executor) {
-		this.executor = executor;
+	BookCreatedEventPublisher() {
+		this.executor = Executors.newFixedThreadPool(20);
 	}
 
 	// <4>
@@ -54,6 +57,7 @@ public class BookCreatedEventPublisher
 					sink.next(event); // <6>
 				}
 				catch (InterruptedException ex) {
+					log.error("Interrupted Exception", ex);
 					ReflectionUtils.rethrowRuntimeException(ex);
 				}
 			}

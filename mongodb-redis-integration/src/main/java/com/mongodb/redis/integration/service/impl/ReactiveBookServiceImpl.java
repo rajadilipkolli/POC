@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.mongodb.redis.integration.reactiveservice;
+package com.mongodb.redis.integration.service.impl;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.reactiveevent.BookCreatedEvent;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
+import com.mongodb.redis.integration.service.ReactiveBookService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ReactiveBookServiceImpl implements ReactiveBookService {
 
@@ -42,13 +45,14 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 
 	@Override
 	public Mono<Book> findByTitle(String title) {
-		return this.reactiveRepository.findByTitle(title);
+		return this.reactiveRepository.findByTitle(title).log();
 	}
 
 	@Override
 	public Mono<Book> updateBook(String bookId, Book requestedBook) {
 		return this.reactiveRepository //
 				.findById(bookId) //
+				.log() //
 				.map(persistedBook -> {
 					persistedBook.setAuthor(requestedBook.getAuthor());
 					persistedBook.setText(requestedBook.getText());
@@ -60,25 +64,26 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 
 	@Override
 	public Flux<Book> findAllBooks() {
-		return this.reactiveRepository.findAll();
+		return this.reactiveRepository.findAll().log().cache();
 	}
 
 	@Override
 	public Mono<Book> getBookById(String bookId) {
-		return this.reactiveRepository.findById(bookId);
+		return this.reactiveRepository.findById(bookId).log();
 	}
 
 	@Override
 	public Mono<Book> createBook(Book book) {
 		return this.reactiveRepository.save(book) //
-				.doOnSuccess(persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook)));
+				.log().doOnSuccess(persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook)))
+				.doOnError(error -> log.error("The following error happened on processFoo method!", error));
 	}
 
 	@Override
 	public Mono<Book> deleteBook(String bookId) {
 		return this.reactiveRepository //
 				.findById(bookId) //
-				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()).thenReturn(book)); //
+				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()).log().thenReturn(book)); //
 	}
 
 }

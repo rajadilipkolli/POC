@@ -20,6 +20,7 @@ import java.util.Optional;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.BookRepository;
+import com.mongodb.redis.integration.service.impl.BookServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

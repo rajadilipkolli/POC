@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mongodb.redis.integration.reactiveservice;
+package com.mongodb.redis.integration.service;
 
 import com.mongodb.redis.integration.document.Book;
 import reactor.core.publisher.Flux;

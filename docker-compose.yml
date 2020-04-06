@@ -1,9 +1,9 @@
 version: "3"
 services:
-  #  Create a service named db.
+  #  Create a service named postgres.
   postgres:
     #   Use the Docker Image postgres. This will pull the newest release.
-    image: postgres:latest
+    image: postgres
     #   Give the container the name postgres. You can changes to something else.
     container_name: postgres
     #   Setup the username, password, and database name. You can changes these values.

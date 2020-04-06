@@ -17,7 +17,7 @@ package com.mongodb.redis.integration.controller;
 
 import com.mongodb.redis.integration.config.BookCreatedEventPublisher;
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.reactiveservice.ReactiveBookService;
+import com.mongodb.redis.integration.service.ReactiveBookService;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
