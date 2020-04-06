@@ -87,11 +87,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public long count() {
-		return this.bookRepository.count();
-	}
-
-	@Override
+	@CacheEvict(allEntries = true, value = "book")
 	public void deleteAll() {
 		this.bookRepository.deleteAll();
 	}

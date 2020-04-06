@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.service.impl;
 
 import com.mongodb.redis.integration.document.Book;
@@ -26,6 +25,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,9 +39,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReactiveBookServiceImpl implements ReactiveBookService {
 
+	/**
+	 * KeyName of the region where cache stored.
+	 */
+	public static final String CACHEABLES_REGION_KEY = "reactivebooks";
+
 	private final ReactiveBookRepository reactiveRepository;
 
 	private final ApplicationEventPublisher publisher;
+
+	private final ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate;
 
 	@Override
 	public Mono<Book> findByTitle(String title) {
@@ -59,23 +66,34 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 					persistedBook.setTitle(requestedBook.getTitle());
 					return persistedBook;
 				}) //
-				.flatMap(this.reactiveRepository::save); //
+				.flatMap(this.reactiveRepository::save).flatMap(book -> this.reactiveJsonBookRedisTemplate.opsForHash()
+						.put(CACHEABLES_REGION_KEY, book.getBookId(), book).log("Pushing to Cache").map(o -> book));
 	}
 
 	@Override
 	public Flux<Book> findAllBooks() {
-		return this.reactiveRepository.findAll().log().cache();
+		return this.reactiveJsonBookRedisTemplate.<String, Book>opsForHash().values(CACHEABLES_REGION_KEY)
+				.switchIfEmpty(this.reactiveRepository.findAll().log("Fetching from Database")
+						.flatMap(books -> this.reactiveJsonBookRedisTemplate.opsForHash()
+								.put(CACHEABLES_REGION_KEY, books.getBookId(), books).log("Pushing to Cache")
+								.map(o -> books)));
 	}
 
 	@Override
 	public Mono<Book> getBookById(String bookId) {
-		return this.reactiveRepository.findById(bookId).log();
+		return this.reactiveJsonBookRedisTemplate.<String, Book>opsForHash().get(CACHEABLES_REGION_KEY, bookId)
+				.log("Fetching from cache")
+				.switchIfEmpty(this.reactiveRepository.findById(bookId).log("Fetching from Database")
+						.flatMap(book -> this.reactiveJsonBookRedisTemplate.opsForHash()
+								.put(CACHEABLES_REGION_KEY, bookId, book).log("Pushing to Cache").map(o -> book)));
 	}
 
 	@Override
-	public Mono<Book> createBook(Book book) {
-		return this.reactiveRepository.save(book) //
-				.log().doOnSuccess(persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook)))
+	public Mono<Book> createBook(Book bookToPersist) {
+		return this.reactiveRepository.save(bookToPersist).log("Saving to DB")
+				.flatMap(book -> this.reactiveJsonBookRedisTemplate.opsForHash()
+						.put(CACHEABLES_REGION_KEY, book.getBookId(), book).log("Pushing to Cache").map(o -> book))
+				.doOnSuccess(persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook)))
 				.doOnError(error -> log.error("The following error happened on processFoo method!", error));
 	}
 
@@ -83,7 +101,14 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	public Mono<Book> deleteBook(String bookId) {
 		return this.reactiveRepository //
 				.findById(bookId) //
-				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()).log().thenReturn(book)); //
+				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()).log().thenReturn(book))
+				.flatMap(returnedBook -> this.reactiveJsonBookRedisTemplate.opsForHash()
+						.remove(CACHEABLES_REGION_KEY, bookId).log("Deleting From Cache").map(o -> returnedBook));
+	}
+
+	@Override
+	public Mono<Boolean> deleteAll() {
+		return this.reactiveJsonBookRedisTemplate.opsForHash().delete(CACHEABLES_REGION_KEY).log("Deleting All Cache");
 	}
 
 }

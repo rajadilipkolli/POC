@@ -51,12 +51,10 @@ class BookHandlerTest {
 
 	@BeforeAll
 	void init() {
-		if (this.controller.count() == 0) {
-			this.controller.deleteCache();
-			Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1")
-					.build();
-			this.controller.saveBook(book);
-		}
+		this.controller.deleteAll();
+		Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1")
+				.build();
+		this.controller.saveBook(book);
 	}
 
 	@AfterAll

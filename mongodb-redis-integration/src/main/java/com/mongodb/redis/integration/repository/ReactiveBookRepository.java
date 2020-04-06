@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.mongodb.redis.integration.repository;
 
 import com.mongodb.redis.integration.document.Book;

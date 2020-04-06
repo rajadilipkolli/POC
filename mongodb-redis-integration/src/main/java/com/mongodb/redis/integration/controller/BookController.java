@@ -88,10 +88,6 @@ public class BookController {
 		log.error("Entering and leaving BookController : bookNotFoundHandler ", ex);
 	}
 
-	public long count() {
-		return this.bookService.count();
-	}
-
 	public void deleteAll() {
 		this.bookService.deleteAll();
 	}

@@ -99,7 +99,15 @@ public class ReactiveBookController {
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}
 
-	/* Books is being Sent to the client as Server Sent Events */
+	@DeleteMapping
+	public Publisher<Boolean> deleteCache() {
+		return this.reactiveBookService.deleteAll();
+	}
+
+	/**
+	 * Created Books sent as stream to the client as Server Sent Events.
+	 * @return books Events.
+	 */
 	@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Book> streamAllBooks() {
 		// return this.events.map(bce -> (Book)bce.getSource());

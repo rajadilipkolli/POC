@@ -37,8 +37,6 @@ public interface BookService {
 
 	String deleteAllCache();
 
-	long count();
-
 	void deleteAll();
 
 }

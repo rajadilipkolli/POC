@@ -39,4 +39,6 @@ public interface ReactiveBookService {
 
 	Mono<Book> deleteBook(String bookId);
 
+	Mono<Boolean> deleteAll();
+
 }

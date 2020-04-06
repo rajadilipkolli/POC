@@ -33,10 +33,14 @@ services:
     volumes:
       - redis-data:/data/db/redis
     ports:
-      - "6379:6379"
+      - 6379:6379
+    networks:
+      - backing-services
 
 networks:
   postgres:
+    driver: bridge
+  backing-services:
     driver: bridge
 
 volumes:

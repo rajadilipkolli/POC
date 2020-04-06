@@ -152,6 +152,15 @@ public class WebFluxIntegrationTests {
 	}
 
 	@Test
+	void deleteCache() {
+		byte[] response = this.webTestClient.delete().uri("/books/").exchange().expectStatus().isOk().expectBody()
+				.returnResult().getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(new String(response)).isEqualTo("true");
+	}
+
+	@Test
 	@DisplayName("Test case for EventStream Value")
 	void testTextEventStreamValue() {
 		this.webTestClient.get().uri("/books/stream").exchange().expectStatus().is2xxSuccessful().expectHeader()
