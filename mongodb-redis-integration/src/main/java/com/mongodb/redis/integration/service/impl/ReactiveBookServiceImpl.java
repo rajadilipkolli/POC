@@ -70,7 +70,7 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	public Flux<Book> findAllBooks() {
 		return this.reactiveJsonBookRedisTemplate.<String, Book>opsForHash().values(CACHEABLES_REGION_KEY) //
 				.log("Fetching from cache") //
-				.switchIfEmpty( //
+				.switchIfEmpty(//
 						this.reactiveRepository.findAll() //
 								.log("Fetching from Database") //
 								.flatMap(this::putToCache) //
@@ -81,7 +81,7 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	public Mono<Book> getBookById(String bookId) {
 		return this.reactiveJsonBookRedisTemplate.<String, Book>opsForHash().get(CACHEABLES_REGION_KEY, bookId) //
 				.log("Fetching from cache") //
-				.switchIfEmpty( //
+				.switchIfEmpty(//
 						this.reactiveRepository.findById(bookId) //
 								.log("Fetching from Database") //
 								.flatMap(this::putToCache) //
@@ -90,6 +90,8 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 
 	@Override
 	public Mono<Book> createBook(Book bookToPersist) {
+		Consumer<Book> publishEventConsumer = persistedBook -> this.publisher
+				.publishEvent(new BookCreatedEvent(persistedBook));
 		return this.reactiveRepository.save(bookToPersist) //
 				.log("Saving to DB") //
 				.flatMap(this::putToCache) //
@@ -128,8 +130,5 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 			return persistedBook;
 		};
 	}
-
-	private Consumer<Book> publishEventConsumer = persistedBook -> publisher
-			.publishEvent(new BookCreatedEvent(persistedBook));
 
 }
