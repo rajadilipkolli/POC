@@ -1,11 +1,15 @@
-<small *ngIf='invalidLogin'>{{errorMessage}}</small>
+<h1> Login !! </h1>
 
-<div>
-    <div> User Name : <input type="text" name="username" [(ngModel)]="userName"> </div>
-    <div>Password : <input type="password" name="password" [(ngModel)]="passWord"></div>
+<div class="container">
+    <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
 
-    <!-- Interpolation User Name : <input type="text" name="username" value="{{userName}}"> -->
-    <!-- Event Binding -->
-    <div> <button (click)=handleLogin()> Login </button></div>
+    <div>
+        <div> User Name : <input type="text" name="username" [(ngModel)]="userName"> </div>
+        <div>Password : <input type="password" name="password" [(ngModel)]="passWord"></div>
 
+        <!-- Interpolation User Name : <input type="text" name="username" value="{{userName}}"> -->
+        <!-- Event Binding -->
+        <div> <button (click)=handleLogin() class="btn btn-success"> Login </button></div>
+
+    </div>
 </div>

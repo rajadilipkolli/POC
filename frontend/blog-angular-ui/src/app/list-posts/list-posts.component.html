@@ -1,19 +1,22 @@
-<table border="1">
-    <caption>My Posts</caption>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>content</th>
-            <th>createdOn</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let post of posts">
-            <td>{{post.id}}</td>
-            <td>{{post.title | uppercase}}</td>
-            <td>{{post.content}}</td>
-            <td>{{post.createdOn | date}}</td>
-        </tr>
-    </tbody>
-</table>
+<h1> My Posts</h1>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Post Id</th>
+                <th>title</th>
+                <th>content</th>
+                <th>createdOn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts">
+                <td>{{post.id}}</td>
+                <td>{{post.title | uppercase}}</td>
+                <td>{{post.content}}</td>
+                <td>{{post.createdOn | date}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
