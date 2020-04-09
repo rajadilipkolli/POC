@@ -103,11 +103,11 @@ public class ReactiveBookServiceImpl implements ReactiveBookService {
 	public Mono<Book> deleteBook(String bookId) {
 		return this.reactiveRepository.findById(bookId) //
 				.flatMap(book -> this.reactiveRepository.deleteById(book.getBookId()) //
-						.log("Deleting from Database") //
+						.log("Deleting from Database").thenReturn(book) //
 						.flatMap(returnedBook -> this.reactiveJsonBookRedisTemplate.opsForHash()
 								.remove(CACHEABLES_REGION_KEY, bookId) //
 								.log("Deleting From Cache") //
-								.thenReturn(book) //
+								.thenReturn(returnedBook) //
 						) //
 				);
 	}
