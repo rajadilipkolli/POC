@@ -9,7 +9,7 @@ import { RouteGaurdService } from './service/route-gaurd.service';
 
 // welcome
 const routes: Routes = [
-  { path: '', component: LoginComponent }, //canActivate //routeGaurdService
+  { path: '', component: LoginComponent }, // canActivate // routeGaurdService
   { path: 'welcome/:name', component: WelcomeComponent, canActivate: [RouteGaurdService] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate: [RouteGaurdService] },
