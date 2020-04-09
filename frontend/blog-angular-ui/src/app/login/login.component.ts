@@ -8,27 +8,25 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  userName = 'username'
-  passWord = ''
-  errorMessage = 'Invalid Credentials'
-  invalidLogin = false
+  userName = 'username';
+  passWord = '';
+  errorMessage = 'Invalid Credentials';
+  invalidLogin = false;
 
-  //Router
-  //Dependency Injection
-
+  // Router Dependency Injection
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   handleLogin() {
-    console.log("UserName : ", this.userName);
+    console.log('UserName : ', this.userName);
     if (this.userName === 'raja' && this.passWord === 'dummy') {
-      //Redirect to Welcome Page
-      this.router.navigate(['welcome', this.userName])
-      this.invalidLogin = false
+      // Redirect to Welcome Page
+      this.router.navigate(['welcome', this.userName]);
+      this.invalidLogin = false;
     } else {
-      this.invalidLogin = true
+      this.invalidLogin = true;
     }
   }
 

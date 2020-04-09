@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+const newLocal = 'name';
+
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -8,13 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
 
-  name: string = ''
+  name = '';
 
-  //inject ActivatedRoute
+  // inject ActivatedRoute
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.name = this.route.snapshot.params['name']
+    this.name = this.route.snapshot.params[newLocal];
   }
 
 }
