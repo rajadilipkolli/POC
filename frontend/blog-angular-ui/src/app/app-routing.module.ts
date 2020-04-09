@@ -5,14 +5,15 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ErrorComponent } from './error/error.component';
 import { ListPostsComponent } from './list-posts/list-posts.component';
 import { LogoutComponent } from './logout/logout.component';
+import { RouteGaurdService } from './service/route-gaurd.service';
 
 // welcome
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'welcome/:name', component: WelcomeComponent },
+  { path: '', component: LoginComponent }, //canActivate //routeGaurdService
+  { path: 'welcome/:name', component: WelcomeComponent, canActivate: [RouteGaurdService] },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'posts', component: ListPostsComponent },
+  { path: 'logout', component: LogoutComponent, canActivate: [RouteGaurdService] },
+  { path: 'posts', component: ListPostsComponent, canActivate: [RouteGaurdService] },
   { path: '**', component: ErrorComponent }
 ];
 
