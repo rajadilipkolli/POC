@@ -36,6 +36,18 @@ services:
       - 6379:6379
     networks:
       - backing-services
+    
+  rabbitmq:
+    container_name: rabbitmq
+    image: 'rabbitmq:management'
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/data/db/rabbitmq
 
 networks:
   postgres:
@@ -47,3 +59,4 @@ volumes:
   postgres-data:
   mongo-data:
   redis-data:
+  rabbitmq-data:
