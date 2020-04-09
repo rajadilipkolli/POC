@@ -1,0 +1,17 @@
+<table border="1">
+    <caption>My Posts</caption>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>content</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let post of posts">
+            <td>{{post.id}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.content}}</td>
+        </tr>
+    </tbody>
+</table>
