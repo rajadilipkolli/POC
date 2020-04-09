@@ -5,13 +5,15 @@
             <th>id</th>
             <th>title</th>
             <th>content</th>
+            <th>createdOn</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let post of posts">
             <td>{{post.id}}</td>
-            <td>{{post.title}}</td>
+            <td>{{post.title | uppercase}}</td>
             <td>{{post.content}}</td>
+            <td>{{post.createdOn | date}}</td>
         </tr>
     </tbody>
 </table>

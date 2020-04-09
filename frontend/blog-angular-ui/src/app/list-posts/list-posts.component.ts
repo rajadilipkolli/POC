@@ -1,5 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
+export class Post {
+  constructor(
+    public id: number,
+    public title: string,
+    public content: string,
+    public createdOn: Date) {
+
+  }
+}
+
 @Component({
   selector: 'app-list-posts',
   templateUrl: './list-posts.component.html',
@@ -8,8 +18,8 @@ import { Component, OnInit } from '@angular/core';
 export class ListPostsComponent implements OnInit {
 
   posts = [
-    { id: 1, title: 'dummy Title', content: 'dummy Content' },
-    { id: 2, title: 'new Title', content: 'new Content' }
+    new Post(1, 'dummy Title', 'dummy Content', new Date()),
+    new Post(2, 'new Title', 'new Content', new Date())
   ];
 
   constructor() { }
