@@ -32,7 +32,7 @@ public class ReactivePOCTest {
 	private WebTestClient webClient;
 
 	@BeforeAll
-	public void setup() {
+	void setup() {
 		this.webClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + this.port).build();
 	}
 

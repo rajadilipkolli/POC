@@ -59,10 +59,8 @@ public class ReportsExecutionJob extends JobExecutionListenerSupport {
 				.<List<Long>, List<PostDTO>>chunk(1).reader(reader).processor(processor).writer(writer)
 				.taskExecutor(taskExecutor).build();
 
-		Job job = this.jobBuilderFactory.get("reporting-job").incrementer(new RunIdIncrementer()).listener(this)
+		return this.jobBuilderFactory.get("reporting-job").incrementer(new RunIdIncrementer()).listener(this)
 				.start(step).build();
-
-		return job;
 	}
 
 	@Override

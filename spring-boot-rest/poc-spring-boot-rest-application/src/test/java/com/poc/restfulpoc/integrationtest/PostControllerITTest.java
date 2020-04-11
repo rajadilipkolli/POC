@@ -19,7 +19,6 @@ import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.dto.TagDTO;
-
 import org.junit.jupiter.api.Test;
 
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,7 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		ResponseEntity<PostDTO[]> response = userRestTemplate().getForEntity("/posts/raja", PostDTO[].class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).hasSize(1);
+		assertThat(response.getBody()).isNotNull().hasSize(1);
 		PostDTO postDTO = response.getBody()[0];
 		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2).contains(
 				PostCommentsDTO.builder().review("Excellent").build(),

@@ -53,11 +53,9 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
 
 		List<PostCommentProjection> postCommentProjections = this.postRepository.findByIds(items);
 
-		List<PostDTO> postDTOS = postCommentProjections.stream()
+		return postCommentProjections.stream()
 				.collect(Collectors.groupingBy(this.titleClassifier, this.downStreamCollector)).entrySet().stream()
 				.map(this.mapToPostDTO).collect(Collectors.toUnmodifiableList());
-
-		return postDTOS;
 	}
 
 }
