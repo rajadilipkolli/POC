@@ -16,7 +16,10 @@
 package com.poc.restfulpoc.integrationtest;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
+import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.TagDTO;
+
 import org.junit.jupiter.api.Test;
 
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,13 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).hasSize(1);
+		PostDTO postDTO = response.getBody()[0];
+		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2).contains(
+				PostCommentsDTO.builder().review("Excellent").build(),
+				PostCommentsDTO.builder().review("Good").build());
+		assertThat(postDTO.getTags()).isNotEmpty().hasSize(2).contains(new TagDTO("Java"), new TagDTO("Spring Boot"));
+		assertThat(postDTO.getCreatedBy()).isEqualTo("raja");
+		assertThat(postDTO.getTitle()).isEqualTo("A Beautiful Post in Java");
 	}
 
 }

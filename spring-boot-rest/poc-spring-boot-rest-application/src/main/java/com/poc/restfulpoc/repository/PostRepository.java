@@ -44,9 +44,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Transactional(readOnly = true)
 	List<PostCommentProjection> findByIds(@Param("ids") List<Long> items);
 
-	@Query("SELECT distinct p FROM Post p JOIN FETCH p.comments JOIN FETCH p.details d LEFT OUTER JOIN FETCH p.tags where d.createdBy = :user")
-	@Transactional(readOnly = true)
+	@Query("SELECT distinct p FROM Post p JOIN FETCH p.comments JOIN FETCH p.details d where d.createdBy = :user")
 	@QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
 	List<Post> findByDetailsCreatedBy(@Param("user") String userName);
+
+	@Query("SELECT distinct p FROM Post p JOIN FETCH p.tags JOIN p.details where p in :posts")
+	@QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
+	List<Post> findPostsWithAllDetails(@Param("posts") List<Post> postList);
 
 }

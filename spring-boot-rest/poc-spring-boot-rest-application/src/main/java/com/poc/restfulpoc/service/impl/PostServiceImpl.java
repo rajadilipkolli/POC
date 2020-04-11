@@ -25,6 +25,7 @@ import com.poc.restfulpoc.service.PostService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +36,13 @@ public class PostServiceImpl implements PostService {
 	private final PostMapper postMapper;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PostDTO> fetchAllPostsByUserName(String userName) {
+		// https://vladmihalcea.com/hibernate-multiplebagfetchexception/
+		// Key is to run in same transaction
 		List<Post> postList = this.postRepository.findByDetailsCreatedBy(userName);
-		return this.postMapper.mapToPostDTO(postList);
+		List<Post> fullPosts = this.postRepository.findPostsWithAllDetails(postList);
+		return this.postMapper.mapToPostDTO(fullPosts);
 	}
 
 }
