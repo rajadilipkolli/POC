@@ -9,7 +9,7 @@
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>poc-spring-boot-rest-jooq</artifactId>
-	<description>JOOQ implmentation</description>
+	<description>JOOQ implementation</description>
 	<properties>
 		<main.basedir>${project.parent.parent.basedir}</main.basedir>
 	</properties>

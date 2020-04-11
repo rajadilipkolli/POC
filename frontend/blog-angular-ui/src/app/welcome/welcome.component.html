@@ -1,10 +1,14 @@
 <h1> welcome !!</h1>
 <div class="container">
 
-    <p>welcome {{name}}!</p>
-
+    <p>welcome {{name}}! </p>
+    you can mange your posts <a routerLink="/posts">here</a>
 </div>
 
-<div class="container"> 
-    you can mange your posts <a routerLink="/posts">here</a>
+<div class="container">
+    <button (click)="getWelcomeMessage()" class="btn btn-success">Get Welcome Message</button>
+</div>
+
+<div class="container" *ngIf="welcomeMessage">
+    <h2> Your customized welcome -> {{welcomeMessage}} </h2>
 </div>
