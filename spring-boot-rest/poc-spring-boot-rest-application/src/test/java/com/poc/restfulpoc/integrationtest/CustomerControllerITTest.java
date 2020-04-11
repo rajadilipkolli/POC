@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.poc.restfulpoc.controller;
+package com.poc.restfulpoc.integrationtest;
 
 import java.time.LocalDateTime;
 import java.time.Month;

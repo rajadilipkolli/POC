@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.poc.restfulpoc.mapper;
 
-package com.poc.restfulpoc.dto;
+import java.util.List;
 
-import lombok.Builder;
-import lombok.Data;
+import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.entities.Post;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Data
-@Builder
-public class PostComments {
+@Mapper(componentModel = "spring")
+public interface PostMapper {
 
-	String review;
+	List<PostDTO> mapToPostDTO(List<Post> postList);
+
+	@Mapping(target = "createdBy", source = "details.createdBy")
+	PostDTO mapPostToDTO(Post post);
 
 }

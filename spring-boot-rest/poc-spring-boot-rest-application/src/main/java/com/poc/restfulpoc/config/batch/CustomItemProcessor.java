@@ -23,7 +23,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.poc.restfulpoc.dto.PostCommentProjection;
-import com.poc.restfulpoc.dto.PostComments;
+import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,15 +37,15 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
 
 	private final PostRepository postRepository;
 
-	final Function<Entry<String, List<PostComments>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
+	final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
 			.title(entry.getKey()).comments(entry.getValue()).build();
 
 	final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
 
-	final Function<PostCommentProjection, PostComments> mapToPostComments = postCommentProjection -> PostComments
+	final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments = postCommentProjection -> PostCommentsDTO
 			.builder().review(postCommentProjection.getReview()).build();
 
-	final Collector<PostCommentProjection, ?, List<PostComments>> downStreamCollector = Collectors
+	final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector = Collectors
 			.mapping(this.mapToPostComments, Collectors.toList());
 
 	@Override

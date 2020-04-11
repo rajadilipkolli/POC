@@ -13,35 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.restfulpoc.dto;
+package com.poc.restfulpoc.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.poc.restfulpoc.dto.PostDTO;
 
-@Getter
-@Setter
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public class PostDTO {
+public interface PostService {
 
-	private String title;
-
-	@Default
-	private List<PostCommentsDTO> comments = new ArrayList<>();
-
-	@Default
-	private List<TagDTO> tags = new ArrayList<>();
-
-	private String createdBy;
+	List<PostDTO> fetchAllPostsByUserName(String userName);
 
 }

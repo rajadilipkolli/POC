@@ -64,4 +64,20 @@ public class PostComment {
 	@ManyToOne
 	private Post post;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		return this.id != null && this.id.equals(((PostComment) o).getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return 31;
+	}
+
 }

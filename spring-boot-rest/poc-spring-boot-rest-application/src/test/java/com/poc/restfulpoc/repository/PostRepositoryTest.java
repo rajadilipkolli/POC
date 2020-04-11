@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.poc.restfulpoc.repository;
 
 import java.time.LocalDateTime;
@@ -25,11 +24,15 @@ import java.util.stream.Collectors;
 
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.dto.PostCommentProjection;
-import com.poc.restfulpoc.dto.PostComments;
+import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
+import com.poc.restfulpoc.entities.PostDetails;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,17 +40,23 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 
 	@Autowired
 	private PostRepository postRepository;
 
-	@Test
-	void testProjection() {
+	private Post persistedPost;
+
+	@BeforeAll
+	void init() {
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		Post post = new Post();
 		post.setCreatedOn(currentDateTime);
 		post.setTitle("Post Title");
+		PostDetails postDetails = new PostDetails();
+		postDetails.setCreatedBy("JUNIT");
+		post.addDetails(postDetails);
 		PostComment postCommentOld = new PostComment();
 		postCommentOld.setCreatedOn(currentDateTime.minusDays(1));
 		postCommentOld.setReview("Review Old");
@@ -56,16 +65,25 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		postCommentNew.setCreatedOn(currentDateTime);
 		postCommentNew.setReview("Review New");
 		post.addComment(postCommentNew);
-		this.postRepository.save(post);
+		this.persistedPost = this.postRepository.save(post);
+	}
+
+	@AfterAll
+	void destroy() {
+		this.postRepository.delete(this.persistedPost);
+	}
+
+	@Test
+	void testProjection() {
 
 		List<PostCommentProjection> postCommentProjections = this.postRepository.findByTitle("Post Title");
 
-		final Function<Entry<String, List<PostComments>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
+		final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
 				.title(entry.getKey()).comments(entry.getValue()).build();
 		final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
-		final Function<PostCommentProjection, PostComments> mapToPostComments = postCommentProjection -> PostComments
+		final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments = postCommentProjection -> PostCommentsDTO
 				.builder().review(postCommentProjection.getReview()).build();
-		final Collector<PostCommentProjection, ?, List<PostComments>> downStreamCollector = Collectors
+		final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector = Collectors
 				.mapping(mapToPostComments, Collectors.toList());
 
 		List<PostDTO> postDTOS = postCommentProjections.stream()
@@ -76,10 +94,16 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		PostDTO postDTO = postDTOS.get(0);
 		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
 		assertThat(postDTO.getComments()).isNotEmpty().hasSizeGreaterThanOrEqualTo(2);
-		assertThat(postDTO.getComments()).contains(PostComments.builder().review("Review New").build(),
-				PostComments.builder().review("Review Old").build());
+		assertThat(postDTO.getComments()).contains(PostCommentsDTO.builder().review("Review New").build(),
+				PostCommentsDTO.builder().review("Review Old").build());
 
-		this.postRepository.deleteById(post.getId());
+	}
+
+	@Test
+	void shouldReturnPostWhenUserNameIsPassed() {
+		List<Post> postList = this.postRepository.findByDetailsCreatedBy("JUNIT");
+		assertThat(postList).isNotEmpty().hasSize(1);
+		assertThat(postList.get(0).getDetails().getCreatedBy()).isEqualTo("JUNIT");
 	}
 
 }

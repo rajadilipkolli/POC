@@ -15,33 +15,17 @@
  */
 package com.poc.restfulpoc.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
+public class PostCommentsDTO {
 
-	private String title;
-
-	@Default
-	private List<PostCommentsDTO> comments = new ArrayList<>();
-
-	@Default
-	private List<TagDTO> tags = new ArrayList<>();
-
-	private String createdBy;
+	private String review;
 
 }
