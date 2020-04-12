@@ -9,7 +9,7 @@ export class Post {
     public createdOn: Date,
     public comments: Comment[],
     public tags: Tag[]
-    ) {
+  ) {
 
   }
 }
@@ -44,18 +44,38 @@ export class ListPostsComponent implements OnInit {
 
   posts: Post[];
 
+  message: string;
+
   constructor(
     private postDataService: PostDataService
   ) { }
 
   ngOnInit(): void {
-    this.postDataService.retrieveAllPosts('raja').subscribe(
-      response => this.handleRetrieveAllPostsResponse(response)
-    )
+    this.refreshPosts();
   }
 
   handleRetrieveAllPostsResponse(response: Post[]): void {
     this.posts = response;
+  }
+
+  deletePost(postTitle: string) {
+    this.postDataService.deletePostByTitleAndUserName(postTitle, 'raja').subscribe(
+      response => {
+        console.log(response);
+        this.message = `Successfully Deleted Post With Title ${postTitle}`;
+        this.refreshPosts();
+      }
+    );
+  }
+
+  refreshPosts() {
+    this.postDataService.retrieveAllPosts('raja').subscribe(
+      response => this.handleRetrieveAllPostsResponse(response)
+    );
+  }
+
+  updatePost(postTitle: string) {
+    console.log(`Update ${postTitle}`);
   }
 
 

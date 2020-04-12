@@ -13,4 +13,8 @@ export class PostDataService {
     return this.http.get<Post[]>(`http://localhost:8080/users/${username}/posts`);
   }
 
+  deletePostByTitleAndUserName(postTitle: string, username: string) {
+    return this.http.delete(`http://localhost:8080/users/${username}/posts/${postTitle}`);
+  }
+
 }

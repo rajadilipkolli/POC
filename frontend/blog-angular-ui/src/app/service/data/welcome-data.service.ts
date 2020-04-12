@@ -13,7 +13,7 @@ export class WelcomeDataService {
 
   executeHelloWorldBeanService() {
     // TODO configure properties
-    return this.http.get<PingResponse>("http://localhost:8080/ping");
+    return this.http.get<PingResponse>('http://localhost:8080/ping');
   }
 }
 

@@ -1,5 +1,6 @@
 <h1> My Posts</h1>
 
+<div class="alert alert-success" *ngIf='message'>{{message}}</div>
 <div class="container">
     <table class="table">
         <thead>
@@ -10,6 +11,8 @@
                 <th>createdBy</th>
                 <th>comments</th>
                 <th>tags</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -18,8 +21,14 @@
                 <td>{{post.content}}</td>
                 <td>{{post.createdOn | date}}</td>
                 <td>{{post.createdBy}}</td>
-                <td>{{post.comments}}</td>
-                <td>{{post.tags.join(', ')}}</td>
+                <td>
+                    <li *ngFor="let comment of post.comments">{{comment.review}}</li>
+                </td>
+                <td>
+                    <li *ngFor="let tag of post.tags">{{tag.name}}</li>
+                </td>
+                <td><button (click)="updatePost(post.title)" class="btn btn-success">Update</button></td>
+                <td><button (click)="deletePost(post.title)" class="btn btn-warning">Delete</button></td>
             </tr>
         </tbody>
     </table>
