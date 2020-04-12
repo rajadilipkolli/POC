@@ -1,11 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { PostDataService } from '../service/data/post-data.service';
 
 export class Post {
   constructor(
-    public id: number,
     public title: string,
     public content: string,
-    public createdOn: Date) {
+    public createdBy: string,
+    public createdOn: Date,
+    public comments: Comment[],
+    public tags: Tag[]
+    ) {
+
+  }
+}
+
+export class Comment {
+  constructor(
+    public review: string
+  ) {
+
+  }
+}
+
+export class Tag {
+  constructor(
+    public review: string
+  ) {
 
   }
 }
@@ -17,14 +37,26 @@ export class Post {
 })
 export class ListPostsComponent implements OnInit {
 
-  posts = [
-    new Post(1, 'dummy Title', 'dummy Content', new Date()),
-    new Post(2, 'new Title', 'new Content', new Date())
-  ];
+  // posts = [
+  //   new Post(1, 'dummy Title', 'dummy Content', new Date()),
+  //   new Post(2, 'new Title', 'new Content', new Date())
+  // ];
 
-  constructor() { }
+  posts: Post[];
+
+  constructor(
+    private postDataService: PostDataService
+  ) { }
 
   ngOnInit(): void {
+    this.postDataService.retrieveAllPosts('raja').subscribe(
+      response => this.handleRetrieveAllPostsResponse(response)
+    )
   }
+
+  handleRetrieveAllPostsResponse(response: Post[]): void {
+    this.posts = response;
+  }
+
 
 }

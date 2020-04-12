@@ -4,18 +4,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Post Id</th>
-                <th>title</th>
+                <th>Title</th>
                 <th>content</th>
                 <th>createdOn</th>
+                <th>createdBy</th>
+                <th>comments</th>
+                <th>tags</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let post of posts">
-                <td>{{post.id}}</td>
                 <td>{{post.title | uppercase}}</td>
                 <td>{{post.content}}</td>
                 <td>{{post.createdOn | date}}</td>
+                <td>{{post.createdBy}}</td>
+                <td>{{post.comments}}</td>
+                <td>{{post.tags.join(', ')}}</td>
             </tr>
         </tbody>
     </table>
