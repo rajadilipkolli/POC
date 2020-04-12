@@ -23,4 +23,10 @@ public interface PostService {
 
 	List<PostDTO> fetchAllPostsByUserName(String userName);
 
+	void createPost(PostDTO postDTO);
+
+	void deletePostByIdAndUserName(String userName, String title);
+
+	PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title);
+
 }

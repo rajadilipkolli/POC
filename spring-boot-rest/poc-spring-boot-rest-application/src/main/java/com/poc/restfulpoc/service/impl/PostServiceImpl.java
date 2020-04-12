@@ -15,6 +15,7 @@
  */
 package com.poc.restfulpoc.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.poc.restfulpoc.dto.PostDTO;
@@ -42,7 +43,30 @@ public class PostServiceImpl implements PostService {
 		// Key is to run in same transaction
 		List<Post> postList = this.postRepository.findByDetailsCreatedBy(userName);
 		List<Post> fullPosts = this.postRepository.findPostsWithAllDetails(postList);
-		return this.postMapper.mapToPostDTO(fullPosts);
+		return this.postMapper.mapToPostDTOs(fullPosts);
+	}
+
+	@Override
+	public void createPost(PostDTO postDTO) {
+		Post post = this.postMapper.postDtoToPost(postDTO);
+		this.postRepository.save(post);
+	}
+
+	@Override
+	@Transactional
+	public void deletePostByIdAndUserName(String userName, String title) {
+		this.postRepository.deleteByTitleAndDetailsCreatedBy(title, userName);
+	}
+
+	@Override
+	@Transactional
+	public PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title) {
+		// https://vladmihalcea.com/hibernate-multiplebagfetchexception/
+		// Key is to run in same transaction
+		Post postWithComments = this.postRepository.findByDetailsCreatedByAndTitle(postDTO.getCreatedBy(), title);
+		Post post = this.postRepository.findPostsWithAllDetails(Collections.singletonList(postWithComments)).get(0);
+		this.postMapper.updateReferenceValues(postDTO, post);
+		return this.postMapper.mapPostToDTO(this.postRepository.save(post));
 	}
 
 }

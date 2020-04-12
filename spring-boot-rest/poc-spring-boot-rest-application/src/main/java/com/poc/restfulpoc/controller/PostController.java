@@ -18,26 +18,60 @@ package com.poc.restfulpoc.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.service.PostService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class PostController {
 
 	private final PostService postService;
 
-	@GetMapping("/{userName}")
-	public ResponseEntity<List<PostDTO>> getPostsByUserName(@PathVariable("userName") String userName) {
+	@GetMapping("/{user_name}/posts")
+	public ResponseEntity<List<PostDTO>> getPostsByUserName(@PathVariable("user_name") String userName) {
 		return ResponseEntity.of(Optional.of(this.postService.fetchAllPostsByUserName(userName)));
+	}
+
+	@PostMapping("/{user_name}/posts/")
+	public ResponseEntity<Object> createPostByUserName(@RequestBody @Valid PostDTO postDTO,
+			@PathVariable("user_name") String userName, UriComponentsBuilder ucBuilder) {
+		postDTO.setCreatedBy(userName);
+		this.postService.createPost(postDTO);
+
+		return ResponseEntity.created(ucBuilder.path("/users/{user_name}/posts").buildAndExpand(userName).toUri())
+				.build();
+	}
+
+	@PutMapping("/{user_name}/posts/{title}")
+	public ResponseEntity<PostDTO> updatePostByUserName(@RequestBody @Valid PostDTO postDTO,
+			@PathVariable("user_name") String userName, @PathVariable("title") String title) {
+		postDTO.setCreatedBy(userName);
+		final PostDTO updatedPost = this.postService.updatePostByUserNameAndId(postDTO, title);
+		return ResponseEntity.ok(updatedPost);
+	}
+
+	@DeleteMapping("/{user_name}/posts/{title}")
+	public ResponseEntity<Void> deletePostByUserName(@PathVariable("user_name") String userName,
+			@PathVariable("title") String title) {
+		this.postService.deletePostByIdAndUserName(userName, title);
+		return ResponseEntity.accepted().build();
 	}
 
 }

@@ -17,17 +17,71 @@ package com.poc.restfulpoc.mapper;
 
 import java.util.List;
 
+import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.TagDTO;
 import com.poc.restfulpoc.entities.Post;
+import com.poc.restfulpoc.entities.PostComment;
+import com.poc.restfulpoc.entities.PostDetails;
+import com.poc.restfulpoc.entities.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
 
-	List<PostDTO> mapToPostDTO(List<Post> postList);
+	List<PostDTO> mapToPostDTOs(List<Post> postList);
 
 	@Mapping(target = "createdBy", source = "details.createdBy")
+	@Mapping(target = "createdOn", source = "details.createdOn")
 	PostDTO mapPostToDTO(Post post);
+
+	@Mapping(target = "comments", ignore = true)
+	@Mapping(target = "tags", ignore = true)
+	@Mapping(target = "details", ignore = true)
+	Post postDtoToPostIgnoringChild(PostDTO postDTO);
+
+	PostComment postCommentsDTOToPostComment(PostCommentsDTO postCommentsDTO);
+
+	Tag tagDTOToTag(TagDTO tagDTO);
+
+	PostDetails postDTOToPostDetails(PostDTO postDTO);
+
+	@Mapping(target = "createdOn", ignore = true)
+	void updateReferenceValues(PostDTO postDTO, @MappingTarget Post post);
+
+	default Post postDtoToPost(PostDTO postDTO) {
+		if (postDTO == null) {
+			return null;
+		}
+
+		Post post = postDtoToPostIgnoringChild(postDTO);
+		post.addDetails(postDTOToPostDetails(postDTO));
+		addPostCommentsToPost(postDTO.getComments(), post);
+		addPostTagsToPost(postDTO.getTags(), post);
+
+		return post;
+	}
+
+	default void addPostTagsToPost(List<TagDTO> tags, Post post) {
+		if (tags == null) {
+			return;
+		}
+
+		for (TagDTO tagDTO : tags) {
+			post.addTag(tagDTOToTag(tagDTO));
+		}
+	}
+
+	default void addPostCommentsToPost(List<PostCommentsDTO> comments, Post post) {
+		if (comments == null) {
+			return;
+		}
+
+		for (PostCommentsDTO postCommentsDTO : comments) {
+			post.addComment(postCommentsDTOToPostComment(postCommentsDTO));
+		}
+	}
 
 }

@@ -36,12 +36,16 @@ public class PostDTO {
 
 	private String title;
 
+	private String content;
+
+	private String createdBy;
+
+	private String createdOn;
+
 	@Default
 	private List<PostCommentsDTO> comments = new ArrayList<>();
 
 	@Default
 	private List<TagDTO> tags = new ArrayList<>();
-
-	private String createdBy;
 
 }

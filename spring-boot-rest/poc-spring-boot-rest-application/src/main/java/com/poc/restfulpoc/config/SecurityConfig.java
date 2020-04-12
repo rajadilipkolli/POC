@@ -49,8 +49,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests().requestMatchers(EndpointRequest.to("health", "info")).permitAll()
 				.requestMatchers(EndpointRequest.toAnyEndpoint().excluding(MappingsEndpoint.class)).hasRole("ACTUATOR")
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-				.antMatchers(HttpMethod.GET, "/ping").permitAll().antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-				.antMatchers("/**").hasRole("USER").and().httpBasic();
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers(HttpMethod.GET, "/ping").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN").antMatchers("/**").hasRole("USER").and()
+				.httpBasic();
 		// H2 database console runs inside a frame, So we need to disable X-Frame-Options
 		// in Spring Security.
 		http.headers().frameOptions().disable();

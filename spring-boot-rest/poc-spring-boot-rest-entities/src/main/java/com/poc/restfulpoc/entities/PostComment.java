@@ -26,7 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -41,7 +40,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "post_comment")
 @Getter
 @Setter
-@NoArgsConstructor // Only to be compliant with JPA
 public class PostComment {
 
 	@Id
@@ -55,6 +53,10 @@ public class PostComment {
 	private String review;
 
 	private LocalDateTime createdOn;
+
+	public PostComment() {
+		this.createdOn = LocalDateTime.now();
+	}
 
 	public PostComment(String review) {
 		this.review = review;

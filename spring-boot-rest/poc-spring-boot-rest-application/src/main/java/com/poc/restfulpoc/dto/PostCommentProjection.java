@@ -22,4 +22,6 @@ public interface PostCommentProjection {
 
 	String getReview();
 
+	String getContent();
+
 }

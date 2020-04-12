@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-	@Query("SELECT p.title as title, c.review as review FROM Post p JOIN p.comments c where p.title = :title")
+	@Query("SELECT p.title as title, p.content as content, c.review as review FROM Post p JOIN p.comments c where p.title = :title")
 	@Transactional(readOnly = true)
 	List<PostCommentProjection> findByTitle(@Param("title") String title);
 
@@ -51,5 +51,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("SELECT distinct p FROM Post p JOIN FETCH p.tags JOIN p.details where p in :posts")
 	@QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
 	List<Post> findPostsWithAllDetails(@Param("posts") List<Post> postList);
+
+	void deleteByTitleAndDetailsCreatedBy(String title, String username);
+
+	@Query("SELECT p FROM Post p JOIN FETCH p.comments JOIN FETCH p.details d where d.createdBy = :user and p.title = :title")
+	Post findByDetailsCreatedByAndTitle(@Param("user") String createdBy, @Param("title") String title);
 
 }
