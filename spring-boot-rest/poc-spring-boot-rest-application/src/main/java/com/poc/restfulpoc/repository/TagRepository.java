@@ -16,10 +16,14 @@
 
 package com.poc.restfulpoc.repository;
 
+import java.util.Optional;
+
 import com.poc.restfulpoc.entities.Tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
+
+	Optional<Tag> findByName(String name);
 
 }

@@ -47,6 +47,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	@Transactional
 	public void createPost(PostDTO postDTO) {
 		Post post = this.postMapper.postDtoToPost(postDTO);
 		this.postRepository.save(post);

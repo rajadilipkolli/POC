@@ -26,6 +26,7 @@ import com.poc.restfulpoc.entities.Customer;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import com.poc.restfulpoc.repository.OrderRepository;
+import com.poc.restfulpoc.service.impl.CustomerServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeAll;

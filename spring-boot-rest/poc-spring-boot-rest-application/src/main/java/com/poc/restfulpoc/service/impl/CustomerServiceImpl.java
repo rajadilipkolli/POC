@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.poc.restfulpoc.service;
+package com.poc.restfulpoc.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +23,7 @@ import com.poc.restfulpoc.entities.Order;
 import com.poc.restfulpoc.exception.EntityNotFoundException;
 import com.poc.restfulpoc.repository.CustomerRepository;
 import com.poc.restfulpoc.repository.OrderRepository;
+import com.poc.restfulpoc.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;

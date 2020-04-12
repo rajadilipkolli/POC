@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.poc.restfulpoc.entities;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -61,6 +62,26 @@ public class Tag {
 
 	public Tag(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Tag other = (Tag) obj;
+		return Objects.equals(this.name, other.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name);
 	}
 
 }

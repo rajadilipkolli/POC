@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.poc.restfulpoc.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,5 +66,25 @@ public class PostDetails {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	private Post post;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		PostDetails other = (PostDetails) obj;
+		return Objects.equals(this.createdBy, other.createdBy);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.createdBy);
+	}
 
 }

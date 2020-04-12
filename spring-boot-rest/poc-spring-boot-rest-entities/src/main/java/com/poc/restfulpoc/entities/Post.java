@@ -18,6 +18,7 @@ package com.poc.restfulpoc.entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -91,6 +92,11 @@ public class Post {
 		comment.setPost(this);
 	}
 
+	public void removeComment(PostComment comment) {
+		this.comments.remove(comment);
+		comment.setPost(null);
+	}
+
 	public void addDetails(PostDetails details) {
 		this.details = details;
 		details.setPost(this);
@@ -109,6 +115,26 @@ public class Post {
 	public void removeTag(Tag tag) {
 		this.tags.remove(tag);
 		tag.getPosts().remove(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Post other = (Post) obj;
+		return Objects.equals(this.details, other.details) && Objects.equals(this.title, other.title);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.details, this.title);
 	}
 
 }
