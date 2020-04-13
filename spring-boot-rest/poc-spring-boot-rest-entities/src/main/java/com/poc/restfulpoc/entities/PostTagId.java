@@ -13,42 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.restfulpoc.dto;
+package com.poc.restfulpoc.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Objects;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
+@Embeddable
 @Getter
-@Setter
-@Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
+public class PostTagId implements Serializable {
 
-	@NotBlank(message = "Title of post is mandatory")
-	private String title;
+	private static final long serialVersionUID = 1L;
 
-	private String content;
+	@Column(name = "post_id")
+	private Long postId;
 
-	private String createdBy;
+	@Column(name = "tag_id")
+	private Long tagId;
 
-	private String createdOn;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
 
-	@Default
-	private List<PostCommentsDTO> comments = new ArrayList<>();
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
-	@Default
-	private List<TagDTO> tags = new ArrayList<>();
+		PostTagId that = (PostTagId) o;
+		return Objects.equals(this.postId, that.postId) && Objects.equals(this.tagId, that.tagId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.postId, this.tagId);
+	}
 
 }

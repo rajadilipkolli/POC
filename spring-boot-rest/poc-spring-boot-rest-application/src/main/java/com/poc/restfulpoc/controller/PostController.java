@@ -49,13 +49,20 @@ public class PostController {
 		return ResponseEntity.of(Optional.of(this.postService.fetchAllPostsByUserName(userName)));
 	}
 
+	@GetMapping("/{user_name}/posts/{title}")
+	public ResponseEntity<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
+			@PathVariable("title") String title) {
+		return ResponseEntity.of(Optional.of(this.postService.fetchPostByUserNameAndTitle(userName, title)));
+	}
+
 	@PostMapping("/{user_name}/posts/")
 	public ResponseEntity<Object> createPostByUserName(@RequestBody @Valid PostDTO postDTO,
 			@PathVariable("user_name") String userName, UriComponentsBuilder ucBuilder) {
 		postDTO.setCreatedBy(userName);
 		this.postService.createPost(postDTO);
 
-		return ResponseEntity.created(ucBuilder.path("/users/{user_name}/posts").buildAndExpand(userName).toUri())
+		return ResponseEntity.created(
+				ucBuilder.path("/users/{user_name}/posts/{title}").buildAndExpand(userName, postDTO.getTitle()).toUri())
 				.build();
 	}
 

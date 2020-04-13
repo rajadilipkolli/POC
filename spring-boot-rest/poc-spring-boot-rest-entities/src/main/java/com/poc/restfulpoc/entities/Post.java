@@ -17,6 +17,7 @@ package com.poc.restfulpoc.entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,9 +27,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -72,10 +70,8 @@ public class Post {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true, fetch = FetchType.LAZY)
 	private PostDetails details;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "ID"),
-			inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "ID"))
-	private List<Tag> tags = new ArrayList<>();
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PostTag> tags = new ArrayList<>();
 
 	public Post(Long id) {
 		this.id = id;
@@ -108,13 +104,22 @@ public class Post {
 	}
 
 	public void addTag(Tag tag) {
-		this.tags.add(tag);
-		tag.getPosts().add(this);
+		PostTag postTag = new PostTag(this, tag);
+		this.tags.add(postTag);
+		tag.getPosts().add(postTag);
 	}
 
 	public void removeTag(Tag tag) {
-		this.tags.remove(tag);
-		tag.getPosts().remove(this);
+		for (Iterator<PostTag> iterator = this.tags.iterator(); iterator.hasNext();) {
+			PostTag postTag = iterator.next();
+
+			if (postTag.getPost().equals(this) && postTag.getTag().equals(tag)) {
+				iterator.remove();
+				postTag.getTag().getPosts().remove(postTag);
+				postTag.setPost(null);
+				postTag.setTag(null);
+			}
+		}
 	}
 
 	@Override

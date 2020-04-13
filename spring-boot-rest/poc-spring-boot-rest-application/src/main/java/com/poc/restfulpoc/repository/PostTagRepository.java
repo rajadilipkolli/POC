@@ -13,22 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.restfulpoc.service;
+package com.poc.restfulpoc.repository;
 
-import java.util.List;
+import com.poc.restfulpoc.entities.PostTag;
+import com.poc.restfulpoc.entities.PostTagId;
 
-import com.poc.restfulpoc.dto.PostDTO;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostService {
-
-	List<PostDTO> fetchAllPostsByUserName(String userName);
-
-	void createPost(PostDTO postDTO);
-
-	void deletePostByIdAndUserName(String userName, String title);
-
-	PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title);
-
-	PostDTO fetchPostByUserNameAndTitle(String userName, String title);
+public interface PostTagRepository extends JpaRepository<PostTag, PostTagId> {
 
 }

@@ -23,6 +23,7 @@ import com.poc.restfulpoc.dto.TagDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
+import com.poc.restfulpoc.entities.PostTag;
 import com.poc.restfulpoc.entities.Tag;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
@@ -58,5 +59,8 @@ public interface PostMapper {
 	List<PostComment> postCommentsDTOListToPostCommentList(List<PostCommentsDTO> comments);
 
 	List<Tag> tagDTOListToTagList(List<TagDTO> tags);
+
+	@Mapping(target = "name", source = "tag.name")
+	TagDTO postTagToTagDTO(PostTag postTag);
 
 }

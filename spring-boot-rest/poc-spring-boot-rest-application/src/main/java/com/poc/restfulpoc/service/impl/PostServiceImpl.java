@@ -47,6 +47,14 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
+		Post postWithComments = this.postRepository.findByDetailsCreatedByAndTitle(userName, title);
+		Post post = this.postRepository.findPostsWithAllDetails(Collections.singletonList(postWithComments)).get(0);
+		return this.postMapper.mapPostToDTO(post);
+	}
+
+	@Override
 	@Transactional
 	public void createPost(PostDTO postDTO) {
 		Post post = this.postMapper.postDtoToPost(postDTO);

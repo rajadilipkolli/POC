@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.poc.restfulpoc.data;
 
 import java.util.List;
@@ -32,7 +31,6 @@ import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
-import com.poc.restfulpoc.entities.Tag;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +62,6 @@ class AllAssociationTest extends AbstractRestFulPOCApplicationTest {
 		postDetails.setCreatedBy("JUNIT");
 		post.addDetails(postDetails);
 
-		Tag tag = new Tag("firstPost");
-		post.addTag(tag);
 		this.entityManager.persist(post);
 
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();

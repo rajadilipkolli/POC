@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.poc.restfulpoc.entities;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -40,6 +41,8 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity(name = "Tag")
 @Table(name = "tag")
+@Getter
+@Setter
 @NoArgsConstructor // Only to be compliant with JPA
 public class Tag {
 
@@ -51,14 +54,11 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
-	@Getter
-	@Setter
+	@Column(nullable = false, unique = true)
 	private String name;
 
-	@ManyToMany(mappedBy = "tags")
-	@Getter
-	@Setter
-	private Set<Post> posts = new HashSet<>();
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PostTag> posts = new ArrayList<>();
 
 	public Tag(String name) {
 		this.name = name;
@@ -69,10 +69,7 @@ public class Tag {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		Tag other = (Tag) obj;

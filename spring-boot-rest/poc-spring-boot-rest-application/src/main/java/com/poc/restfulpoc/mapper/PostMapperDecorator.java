@@ -24,6 +24,7 @@ import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.dto.TagDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
+import com.poc.restfulpoc.entities.PostTag;
 import com.poc.restfulpoc.entities.Tag;
 import com.poc.restfulpoc.repository.PostCommentRepository;
 import com.poc.restfulpoc.repository.TagRepository;
@@ -34,14 +35,27 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public abstract class PostMapperDecorator implements PostMapper {
 
 	@Autowired
-	private TagRepository tagRepository;
-
-	@Autowired
 	private PostCommentRepository postCommentRepository;
 
 	@Autowired
 	@Qualifier("delegate")
 	private PostMapper postMapperDelegate;
+
+	@Autowired
+	private TagRepository tagRepository;
+
+	@Override
+	public Tag tagDTOToTag(TagDTO tagDTO) {
+		if (tagDTO == null) {
+			return null;
+		}
+
+		Tag tag = new Tag();
+
+		tag.setName(tagDTO.getName());
+
+		return this.tagRepository.save(tag);
+	}
 
 	@Override
 	public Post postDtoToPost(PostDTO postDTO) {
@@ -65,7 +79,8 @@ public abstract class PostMapperDecorator implements PostMapper {
 		for (TagDTO tagDTO : tags) {
 			Optional<Tag> tag = this.tagRepository.findByName(tagDTO.getName());
 			if (tag.isPresent()) {
-				post.getTags().add(tag.get());
+				PostTag postTag = new PostTag(post, tag.get());
+				post.getTags().add(postTag);
 			}
 			else {
 				post.addTag(tagDTOToTag(tagDTO));
@@ -74,6 +89,7 @@ public abstract class PostMapperDecorator implements PostMapper {
 	}
 
 	void addPostCommentsToPost(List<PostCommentsDTO> comments, Post post) {
+
 		if (comments == null) {
 			return;
 		}
@@ -121,13 +137,14 @@ public abstract class PostMapperDecorator implements PostMapper {
 				newPostComments.forEach(post::addComment);
 			}
 			else {
-				post.setComments(null);
+				post.getComments().forEach(post::removeComment);
 			}
 		}
 		else {
-			List<PostComment> list = postMapperDelegate.postCommentsDTOListToPostCommentList(postDTO.getComments());
+			List<PostComment> list = this.postMapperDelegate
+					.postCommentsDTOListToPostCommentList(postDTO.getComments());
 			if (list != null) {
-				post.setComments(list);
+				list.forEach(post::addComment);
 			}
 		}
 		if (post.getTags() != null) {
@@ -136,22 +153,19 @@ public abstract class PostMapperDecorator implements PostMapper {
 				// convertPostCommentsDTO to PostComment Entities
 				List<Tag> updateTagsRequest = this.postMapperDelegate.tagDTOListToTagList(postDTO.getTags());
 
+				List<Tag> existingTags = post.getTags().stream().map(PostTag::getTag).collect(Collectors.toList());
+
 				// Remove the existing database rows that are no
 				// longer found in the incoming collection (updateTagsRequest)
-				List<Tag> tagsToRemoveList = post.getTags().stream().filter(tag -> !updateTagsRequest.contains(tag))
+				List<Tag> tagsToRemoveList = existingTags.stream().filter(tag -> !updateTagsRequest.contains(tag))
 						.collect(Collectors.toList());
 				tagsToRemoveList.forEach(post::removeTag);
 
+				List<String> tagNames = existingTags.stream().map(Tag::getName).collect(Collectors.toList());
 				// Update the existing database rows which can be found
 				// in the incoming collection (updateTagsRequest)
-				List<Tag> newTagsList = updateTagsRequest.stream().filter(tag -> !post.getTags().contains(tag))
+				List<Tag> newTagsList = updateTagsRequest.stream().filter(tag -> !tagNames.contains(tag.getName()))
 						.collect(Collectors.toList());
-
-				updateTagsRequest.stream().filter(tag -> !newTagsList.contains(tag)).forEach((tag) -> {
-					tag.getPosts().add(post);
-					Tag mergedTag = this.tagRepository.save(tag);
-					post.getTags().set(post.getTags().indexOf(mergedTag), mergedTag);
-				});
 
 				// Add the rows found in the incoming collection,
 				// which cannot be found in the current database snapshot
@@ -159,13 +173,13 @@ public abstract class PostMapperDecorator implements PostMapper {
 
 			}
 			else {
-				post.setTags(null);
+				post.getTags().forEach(postTag -> post.removeTag(postTag.getTag()));
 			}
 		}
 		else {
-			List<Tag> list1 = postMapperDelegate.tagDTOListToTagList(postDTO.getTags());
+			List<Tag> list1 = this.postMapperDelegate.tagDTOListToTagList(postDTO.getTags());
 			if (list1 != null) {
-				post.setTags(list1);
+				list1.forEach(post::addTag);
 			}
 		}
 	}

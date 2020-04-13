@@ -49,7 +49,7 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		this.postDto = new PostDTO();
 		this.postDto.setCreatedBy("junit");
-		this.postDto.setTitle("Post Title");
+		this.postDto.setTitle("PostTitle");
 		this.postDto.setContent("post created By Junit");
 		this.postDto.setCreatedOn(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(currentDateTime));
 		this.postDto.setTags(Collections.singletonList(new TagDTO("junit")));
@@ -80,19 +80,19 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 		assertThat(postResponse.getHeaders().getContentLength()).isEqualTo(0);
 		String location = postResponse.getHeaders().getFirst("Location");
-		assertThat(location).contains("/users/junit/posts");
+		assertThat(location).contains("/users/junit/posts/" + this.postDto.getTitle());
 
-		ResponseEntity<PostDTO[]> getResponse = userRestTemplate().getForEntity(location, PostDTO[].class);
+		ResponseEntity<PostDTO> getResponse = userRestTemplate().getForEntity(location, PostDTO.class);
 		assertThat(getResponse).isNotNull();
 		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(getResponse.getBody()).isNotNull().hasSize(1);
-		PostDTO postDTO = getResponse.getBody()[0];
+		assertThat(getResponse.getBody()).isNotNull();
+		PostDTO postDTO = getResponse.getBody();
 		assertThat(postDTO.getComments()).isNotEmpty().hasSize(1)
 				.contains(PostCommentsDTO.builder().review("junit Review").build());
 		assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
 		assertThat(postDTO.getContent()).isEqualTo("post created By Junit");
 		assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
-		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
+		assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
 	}
 
 	@Test
@@ -112,7 +112,7 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
 		assertThat(postDTO.getContent()).isEqualTo("Updating content using Junit");
 		assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
-		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
+		assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
 
 	}
 
