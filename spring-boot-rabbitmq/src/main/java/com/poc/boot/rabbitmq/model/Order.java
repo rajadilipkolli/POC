@@ -37,6 +37,6 @@ public class Order implements Serializable {
 
 	private String productId;
 
-	private double amount;
+	private Double amount;
 
 }

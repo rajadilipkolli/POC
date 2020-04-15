@@ -75,7 +75,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- tag::tests[] -->
 
     <dependency>
       <groupId>org.springframework.security</groupId>
