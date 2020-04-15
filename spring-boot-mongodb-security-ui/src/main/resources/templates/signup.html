@@ -16,11 +16,11 @@
                     You have been logged out.
                 </div>
                 <label for="inputUsername" class="sr-only">Username</label>
-                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Username" required="" />
+                <input type="email" name="email" id="inputUsername" class="form-control" placeholder="Username" required="" />
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
                 <label for="inputFullname" class="sr-only">Full Name</label>
-                <input type="text" name="fullname" id="inputEmail" class="form-control" placeholder="Fullname" required="" />
+                <input type="text" name="fullname" id="inputFullname" class="form-control" placeholder="Fullname" required="" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
             </form>
             <form class="form-signin" th:action="@{/login}" method="get">
