@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 		// Remove the existing database rows that are no
 		// longer found in the incoming collection (updateCustomerRequest.getOrders())
 		List<Order> ordersToRemove = persistedCustomer.getOrders().stream()
-				.filter(order -> !updateCustomerRequest.getOrders().contains(order)).collect(Collectors.toList());
+				.dropWhile(order -> updateCustomerRequest.getOrders().contains(order)).collect(Collectors.toList());
 		ordersToRemove.forEach(persistedCustomer::removeOrder);
 
 		// Update the existing database rows which can be found

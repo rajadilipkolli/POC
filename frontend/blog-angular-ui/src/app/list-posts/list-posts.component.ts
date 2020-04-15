@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostDataService } from '../service/data/post-data.service';
+import { Router } from '@angular/router';
 
 export class Post {
   constructor(
@@ -47,7 +48,8 @@ export class ListPostsComponent implements OnInit {
   message: string;
 
   constructor(
-    private postDataService: PostDataService
+    private postDataService: PostDataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -76,7 +78,11 @@ export class ListPostsComponent implements OnInit {
 
   updatePost(postTitle: string) {
     console.log(`Update ${postTitle}`);
+    this.router.navigate(['posts', postTitle]);
   }
 
+  createPost(){
+    this.router.navigate(['posts', -1]);
+  }
 
 }

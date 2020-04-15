@@ -26,6 +26,7 @@ import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.dto.PostCommentProjection;
 import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.RootValueDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
@@ -54,6 +55,7 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		Post post = new Post();
 		post.setCreatedOn(currentDateTime);
 		post.setTitle("Post Title");
+		post.setContent("Post Content");
 		PostDetails postDetails = new PostDetails();
 		postDetails.setCreatedBy("JUNIT");
 		post.addDetails(postDetails);
@@ -78,21 +80,24 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 
 		List<PostCommentProjection> postCommentProjections = this.postRepository.findByTitle("Post Title");
 
-		final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
-				.title(entry.getKey()).comments(entry.getValue()).build();
-		final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
+		final Function<Entry<RootValueDTO, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
+				.title(entry.getKey().getTitle()).content(entry.getKey().getContent()).comments(entry.getValue())
+				.build();
+		final Function<PostCommentProjection, RootValueDTO> titleAndContentClassifier = postCommentProjection -> new RootValueDTO(
+				postCommentProjection.getTitle(), postCommentProjection.getContent());
 		final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments = postCommentProjection -> PostCommentsDTO
 				.builder().review(postCommentProjection.getReview()).build();
 		final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector = Collectors
 				.mapping(mapToPostComments, Collectors.toList());
 
 		List<PostDTO> postDTOS = postCommentProjections.stream()
-				.collect(groupingBy(titleClassifier, downStreamCollector)).entrySet().stream().map(mapToPostDTO)
-				.collect(toUnmodifiableList());
+				.collect(groupingBy(titleAndContentClassifier, downStreamCollector)).entrySet().stream()
+				.map(mapToPostDTO).collect(toUnmodifiableList());
 
 		assertThat(postDTOS).isNotEmpty().hasSize(1);
 		PostDTO postDTO = postDTOS.get(0);
 		assertThat(postDTO.getTitle()).isEqualTo("Post Title");
+		assertThat(postDTO.getContent()).isEqualTo("Post Content");
 		assertThat(postDTO.getComments()).isNotEmpty().hasSizeGreaterThanOrEqualTo(2);
 		assertThat(postDTO.getComments()).contains(PostCommentsDTO.builder().review("Review New").build(),
 				PostCommentsDTO.builder().review("Review Old").build());
