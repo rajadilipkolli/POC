@@ -18,8 +18,10 @@ package org.poc.springboot.mongodb.security.config;
 
 import org.poc.springboot.mongodb.security.service.CustomUserDetailsServiceImpl;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -66,12 +68,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/login").permitAll().antMatchers("/signup")
-				.permitAll().antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest().authenticated().and()
-				.csrf().disable().formLogin().successHandler(this.customizeAuthenticationSuccessHandler)
-				.loginPage("/login").failureUrl("/login?error=true").usernameParameter("email")
-				.passwordParameter("password").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/").permitAll()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().antMatchers("/login")
+				.permitAll().antMatchers("/signup").permitAll().antMatchers("/dashboard/**").hasAuthority("ADMIN")
+				.anyRequest().authenticated().and().csrf().disable().formLogin()
+				.successHandler(this.customizeAuthenticationSuccessHandler).loginPage("/login")
+				.failureUrl("/login?error=true").usernameParameter("email").passwordParameter("password").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
+				.exceptionHandling();
 	}
 
 }
