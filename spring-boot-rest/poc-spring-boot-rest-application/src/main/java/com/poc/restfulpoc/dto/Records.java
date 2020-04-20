@@ -15,13 +15,9 @@
  */
 package com.poc.restfulpoc.dto;
 
-import lombok.Value;
+public class Records {
 
-@Value
-public class RootValueDTO {
-
-	String title;
-
-	String content;
+	public record RootValueDTO(String title, String content) {
+	}
 
 }

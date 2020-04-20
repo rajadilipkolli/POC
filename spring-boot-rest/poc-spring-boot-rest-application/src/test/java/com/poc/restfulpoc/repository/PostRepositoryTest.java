@@ -26,7 +26,7 @@ import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.dto.PostCommentProjection;
 import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
-import com.poc.restfulpoc.dto.RootValueDTO;
+import com.poc.restfulpoc.dto.Records.RootValueDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
@@ -81,8 +81,7 @@ class PostRepositoryTest extends AbstractRestFulPOCApplicationTest {
 		List<PostCommentProjection> postCommentProjections = this.postRepository.findByTitle("Post Title");
 
 		final Function<Entry<RootValueDTO, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
-				.title(entry.getKey().getTitle()).content(entry.getKey().getContent()).comments(entry.getValue())
-				.build();
+				.title(entry.getKey().title()).content(entry.getKey().content()).comments(entry.getValue()).build();
 		final Function<PostCommentProjection, RootValueDTO> titleAndContentClassifier = postCommentProjection -> new RootValueDTO(
 				postCommentProjection.getTitle(), postCommentProjection.getContent());
 		final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments = postCommentProjection -> PostCommentsDTO
