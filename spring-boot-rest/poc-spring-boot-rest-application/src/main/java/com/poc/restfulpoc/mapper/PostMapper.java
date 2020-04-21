@@ -40,20 +40,26 @@ public interface PostMapper {
 	@Mapping(target = "createdOn", source = "details.createdOn")
 	PostDTO mapPostToDTO(Post post);
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "comments", ignore = true)
 	@Mapping(target = "tags", ignore = true)
 	@Mapping(target = "details", ignore = true)
 	Post postDtoToPostIgnoringChild(PostDTO postDTO);
 
+	@Mapping(target = "createdOn", ignore = true)
 	PostComment postCommentsDTOToPostComment(PostCommentsDTO postCommentsDTO);
 
+	@Mapping(target = "id", ignore = true)
 	Tag tagDTOToTag(TagDTO tagDTO);
 
+	@Mapping(target = "id", ignore = true)
 	PostDetails postDTOToPostDetails(PostDTO postDTO);
 
+	@Mapping(target = "details", ignore = true)
 	@Mapping(target = "createdOn", ignore = true)
 	void updateReferenceValues(PostDTO postDTO, @MappingTarget Post post);
 
+	@Mapping(target = "details", ignore = true)
 	Post postDtoToPost(PostDTO postDTO);
 
 	List<PostComment> postCommentsDTOListToPostCommentList(List<PostCommentsDTO> comments);

@@ -141,10 +141,9 @@ public class Customer implements Serializable {
 		if (this == o) {
 			return true;
 		}
-		if (!(o instanceof Customer)) {
+		if (!(o instanceof Customer customer)) {
 			return false;
 		}
-		Customer customer = (Customer) o;
 		return Objects.equals(getFirstName(), customer.getFirstName())
 				&& Objects.equals(getLastName(), customer.getLastName())
 				&& Objects.equals(getDateOfBirth(), customer.getDateOfBirth())

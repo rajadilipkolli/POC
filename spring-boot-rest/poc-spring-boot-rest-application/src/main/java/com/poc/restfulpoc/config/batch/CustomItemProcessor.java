@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
 import com.poc.restfulpoc.dto.PostCommentProjection;
 import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.Records.RootValueDTO;
 import com.poc.restfulpoc.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -37,10 +39,11 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
 
 	private final PostRepository postRepository;
 
-	final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
-			.title(entry.getKey()).comments(entry.getValue()).build();
+	final Function<Entry<RootValueDTO, List<PostCommentsDTO>>, PostDTO> mapToPostDTO = entry -> PostDTO.builder()
+			.title(entry.getKey().title()).content(entry.getKey().content()).comments(entry.getValue()).build();
 
-	final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
+	final Function<PostCommentProjection, RootValueDTO> titleAndContentClassifier = postCommentProjection -> new RootValueDTO(
+			postCommentProjection.getTitle(), postCommentProjection.getContent());
 
 	final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments = postCommentProjection -> PostCommentsDTO
 			.builder().review(postCommentProjection.getReview()).build();
@@ -49,13 +52,13 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
 			.mapping(this.mapToPostComments, Collectors.toList());
 
 	@Override
-	public List<PostDTO> process(List<Long> items) {
+	public List<PostDTO> process(@NonNull List<Long> items) {
 
 		List<PostCommentProjection> postCommentProjections = this.postRepository.findByIds(items);
 
 		return postCommentProjections.stream()
-				.collect(Collectors.groupingBy(this.titleClassifier, this.downStreamCollector)).entrySet().stream()
-				.map(this.mapToPostDTO).collect(Collectors.toUnmodifiableList());
+				.collect(Collectors.groupingBy(this.titleAndContentClassifier, this.downStreamCollector)).entrySet()
+				.stream().map(this.mapToPostDTO).collect(Collectors.toUnmodifiableList());
 	}
 
 }

@@ -64,26 +64,43 @@ class AllAssociationTest extends AbstractRestFulPOCApplicationTest {
 
 		this.entityManager.persist(post);
 
+		// 1. Use Criteria Builder to create a Criteria Query returning the
+		// expected result object
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Post> query = builder.createQuery(Post.class);
-		Root<Post> root = query.from(Post.class);
 
-		Predicate cond = builder.equal(root.get("title"), "post");
+		// 2. Define roots for tables which are involved in the query
+		Root<Post> postRoot = query.from(Post.class);
+
+		// 3. Define Predicates etc using Criteria Builder
+		Predicate cond = builder.equal(postRoot.get("title"), "post");
+
+		// 4. Add Predicates etc to the Criteria Query
 		query.where(cond);
 
+		// 5. Build the TypedQuery using the entity manager and criteria query
 		TypedQuery<Post> q = this.entityManager.createQuery(query);
 		List<Post> resultList = q.getResultList();
 
 		assertThat(resultList).isEmpty();
 
+		// Retrieving the data by joining and using EntityGraph
+
 		CriteriaQuery<Post> query1 = builder.createQuery(Post.class);
+		// 2. Define roots for tables which are involved in the query
 		Root<Post> root1 = query1.from(Post.class);
-		// comments should be available in post entity
+
+		// 3. Define Predicates etc using Criteria Builder, comments should be available
+		// in post entity
 		Join<Post, PostComment> join = root1.join("comments", JoinType.LEFT);
+		// 4. Add Predicates etc to the Criteria Query
 		query1.select(root1).where(builder.equal(join.get("review"), "Excellent"));
 
+		// 5. Creating EntityGraphs
 		EntityGraph<Post> fetchGraph = this.entityManager.createEntityGraph(Post.class);
 		fetchGraph.addSubgraph("comments");
+
+		// 6. Build the TypedQuery using the entity manager and criteria query
 		TypedQuery<Post> q1 = this.entityManager.createQuery(query1).setHint("javax.persistence.loadgraph", fetchGraph);
 		resultList = q1.getResultList();
 		assertThat(resultList).isNotEmpty().size().isGreaterThanOrEqualTo(1);

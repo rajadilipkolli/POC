@@ -42,7 +42,7 @@ public class PostClassicController {
 
 	private final PostService postService;
 
-	private MediaType mediaType = MediaType.APPLICATION_JSON;
+	private final MediaType mediaType = MediaType.APPLICATION_JSON;
 
 	@GetMapping
 	public Publisher<ReactivePost> all() {
