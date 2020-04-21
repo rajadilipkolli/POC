@@ -32,6 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -85,6 +86,7 @@ public class Customer implements Serializable {
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "DATE_OF_BIRTH")
+	@Past
 	private LocalDateTime dateOfBirth;
 
 	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY,

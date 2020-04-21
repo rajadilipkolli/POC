@@ -33,7 +33,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  * @author Raja Kolli
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean

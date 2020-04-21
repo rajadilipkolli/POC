@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 0.0.5
  */
 @EnableCaching
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class CaffeineConfig extends CachingConfigurerSupport {
 
 	/** {@inheritDoc} */

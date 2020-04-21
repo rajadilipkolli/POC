@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -36,9 +38,11 @@ import org.springframework.hateoas.RepresentationModel;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(description = "All details related to posts.")
 public class PostDTO extends RepresentationModel<PostDTO> {
 
 	@NotBlank(message = "Title of post is mandatory")
+	@ApiModelProperty(notes = "Title is mandatory", required = true)
 	private String title;
 
 	private String content;
