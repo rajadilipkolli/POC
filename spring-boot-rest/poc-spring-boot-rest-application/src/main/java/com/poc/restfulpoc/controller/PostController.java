@@ -24,6 +24,9 @@ import com.poc.restfulpoc.dto.PostDTO;
 import com.poc.restfulpoc.service.PostService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,13 +49,24 @@ public class PostController {
 
 	@GetMapping("/{user_name}/posts")
 	public ResponseEntity<List<PostDTO>> getPostsByUserName(@PathVariable("user_name") String userName) {
+
 		return ResponseEntity.of(Optional.of(this.postService.fetchAllPostsByUserName(userName)));
 	}
 
 	@GetMapping("/{user_name}/posts/{title}")
-	public ResponseEntity<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
+	public EntityModel<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
 			@PathVariable("title") String title) {
-		return ResponseEntity.of(Optional.of(this.postService.fetchPostByUserNameAndTitle(userName, title)));
+		PostDTO postDTO = this.postService.fetchPostByUserNameAndTitle(userName, title);
+
+		Link linkTo = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getPostByUserNameAndTitle(userName, title))
+				.withSelfRel();
+
+		Link getAllPostsLink = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getPostsByUserName(userName))
+				.withRel("get-all-posts-by-username");
+
+		return EntityModel.of(postDTO, linkTo, getAllPostsLink);
 	}
 
 	@PostMapping("/{user_name}/posts/")
