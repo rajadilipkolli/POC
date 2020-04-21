@@ -15,6 +15,7 @@
  */
 package com.poc.restfulpoc.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -26,7 +27,9 @@ public class Records {
 
 	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 	public record PostsDTO(List<PostDTO> postList) {
-
+		public PostsDTO() {
+			this(new ArrayList<>());
+		}
 	}
 
 }

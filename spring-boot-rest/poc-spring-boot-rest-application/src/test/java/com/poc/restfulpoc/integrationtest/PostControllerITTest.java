@@ -22,6 +22,7 @@ import java.util.Collections;
 import com.poc.restfulpoc.AbstractRestFulPOCApplicationTest;
 import com.poc.restfulpoc.dto.PostCommentsDTO;
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.Records.PostsDTO;
 import com.poc.restfulpoc.dto.TagDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -58,11 +59,12 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	@Test
 	void test01_FetchingPostsByUserId() {
-		ResponseEntity<PostDTO[]> response = userRestTemplate().getForEntity("/users/raja/posts", PostDTO[].class);
+		ResponseEntity<PostsDTO> response = userRestTemplate().getForEntity("/users/raja/posts", PostsDTO.class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).isNotNull().hasSize(1);
-		PostDTO postDTO = response.getBody()[0];
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().postList()).isNotEmpty().hasSize(1);
+		PostDTO postDTO = response.getBody().postList().get(0);
 		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2).contains(
 				PostCommentsDTO.builder().review("Excellent").build(),
 				PostCommentsDTO.builder().review("Good").build());
@@ -119,10 +121,11 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 	@Test
 	void test04_DeletingPost() {
 		adminRestTemplate().delete("/users/junit/posts/" + this.postDto.getTitle());
-		ResponseEntity<PostDTO[]> response = userRestTemplate().getForEntity("/users/junit/posts", PostDTO[].class);
+		ResponseEntity<PostsDTO> response = userRestTemplate().getForEntity("/users/junit/posts", PostsDTO.class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).isNotNull().hasSize(0);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().postList()).isEmpty();
 	}
 
 }
