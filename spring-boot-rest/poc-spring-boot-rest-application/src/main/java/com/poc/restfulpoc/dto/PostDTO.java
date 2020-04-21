@@ -28,13 +28,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.hateoas.RepresentationModel;
+
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
+public class PostDTO extends RepresentationModel<PostDTO> {
 
 	@NotBlank(message = "Title of post is mandatory")
 	private String title;

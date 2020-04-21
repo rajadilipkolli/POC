@@ -22,6 +22,7 @@ import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 /**
@@ -31,6 +32,7 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
  *
  */
 @Configuration
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class WebConfig {
 
 	private static final String PLACEHOLDER_METHOD_NAME = "$[methodName]";

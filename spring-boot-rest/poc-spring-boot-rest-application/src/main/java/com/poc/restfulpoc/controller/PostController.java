@@ -17,14 +17,16 @@ package com.poc.restfulpoc.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import com.poc.restfulpoc.dto.PostDTO;
+import com.poc.restfulpoc.dto.Records.PostsDTO;
 import com.poc.restfulpoc.service.PostService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -47,26 +49,33 @@ public class PostController {
 
 	private final PostService postService;
 
-	@GetMapping("/{user_name}/posts")
-	public ResponseEntity<List<PostDTO>> getPostsByUserName(@PathVariable("user_name") String userName) {
+	BiFunction<String, PostDTO, PostDTO> addLinkToPostBiFunction = (userName, postDTO) -> {
+		Link linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PostController.this.getClass())
+				.getPostByUserNameAndTitle(userName, postDTO.getTitle())).withSelfRel();
+		postDTO.add(linkTo);
+		return postDTO;
+	};
 
-		return ResponseEntity.of(Optional.of(this.postService.fetchAllPostsByUserName(userName)));
+	@GetMapping("/{user_name}/posts")
+	public ResponseEntity<PostsDTO> getPostsByUserName(@PathVariable("user_name") String userName) {
+
+		List<PostDTO> posts = this.postService.fetchAllPostsByUserName(userName).stream()
+				.map(postDTO -> addLinkToPostBiFunction.apply(userName, postDTO)).collect(Collectors.toList());
+		return ResponseEntity.of(Optional.of(new PostsDTO(posts)));
 	}
 
 	@GetMapping("/{user_name}/posts/{title}")
-	public EntityModel<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
+	public ResponseEntity<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
 			@PathVariable("title") String title) {
-		PostDTO postDTO = this.postService.fetchPostByUserNameAndTitle(userName, title);
-
-		Link linkTo = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getPostByUserNameAndTitle(userName, title))
-				.withSelfRel();
+		PostDTO postDTO = addLinkToPostBiFunction.apply(userName,
+				this.postService.fetchPostByUserNameAndTitle(userName, title));
 
 		Link getAllPostsLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getPostsByUserName(userName))
 				.withRel("get-all-posts-by-username");
+		postDTO.add(getAllPostsLink);
 
-		return EntityModel.of(postDTO, linkTo, getAllPostsLink);
+		return ResponseEntity.of(Optional.of(postDTO));
 	}
 
 	@PostMapping("/{user_name}/posts/")
