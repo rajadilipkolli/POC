@@ -14,6 +14,8 @@ import { FooterComponent } from './footer/footer.component';
 import { LogoutComponent } from './logout/logout.component';
 import { HttpInterceptorBasicAuthService } from './service/http/http-interceptor-basic-auth.service';
 import { PostComponent } from './post/post.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { PostComponent } from './post/post.component';
     MenuComponent,
     FooterComponent,
     LogoutComponent,
-    PostComponent
+    PostComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { PostComponent } from './post/post.component';
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorBasicAuthService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorBasicAuthService, multi: true },
+      DatePipe
   ],
   bootstrap: [AppComponent]
 })

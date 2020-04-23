@@ -44,6 +44,7 @@ public interface PostMapper {
 	@Mapping(target = "comments", ignore = true)
 	@Mapping(target = "tags", ignore = true)
 	@Mapping(target = "details", ignore = true)
+	@Mapping(source = "createdOn", target = "createdOn")
 	Post postDtoToPostIgnoringChild(PostDTO postDTO);
 
 	@Mapping(target = "createdOn", ignore = true)
@@ -53,13 +54,13 @@ public interface PostMapper {
 	Tag tagDTOToTag(TagDTO tagDTO);
 
 	@Mapping(target = "id", ignore = true)
+	@Mapping(source = "createdOn", target = "createdOn")
 	PostDetails postDTOToPostDetails(PostDTO postDTO);
 
 	@Mapping(target = "details", ignore = true)
 	@Mapping(target = "createdOn", ignore = true)
 	void updateReferenceValues(PostDTO postDTO, @MappingTarget Post post);
 
-	@Mapping(target = "details", ignore = true)
 	Post postDtoToPost(PostDTO postDTO);
 
 	List<PostComment> postCommentsDTOListToPostCommentList(List<PostCommentsDTO> comments);

@@ -1,11 +1,15 @@
 {
     "configurations": [
+        
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Application",
+            "name": "Spring Boot-Application<poc-spring-boot-rest-application>",
             "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
             "mainClass": "com.poc.restfulpoc.Application",
-            "projectName": "poc-spring-boot-rest-application"
+            "projectName": "poc-spring-boot-rest-application",
+            "args": ""
         },
         {
             "type": "java",

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -60,6 +61,7 @@ public class Post {
 
 	private String title;
 
+	@Column(length = 4096)
 	private String content;
 
 	private LocalDateTime createdOn;
@@ -106,7 +108,6 @@ public class Post {
 	public void addTag(Tag tag) {
 		PostTag postTag = new PostTag(this, tag);
 		this.tags.add(postTag);
-		tag.getPosts().add(postTag);
 	}
 
 	public void removeTag(Tag tag) {
@@ -115,7 +116,6 @@ public class Post {
 
 			if (postTag.getPost().equals(this) && postTag.getTag().equals(tag)) {
 				iterator.remove();
-				postTag.getTag().getPosts().remove(postTag);
 				postTag.setPost(null);
 				postTag.setTag(null);
 			}

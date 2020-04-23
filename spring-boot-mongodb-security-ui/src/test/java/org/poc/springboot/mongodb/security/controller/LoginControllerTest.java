@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.poc.springboot.mongodb.security.config.CustomizeAuthenticationSuccessHandler;
 import org.poc.springboot.mongodb.security.service.CustomUserDetailsServiceImpl;
 import org.poc.springboot.mongodb.security.util.MockObjectCreator;
@@ -82,7 +83,8 @@ class LoginControllerTest {
 
 	@Test
 	void testCreateNewUser_whenUserExists() throws Exception {
-		given(this.userService.findUserByEmail("junit@email.com")).willReturn(Optional.of(MockObjectCreator.getUser()));
+		given(this.userService.findUserByEmail(ArgumentMatchers.eq(null)))
+				.willReturn(Optional.of(MockObjectCreator.getUser()));
 
 		this.mockMvc
 				.perform(post("/signup").content(asJsonString(MockObjectCreator.getUser()))

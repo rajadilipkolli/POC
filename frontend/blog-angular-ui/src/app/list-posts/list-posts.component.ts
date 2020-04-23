@@ -2,12 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { PostDataService } from '../service/data/post-data.service';
 import { Router } from '@angular/router';
 
+
+export class PostList {
+  constructor(
+    public postList: Post[]
+  ) {
+
+  }
+}
+
 export class Post {
   constructor(
     public title: string,
     public content: string,
     public createdBy: string,
-    public createdOn: Date,
+    public createdOn: string,
     public comments: Comment[],
     public tags: Tag[]
   ) {
@@ -56,8 +65,8 @@ export class ListPostsComponent implements OnInit {
     this.refreshPosts();
   }
 
-  handleRetrieveAllPostsResponse(response: Post[]): void {
-    this.posts = response;
+  handleRetrieveAllPostsResponse(response: PostList): void {
+    this.posts = response.postList;
   }
 
   deletePost(postTitle: string) {
@@ -82,7 +91,7 @@ export class ListPostsComponent implements OnInit {
   }
 
   createPost(){
-    this.router.navigate(['posts', -1]);
+    this.router.navigate(['createpost']);
   }
 
 }

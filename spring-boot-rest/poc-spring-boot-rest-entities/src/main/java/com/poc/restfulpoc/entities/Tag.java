@@ -57,9 +57,6 @@ public class Tag {
 	@Column(nullable = false, unique = true)
 	private String name;
 
-	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PostTag> posts = new ArrayList<>();
-
 	public Tag(String name) {
 		this.name = name;
 	}

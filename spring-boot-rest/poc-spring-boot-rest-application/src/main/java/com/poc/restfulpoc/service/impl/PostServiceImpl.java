@@ -46,10 +46,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
-		Post postWithComments = this.postRepository.findByDetailsCreatedByAndTitle(userName, title);
-		Post post = this.postRepository.findPostsWithAllDetails(List.of(postWithComments)).get(0);
+		Post post = this.postRepository.findByDetailsCreatedByAndTitle(userName, title);
 		return this.postMapper.mapPostToDTO(post);
 	}
 
@@ -71,8 +69,7 @@ public class PostServiceImpl implements PostService {
 	public PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title) {
 		// https://vladmihalcea.com/hibernate-multiplebagfetchexception/
 		// Key is to run in same transaction
-		Post postWithComments = this.postRepository.findByDetailsCreatedByAndTitle(postDTO.getCreatedBy(), title);
-		Post post = this.postRepository.findPostsWithAllDetails(List.of(postWithComments)).get(0);
+		Post post = this.postRepository.findByDetailsCreatedByAndTitle(postDTO.getCreatedBy(), title);
 		this.postMapper.updateReferenceValues(postDTO, post);
 		return this.postMapper.mapPostToDTO(this.postRepository.save(post));
 	}

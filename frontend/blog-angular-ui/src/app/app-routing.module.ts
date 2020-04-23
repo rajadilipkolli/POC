@@ -7,6 +7,7 @@ import { ListPostsComponent } from './list-posts/list-posts.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RouteGaurdService } from './service/route-gaurd.service';
 import { PostComponent } from './post/post.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 // welcome
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent, canActivate: [RouteGaurdService] },
   { path: 'posts', component: ListPostsComponent, canActivate: [RouteGaurdService] },
   { path: 'posts/:title', component: PostComponent, canActivate: [RouteGaurdService]},
+  { path: 'createpost', component: CreatePostComponent, canActivate: [RouteGaurdService]},
   { path: '**', component: ErrorComponent }
 ];
 

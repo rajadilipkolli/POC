@@ -1,5 +1,5 @@
 {
-    "java.home": "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.6.10-hotspot",
+    "java.home": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.0.36-hotspot",
     "java.configuration.runtimes": [
         {
           "name": "JavaSE-1.8",
@@ -8,7 +8,12 @@
         {
           "name": "JavaSE-11",
           "path": "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.6.10-hotspot",
-          "javadoc" : "https://docs.oracle.com/en/java/javase/11/docs/api",
+          "javadoc" : "https://docs.oracle.com/en/java/javase/11/docs/api"
+         },
+         {
+          "name": "JavaSE-14",
+          "path": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.0.36-hotspot",
+          "javadoc" : "https://docs.oracle.com/en/java/javase/14/docs/api",
           "default":  true
          }
       ],

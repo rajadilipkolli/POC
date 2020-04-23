@@ -78,9 +78,9 @@ class CustomerServiceTest {
 
 	@Test
 	void testGetCustomer() throws EntityNotFoundException {
-		Customer cust = this.customerService.getCustomer(RandomUtils.nextLong());
-		assertThat(cust).isNotNull();
-		assertThat(cust.getFirstName()).isEqualTo("firstName");
+		Customer customer = this.customerService.getCustomer(RandomUtils.nextLong());
+		assertThat(customer).isNotNull();
+		assertThat(customer.getFirstName()).isEqualTo("firstName");
 
 		try {
 			this.customerService.getCustomer(0L);

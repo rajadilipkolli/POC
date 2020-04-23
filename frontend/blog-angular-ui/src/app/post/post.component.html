@@ -1,14 +1,14 @@
 <h1>Post</h1>
 
 <div class="container">
-    <div class="alert alert-warning" *ngIf="postForm.dirty && postForm.invalid">Enter valid values</div>
+    <div class="alert alert-warning" *ngIf="postForm.dirty && postForm.invalid">Enter valid </div>
     <!-- <div class="alert alert-warning" *ngIf="postForm.dirty && createdOn.invalid">Enter valid Target Date</div> -->
 
     <form (ngSubmit)="!postForm.invalid && updatePost()" #postForm="ngForm">
 
         <fieldset class="form-group">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" [(ngModel)]="post.title" class="form-control" />
+            <input type="text" name="title" id="title" [ngModel]="post.title" class="form-control" readonly />
         </fieldset>
 
         <fieldset class="form-group">

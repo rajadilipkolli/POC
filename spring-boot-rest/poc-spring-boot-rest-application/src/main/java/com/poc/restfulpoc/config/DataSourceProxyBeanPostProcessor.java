@@ -29,15 +29,16 @@ import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.boot.test.context.TestComponent;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
-@TestComponent
+@Component
 @Slf4j
 public class DataSourceProxyBeanPostProcessor implements BeanPostProcessor {
 
 	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) {
+	public Object postProcessAfterInitialization(@NonNull Object bean, @NonNull String beanName) {
 
 		if (bean instanceof DataSource) {
 

@@ -29,8 +29,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -67,7 +67,7 @@ public class LoginController {
 	}
 
 	@PostMapping("/signup")
-	public ModelAndView createNewUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		Optional<User> userExists = this.userService.findUserByEmail(user.getEmail());
 		if (userExists.isPresent()) {

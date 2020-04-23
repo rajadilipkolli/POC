@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.poc.restfulpoc.config.DataSourceProxyBeanPostProcessor;
 import com.poc.restfulpoc.data.DataBuilder;
 import com.poc.restfulpoc.entities.Customer;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,8 +38,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.restdocs.RestDocumentationExtension;
 
 @ExtendWith({ RestDocumentationExtension.class })
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
-		classes = { Application.class, DataSourceProxyBeanPostProcessor.class })
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(DataBuilder.class)
 public abstract class AbstractRestFulPOCApplicationTest {
 
