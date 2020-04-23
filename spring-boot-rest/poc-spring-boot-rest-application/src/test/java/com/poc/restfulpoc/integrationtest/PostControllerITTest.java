@@ -63,7 +63,7 @@ class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().postList()).isNotEmpty().hasSize(1);
+		assertThat(response.getBody().postList()).isNotEmpty().hasSize(2);
 		PostDTO postDTO = (PostDTO) response.getBody().postList().get(0);
 		assertThat(postDTO.getComments()).isNotEmpty().hasSize(2).contains(
 				PostCommentsDTO.builder().review("Excellent").build(),

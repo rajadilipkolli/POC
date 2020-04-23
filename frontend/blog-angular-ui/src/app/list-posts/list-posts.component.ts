@@ -90,7 +90,7 @@ export class ListPostsComponent implements OnInit {
     this.router.navigate(['posts', postTitle]);
   }
 
-  createPost(){
+  createPost() {
     this.router.navigate(['createpost']);
   }
 
