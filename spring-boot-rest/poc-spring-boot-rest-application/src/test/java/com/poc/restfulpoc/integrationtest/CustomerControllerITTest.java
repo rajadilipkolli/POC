@@ -135,7 +135,7 @@ class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 		customer.setAddress(
 				Address.builder().street("Main Street").town("Portadown").county("Armagh").postcode("BT359JK").build());
 		ResponseEntity<Customer> response = userRestTemplate().postForEntity(BASE_URL, customer, Customer.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 		customer.setDateOfBirth(LocalDateTime.of(1984, Month.MARCH, 8, 0, 0));
 		response = userRestTemplate().postForEntity(BASE_URL, customer, Customer.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);

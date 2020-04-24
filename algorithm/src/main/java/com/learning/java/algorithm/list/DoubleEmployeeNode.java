@@ -5,18 +5,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmployeeNode {
+public class DoubleEmployeeNode {
 
-    private Employee employee;
+    private final Employee employee;
 
-    private EmployeeNode next;
+    private DoubleEmployeeNode next;
 
-    public EmployeeNode(Employee employee) {
+    private DoubleEmployeeNode previous;
+
+    public DoubleEmployeeNode(Employee employee) {
         this.employee = employee;
     }
 
+    @Override
     public String toString() {
         return employee.toString();
     }
-
 }

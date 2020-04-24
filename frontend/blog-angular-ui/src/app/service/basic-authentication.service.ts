@@ -4,8 +4,8 @@ import { PingResponse } from './data/welcome-data.service';
 import { map } from 'rxjs/operators';
 
 
-export const TOKEN = 'token'
-export const AUTHENTICATED_USER = 'authenticaterUser'
+export const TOKEN = 'token';
+export const AUTHENTICATED_USER = 'authenticaterUser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +13,22 @@ export const AUTHENTICATED_USER = 'authenticaterUser'
 export class BasicAuthenticationService {
 
   constructor(
-    private http: HttpClient
+    private httpClient: HttpClient
   ) { }
 
   executeAuthenticationService(username: string, password: string) {
 
-    let basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
+    const basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
 
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: basicAuthHeaderString
     });
-
-    return this.http.get<PingResponse>(`http://localhost:8080/ping`,
+    console.log(`heders set ${headers}`);
+    return this.httpClient.get<PingResponse>(`http://localhost:8080/pingWithAuthentication`,
       { headers }).pipe(
         map(
-          (data: any) => {
+          data => {
+            console.log(`inside basic authentication ${username} & token ${basicAuthHeaderString}`);
             sessionStorage.setItem(AUTHENTICATED_USER, username);
             sessionStorage.setItem(TOKEN, basicAuthHeaderString);
             return data;
@@ -37,16 +38,22 @@ export class BasicAuthenticationService {
   }
 
   getAuthenticatedUser() {
-    return sessionStorage.getItem(AUTHENTICATED_USER)
+    return sessionStorage.getItem(AUTHENTICATED_USER);
+  }
+
+  getAuthenticatedToken() {
+    if (this.getAuthenticatedUser()) {
+      return sessionStorage.getItem(TOKEN);
+    }
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem(AUTHENTICATED_USER)
-    return !(user === null)
+    const user = sessionStorage.getItem(AUTHENTICATED_USER);
+    return !(user === null);
   }
 
   logout() {
-    sessionStorage.removeItem(AUTHENTICATED_USER)
-    sessionStorage.removeItem(TOKEN)
+    sessionStorage.removeItem(AUTHENTICATED_USER);
+    sessionStorage.removeItem(TOKEN);
   }
 }

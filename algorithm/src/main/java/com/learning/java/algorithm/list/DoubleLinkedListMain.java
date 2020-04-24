@@ -1,6 +1,6 @@
 package com.learning.java.algorithm.list;
 
-public class SingleLinkedListMain {
+public class DoubleLinkedListMain {
 
     public static void main(String[] args) {
 
@@ -9,7 +9,7 @@ public class SingleLinkedListMain {
         Employee marySmith = new Employee("Mary", "Smith", 22);
         Employee mikeWilson = new Employee("Mike", "Wilson", 3245);
 
-        EmployeeLinkedList list = new EmployeeLinkedList();
+        EmployeeDoubleLinkedList list = new EmployeeDoubleLinkedList();
 
         System.out.println(list.isEmpty());
 
@@ -26,6 +26,25 @@ public class SingleLinkedListMain {
         System.out.println(list.getSize());
         list.printList();
 
+        list.addToEnd(mikeWilson);
+        System.out.println(list.getSize());
+        list.printList();
+
+        System.out.println("Removing from Last");
+        list.removeFromLast();
+        list.removeFromLast();
+        list.removeFromLast();
+        list.removeFromLast();
+
+        System.out.println(list.getSize());
+        list.printList();
+
+        list.addToFront(janeJones);
+        list.addToEnd(johnDoe);
+        list.addToFront(marySmith);
+        list.addToEnd(mikeWilson);
+        System.out.println(list.getSize());
+        list.printList();
     }
 
 }

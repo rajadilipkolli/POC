@@ -15,50 +15,37 @@
  */
 package com.poc.restfulpoc.config.swagger;
 
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
-import org.springframework.http.ResponseEntity;
 import org.springframework.plugin.core.SimplePluginRegistry;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration(proxyBeanMethods = false)
-@EnableSwagger2
 public class SwaggerConfig {
 
 	@Bean
-	public Docket api(SwaggerConfigProperties swaggerConfigProperties) {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo(swaggerConfigProperties))
-				.enable(swaggerConfigProperties.isEnabled()).select().apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any()).build().pathMapping("/")
-				.directModelSubstitute(LocalDate.class, String.class).genericModelSubstitutes(ResponseEntity.class)
-				.useDefaultResponseMessages(swaggerConfigProperties.isUseDefaultResponseMessages())
-				.enableUrlTemplating(swaggerConfigProperties.isUrlTemplatingEnabled());
-	}
-
-	private ApiInfo apiInfo(SwaggerConfigProperties swaggerConfigProperties) {
-		return new ApiInfoBuilder().title(swaggerConfigProperties.getTitle())
-				.description(swaggerConfigProperties.getDescription()).version(swaggerConfigProperties.getApiVersion())
-				.build();
+	public OpenAPI springShopOpenAPI() {
+		return new OpenAPI()
+				.info(new Info().title("SpringShop API").description("Spring shop sample application").version("v0.0.1")
+						.license(new License().name("Apache 2.0").url("http://springdoc.org")))
+				.externalDocs(new ExternalDocumentation().description("SpringShop Wiki Documentation")
+						.url("https://springshop.wiki.github.org/docs"));
 	}
 
 	@Bean
 	public LinkDiscoverers discoverers() {
 		List<LinkDiscoverer> plugins = new ArrayList<>();
 		plugins.add(new CollectionJsonLinkDiscoverer());
-		return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
+		return new LinkDiscoverers(SimplePluginRegistry.of(plugins));
 	}
 
 }

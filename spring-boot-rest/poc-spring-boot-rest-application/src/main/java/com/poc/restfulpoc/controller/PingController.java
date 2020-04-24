@@ -18,6 +18,7 @@ package com.poc.restfulpoc.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +27,11 @@ public class PingController {
 
 	@GetMapping("/ping")
 	public ResponseEntity<String> ping() {
+		return ResponseEntity.ok("{\"message\":\"Welcome to spring boot !!\"}");
+	}
+
+	@GetMapping("/pingWithAuthentication")
+	public ResponseEntity<String> postPing() {
 		return ResponseEntity.ok("{\"message\":\"Welcome to spring boot !!\"}");
 	}
 
