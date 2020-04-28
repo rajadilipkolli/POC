@@ -23,6 +23,7 @@ import com.poc.restfulpoc.dto.PostCommentProjection;
 import com.poc.restfulpoc.entities.Post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
@@ -52,6 +53,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, CustomizedPos
 	@QueryHints(@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"))
 	List<Post> findPostsWithAllDetails(@Param("posts") List<Post> postList);
 
+	@Modifying
 	void deleteByTitleAndDetailsCreatedBy(String title, String username);
 
 }
