@@ -60,14 +60,14 @@ public class PostController {
 	public ResponseEntity<PostsDTO> getPostsByUserName(@PathVariable("user_name") String userName) {
 
 		List<PostDTO> posts = this.postService.fetchAllPostsByUserName(userName).stream()
-				.map(postDTO -> addLinkToPostBiFunction.apply(userName, postDTO)).collect(Collectors.toList());
+				.map(postDTO -> this.addLinkToPostBiFunction.apply(userName, postDTO)).collect(Collectors.toList());
 		return ResponseEntity.of(Optional.of(new PostsDTO(posts)));
 	}
 
 	@GetMapping("/{user_name}/posts/{title}")
 	public ResponseEntity<PostDTO> getPostByUserNameAndTitle(@PathVariable("user_name") String userName,
 			@PathVariable("title") String title) {
-		PostDTO postDTO = addLinkToPostBiFunction.apply(userName,
+		PostDTO postDTO = this.addLinkToPostBiFunction.apply(userName,
 				this.postService.fetchPostByUserNameAndTitle(userName, title));
 
 		Link getAllPostsLink = WebMvcLinkBuilder

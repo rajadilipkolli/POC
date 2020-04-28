@@ -13,21 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.poc.restfulpoc.repository.impl;
+package com.poc.restfulpoc.repository;
 
-import java.util.function.Function;
+import com.poc.restfulpoc.entities.Post;
 
-import javax.persistence.EntityManager;
+public interface CustomizedPostRepository {
 
-@FunctionalInterface
-public interface JPATransactionFunction<T> extends Function<EntityManager, T> {
-
-	default void beforeTransactionCompletion() {
-
-	}
-
-	default void afterTransactionCompletion() {
-
-	}
+	Post findByDetailsCreatedByAndTitle(String userName, String title);
 
 }

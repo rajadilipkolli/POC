@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long>, CustomPostRepository {
+public interface PostRepository extends JpaRepository<Post, Long>, CustomizedPostRepository {
 
 	@Query("SELECT p.title as title, p.content as content, c.review as review FROM Post p JOIN p.comments c where p.title = :title")
 	@Transactional(readOnly = true)

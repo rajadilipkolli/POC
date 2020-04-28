@@ -9,4 +9,5 @@
     <suppress files=".\.java" checks="SpringLambda" />
 	<suppress files=".+Test\.java" checks="AvoidStaticImport" />
 	<suppress files=".\.java" checks="NewlineAtEndOfFile" />
+	<suppress files="Records\.java" checks="AvoidNestedBlocks" />
 </suppressions>

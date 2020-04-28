@@ -133,13 +133,13 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>${maven-checkstyle-plugin.version}</version>
 				<configuration>
-					<skip>true</skip>
+					<skip>false</skip>
 				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>8.31</version>
+						<version>8.32</version>
 					</dependency>
 					<dependency>
 						<groupId>io.spring.javaformat</groupId>
@@ -208,7 +208,7 @@
 	<modules>
 		<module>mongodb-redis-integration</module>
 		<module>spring-boot-rest</module>
-		<module>spring-boot-mongodb-security-ui</module>
 		<module>spring-boot-rabbitmq</module>
+		<module>spring-boot-mongodb-security-ui</module>
 	</modules>
 </project>

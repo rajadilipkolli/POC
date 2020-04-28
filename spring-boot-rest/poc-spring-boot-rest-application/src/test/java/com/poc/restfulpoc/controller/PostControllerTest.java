@@ -50,9 +50,9 @@ class PostControllerTest {
 
 	@Test
 	void shouldReturnAllPostsWithLinks() throws Exception {
-		given(postService.fetchAllPostsByUserName("junit")).willReturn(List.of(MockObjectCreator.getPostDTO()));
+		given(this.postService.fetchAllPostsByUserName("junit")).willReturn(List.of(MockObjectCreator.getPostDTO()));
 
-		mvc.perform(get("/users/junit/posts").accept(MediaTypes.HAL_JSON_VALUE)) //
+		this.mvc.perform(get("/users/junit/posts").accept(MediaTypes.HAL_JSON_VALUE)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
 				.andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)) //

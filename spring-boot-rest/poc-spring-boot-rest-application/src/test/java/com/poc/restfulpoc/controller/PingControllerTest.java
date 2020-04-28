@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -34,6 +35,13 @@ class PingControllerTest {
 	@Test
 	void shouldReturnResponse() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/ping")).andExpect(status().isOk())
+				.andExpect(jsonPath("message").value("Welcome to spring boot !!"));
+	}
+
+	@Test
+	@WithMockUser(roles = "USER")
+	void shouldReturnResponseWhenAuthenticationIsSent() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/pingWithAuthentication")).andExpect(status().isOk())
 				.andExpect(jsonPath("message").value("Welcome to spring boot !!"));
 	}
 

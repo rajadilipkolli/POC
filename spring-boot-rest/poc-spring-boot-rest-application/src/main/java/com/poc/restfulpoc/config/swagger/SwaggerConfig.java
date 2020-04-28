@@ -15,19 +15,20 @@
  */
 package com.poc.restfulpoc.config.swagger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration(proxyBeanMethods = false)
 public class SwaggerConfig {

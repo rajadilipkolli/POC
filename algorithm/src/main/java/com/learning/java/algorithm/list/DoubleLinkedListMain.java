@@ -8,6 +8,7 @@ public class DoubleLinkedListMain {
         Employee johnDoe = new Employee("John", "Doe", 4567);
         Employee marySmith = new Employee("Mary", "Smith", 22);
         Employee mikeWilson = new Employee("Mike", "Wilson", 3245);
+        Employee billEnd = new Employee("Bill", "End", 78);
 
         EmployeeDoubleLinkedList list = new EmployeeDoubleLinkedList();
 
@@ -44,6 +45,10 @@ public class DoubleLinkedListMain {
         list.addToFront(marySmith);
         list.addToEnd(mikeWilson);
         System.out.println(list.getSize());
+        list.printList();
+
+        list.addBefore(billEnd, johnDoe);
+        list.addBefore(new Employee("Someone", "Else", 1111), marySmith);
         list.printList();
     }
 

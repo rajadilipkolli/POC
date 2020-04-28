@@ -94,10 +94,11 @@ public class Order implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Order order)) {
+		if (!(obj instanceof Order)) {
 			return false;
 		}
-        return Objects.equals(order.orderNumber, this.orderNumber);
+		Order order = (Order) obj;
+		return Objects.equals(order.orderNumber, this.orderNumber);
 	}
 
 	@Override

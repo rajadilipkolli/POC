@@ -27,7 +27,7 @@ public class Records {
 
 	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 	public record PostsDTO(List<PostDTO> postList) {
-		public PostsDTO() {
+		PostsDTO() {
 			this(new ArrayList<>());
 		}
 	}
