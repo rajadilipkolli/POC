@@ -20,7 +20,7 @@
                 <td>{{post.title | uppercase}}</td>
                 <td>{{post.content}}</td>
                 <td>{{post.createdOn | date:'MMM d, y, h:mm:ss a'}}</td>
-                <td>{{post.createdBy}}</td>
+                <td>{{post.createdBy | titlecase}}</td>
                 <td>
                     <li *ngFor="let comment of post.comments">{{comment.review}}</li>
                 </td>

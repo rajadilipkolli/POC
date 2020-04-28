@@ -4,14 +4,18 @@
                 SourceCode</a></div>
 
         <ul class="navbar-nav">
-            <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/welcome/raja" class="nav-link">Home</a></li>
-            <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/posts" class="nav-link">Posts</a></li>
+            <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/welcome/raja" class="nav-link">Home</a></li> -->
+            <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/posts" class="nav-link">Posts</a></li> -->
+            <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" routerLink="/welcome/raja" class="nav-link">Home</a></li>
+            <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" routerLink="/posts" class="nav-link">Posts</a></li>
         </ul>
 
         <!-- As menu is refreshed only once data is not availabe, hence calling method directly-->
         <ul class="navbar-nav navbar-collapse justify-content-end">
-            <li><a *ngIf="!hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
-            <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li>
+            <!-- <li><a *ngIf="!hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li> -->
+            <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li> -->
+            <li><a *ngIf="!basicAuthenticationService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+            <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li>
         </ul>
     </nav>
 </header>

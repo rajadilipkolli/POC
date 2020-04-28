@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PingResponse } from './data/welcome-data.service';
 import { map } from 'rxjs/operators';
+import { API_URL } from '../app.constants';
 
 
 export const TOKEN = 'token';
@@ -23,8 +24,8 @@ export class BasicAuthenticationService {
     const headers = new HttpHeaders({
       Authorization: basicAuthHeaderString
     });
-    console.log(`heders set ${headers}`);
-    return this.httpClient.get<PingResponse>(`http://localhost:8080/pingWithAuthentication`,
+
+    return this.httpClient.get<PingResponse>(`${API_URL}/pingWithAuthentication`,
       { headers }).pipe(
         map(
           data => {

@@ -40,10 +40,10 @@ export class LoginComponent implements OnInit {
   handleBasicAuthLogin() {
     // console.log(this.username);
     // if(this.username==="username" && this.password === 'password') {
+
     this.basicAuthenticationService.executeAuthenticationService(this.userName, this.passWord)
       .subscribe(
-        data => {
-          console.log(data);
+        respone => {
           this.router.navigate(['welcome', this.userName]);
           this.invalidLogin = false;
         },
