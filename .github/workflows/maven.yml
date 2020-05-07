@@ -44,6 +44,16 @@ jobs:
         java-version: 14
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Cache
+      uses: actions/cache@v1.1.2
+      with:
+        # A directory to store and save the cache
+        path: ~/.m2/repository
+        # An explicit key for restoring and saving the cache
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+        restore-keys: |
+          ${{ runner.os }}-maven-
     - name: Codecov
       uses: codecov/codecov-action@v1.0.6
 
