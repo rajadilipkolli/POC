@@ -43,7 +43,7 @@ jobs:
       with:
         java-version: 14
     - name: Cache
-      uses: actions/cache@v1.1.2
+      uses: actions/cache@v2.1.0
       with:
         # A directory to store and save the cache
         path: ~/.m2/repository
