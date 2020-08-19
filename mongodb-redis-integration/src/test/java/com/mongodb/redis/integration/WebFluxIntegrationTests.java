@@ -101,13 +101,6 @@ public class WebFluxIntegrationTests {
 				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
 				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
 				.isEqualTo("size must be between 0 and 140");
-
-		book = Book.builder().build();
-		this.webTestClient.post().uri("/books").contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus()
-				.isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
-				.jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
-				.isEqualTo("must not be blank");
 	}
 
 	@Test
