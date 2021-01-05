@@ -22,7 +22,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>14</java.version>
 		<main.basedir>${project.basedir}</main.basedir>
-		<spring-javaformat.version>0.0.25</spring-javaformat.version>
+		<spring-javaformat.version>0.0.26</spring-javaformat.version>
 		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
 	</properties>
 	
