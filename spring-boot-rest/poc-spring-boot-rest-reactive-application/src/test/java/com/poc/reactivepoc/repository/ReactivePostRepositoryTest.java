@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 the original author or authors.
+ * Copyright 2018-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.reactivepoc.repository;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import reactor.test.StepVerifier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.r2dbc.core.DatabaseClient;
 
 @DataR2dbcTest
 class ReactivePostRepositoryTest {
@@ -46,7 +47,7 @@ class ReactivePostRepositoryTest {
 				"DROP TABLE IF EXISTS reactive_posts;",
 				"CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, title VARCHAR(100) NOT NULL, content VARCHAR(100) NOT NULL);");
 
-		statements.forEach(it -> this.databaseClient.execute(it) //
+		statements.forEach(statement -> this.databaseClient.sql(statement) //
 				.fetch() //
 				.rowsUpdated() //
 				.as(StepVerifier::create) //
