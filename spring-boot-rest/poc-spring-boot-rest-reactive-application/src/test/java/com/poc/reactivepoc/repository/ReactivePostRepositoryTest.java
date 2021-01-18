@@ -47,7 +47,7 @@ class ReactivePostRepositoryTest {
 				"DROP TABLE IF EXISTS reactive_posts;",
 				"CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, title VARCHAR(100) NOT NULL, content VARCHAR(100) NOT NULL);");
 
-		statements.forEach(it -> this.databaseClient.execute(it) //
+		statements.forEach(statement -> this.databaseClient.sql(statement) //
 				.fetch() //
 				.rowsUpdated() //
 				.as(StepVerifier::create) //
