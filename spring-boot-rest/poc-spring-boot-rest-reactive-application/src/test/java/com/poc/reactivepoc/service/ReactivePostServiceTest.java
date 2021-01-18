@@ -38,7 +38,7 @@ class ReactivePostServiceTest {
 
 	@Autowired
 	private PostService service;
-	
+
 	@AfterAll
 	void tearDown() {
 		Mono<Void> deleted = this.repository.deleteByIdNot(0);
