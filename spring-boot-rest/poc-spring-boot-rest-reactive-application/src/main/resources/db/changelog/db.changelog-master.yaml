@@ -28,7 +28,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  valueNumeric: 1
+                  valueNumeric: 0
               - column:
                   name: title
                   value: "First post title"
