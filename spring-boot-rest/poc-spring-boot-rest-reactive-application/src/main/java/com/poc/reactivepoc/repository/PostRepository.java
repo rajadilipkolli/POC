@@ -29,7 +29,7 @@ public interface PostRepository extends ReactiveCrudRepository<ReactivePost, Int
 
 	@Query("select id, title, content from reactive_posts p where p.content = :content")
 	Flux<ReactivePost> findByContent(String content);
-	
+
 	Mono<Void> deleteByIdNot(Integer integer);
 
 }
