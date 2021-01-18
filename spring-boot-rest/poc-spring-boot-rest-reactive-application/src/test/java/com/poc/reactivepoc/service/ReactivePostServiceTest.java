@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2020-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.poc.reactivepoc.service;
 
 import com.poc.reactivepoc.entity.ReactivePost;
 import com.poc.reactivepoc.repository.PostRepository;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -37,6 +38,12 @@ class ReactivePostServiceTest {
 
 	@Autowired
 	private PostService service;
+	
+	@AfterAll
+	void tearDown() {
+		Mono<Void> deleted = this.repository.deleteByIdNot(0);
+		StepVerifier.create(deleted).verifyComplete();
+	}
 
 	@Test
 	void getAll() {
