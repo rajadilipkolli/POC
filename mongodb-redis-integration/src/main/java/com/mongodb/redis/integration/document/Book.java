@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.mongodb.redis.integration.document;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
@@ -47,6 +49,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Book implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id

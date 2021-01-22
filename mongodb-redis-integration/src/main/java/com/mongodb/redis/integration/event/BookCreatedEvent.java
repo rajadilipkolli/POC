@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.mongodb.redis.integration.event;
+
+import java.io.Serial;
 
 import com.mongodb.redis.integration.document.Book;
 
@@ -21,6 +24,7 @@ import org.springframework.context.ApplicationEvent;
 
 public class BookCreatedEvent extends ApplicationEvent {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public BookCreatedEvent(Book book) {

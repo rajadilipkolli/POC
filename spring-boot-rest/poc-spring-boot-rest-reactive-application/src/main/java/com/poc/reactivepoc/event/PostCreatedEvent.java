@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.reactivepoc.event;
+
+import java.io.Serial;
 
 import com.poc.reactivepoc.entity.ReactivePost;
 
@@ -21,6 +24,7 @@ import org.springframework.context.ApplicationEvent;
 
 public class PostCreatedEvent extends ApplicationEvent {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public PostCreatedEvent(ReactivePost post) {
