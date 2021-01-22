@@ -43,7 +43,7 @@ class BookServiceTest {
 
 	@BeforeAll
 	void setUp() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		this.bookService = new BookServiceImpl(this.bookRepository, null);
 	}
 

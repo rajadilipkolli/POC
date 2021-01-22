@@ -61,7 +61,7 @@ class CustomerServiceTest {
 
 	@BeforeAll
 	void setUp() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		this.customerService = new CustomerServiceImpl(this.customerRepository, this.orderRepository, this.jmsTemplate);
 		given(this.customerRepository.findAll()).willReturn(Collections.singletonList(this.customer));
 		given(this.customerRepository.findById(ArgumentMatchers.anyLong())).willReturn(Optional.of(this.customer));
