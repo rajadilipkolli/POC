@@ -33,7 +33,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class BookRepositoryTest {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2015-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,16 @@
 
 package com.poc.restfulpoc.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Records {
 
 	public record RootValueDTO(String title, String content) {
 	}
 
-	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-	public record PostsDTO(List<PostDTO> postList) {
-		PostsDTO() {
-			this(new ArrayList<>());
-		}
+	public record PostsDTO(@JsonProperty("postList")List<PostDTO> postList) {
 	}
 
 }

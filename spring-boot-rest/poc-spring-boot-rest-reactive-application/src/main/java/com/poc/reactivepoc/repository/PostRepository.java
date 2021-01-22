@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2020-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.reactivepoc.repository;
 
 import com.poc.reactivepoc.entity.ReactivePost;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -27,5 +29,7 @@ public interface PostRepository extends ReactiveCrudRepository<ReactivePost, Int
 
 	@Query("select id, title, content from reactive_posts p where p.content = :content")
 	Flux<ReactivePost> findByContent(String content);
+
+	Mono<Void> deleteByIdNot(Integer integer);
 
 }
