@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.restfulpoc.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -31,6 +33,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostTagId implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "post_id")
