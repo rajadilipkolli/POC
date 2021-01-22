@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.restfulpoc.integrationtest;
 
 import java.time.LocalDateTime;
@@ -54,7 +55,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Raja Kolli
  *
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class CustomerControllerITTest extends AbstractRestFulPOCApplicationTest {
 

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.poc.restfulpoc.integrationtest;
 
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 class PostControllerITTest extends AbstractRestFulPOCApplicationTest {
 
 	private PostDTO postDto;

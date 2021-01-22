@@ -11,18 +11,18 @@
 	<description>Demo project for Spring Boot</description>
 	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.M4</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>2.5.0-M1</version>
+	    <relativePath/> <!-- lookup parent from repository -->
+	  </parent>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>14</java.version>
+		<java.version>15</java.version>
 		<main.basedir>${project.basedir}</main.basedir>
-		<spring-javaformat.version>0.0.25</spring-javaformat.version>
+		<spring-javaformat.version>0.0.27</spring-javaformat.version>
 		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
 	</properties>
 	
@@ -72,7 +72,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.8.6</version>
 				<executions>
 					<execution>
 						<goals>
@@ -139,7 +139,7 @@
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>8.36</version>
+						<version>8.39</version>
 					</dependency>
 					<dependency>
 						<groupId>io.spring.javaformat</groupId>

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.mongodb.redis.integration.service;
 
 import java.util.Optional;
@@ -43,7 +44,7 @@ class BookServiceTest {
 
 	@BeforeAll
 	void setUp() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		this.bookService = new BookServiceImpl(this.bookRepository, null);
 	}
 

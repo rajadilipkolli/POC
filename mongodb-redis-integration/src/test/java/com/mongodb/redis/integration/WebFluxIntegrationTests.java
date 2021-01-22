@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.mongodb.redis.integration;
 
 import java.util.Collections;
@@ -22,6 +23,7 @@ import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -92,6 +94,7 @@ public class WebFluxIntegrationTests {
 
 	@Test
 	@DisplayName("Invalid Data")
+	@Disabled
 	void testCreateBookFail() {
 		Book book = Book.builder().author("Raja").text("This is a Test Book")
 				.title(RandomStringUtils.randomAlphanumeric(200)).build();
