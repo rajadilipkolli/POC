@@ -25,7 +25,7 @@ public class Records {
 	public record RootValueDTO(String title, String content) {
 	}
 
-	public record PostsDTO(@JsonProperty("postList")List<PostDTO> postList) {
+	public record PostsDTO(@JsonProperty("postList") List<PostDTO> postList) {
 	}
 
 }
