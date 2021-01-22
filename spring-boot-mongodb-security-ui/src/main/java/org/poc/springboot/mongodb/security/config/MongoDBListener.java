@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MongoDBListener {
 
-	private MongoTemplate mongoTemplate;
+	private final MongoTemplate mongoTemplate;
 
 	@Autowired
 	public MongoDBListener(MongoTemplate mongoTemplate) {
