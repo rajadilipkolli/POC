@@ -39,7 +39,7 @@
 					<!-- This is needed for the JPADatabase -->
 					<dependency>
 						<groupId>org.jooq</groupId>
-						<artifactId>jooq-meta-extensions</artifactId>
+						<artifactId>jooq-meta-extensions-hibernate</artifactId>
 						<version>${jooq.version}</version>
 					</dependency>
 					<dependency>
