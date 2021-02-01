@@ -23,7 +23,7 @@
 		<java.version>15</java.version>
 		<main.basedir>${project.basedir}</main.basedir>
 		<spring-javaformat.version>0.0.27</spring-javaformat.version>
-		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+		<maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
 	</properties>
 	
 	<build>
