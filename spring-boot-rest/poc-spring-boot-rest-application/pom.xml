@@ -13,7 +13,7 @@
         <datasource-proxy.version>1.7</datasource-proxy.version>
         <db-util.version>1.0.5</db-util.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <springdoc-openapi.version>1.5.2</springdoc-openapi.version>
+        <springdoc-openapi.version>1.5.3</springdoc-openapi.version>
     </properties>
 
     <dependencies>
