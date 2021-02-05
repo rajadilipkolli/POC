@@ -2,21 +2,21 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.MongoDBTestContainer;
+import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class MongoDBRedisApplicationTest {
+class MongoDBRedisApplicationTest extends MongoDBTestContainer {
 
   @Autowired private TestRestTemplate testRestTemplate;
-
-  @Autowired private WebTestClient webTestClient;
 
   @Test
   @DisplayName("Traditional way")
@@ -29,20 +29,45 @@ class MongoDBRedisApplicationTest {
   }
 
   @Test
-  @DisplayName("WebFlux way")
-  void should_return_hello_world_web_flux() {
-    String response =
-        webTestClient
-            .get()
-            .uri("/")
-            .exchange()
-            .expectStatus()
-            .isOk()
-            .expectBody(String.class)
-            .returnResult()
-            .getResponseBody();
+  void getBookByTitle_returnsBookDetails() {
+    // arrange
+    Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
+    ResponseEntity<Book> response =
+        this.testRestTemplate.postForEntity("/book/saveBook", book, Book.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
+
+    // act
+    response = this.testRestTemplate.getForEntity("/book/findByTitle/MongoDbCookBook", Book.class);
 
     // assert
-    assertThat(response).isNotBlank().isEqualTo("Hello World!");
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
+    assertThat(response.getBody().getAuthor()).isEqualTo("Raja");
+
+    // act by Update
+    response =
+        this.testRestTemplate.exchange(
+            "/book/updateByTitle/MongoDbCookBook/Raja1", HttpMethod.PUT, null, Book.class);
+
+    // assert After Update
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
+    assertThat(response.getBody().getAuthor()).isEqualTo("Raja1");
+
+    // act by Delete
+    ResponseEntity<String> resp =
+        this.testRestTemplate.exchange(
+            "/book/deleteByTitle/MongoDbCookBook", HttpMethod.DELETE, null, String.class);
+    assertThat(resp).isNotNull();
+    assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
+    assertThat(resp.getBody()).isEqualTo("Book with title MongoDbCookBook deleted");
+
+    response = this.testRestTemplate.getForEntity("/book/findByTitle/MongoDbCookBook", Book.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+    resp = this.testRestTemplate.getForEntity("/book/deleteCache", String.class);
+    assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(resp.getBody()).isEqualTo("Deleted Full Cache");
   }
 }

@@ -18,7 +18,6 @@ class ReactiveBookRepositoryTest extends MongoDBTestContainer {
 
   @BeforeAll
   void setUp() {
-    MONGO_DB_CONTAINER.start();
     this.bookRepository.save(Book.builder().title("prius").author("hybrid").build()).then().block();
   }
 
