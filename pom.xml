@@ -4,7 +4,7 @@
 	
 	<groupId>com.example.poc</groupId>
 	<artifactId>poc-parent</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>poc-parent</name>
@@ -64,7 +64,7 @@
 
 	<modules>
 		<module>algorithm</module>
-<!--		<module>mongodb-redis-integration</module>-->
+		<module>mongodb-redis-integration</module>
 <!--		<module>spring-boot-rest</module>-->
 <!--		<module>spring-boot-rabbitmq</module>-->
 <!--		<module>spring-boot-mongodb-security-ui</module>-->
