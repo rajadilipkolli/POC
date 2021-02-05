@@ -16,8 +16,13 @@ public class MongoDBTestContainer {
   protected static final MongoDBContainer MONGO_DB_CONTAINER =
       new MongoDBContainer(dockerImageName).withExposedPorts(27017);
 
+  static {
+    MONGO_DB_CONTAINER.start();
+  }
+
   @DynamicPropertySource
   static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-    propertyRegistry.add("spring.data.mongodb.host", MONGO_DB_CONTAINER::getContainerIpAddress);
+    propertyRegistry.add("spring.data.mongodb.host", MONGO_DB_CONTAINER::getHost);
+    propertyRegistry.add("spring.data.mongodb.port", MONGO_DB_CONTAINER::getFirstMappedPort);
   }
 }
