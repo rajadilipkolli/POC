@@ -2,9 +2,7 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.MongoDBTestContainer;
 import com.mongodb.redis.integration.document.Book;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,14 +10,15 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class MongoDBRedisApplicationTest extends MongoDBTestContainer {
+@TestPropertySource(properties = {"spring.cache.type=none"})
+class MongoDBRedisApplicationTest {
 
   @Autowired private TestRestTemplate testRestTemplate;
 
   @Test
-  @DisplayName("Traditional way")
   void should_return_hello_world() {
     ResponseEntity<String> response = this.testRestTemplate.getForEntity("/", String.class);
 
@@ -35,6 +34,7 @@ class MongoDBRedisApplicationTest extends MongoDBTestContainer {
     ResponseEntity<Book> response =
         this.testRestTemplate.postForEntity("/book/saveBook", book, Book.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
     assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
 
     // act
@@ -42,6 +42,7 @@ class MongoDBRedisApplicationTest extends MongoDBTestContainer {
 
     // assert
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
     assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
     assertThat(response.getBody().getAuthor()).isEqualTo("Raja");
 
@@ -52,6 +53,7 @@ class MongoDBRedisApplicationTest extends MongoDBTestContainer {
 
     // assert After Update
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
     assertThat(response.getBody().getTitle()).isEqualTo("MongoDbCookBook");
     assertThat(response.getBody().getAuthor()).isEqualTo("Raja1");
 

@@ -2,7 +2,6 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.MongoDBTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
@@ -13,7 +12,8 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @DataMongoTest
-class BookRepositoryTest extends MongoDBTestContainer {
+class BookRepositoryTest {
+
   @Autowired private BookRepository bookRepository;
 
   @Autowired private MongoTemplate mongoTemplate;
@@ -23,7 +23,7 @@ class BookRepositoryTest extends MongoDBTestContainer {
   private Book bookRecToInsert;
 
   @BeforeAll
-  void before() {
+  void setUp() {
     this.collectionName = "books";
     this.bookRecToInsert =
         Book.builder()
@@ -35,7 +35,7 @@ class BookRepositoryTest extends MongoDBTestContainer {
   }
 
   @AfterAll
-  void after() {
+  void tearDown() {
     this.mongoTemplate.dropCollection(this.collectionName);
   }
 
