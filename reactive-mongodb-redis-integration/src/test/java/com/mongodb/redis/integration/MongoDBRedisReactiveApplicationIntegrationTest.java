@@ -1,8 +1,13 @@
 package com.mongodb.redis.integration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -21,13 +26,6 @@ import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
-import reactor.core.publisher.Mono;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
@@ -37,28 +35,35 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
   @Autowired private WebTestClient webTestClient;
 
-  @Autowired
-  private ReactiveMongoOperations operations;
+  @Autowired private ReactiveMongoOperations operations;
 
-  @Autowired
-  private ReactiveBookRepository bookReactiveRepository;
+  @Autowired private ReactiveBookRepository bookReactiveRepository;
 
   @BeforeAll
   void init() {
     if (!this.operations.collectionExists(Book.class).block()) {
-      this.operations.createCollection(Book.class,
-              CollectionOptions.empty().size(1024 * 1024).maxDocuments(100)).then().block();
+      this.operations
+          .createCollection(
+              Book.class, CollectionOptions.empty().size(1024 * 1024).maxDocuments(100))
+          .then()
+          .block();
     }
-    this.bookReactiveRepository.save(
-            Book.builder().title("MongoDbCookBook").text("MongoDB Data Book").author("Raja").bookId("1").build())
-            .then().block();
+    this.bookReactiveRepository
+        .save(
+            Book.builder()
+                .title("MongoDbCookBook")
+                .text("MongoDB Data Book")
+                .author("Raja")
+                .bookId("1")
+                .build())
+        .then()
+        .block();
   }
 
   @AfterAll
   void tearDown() {
     this.operations.dropCollection(Book.class).block();
   }
-
 
   @Test
   @DisplayName("Traditional way")
@@ -90,8 +95,16 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
   @Test
   void test01GetAll() {
-    EntityExchangeResult<List<Book>> result = this.webTestClient.get().uri("/api/book/")
-            .accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectBodyList(Book.class).returnResult();
+    EntityExchangeResult<List<Book>> result =
+        this.webTestClient
+            .get()
+            .uri("/api/book/")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .expectBodyList(Book.class)
+            .returnResult();
     assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(1);
     assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
     assertThat(result.getUriTemplate()).isEqualTo("/api/book/");
@@ -103,10 +116,16 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
   @Test
   void test02GetBook() {
-    this.webTestClient.get().uri("/api/book/{id}", 1).accept(MediaType.APPLICATION_JSON).exchange()
-            .expectStatus().isOk()
-            .expectBody(Book.class)
-            .consumeWith((response) -> {
+    this.webTestClient
+        .get()
+        .uri("/api/book/{id}", 1)
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectBody(Book.class)
+        .consumeWith(
+            (response) -> {
               assertThat(response.getResponseBody()).isNotNull();
               assertThat(response.getResponseBody().getTitle()).isEqualTo("MongoDbCookBook");
               assertThat(response.getResponseBody().getAuthor()).isEqualTo("Raja");
@@ -116,60 +135,127 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
   @Test
   void test03PostBook() {
-    final Book book = Book.builder().author("Raja").text("This is a Test Book").title("JUNIT_TITLE").build();
+    final Book book =
+        Book.builder().author("Raja").text("This is a Test Book").title("JUNIT_TITLE").build();
 
-    this.webTestClient.post().uri("/api/book/").contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(book)).exchange().expectStatus()
-            .isCreated().expectHeader().contentType(MediaType.APPLICATION_JSON).expectHeader().exists("location")
-            .expectBody(Book.class)
-            .consumeWith((response) -> {
-              assertThat(response.getResponseBody()).isNull();
-            });
+    this.webTestClient
+        .post()
+        .uri("/api/book/")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(book))
+        .exchange()
+        .expectStatus()
+        .isCreated()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectHeader()
+        .exists("location")
+        .expectBody(Book.class)
+        .consumeWith((response) -> assertThat(response.getResponseBody()).isNull());
   }
 
   @Test
   void test04PutBook() {
-    Book book = Book.builder().title("MongoDbCookBook").text("MongoDB Data Book1").author("Raja").bookId("1")
+    Book book =
+        Book.builder()
+            .title("MongoDbCookBook")
+            .text("MongoDB Data Book1")
+            .author("Raja")
+            .bookId("1")
             .build();
 
-    this.webTestClient.put().uri("/api/book/{id}", 1).contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus().isOk()
-            .expectHeader()
-            .contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$.text").isEqualTo("MongoDB Data Book1");
+    this.webTestClient
+        .put()
+        .uri("/api/book/{id}", 1)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(book))
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBody()
+        .jsonPath("$[0].text")
+        .isEqualTo("MongoDB Data Book1");
   }
 
   @Test
   void test05DeleteBook() {
-    this.webTestClient.delete().uri("/api/book/{id}", 1).exchange().expectStatus().isAccepted()
-            .expectBody(Book.class);
-    this.webTestClient.get().uri("/api/book/{id}", Collections.singletonMap("id", 1)).exchange()
-            .expectStatus().isNotFound();
+    this.webTestClient
+        .delete()
+        .uri("/api/book/{id}", 1)
+        .exchange()
+        .expectStatus()
+        .isAccepted()
+        .expectBody(Book.class);
+    this.webTestClient
+        .get()
+        .uri("/api/book/{id}", Collections.singletonMap("id", 1))
+        .exchange()
+        .expectStatus()
+        .isNotFound();
   }
 
   @Test
   void test06DeleteBook() {
-    this.webTestClient.delete().uri("/api/book/")
-            .accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isAccepted();
+    this.webTestClient
+        .delete()
+        .uri("/api/book/")
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isAccepted();
   }
 
   @Test
   @DisplayName("Invalid Data")
   void testCreateBookFail() {
-    Book book = Book.builder().author("Raja").text("This is a Test Book")
-            .title(RandomStringUtils.randomAlphanumeric(200)).build();
+    Book book =
+        Book.builder()
+            .author("Raja")
+            .text("This is a Test Book")
+            .title(RandomStringUtils.randomAlphanumeric(200))
+            .build();
 
-    this.webTestClient.post().uri("/api/book/").contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(book)).exchange().expectStatus()
-            .isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
-            .jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
-            .isEqualTo("size must be between 0 and 140");
+    this.webTestClient
+        .post()
+        .uri("/api/book/")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(book))
+        .exchange()
+        .expectStatus()
+        .isBadRequest()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBody()
+        .jsonPath("$.status")
+        .isEqualTo("400")
+        .jsonPath("$.message")
+        .isEmpty()
+        .jsonPath("$.requestId")
+        .isNotEmpty();
 
     book = Book.builder().build();
-    this.webTestClient.post().uri("/api/book/").contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON).body(Mono.just(book), Book.class).exchange().expectStatus()
-            .isBadRequest().expectHeader().contentType(MediaType.APPLICATION_JSON).expectBody()
-            .jsonPath("$.message").isNotEmpty().jsonPath("$.errors.[0].defaultMessage")
-            .isEqualTo("must not be blank");
+    this.webTestClient
+        .post()
+        .uri("/api/book/")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(book))
+        .exchange()
+        .expectStatus()
+        .isBadRequest()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBody()
+        .jsonPath("$.status")
+        .isEqualTo("400")
+        .jsonPath("$.message")
+        .isEmpty()
+        .jsonPath("$.requestId")
+        .isNotEmpty();
   }
-
 }

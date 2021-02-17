@@ -8,6 +8,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 import com.mongodb.redis.integration.handler.BookHandler;
+import com.mongodb.redis.integration.handler.ValidationBookHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -24,20 +25,24 @@ public class RoutingConfiguration {
    * @return a {@link org.springframework.web.reactive.function.server.RouterFunction} object.
    */
   @Bean
-  public RouterFunction<ServerResponse> monoRouterFunction(BookHandler bookHandler) {
+  public RouterFunction<ServerResponse> monoRouterFunction(
+      BookHandler bookHandler, ValidationBookHandler validationBookHandler) {
     return route(
             GET("/api/book").and(accept(MediaType.APPLICATION_JSON)),
             request -> bookHandler.getAll())
         .andRoute(
             GET("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)), bookHandler::getBook)
-        .andRoute(POST("/api/book/").and(accept(MediaType.APPLICATION_JSON)), bookHandler::postBook)
         .andRoute(
-            PUT("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)), bookHandler::putBook)
+            POST("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
+            validationBookHandler::handleRequest)
+        .andRoute(
+            PUT("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
+            validationBookHandler::handleRequest)
         .andRoute(
             DELETE("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
             bookHandler::deleteBook)
         .andRoute(
-                DELETE("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
-                request -> bookHandler.deleteAllBooks());
+            DELETE("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
+            request -> bookHandler.deleteAllBooks());
   }
 }

@@ -27,8 +27,8 @@ public class Book implements Serializable {
   @Id private String bookId;
 
   @Indexed(unique = true)
-  @NotBlank
-  @Size(max = 140)
+  @NotBlank(message = "Book title can't be Blank")
+  @Size(max = 140, message = "Book title size must be between 0 and 140")
   private String title;
 
   private String author;
