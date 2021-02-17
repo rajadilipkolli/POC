@@ -37,7 +37,7 @@ public class BookService {
     return this.bookRepository.save(book);
   }
 
-  @CachePut(value = "book", key = "#title")
+  @CachePut(value = "books", key = "#title")
   public Book updateAuthorByTitle(String title, String author) {
     log.info("Updating Book Author by Title :{} with {}", title, author);
     final Query query = new Query(Criteria.where("title").is(title));
@@ -46,20 +46,20 @@ public class BookService {
         query, update, new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
   }
 
-  @CacheEvict(value = "book", key = "#title")
+  @CacheEvict(value = "books", key = "#title")
   public void deleteBook(String title) throws BookNotFoundException {
     log.info("deleting Books by title :{}", title);
     Book book = findBookByTitle(title);
     this.bookRepository.delete(book);
   }
 
-  @CacheEvict(allEntries = true, value = "book")
+  @CacheEvict(allEntries = true, value = "books")
   public String deleteAllCache() {
     log.info("Deleting Cache");
     return "Deleted Full Cache";
   }
 
-  @CacheEvict(allEntries = true, value = "book")
+  @CacheEvict(allEntries = true, value = "books")
   public void deleteAll() {
     this.bookRepository.deleteAll();
   }

@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @Setter
 @Getter
 @Builder
+@ToString
 public class Book implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;

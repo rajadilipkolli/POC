@@ -63,8 +63,9 @@ public class BookController {
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  private void bookNotFoundHandler(BookNotFoundException ex) {
+  private ResponseEntity<Object> bookNotFoundHandler(BookNotFoundException ex) {
     log.error("Entering and leaving BookController : bookNotFoundHandler ", ex);
+    return ResponseEntity.notFound().build();
   }
 
   public void deleteAll() {

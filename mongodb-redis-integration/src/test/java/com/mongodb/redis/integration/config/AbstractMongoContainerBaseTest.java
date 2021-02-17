@@ -6,13 +6,13 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
-public abstract class AbstractContainerBaseTest {
+public abstract class AbstractMongoContainerBaseTest {
 
-  static DockerImageName dockerImageName = DockerImageName.parse("mongo");
+  static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo");
 
   @Container
   protected static final MongoDBContainer MONGO_DB_CONTAINER =
-      new MongoDBContainer(dockerImageName).withExposedPorts(27017);
+      new MongoDBContainer(mongoDockerImageName).withExposedPorts(27017);
 
   static {
     MONGO_DB_CONTAINER.start();

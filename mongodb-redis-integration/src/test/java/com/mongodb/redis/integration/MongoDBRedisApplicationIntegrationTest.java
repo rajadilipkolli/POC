@@ -2,7 +2,7 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractContainerBaseTest;
+import com.mongodb.redis.integration.config.AbstractRedisContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,29 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {"spring.cache.type=none"})
-class MongoDBRedisApplicationTest extends AbstractContainerBaseTest {
+@ActiveProfiles("test")
+class MongoDBRedisApplicationIntegrationTest extends AbstractRedisContainerBaseTest {
 
   @Autowired private TestRestTemplate testRestTemplate;
+
+  @Test
+  void test_application_running() {
+    // act
+    ResponseEntity<String> response = this.testRestTemplate.getForEntity("/", String.class);
+
+    // assert
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull().isEqualTo("Hello World!");
+  }
+
+  @Test
+  void test_both_containers_are_running() {
+    assertThat(MONGO_DB_CONTAINER.isRunning()).isTrue();
+    assertThat(REDIS_DB_CONTAINER.isRunning()).isTrue();
+  }
 
   @Test
   void should_return_hello_world() {
@@ -31,7 +47,13 @@ class MongoDBRedisApplicationTest extends AbstractContainerBaseTest {
   @Test
   void getBookByTitle_returnsBookDetails() {
     // arrange
-    Book book = Book.builder().title("MongoDbCookBook").author("Raja").build();
+    Book book =
+        Book.builder()
+            .title("MongoDbCookBook")
+            .author("Raja")
+            .bookId("book1")
+            .text("text1")
+            .build();
     ResponseEntity<Book> response =
         this.testRestTemplate.postForEntity("/book/saveBook", book, Book.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

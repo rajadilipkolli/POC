@@ -2,7 +2,7 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractContainerBaseTest;
+import com.mongodb.redis.integration.config.AbstractMongoContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @DataMongoTest
-class BookRepositoryTest extends AbstractContainerBaseTest {
+class BookRepositoryTest extends AbstractMongoContainerBaseTest {
 
   @Autowired private BookRepository bookRepository;
 
