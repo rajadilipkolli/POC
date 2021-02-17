@@ -2,6 +2,7 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.AbstractContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"spring.cache.type=none"})
-class MongoDBRedisApplicationTest {
+class MongoDBRedisApplicationTest extends AbstractContainerBaseTest {
 
   @Autowired private TestRestTemplate testRestTemplate;
 
