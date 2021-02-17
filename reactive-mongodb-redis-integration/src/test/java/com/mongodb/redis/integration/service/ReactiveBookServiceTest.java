@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
+import com.mongodb.redis.integration.utils.MockObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.test.util.ReflectionTestUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -24,6 +27,8 @@ class ReactiveBookServiceTest {
   @Mock private ReactiveBookRepository reactiveBookRepository;
 
   @Mock private ApplicationEventPublisher publisher;
+
+  @Mock private ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate;
 
   @InjectMocks private ReactiveBookService reactiveBookService;
 
@@ -73,6 +78,8 @@ class ReactiveBookServiceTest {
 
   @Test
   void getAllBookDetails() {
+    ReflectionTestUtils.setField(
+        reactiveBookService, "bookReactiveHashOperations", MockObjectUtils.getMockHashOps());
     given(this.reactiveBookRepository.findAll()).willReturn(Flux.just(dummyBook));
 
     StepVerifier.create(this.reactiveBookService.findAllBooks())

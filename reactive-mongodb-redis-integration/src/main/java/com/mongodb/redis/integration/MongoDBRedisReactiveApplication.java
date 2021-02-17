@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class MongoDBRedisApplication {
+public class MongoDBRedisReactiveApplication {
   public static void main(String[] args) {
-    SpringApplication.run(MongoDBRedisApplication.class, args);
+    SpringApplication.run(MongoDBRedisReactiveApplication.class, args);
   }
 
   @RequestMapping(value = "/")

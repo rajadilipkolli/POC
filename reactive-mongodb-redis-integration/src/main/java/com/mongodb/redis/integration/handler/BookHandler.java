@@ -57,6 +57,13 @@ public record BookHandler(ReactiveBookService reactiveBookService) {
         .switchIfEmpty(ServerResponse.notFound().build());
   }
 
+  public Mono<ServerResponse> deleteAllBooks() {
+    return ServerResponse.accepted()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(this.reactiveBookService.deleteAll(), Void.class)
+            .switchIfEmpty(ServerResponse.notFound().build());
+  }
+
   private static Mono<ServerResponse> defaultWriteResponse(Publisher<Book> books) {
     return Mono.from(books)
         .flatMap(
