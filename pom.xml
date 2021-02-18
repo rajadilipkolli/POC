@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>com.example.poc</groupId>
 	<artifactId>poc-parent</artifactId>
 	<version>0.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<name>poc-parent</name>
 	<description>Demo project for Spring Boot</description>
-	
+
 	<parent>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>2.5.0-M1</version>
-	    <relativePath/> <!-- lookup parent from repository -->
-	  </parent>
-	
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.0-M1</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -42,7 +44,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-snapshots</id>
@@ -66,8 +68,8 @@
 		<module>algorithm</module>
 		<module>mongodb-redis-integration</module>
 		<module>reactive-mongodb-redis-integration</module>
-<!--		<module>spring-boot-rest</module>-->
-<!--		<module>spring-boot-rabbitmq</module>-->
-<!--		<module>spring-boot-mongodb-security-ui</module>-->
+		<module>poc-spring-boot-rest</module>
+		<!-- <module>spring-boot-rabbitmq</module> -->
+		<!-- <module>spring-boot-mongodb-security-ui</module> -->
 	</modules>
 </project>
