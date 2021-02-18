@@ -1,4 +1,4 @@
-package com.mongodb.redis.integration.config;
+package com.mongodb.redis.integration.route;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;

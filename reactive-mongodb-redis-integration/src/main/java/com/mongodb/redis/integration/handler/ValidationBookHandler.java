@@ -1,7 +1,7 @@
 package com.mongodb.redis.integration.handler;
 
-import com.mongodb.redis.integration.config.AbstractValidationHandler;
 import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.route.AbstractValidationHandler;
 import com.mongodb.redis.integration.service.ReactiveBookService;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
 import java.net.URI;

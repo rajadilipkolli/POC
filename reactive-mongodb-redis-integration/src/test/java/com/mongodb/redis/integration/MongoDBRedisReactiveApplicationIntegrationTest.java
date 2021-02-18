@@ -229,13 +229,13 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
         .expectStatus()
         .isBadRequest()
         .expectHeader()
-        .contentType(MediaType.APPLICATION_JSON)
+        .contentType("application/problem+json")
         .expectBody()
         .jsonPath("$.status")
         .isEqualTo("400")
-        .jsonPath("$.message")
-        .isEmpty()
-        .jsonPath("$.requestId")
+        .jsonPath("$.title")
+        .isEqualTo("Bad Request")
+        .jsonPath("$.detail")
         .isNotEmpty();
 
     book = Book.builder().build();
@@ -249,13 +249,13 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
         .expectStatus()
         .isBadRequest()
         .expectHeader()
-        .contentType(MediaType.APPLICATION_JSON)
+        .contentType("application/problem+json")
         .expectBody()
         .jsonPath("$.status")
         .isEqualTo("400")
-        .jsonPath("$.message")
-        .isEmpty()
-        .jsonPath("$.requestId")
+        .jsonPath("$.title")
+        .isEqualTo("Bad Request")
+        .jsonPath("$.detail")
         .isNotEmpty();
   }
 }

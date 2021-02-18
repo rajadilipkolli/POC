@@ -1,4 +1,4 @@
-package com.mongodb.redis.integration.config;
+package com.mongodb.redis.integration.route;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BeanPropertyBindingResult;
