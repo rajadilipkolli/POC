@@ -6,7 +6,7 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
-public abstract class MongoDBTestContainer {
+public abstract class AbstractMongoDBTestContainer {
 
   static DockerImageName dockerImageName = DockerImageName.parse("mongo");
 

@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+@SuppressWarnings("preview")
 @Component
 public record BookHandler(ReactiveBookService reactiveBookService) {
 

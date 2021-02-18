@@ -26,7 +26,7 @@ public class ProblemJacksonAutoConfiguration {
   }
 
   @Bean
-  @Order(-2) 
+  @Order(-2)
   // The handler must have precedence over WebFluxResponseStatusExceptionHandler and Spring
   // Boot's ErrorWebExceptionHandler
   public WebExceptionHandler problemExceptionHandler(

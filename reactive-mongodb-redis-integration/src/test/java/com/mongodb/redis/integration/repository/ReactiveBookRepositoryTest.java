@@ -2,7 +2,7 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.MongoDBTestContainer;
+import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import reactor.test.StepVerifier;
 
 @DataMongoTest
-class ReactiveBookRepositoryTest extends MongoDBTestContainer {
+class ReactiveBookRepositoryTest extends AbstractMongoDBTestContainer {
 
   @Autowired ReactiveBookRepository bookRepository;
 

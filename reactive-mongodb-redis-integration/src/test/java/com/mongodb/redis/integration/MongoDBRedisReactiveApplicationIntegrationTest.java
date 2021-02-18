@@ -8,7 +8,6 @@ import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -58,11 +57,6 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .build())
         .then()
         .block();
-  }
-
-  @AfterAll
-  void tearDown() {
-    this.operations.dropCollection(Book.class).block();
   }
 
   @Test
