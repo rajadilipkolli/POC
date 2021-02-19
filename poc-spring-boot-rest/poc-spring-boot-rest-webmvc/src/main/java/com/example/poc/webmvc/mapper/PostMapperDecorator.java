@@ -1,8 +1,7 @@
 package com.example.poc.webmvc.mapper;
 
-import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.TagDTO;
+import com.example.poc.webmvc.dto.Records;
 import com.example.poc.webmvc.repository.PostCommentRepository;
 import com.example.poc.webmvc.repository.TagRepository;
 import com.poc.restfulpoc.entities.Post;
@@ -26,16 +25,28 @@ public abstract class PostMapperDecorator implements PostMapper {
     @Autowired private TagRepository tagRepository;
 
     @Override
-    public Tag tagDTOToTag(TagDTO tagDTO) {
+    public Tag tagDTOToTag(Records.TagDTO tagDTO) {
         if (tagDTO == null) {
             return null;
         }
 
         Tag tag = new Tag();
 
-        tag.setName(tagDTO.getName());
+        tag.setName(tagDTO.name());
 
         return this.tagRepository.save(tag);
+    }
+
+    @Override
+    public PostTag tagDTOToPostTag(Records.TagDTO tagDTO) {
+        if ( tagDTO == null ) {
+            return null;
+        }
+
+        PostTag postTag = new PostTag();
+        postTag.setTag(new Tag(tagDTO.name()));
+
+        return postTag;
     }
 
     @Override
@@ -52,13 +63,13 @@ public abstract class PostMapperDecorator implements PostMapper {
         return post;
     }
 
-    void addPostTagsToPost(List<TagDTO> tags, Post post) {
+    void addPostTagsToPost(List<Records.TagDTO> tags, Post post) {
         if (tags == null) {
             return;
         }
 
-        for (TagDTO tagDTO : tags) {
-            Optional<Tag> tag = this.tagRepository.findByName(tagDTO.getName());
+        for (Records.TagDTO tagDTO : tags) {
+            Optional<Tag> tag = this.tagRepository.findByName(tagDTO.name());
             if (tag.isPresent()) {
                 PostTag postTag = new PostTag(post, tag.get());
                 post.getTags().add(postTag);
@@ -68,13 +79,13 @@ public abstract class PostMapperDecorator implements PostMapper {
         }
     }
 
-    void addPostCommentsToPost(List<PostCommentsDTO> comments, Post post) {
+    void addPostCommentsToPost(List<Records.PostCommentsDTO> comments, Post post) {
 
         if (comments == null) {
             return;
         }
 
-        for (PostCommentsDTO postCommentsDTO : comments) {
+        for (Records.PostCommentsDTO postCommentsDTO : comments) {
             post.addComment(postCommentsDTOToPostComment(postCommentsDTO));
         }
     }

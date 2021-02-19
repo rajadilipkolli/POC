@@ -28,7 +28,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
 
     private String createdOn;
 
-    @Builder.Default private List<PostCommentsDTO> comments = new ArrayList<>();
+    @Builder.Default private List<Records.PostCommentsDTO> comments = new ArrayList<>();
 
-    @Builder.Default private List<TagDTO> tags = new ArrayList<>();
+    @Builder.Default private List<Records.TagDTO> tags = new ArrayList<>();
 }

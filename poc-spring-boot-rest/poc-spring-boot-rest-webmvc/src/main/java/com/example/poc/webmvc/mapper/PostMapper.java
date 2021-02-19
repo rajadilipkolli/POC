@@ -1,8 +1,7 @@
 package com.example.poc.webmvc.mapper;
 
-import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.TagDTO;
+import com.example.poc.webmvc.dto.Records;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
@@ -32,10 +31,10 @@ public interface PostMapper {
     Post postDtoToPostIgnoringChild(PostDTO postDTO);
 
     @Mapping(target = "createdOn", ignore = true)
-    PostComment postCommentsDTOToPostComment(PostCommentsDTO postCommentsDTO);
+    PostComment postCommentsDTOToPostComment(Records.PostCommentsDTO postCommentsDTO);
 
     @Mapping(target = "id", ignore = true)
-    Tag tagDTOToTag(TagDTO tagDTO);
+    Tag tagDTOToTag(Records.TagDTO tagDTO);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "createdOn", target = "createdOn")
@@ -45,12 +44,14 @@ public interface PostMapper {
     @Mapping(target = "createdOn", ignore = true)
     void updateReferenceValues(PostDTO postDTO, @MappingTarget Post post);
 
+    PostTag tagDTOToPostTag(Records.TagDTO tagDTO);
+
     Post postDtoToPost(PostDTO postDTO);
 
-    List<PostComment> postCommentsDTOListToPostCommentList(List<PostCommentsDTO> comments);
+    List<PostComment> postCommentsDTOListToPostCommentList(List<Records.PostCommentsDTO> comments);
 
-    List<Tag> tagDTOListToTagList(List<TagDTO> tags);
+    List<Tag> tagDTOListToTagList(List<Records.TagDTO> tags);
 
     @Mapping(target = "name", source = "tag.name")
-    TagDTO postTagToTagDTO(PostTag postTag);
+    Records.TagDTO postTagToTagDTO(PostTag postTag);
 }

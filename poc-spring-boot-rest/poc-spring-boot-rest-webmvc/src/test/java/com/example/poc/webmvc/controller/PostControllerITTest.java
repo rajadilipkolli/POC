@@ -3,10 +3,8 @@ package com.example.poc.webmvc.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.webmvc.common.AbstractIntegrationTest;
-import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.Records;
-import com.example.poc.webmvc.dto.TagDTO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -34,10 +32,9 @@ class PostControllerITTest extends AbstractIntegrationTest {
         this.postDto.setTitle("PostTitle");
         this.postDto.setContent("post created By Junit");
         this.postDto.setCreatedOn(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(currentDateTime));
-        this.postDto.setTags(Collections.singletonList(new TagDTO("junit")));
+        this.postDto.setTags(Collections.singletonList(new Records.TagDTO("junit")));
         this.postDto.setComments(
-                Collections.singletonList(
-                        PostCommentsDTO.builder().review("junit Review").build()));
+                Collections.singletonList(new Records.PostCommentsDTO("junit Review")));
     }
 
     @Test
@@ -53,12 +50,12 @@ class PostControllerITTest extends AbstractIntegrationTest {
                 .isNotEmpty()
                 .hasSize(2)
                 .contains(
-                        PostCommentsDTO.builder().review("Excellent").build(),
-                        PostCommentsDTO.builder().review("Good").build());
+                        new Records.PostCommentsDTO("Excellent"),
+                        new Records.PostCommentsDTO("Good"));
         assertThat(postDTO.getTags())
                 .isNotEmpty()
                 .hasSize(2)
-                .contains(new TagDTO("Java"), new TagDTO("Spring Boot"));
+                .contains(new Records.TagDTO("Java"), new Records.TagDTO("Spring Boot"));
         assertThat(postDTO.getCreatedBy()).isEqualTo("raja");
         assertThat(postDTO.getContent()).isNull();
         assertThat(postDTO.getTitle()).isEqualTo("A Beautiful Post in Java");
@@ -84,8 +81,8 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(1)
-                .contains(PostCommentsDTO.builder().review("junit Review").build());
-        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
+                .contains(new Records.PostCommentsDTO("junit Review"));
+        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new Records.TagDTO("junit"));
         assertThat(postDTO.getContent()).isEqualTo("post created By Junit");
         assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
         assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
@@ -111,8 +108,8 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(1)
-                .contains(PostCommentsDTO.builder().review("junit Review").build());
-        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
+                .contains(new Records.PostCommentsDTO("junit Review"));
+        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new Records.TagDTO("junit"));
         assertThat(postDTO.getContent()).isEqualTo("Updating content using Junit");
         assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
         assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
