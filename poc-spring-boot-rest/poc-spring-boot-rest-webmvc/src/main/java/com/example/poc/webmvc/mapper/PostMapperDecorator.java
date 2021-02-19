@@ -39,7 +39,7 @@ public abstract class PostMapperDecorator implements PostMapper {
 
     @Override
     public PostTag tagDTOToPostTag(Records.TagDTO tagDTO) {
-        if ( tagDTO == null ) {
+        if (tagDTO == null) {
             return null;
         }
 
