@@ -1,5 +1,6 @@
 package com.example.poc.webmvc.controller;
 
+import com.example.poc.webmvc.api.PostAPI;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.Records;
 import com.example.poc.webmvc.service.PostService;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +26,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
-public class PostController {
+public class PostController implements PostAPI {
 
     private final PostService postService;
 
-    BiFunction<String, PostDTO, PostDTO> addLinkToPostBiFunction =
+    private final BiFunction<String, PostDTO, PostDTO> addLinkToPostBiFunction =
             (userName, postDTO) -> {
                 Link linkTo =
                         WebMvcLinkBuilder.linkTo(
@@ -72,17 +71,17 @@ public class PostController {
     }
 
     @PostMapping("/{user_name}/posts/")
+    @Override
     public ResponseEntity<Object> createPostByUserName(
-            @RequestBody @Valid PostDTO postDTO,
+            @RequestBody @Valid Records.PostRequestDTO postRequestDTO,
             @PathVariable("user_name") String userName,
             UriComponentsBuilder ucBuilder) {
-        postDTO.setCreatedBy(userName);
-        this.postService.createPost(postDTO);
+        this.postService.createPost(postRequestDTO, userName);
 
         return ResponseEntity.created(
                         ucBuilder
                                 .path("/users/{user_name}/posts/{title}")
-                                .buildAndExpand(userName, postDTO.getTitle())
+                                .buildAndExpand(userName, postRequestDTO.title())
                                 .toUri())
                 .build();
     }

@@ -54,4 +54,6 @@ public interface PostMapper {
 
     @Mapping(target = "name", source = "tag.name")
     Records.TagDTO postTagToTagDTO(PostTag postTag);
+
+    PostDTO postRequestDtoToPostDto(Records.PostRequestDTO postRequestDTO);
 }

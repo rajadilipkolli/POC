@@ -1,8 +1,9 @@
 package com.example.poc.webmvc.repository;
 
 import com.poc.restfulpoc.entities.Post;
+import java.util.Optional;
 
 public interface CustomizedPostRepository {
 
-    Post findByDetailsCreatedByAndTitle(String userName, String title);
+    Optional<Post> findByDetailsCreatedByAndTitle(String userName, String title);
 }

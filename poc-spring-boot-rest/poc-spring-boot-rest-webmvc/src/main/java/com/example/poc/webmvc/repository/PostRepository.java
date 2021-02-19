@@ -31,18 +31,18 @@ public interface PostRepository extends JpaRepository<Post, Long>, CustomizedPos
 
     @Query(
             "SELECT distinct p FROM Post p LEFT JOIN FETCH p.comments JOIN FETCH p.details d where d.createdBy = :user")
-    @QueryHints(
-            @QueryHint(
-                    name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH,
-                    value = "false"))
+    @QueryHints({
+        @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"),
+        @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_READONLY, value = "true")
+    })
     List<Post> findByDetailsCreatedBy(@Param("user") String userName);
 
     @Query(
             "SELECT distinct p FROM Post p LEFT JOIN FETCH p.tags pt LEFT JOIN FETCH pt.tag JOIN p.details where p in :posts")
-    @QueryHints(
-            @QueryHint(
-                    name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH,
-                    value = "false"))
+    @QueryHints({
+        @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false"),
+        @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_READONLY, value = "true")
+    })
     List<Post> findPostsWithAllDetails(@Param("posts") List<Post> postList);
 
     @Modifying

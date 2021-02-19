@@ -1,8 +1,8 @@
 package com.example.poc.webmvc.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +17,10 @@ import org.springframework.hateoas.RepresentationModel;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "All details related to posts.")
 public class PostDTO extends RepresentationModel<PostDTO> {
 
-    @NotBlank(message = "Title of post is mandatory")
+    @Schema(description = "Title is mandatory", required = true)
     private String title;
 
     private String content;

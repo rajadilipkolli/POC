@@ -23,7 +23,6 @@ import java.util.Objects;
 
 @Entity(name = "Post")
 @Table(name = "post")
-@NoArgsConstructor
 @Getter
 @Setter
 public class Post {
@@ -51,6 +50,10 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostTag> tags = new ArrayList<>();
+
+    public Post() {
+        this.createdOn = LocalDateTime.now();
+    }
 
     public Post(Long id) {
         this.id = id;
