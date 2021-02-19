@@ -1,0 +1,14 @@
+DELETE FROM post
+WHERE  id IN ( 1, 2 );
+
+DELETE FROM post_comment
+WHERE  id IN ( 1, 2 );
+
+DELETE FROM TAG
+WHERE  id IN ( 1, 2 );
+
+DELETE FROM POST_DETAILS
+WHERE  id IN ( 1, 2 );
+
+DELETE FROM POST_TAG
+WHERE  POST_ID IN ( 1);

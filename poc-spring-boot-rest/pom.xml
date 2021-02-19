@@ -14,5 +14,6 @@
   <modules>
     <module>poc-spring-boot-rest-entities</module>
     <module>poc-spring-boot-rest-jooq</module>
+    <module>poc-spring-boot-rest-webmvc</module>
   </modules>
 </project>
