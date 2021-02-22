@@ -66,6 +66,7 @@
 
 	<modules>
 		<module>algorithm</module>
+		<module>reactive-learning</module>
 		<module>mongodb-redis-integration</module>
 		<module>reactive-mongodb-redis-integration</module>
 		<module>poc-spring-boot-rest</module>
