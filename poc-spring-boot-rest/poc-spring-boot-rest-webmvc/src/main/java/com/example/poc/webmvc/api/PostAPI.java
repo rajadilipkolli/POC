@@ -11,9 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@OpenAPIDefinition(tags = {
-        @Tag(name = "Post API", description = "performs all CRUD operations for posts")
-})
+@OpenAPIDefinition(
+        tags = {@Tag(name = "Post API", description = "performs all CRUD operations for posts")})
 public interface PostAPI {
 
     @Operation(summary = "Creates post")
