@@ -3,8 +3,10 @@ package com.example.poc.webmvc.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.webmvc.common.AbstractIntegrationTest;
+import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.PostsDTO;
+import com.example.poc.webmvc.dto.TagDTO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -32,15 +34,14 @@ class PostControllerITTest extends AbstractIntegrationTest {
         this.postDto.setTitle("PostTitle");
         this.postDto.setContent("post created By Junit");
         this.postDto.setCreatedOn(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(currentDateTime));
-        this.postDto.setTags(Collections.singletonList(new Records.TagDTO("junit")));
-        this.postDto.setComments(
-                Collections.singletonList(new Records.PostCommentsDTO("junit Review")));
+        this.postDto.setTags(Collections.singletonList(new TagDTO("junit")));
+        this.postDto.setComments(Collections.singletonList(new PostCommentsDTO("junit Review")));
     }
 
     @Test
     void test01_FetchingPostsByUserId() {
-        ResponseEntity<Records.PostsDTO> response =
-                userRestTemplate().getForEntity("/users/raja/posts", Records.PostsDTO.class);
+        ResponseEntity<PostsDTO> response =
+                userRestTemplate().getForEntity("/users/raja/posts", PostsDTO.class);
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -49,13 +50,11 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(2)
-                .contains(
-                        new Records.PostCommentsDTO("Excellent"),
-                        new Records.PostCommentsDTO("Good"));
+                .contains(new PostCommentsDTO("Excellent"), new PostCommentsDTO("Good"));
         assertThat(postDTO.getTags())
                 .isNotEmpty()
                 .hasSize(2)
-                .contains(new Records.TagDTO("Java"), new Records.TagDTO("Spring Boot"));
+                .contains(new TagDTO("Java"), new TagDTO("Spring Boot"));
         assertThat(postDTO.getCreatedBy()).isEqualTo("raja");
         assertThat(postDTO.getContent()).isNull();
         assertThat(postDTO.getTitle()).isEqualTo("A Beautiful Post in Java");
@@ -81,8 +80,8 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(1)
-                .contains(new Records.PostCommentsDTO("junit Review"));
-        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new Records.TagDTO("junit"));
+                .contains(new PostCommentsDTO("junit Review"));
+        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
         assertThat(postDTO.getContent()).isEqualTo("post created By Junit");
         assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
         assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
@@ -108,8 +107,8 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(1)
-                .contains(new Records.PostCommentsDTO("junit Review"));
-        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new Records.TagDTO("junit"));
+                .contains(new PostCommentsDTO("junit Review"));
+        assertThat(postDTO.getTags()).isNotEmpty().hasSize(1).contains(new TagDTO("junit"));
         assertThat(postDTO.getContent()).isEqualTo("Updating content using Junit");
         assertThat(postDTO.getCreatedBy()).isEqualTo("junit");
         assertThat(postDTO.getTitle()).isEqualTo("PostTitle");
@@ -118,8 +117,8 @@ class PostControllerITTest extends AbstractIntegrationTest {
     @Test
     void test04_DeletingPost() {
         adminRestTemplate().delete("/users/junit/posts/" + this.postDto.getTitle());
-        ResponseEntity<Records.PostsDTO> response =
-                userRestTemplate().getForEntity("/users/junit/posts", Records.PostsDTO.class);
+        ResponseEntity<PostsDTO> response =
+                userRestTemplate().getForEntity("/users/junit/posts", PostsDTO.class);
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();

@@ -6,8 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.webmvc.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.webmvc.dto.PostCommentProjection;
+import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.RootValueDTO;
 import com.poc.restfulpoc.entities.Post;
 import com.poc.restfulpoc.entities.PostComment;
 import com.poc.restfulpoc.entities.PostDetails;
@@ -64,24 +65,22 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
         List<PostCommentProjection> postCommentProjections =
                 this.postRepository.findByTitle("Post Title");
 
-        final Function<Map.Entry<Records.RootValueDTO, List<Records.PostCommentsDTO>>, PostDTO>
-                mapToPostDTO =
-                        entry ->
-                                PostDTO.builder()
-                                        .title(entry.getKey().title())
-                                        .content(entry.getKey().content())
-                                        .comments(entry.getValue())
-                                        .build();
-        final Function<PostCommentProjection, Records.RootValueDTO> titleAndContentClassifier =
+        final Function<Map.Entry<RootValueDTO, List<PostCommentsDTO>>, PostDTO> mapToPostDTO =
+                entry ->
+                        PostDTO.builder()
+                                .title(entry.getKey().title())
+                                .content(entry.getKey().content())
+                                .comments(entry.getValue())
+                                .build();
+        final Function<PostCommentProjection, RootValueDTO> titleAndContentClassifier =
                 postCommentProjection ->
-                        new Records.RootValueDTO(
+                        new RootValueDTO(
                                 postCommentProjection.getTitle(),
                                 postCommentProjection.getContent());
-        final Function<PostCommentProjection, Records.PostCommentsDTO> mapToPostComments =
-                postCommentProjection ->
-                        new Records.PostCommentsDTO(postCommentProjection.getReview());
-        final Collector<PostCommentProjection, ?, List<Records.PostCommentsDTO>>
-                downStreamCollector = Collectors.mapping(mapToPostComments, Collectors.toList());
+        final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments =
+                postCommentProjection -> new PostCommentsDTO(postCommentProjection.getReview());
+        final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector =
+                Collectors.mapping(mapToPostComments, Collectors.toList());
 
         List<PostDTO> postDTOS =
                 postCommentProjections.stream()
@@ -97,9 +96,7 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
         assertThat(postDTO.getContent()).isEqualTo("Post Content");
         assertThat(postDTO.getComments()).isNotEmpty().hasSizeGreaterThanOrEqualTo(2);
         assertThat(postDTO.getComments())
-                .contains(
-                        new Records.PostCommentsDTO("Review New"),
-                        new Records.PostCommentsDTO("Review Old"));
+                .contains(new PostCommentsDTO("Review New"), new PostCommentsDTO("Review Old"));
     }
 
     @Test

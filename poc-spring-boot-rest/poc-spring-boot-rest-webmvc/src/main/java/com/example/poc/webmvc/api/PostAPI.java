@@ -1,6 +1,6 @@
 package com.example.poc.webmvc.api;
 
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.PostRequestDTO;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,7 +29,7 @@ public interface PostAPI {
             })
     @Tag(name = "Post API")
     ResponseEntity<Object> createPostByUserName(
-            Records.PostRequestDTO postRequestDTO,
+            PostRequestDTO postRequestDTO,
             @Parameter(description = "id of user who is creating") String userName,
             UriComponentsBuilder ucBuilder);
 }

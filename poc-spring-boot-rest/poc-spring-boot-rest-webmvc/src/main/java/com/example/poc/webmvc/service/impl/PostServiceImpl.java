@@ -1,7 +1,7 @@
 package com.example.poc.webmvc.service.impl;
 
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.exception.PostNotFoundException;
 import com.example.poc.webmvc.mapper.PostMapper;
 import com.example.poc.webmvc.repository.PostRepository;
@@ -72,7 +72,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void createPost(Records.PostRequestDTO postRequestDTO, String userName) {
+    public void createPost(PostRequestDTO postRequestDTO, String userName) {
         PostDTO postDTO = this.postMapper.postRequestDtoToPostDto(postRequestDTO);
         postDTO.setCreatedBy(userName);
         Post post = this.postMapper.postDtoToPost(postDTO);

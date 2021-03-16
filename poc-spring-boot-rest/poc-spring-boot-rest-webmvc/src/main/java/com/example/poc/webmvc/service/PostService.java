@@ -1,7 +1,7 @@
 package com.example.poc.webmvc.service;
 
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.PostRequestDTO;
 import java.util.List;
 
 public interface PostService {
@@ -14,5 +14,5 @@ public interface PostService {
 
     PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title);
 
-    void createPost(Records.PostRequestDTO postRequestDTO, String userName);
+    void createPost(PostRequestDTO postRequestDTO, String userName);
 }

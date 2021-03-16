@@ -1,7 +1,8 @@
 package com.example.poc.webmvc.common;
 
+import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.TagDTO;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
@@ -18,11 +19,11 @@ public class MockObjectCreator {
         return postDto;
     }
 
-    private Records.TagDTO getTag() {
-        return new Records.TagDTO("tag");
+    private TagDTO getTag() {
+        return new TagDTO("tag");
     }
 
-    private Records.PostCommentsDTO getPostComments() {
-        return new Records.PostCommentsDTO("junitReview");
+    private PostCommentsDTO getPostComments() {
+        return new PostCommentsDTO("junitReview");
     }
 }

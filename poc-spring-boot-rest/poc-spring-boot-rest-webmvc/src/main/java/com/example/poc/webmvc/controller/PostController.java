@@ -2,7 +2,8 @@ package com.example.poc.webmvc.controller;
 
 import com.example.poc.webmvc.api.PostAPI;
 import com.example.poc.webmvc.dto.PostDTO;
-import com.example.poc.webmvc.dto.Records;
+import com.example.poc.webmvc.dto.PostRequestDTO;
+import com.example.poc.webmvc.dto.PostsDTO;
 import com.example.poc.webmvc.service.PostService;
 import java.util.List;
 import java.util.Optional;
@@ -43,14 +44,13 @@ public class PostController implements PostAPI {
             };
 
     @GetMapping("/{user_name}/posts")
-    public ResponseEntity<Records.PostsDTO> getPostsByUserName(
-            @PathVariable("user_name") String userName) {
+    public ResponseEntity<PostsDTO> getPostsByUserName(@PathVariable("user_name") String userName) {
 
         List<PostDTO> posts =
                 this.postService.fetchAllPostsByUserName(userName).stream()
                         .map(postDTO -> this.addLinkToPostBiFunction.apply(userName, postDTO))
                         .collect(Collectors.toList());
-        return ResponseEntity.of(Optional.of(new Records.PostsDTO(posts)));
+        return ResponseEntity.of(Optional.of(new PostsDTO(posts)));
     }
 
     @GetMapping("/{user_name}/posts/{title}")
@@ -73,7 +73,7 @@ public class PostController implements PostAPI {
     @PostMapping("/{user_name}/posts/")
     @Override
     public ResponseEntity<Object> createPostByUserName(
-            @RequestBody @Valid Records.PostRequestDTO postRequestDTO,
+            @RequestBody @Valid PostRequestDTO postRequestDTO,
             @PathVariable("user_name") String userName,
             UriComponentsBuilder ucBuilder) {
         this.postService.createPost(postRequestDTO, userName);
