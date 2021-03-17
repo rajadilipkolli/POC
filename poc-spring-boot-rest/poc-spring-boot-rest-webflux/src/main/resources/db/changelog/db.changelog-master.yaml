@@ -35,3 +35,23 @@ databaseChangeLog:
               - column:
                   name: content
                   value: "Content of my first post"
+
+  - changeSet:
+      id: 2
+      author: raja
+      changes:
+        - addColumn:
+            tableName: reactive_posts
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamptz
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: updated_at
+                  type: timestamptz
+              - column:
+                  name: updated_by
+                  type: varchar(255)

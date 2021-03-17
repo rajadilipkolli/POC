@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -32,7 +33,7 @@ public class PostClassicController {
     }
 
     @GetMapping("/{id}")
-    public Publisher<ReactivePost> get(@PathVariable("id") Integer id) {
+    public Mono<ReactivePost> get(@PathVariable("id") Integer id) {
         return this.postService.findPostById(id);
     }
 
@@ -49,15 +50,13 @@ public class PostClassicController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<ReactivePost>> update(
+    public Mono<ServerResponse> update(
             @PathVariable("id") Integer id, @RequestBody ReactivePost reactivePost) {
-        return Mono.just(reactivePost)
-                .flatMap(post -> this.postService.update(id, post))
-                .map(p -> ResponseEntity.ok().contentType(this.mediaType).build());
+        return this.postService.update(id, reactivePost);
     }
 
     @DeleteMapping("/{id}")
-    public Publisher<ReactivePost> delete(@PathVariable("id") Integer id) {
+    public Mono<ServerResponse> delete(@PathVariable("id") Integer id) {
         return this.postService.deletePostById(id);
     }
 }

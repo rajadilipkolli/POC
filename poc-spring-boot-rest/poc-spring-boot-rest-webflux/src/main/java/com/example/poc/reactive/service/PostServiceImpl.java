@@ -1,16 +1,24 @@
 package com.example.poc.reactive.service;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.accepted;
+import static org.springframework.web.reactive.function.server.ServerResponse.noContent;
+import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
+
 import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.event.PostCreatedEvent;
+import com.example.poc.reactive.exception.PostNotFoundException;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
@@ -30,18 +38,27 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Mono<ReactivePost> findPostById(Integer id) {
-        return this.postRepository.findById(id);
-    }
-
-    @Override
-    public Mono<ReactivePost> deletePostById(Integer id) {
         return this.postRepository
                 .findById(id)
-                .flatMap(p -> this.postRepository.deleteById(p.getId()).thenReturn(p));
+                .switchIfEmpty(
+                        Mono.error(new PostNotFoundException("Post with Id " + id + " NotFound!")));
     }
 
     @Override
-    public Mono<ReactivePost> update(Integer id, ReactivePost reactivePost) {
+    public Mono<ServerResponse> deletePostById(Integer id) {
+        return this.postRepository
+                .findById(id)
+                .flatMap(
+                        p -> {
+                            log.debug("found post: {}", p);
+                            return this.postRepository.deleteById(p.getId()).thenReturn(p);
+                        })
+                .flatMap(deleted -> accepted().build())
+                .switchIfEmpty(notFound().build());
+    }
+
+    @Override
+    public Mono<ServerResponse> update(Integer id, ReactivePost reactivePost) {
         return this.postRepository
                 .findById(id)
                 .map(
@@ -50,6 +67,8 @@ public class PostServiceImpl implements PostService {
                             post.setContent(reactivePost.getContent());
                             return post;
                         })
-                .flatMap(this.postRepository::save);
+                .flatMap(this.postRepository::save)
+                .flatMap(post -> noContent().build())
+                .switchIfEmpty(notFound().build());
     }
 }

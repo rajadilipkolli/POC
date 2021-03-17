@@ -1,6 +1,7 @@
 package com.example.poc.reactive.service;
 
 import com.example.poc.reactive.entity.ReactivePost;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -12,7 +13,7 @@ public interface PostService {
 
     Mono<ReactivePost> findPostById(Integer id);
 
-    Mono<ReactivePost> deletePostById(Integer id);
+    Mono<ServerResponse> deletePostById(Integer id);
 
-    Mono<ReactivePost> update(Integer id, ReactivePost reactivePost);
+    Mono<ServerResponse> update(Integer id, ReactivePost reactivePost);
 }
