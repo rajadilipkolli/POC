@@ -4,9 +4,11 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ac
 import static org.springframework.web.reactive.function.server.ServerResponse.noContent;
 import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
 
+import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.event.PostCreatedEvent;
 import com.example.poc.reactive.exception.PostNotFoundException;
+import com.example.poc.reactive.mapping.PostMapper;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final ApplicationEventPublisher publisher;
+    private final PostMapper postMapper;
 
     @Override
     public Flux<ReactivePost> findAllPosts() {
@@ -30,7 +33,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Mono<ReactivePost> savePost(ReactivePost reactivePost) {
+    public Mono<ReactivePost> savePost(PostDto postDto) {
+        ReactivePost reactivePost = this.postMapper.toEntity(postDto);
         return this.postRepository
                 .save(reactivePost)
                 .doOnSuccess(post -> this.publisher.publishEvent(new PostCreatedEvent(post)));

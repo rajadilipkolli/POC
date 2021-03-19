@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.reactive.config.DatabaseConfig;
+import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
+import com.example.poc.reactive.mapping.PostMapperImpl;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
@@ -21,7 +23,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @DataR2dbcTest
-@Import({PostServiceImpl.class, DatabaseConfig.class})
+@Import({PostServiceImpl.class, DatabaseConfig.class, PostMapperImpl.class})
 @WithMockUser
 @Slf4j
 class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
@@ -62,19 +64,18 @@ class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
     @Test
     void save() {
         Mono<ReactivePost> reactivePostMono =
-                this.postService.savePost(
-                        ReactivePost.builder().title("Raja").content("fourth Content").build());
+                this.postService.savePost(new PostDto("Raja", "fourth Content"));
 
         StepVerifier.create(reactivePostMono)
                 .consumeNextWith(
-                        p -> {
-                            log.info("saved post: {}", p);
-                            assertThat(p.getTitle()).isEqualTo("Raja");
-                            assertThat(p.getContent()).isEqualTo("fourth Content");
-                            assertThat(p.getCreatedAt()).isNotNull();
-                            assertThat(p.getUpdatedAt()).isNotNull();
-                            assertThat(p.getCreatedBy()).isEqualTo("user");
-                            assertThat(p.getUpdatedBy()).isEqualTo("user");
+                        reactivePost -> {
+                            log.info("saved post: {}", reactivePost);
+                            assertThat(reactivePost.getTitle()).isEqualTo("Raja");
+                            assertThat(reactivePost.getContent()).isEqualTo("fourth Content");
+                            assertThat(reactivePost.getCreatedAt()).isNotNull();
+                            assertThat(reactivePost.getUpdatedAt()).isNotNull();
+                            assertThat(reactivePost.getCreatedBy()).isEqualTo("user");
+                            assertThat(reactivePost.getUpdatedBy()).isEqualTo("user");
                         })
                 .verifyComplete();
     }
@@ -82,10 +83,9 @@ class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
     @Test
     void delete() {
 
-        ReactivePost test = ReactivePost.builder().title("Hello").content("fifth Content").build();
         Mono<ServerResponse> deleted =
                 this.postService
-                        .savePost(test)
+                        .savePost(new PostDto("Hello", "fifth Content"))
                         .flatMap(
                                 saved -> {
                                     log.info("saved post: {}", saved);
@@ -101,13 +101,12 @@ class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
 
     @Test
     void update() {
-        ReactivePost test = ReactivePost.builder().title("Junit").content("sixth Content").build();
         ReactivePost test1 =
                 ReactivePost.builder().title("Junit1").content("sixth Content").build();
 
         Mono<ServerResponse> saved =
                 this.postService
-                        .savePost(test)
+                        .savePost(new PostDto("Junit1", "sixth Content"))
                         .flatMap(p -> this.postService.update(p.getId(), test1));
 
         StepVerifier.create(saved)
@@ -122,7 +121,7 @@ class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
                 ReactivePost.builder().title("Junit_new").content("seventh Content").build();
         Mono<ReactivePost> responseMono =
                 this.postService
-                        .savePost(test)
+                        .savePost(new PostDto("Junit_new", "seventh Content"))
                         .flatMap(
                                 reactivePost ->
                                         this.postService.findPostById(reactivePost.getId()));

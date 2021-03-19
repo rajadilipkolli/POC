@@ -23,7 +23,7 @@ class SecurityConfig {
 
     @Bean
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
-        var POST_PATH = "/posts/**";
+        var postPath = "/posts/**";
         return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(
                         httpBasicSpec ->
@@ -31,11 +31,11 @@ class SecurityConfig {
                                         NoOpServerSecurityContextRepository.getInstance()))
                 .authorizeExchange(
                         it ->
-                                it.pathMatchers(HttpMethod.GET, "/", POST_PATH)
+                                it.pathMatchers(HttpMethod.GET, "/", postPath)
                                         .permitAll()
-                                        .pathMatchers(HttpMethod.DELETE, POST_PATH)
+                                        .pathMatchers(HttpMethod.DELETE, postPath)
                                         .hasRole("ADMIN")
-                                        .pathMatchers(POST_PATH)
+                                        .pathMatchers(postPath)
                                         .hasRole("USER")
                                         .pathMatchers("/users/{user}/**")
                                         .access(this::currentUserMatchesPath)

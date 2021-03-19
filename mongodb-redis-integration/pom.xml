@@ -16,7 +16,6 @@
 	<name>Spring Boot MongoDb Redis Cache Implementation</name>
 
 	<properties>
-		<java.version>15</java.version>
 		<problem-spring-web.version>0.26.2</problem-spring-web.version>
 
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>

@@ -23,26 +23,6 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-        - insert:
-            tableName: reactive_posts
-            columns:
-              - column:
-                  name: id
-                  valueNumeric: 0
-              - column:
-                  name: title
-                  value: "First post title"
-              - column:
-                  name: content
-                  value: "Content of my first post"
-
-  - changeSet:
-      id: 2
-      author: raja
-      changes:
-        - addColumn:
-            tableName: reactive_posts
-            columns:
               - column:
                   name: created_at
                   type: timestamptz
@@ -55,3 +35,15 @@ databaseChangeLog:
               - column:
                   name: updated_by
                   type: varchar(255)
+        - insert:
+            tableName: reactive_posts
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 0
+              - column:
+                  name: title
+                  value: "First post title"
+              - column:
+                  name: content
+                  value: "Content of my first post"

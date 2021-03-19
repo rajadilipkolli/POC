@@ -47,7 +47,6 @@ public class ReactivePost {
     private String updatedBy;
 
     public ReactivePost(String title, String content) {
-        this.id = null;
         this.title = title;
         this.content = content;
     }

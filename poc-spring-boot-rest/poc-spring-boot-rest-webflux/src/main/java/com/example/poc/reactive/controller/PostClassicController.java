@@ -1,5 +1,6 @@
 package com.example.poc.reactive.controller;
 
+import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.service.PostService;
 import java.net.URI;
@@ -38,9 +39,9 @@ public class PostClassicController {
     }
 
     @PostMapping
-    public Publisher<ResponseEntity<ReactivePost>> create(@RequestBody ReactivePost reactivePost) {
+    public Publisher<ResponseEntity<ReactivePost>> create(@RequestBody PostDto postDto) {
         return this.postService
-                .savePost(reactivePost)
+                .savePost(postDto)
                 .map(
                         persistedPost ->
                                 ResponseEntity.created(

@@ -9,7 +9,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApplicationTests extends AbstractPostgreSQLContainerBase {
+public class ApplicationIntegrationTest extends AbstractPostgreSQLContainerBase {
 
     @LocalServerPort private int port;
 

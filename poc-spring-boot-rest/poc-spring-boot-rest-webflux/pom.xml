@@ -14,8 +14,7 @@
     <name>Spring Boot Rest Webflux</name>
 
     <properties>
-        <java.version>15</java.version>
-
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <testcontainers.version>1.15.2</testcontainers.version>
 
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
@@ -66,6 +65,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -145,11 +149,22 @@
                     <target>${java.version}</target> <!-- depending on your project -->
                     <compilerArgs>--enable-preview</compilerArgs>
                     <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
                         <!-- other annotation processors -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <!-- This is needed when using Lombok 1.18.16 and above -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
