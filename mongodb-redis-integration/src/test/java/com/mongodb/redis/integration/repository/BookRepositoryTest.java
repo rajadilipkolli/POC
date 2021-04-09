@@ -15,45 +15,45 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @DataMongoTest
 class BookRepositoryTest extends AbstractMongoContainerBaseTest {
 
-  @Autowired private BookRepository bookRepository;
+    @Autowired private BookRepository bookRepository;
 
-  @Autowired private MongoTemplate mongoTemplate;
+    @Autowired private MongoTemplate mongoTemplate;
 
-  private String collectionName;
+    private String collectionName;
 
-  private Book bookRecToInsert;
+    private Book bookRecToInsert;
 
-  @BeforeAll
-  void setUp() {
-    this.collectionName = "books";
-    this.bookRecToInsert =
-        Book.builder()
-            .title("JUNIT_TITLE")
-            .author("JUNIT_AUTHOR")
-            .bookId("JUNIT")
-            .text("JUNIT_TEXT")
-            .build();
-  }
+    @BeforeAll
+    void setUp() {
+        this.collectionName = "books";
+        this.bookRecToInsert =
+                Book.builder()
+                        .title("JUNIT_TITLE")
+                        .author("JUNIT_AUTHOR")
+                        .bookId("JUNIT")
+                        .text("JUNIT_TEXT")
+                        .build();
+    }
 
-  @AfterAll
-  void tearDown() {
-    this.mongoTemplate.dropCollection(this.collectionName);
-  }
+    @AfterAll
+    void tearDown() {
+        this.mongoTemplate.dropCollection(this.collectionName);
+    }
 
-  @Test
-  void checkMongoTemplateAndPerFormOperations() {
+    @Test
+    void checkMongoTemplateAndPerFormOperations() {
 
-    assertThat(this.mongoTemplate).isNotNull();
-    com.mongodb.client.MongoCollection<Document> createdCollection =
-        this.mongoTemplate.createCollection(this.collectionName);
-    assertThat(createdCollection.countDocuments()).isEqualTo(0);
-    assertThat(this.mongoTemplate.collectionExists(this.collectionName)).isTrue();
+        assertThat(this.mongoTemplate).isNotNull();
+        com.mongodb.client.MongoCollection<Document> createdCollection =
+                this.mongoTemplate.createCollection(this.collectionName);
+        assertThat(createdCollection.countDocuments()).isEqualTo(0);
+        assertThat(this.mongoTemplate.collectionExists(this.collectionName)).isTrue();
 
-    assertThat(this.bookRepository).isNotNull();
-    Book savedLogRecord = this.bookRepository.save(this.bookRecToInsert);
-    assertThat(this.bookRepository.findById(savedLogRecord.getBookId())).isNotNull();
-    Book foundBook = this.bookRepository.findBookByTitle("JUNIT_TITLE").get();
-    assertThat(foundBook).isNotNull();
-    assertThat(foundBook.getTitle()).isEqualTo("JUNIT_TITLE");
-  }
+        assertThat(this.bookRepository).isNotNull();
+        Book savedLogRecord = this.bookRepository.save(this.bookRecToInsert);
+        assertThat(this.bookRepository.findById(savedLogRecord.getBookId())).isNotNull();
+        Book foundBook = this.bookRepository.findBookByTitle("JUNIT_TITLE").get();
+        assertThat(foundBook).isNotNull();
+        assertThat(foundBook.getTitle()).isEqualTo("JUNIT_TITLE");
+    }
 }

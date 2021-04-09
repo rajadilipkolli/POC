@@ -14,16 +14,16 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 @RequiredArgsConstructor
 public class RedisCachingConfig extends CachingConfigurerSupport {
 
-  private final RedisConnectionFactory connectionFactory;
+    private final RedisConnectionFactory connectionFactory;
 
-  @Bean
-  @Override
-  public CacheErrorHandler errorHandler() {
-    return new CustomCacheErrorHandler();
-  }
+    @Bean
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new CustomCacheErrorHandler();
+    }
 
-  @PreDestroy
-  public void flushTestDb() {
-    this.connectionFactory.getConnection().flushDb();
-  }
+    @PreDestroy
+    public void flushTestDb() {
+        this.connectionFactory.getConnection().flushDb();
+    }
 }

@@ -8,19 +8,19 @@ import org.testcontainers.utility.DockerImageName;
 
 public abstract class AbstractRedisContainerBaseTest extends AbstractMongoContainerBaseTest {
 
-  static DockerImageName redisDockerImageName = DockerImageName.parse("redis");
+    static DockerImageName redisDockerImageName = DockerImageName.parse("redis");
 
-  @Container
-  protected static final GenericContainer REDIS_DB_CONTAINER =
-      new GenericContainer(redisDockerImageName).withExposedPorts(6379);
+    @Container
+    protected static final GenericContainer REDIS_DB_CONTAINER =
+            new GenericContainer(redisDockerImageName).withExposedPorts(6379);
 
-  static {
-    REDIS_DB_CONTAINER.start();
-  }
+    static {
+        REDIS_DB_CONTAINER.start();
+    }
 
-  @DynamicPropertySource
-  static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-    propertyRegistry.add("spring.redis.host", REDIS_DB_CONTAINER::getHost);
-    propertyRegistry.add("spring.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
-  }
+    @DynamicPropertySource
+    static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
+        propertyRegistry.add("spring.redis.host", REDIS_DB_CONTAINER::getHost);
+        propertyRegistry.add("spring.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
+    }
 }

@@ -14,12 +14,12 @@ import org.springframework.context.event.EventListener;
 @Slf4j
 public class TestData {
 
-  @Autowired BookRepository bookRepository;
+    @Autowired BookRepository bookRepository;
 
-  @EventListener(ApplicationReadyEvent.class)
-  void loadData() {
-    Book book = Book.builder().title("SB2").bookId("1").author("raja").build();
-    log.info("saving dummy data");
-    this.bookRepository.save(book);
-  }
+    @EventListener(ApplicationReadyEvent.class)
+    void loadData() {
+        Book book = Book.builder().title("SB2").bookId("1").author("raja").build();
+        log.info("saving dummy data");
+        this.bookRepository.save(book);
+    }
 }

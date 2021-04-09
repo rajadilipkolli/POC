@@ -18,18 +18,18 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @ToString
 public class Book implements Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
-  @Id private String bookId;
+    @Id private String bookId;
 
-  @Indexed
-  @NotBlank
-  @Size(max = 140)
-  private String title;
+    @Indexed
+    @NotBlank
+    @Size(max = 140)
+    private String title;
 
-  private String author;
+    private String author;
 
-  private String text;
+    private String text;
 
-  @Version private Long version;
+    @Version private Long version;
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PingController {
 
-  @RequestMapping(value = "/")
-  String hello() {
-    return "Hello World!";
-  }
+    @RequestMapping(value = "/")
+    String hello() {
+        return "Hello World!";
+    }
 }

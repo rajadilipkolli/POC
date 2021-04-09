@@ -20,47 +20,51 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookService {
 
-  private final BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
-  private final MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
-  @Cacheable(value = "books", key = "#title", unless = "#result == null")
-  public Book findBookByTitle(String title) throws BookNotFoundException {
-    log.info("Finding Book by Title :{}", title);
-    return this.bookRepository
-        .findBookByTitle(title)
-        .orElseThrow(() -> new BookNotFoundException("Book with Title " + title + " NotFound!"));
-  }
+    @Cacheable(value = "books", key = "#title", unless = "#result == null")
+    public Book findBookByTitle(String title) throws BookNotFoundException {
+        log.info("Finding Book by Title :{}", title);
+        return this.bookRepository
+                .findBookByTitle(title)
+                .orElseThrow(
+                        () -> new BookNotFoundException("Book with Title " + title + " NotFound!"));
+    }
 
-  public Book saveBook(Book book) {
-    log.info("Saving book :{}", book.toString());
-    return this.bookRepository.save(book);
-  }
+    public Book saveBook(Book book) {
+        log.info("Saving book :{}", book.toString());
+        return this.bookRepository.save(book);
+    }
 
-  @CachePut(value = "books", key = "#title")
-  public Book updateAuthorByTitle(String title, String author) {
-    log.info("Updating Book Author by Title :{} with {}", title, author);
-    final Query query = new Query(Criteria.where("title").is(title));
-    final Update update = new Update().set("author", author);
-    return this.mongoTemplate.findAndModify(
-        query, update, new FindAndModifyOptions().returnNew(true).upsert(false), Book.class);
-  }
+    @CachePut(value = "books", key = "#title")
+    public Book updateAuthorByTitle(String title, String author) {
+        log.info("Updating Book Author by Title :{} with {}", title, author);
+        final Query query = new Query(Criteria.where("title").is(title));
+        final Update update = new Update().set("author", author);
+        return this.mongoTemplate.findAndModify(
+                query,
+                update,
+                new FindAndModifyOptions().returnNew(true).upsert(false),
+                Book.class);
+    }
 
-  @CacheEvict(value = "books", key = "#title")
-  public void deleteBook(String title) throws BookNotFoundException {
-    log.info("deleting Books by title :{}", title);
-    Book book = findBookByTitle(title);
-    this.bookRepository.delete(book);
-  }
+    @CacheEvict(value = "books", key = "#title")
+    public void deleteBook(String title) throws BookNotFoundException {
+        log.info("deleting Books by title :{}", title);
+        Book book = findBookByTitle(title);
+        this.bookRepository.delete(book);
+    }
 
-  @CacheEvict(allEntries = true, value = "books")
-  public String deleteAllCache() {
-    log.info("Deleting Cache");
-    return "Deleted Full Cache";
-  }
+    @CacheEvict(allEntries = true, value = "books")
+    public String deleteAllCache() {
+        log.info("Deleting Cache");
+        return "Deleted Full Cache";
+    }
 
-  @CacheEvict(allEntries = true, value = "books")
-  public void deleteAll() {
-    this.bookRepository.deleteAll();
-  }
+    @CacheEvict(allEntries = true, value = "books")
+    public void deleteAll() {
+        this.bookRepository.deleteAll();
+    }
 }

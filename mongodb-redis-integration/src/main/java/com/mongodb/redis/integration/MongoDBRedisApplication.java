@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MongoDBRedisApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(MongoDBRedisApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(MongoDBRedisApplication.class, args);
+    }
 }
