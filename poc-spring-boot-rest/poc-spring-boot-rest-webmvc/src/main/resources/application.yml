@@ -47,6 +47,10 @@ spring:
           fail_on_pagination_over_collection_fetch: true
           in_clause_parameter_padding: true
     show-sql: true
+    #Disables starting of job automatically
+  batch:
+    job:
+      enabled: false
 
 springdoc:
   swagger-ui:
