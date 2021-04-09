@@ -18,7 +18,7 @@ import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
 @DataR2dbcTest
-@Import({DatabaseConfig.class})
+@Import({DatabaseConfig.class, ReactivePost.class})
 @WithMockUser(username = "username")
 class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
 
@@ -34,7 +34,11 @@ class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
         List<String> statements =
                 List.of( //
                         "DROP TABLE IF EXISTS reactive_posts;",
-                        "CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, title VARCHAR(100) NOT NULL, content VARCHAR(100) NOT NULL);");
+                        "CREATE TABLE reactive_posts ( id SERIAL PRIMARY KEY, "
+                                + "title VARCHAR(100) NOT NULL, "
+                                + "content VARCHAR(100) NOT NULL,"
+                                + "created_by VARCHAR(100),"
+                                + "updated_by VARCHAR(100) );");
 
         statements.forEach(
                 statement ->

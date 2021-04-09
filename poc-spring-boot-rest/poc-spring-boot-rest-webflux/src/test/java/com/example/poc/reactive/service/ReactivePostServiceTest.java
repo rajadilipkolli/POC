@@ -10,6 +10,7 @@ import com.example.poc.reactive.mapping.PostMapperImpl;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
@@ -23,9 +24,10 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @DataR2dbcTest
-@Import({PostServiceImpl.class, DatabaseConfig.class, PostMapperImpl.class})
+@Import({PostServiceImpl.class, DatabaseConfig.class, PostMapperImpl.class, ReactivePost.class})
 @WithMockUser
 @Slf4j
+@Disabled
 class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private PostRepository postRepository;

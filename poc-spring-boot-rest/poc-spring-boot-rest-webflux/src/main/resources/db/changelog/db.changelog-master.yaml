@@ -47,3 +47,12 @@ databaseChangeLog:
               - column:
                   name: content
                   value: "Content of my first post"
+              - column:
+                  name: created_by
+                  value: "liquibase"
+              - column:
+                  name: created_at
+                  value: "2019-09-24 20:10:58.977914"
+              - column:
+                  name: updated_by
+                  value: "spring"

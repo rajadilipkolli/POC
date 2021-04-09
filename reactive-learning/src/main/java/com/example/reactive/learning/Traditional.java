@@ -1,5 +1,6 @@
 package com.example.reactive.learning;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
@@ -22,7 +23,7 @@ public class Traditional {
         Instant end = Instant.now();
         System.out.println("TimeTaken to execute sync :: " + Duration.between(start, end));
         start = Instant.now();
-        traditional.executeMethodAsync();
+//        traditional.executeMethodAsync();
         end = Instant.now();
         System.out.println("TimeTaken to execute async :: " + Duration.between(start, end));
         start = Instant.now();
@@ -32,27 +33,57 @@ public class Traditional {
     }
 
     private Integer executeMethodReactive() {
+
         Scheduler scheduler = Schedulers.parallel();
         Mono<Integer> a = Mono.just(firstMethod());
         Mono<Integer> b = Mono.just(secondMethod());
         Mono<Integer> c = Mono.just(thirdMethod());
 
-//        Flux<Integer> af = Flux.just(firstMethod()).subscribeOn(scheduler);
-//        Flux<Integer> bf = Flux.just(secondMethod()).subscribeOn(scheduler);
-//        Flux<Integer> cf = Flux.just(thirdMethod()).subscribeOn(scheduler);
+        Flux<Integer> af = Flux.just(firstMethod()).subscribeOn(scheduler);
+        Flux<Integer> bf = Flux.just(secondMethod()).subscribeOn(scheduler);
+        Flux<Integer> cf = Flux.just(thirdMethod()).subscribeOn(scheduler);
 
-        Mono<Integer> externalMono = Mono.zip(a, b, c).subscribeOn(scheduler).flatMap(data -> {
-            Integer total = sum(data.getT1(), data.getT2());
-            Integer diff = diff(data.getT3(), data.getT1());
+//        Mono<Integer> externalMono = Mono.zip(a, b, c).subscribeOn(scheduler).flatMap(data -> {
+//            Integer total = sum(data.getT1(), data.getT2());
+//            Integer diff = diff(data.getT3(), data.getT1());
+//
+//            return Mono.zip(Mono.just(divide(total, diff)).subscribeOn(scheduler), Mono.just(multiply(total, diff)).subscribeOn(scheduler))
+//                    .flatMap(innerzip -> Mono.just(innerzip.getT1() + innerzip.getT2()));
+//        });
 
-            return Mono.zip(Mono.just(divide(total, diff)).subscribeOn(scheduler), Mono.just(multiply(total, diff)).subscribeOn(scheduler))
-                    .flatMap(innerzip -> Mono.just(innerzip.getT1() + innerzip.getT2()));
-        });
+        // Creating a Async operation somewhere.
+        EventProcessor processor = new EventProcessor();
 
-        Integer value = externalMono.block(Duration.ofMinutes(1));
-        System.out.println(value);
-        return value;
+        // Create the FLUX from the Event listener
+        Flux<Integer> bridge = Flux.create(fluxSink -> processor.register(
+                new MyEventListener<>() {
 
+                    @Override
+                    public Integer onDataChunk(Integer chunk) {
+                        System.out.println("chunk ::" + chunk);
+                        fluxSink.next(chunk);
+                        return chunk;
+                    }
+
+                    @Override
+                    public void processComplete() {
+                        fluxSink.complete();
+                    }
+                }));
+
+        // Work with it Reactively
+        bridge.subscribe(
+                obj -> System.out.println("Obj :: " + obj),
+                null,
+                () -> System.out.println("Complete Done"));
+
+        // Need to trigger else nothing will happen.
+        processor.process(af, bf, cf);
+
+//        Integer value = externalMono.block(Duration.ofMinutes(1));
+//        System.out.println(value);
+//        return value;
+            return 0;
     }
 
     private int executeMethod() {
@@ -99,7 +130,7 @@ public class Traditional {
         return finalTotal.get();
     }
 
-    private int divide(Integer total, Integer diff) {
+    int divide(Integer total, Integer diff) {
         try {
             TimeUnit.SECONDS.sleep(4);
         } catch (InterruptedException e) {
@@ -109,7 +140,7 @@ public class Traditional {
         return total / diff;
     }
 
-    private int multiply(Integer total, Integer diff) {
+    int multiply(Integer total, Integer diff) {
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
@@ -119,11 +150,11 @@ public class Traditional {
         return total * diff;
     }
 
-    private Integer diff(Integer a, Integer b) {
+    Integer diff(Integer a, Integer b) {
         return a - b;
     }
 
-    private int firstMethod() {
+    int firstMethod() {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -133,7 +164,7 @@ public class Traditional {
         return 1;
     }
 
-    private int secondMethod() {
+    int secondMethod() {
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
@@ -143,7 +174,7 @@ public class Traditional {
         return 2;
     }
 
-    private int thirdMethod() {
+    int thirdMethod() {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
