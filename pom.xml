@@ -24,7 +24,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>15</java.version>
-		<testcontainers.version>1.15.2</testcontainers.version>
+		<testcontainers.version>1.15.3</testcontainers.version>
 	</properties>
 
 	<repositories>
