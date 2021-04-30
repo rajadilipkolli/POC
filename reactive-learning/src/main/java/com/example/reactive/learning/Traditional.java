@@ -65,8 +65,10 @@ public class Traditional {
                                             .flatMap(
                                                     innerZip ->
                                                             Mono.just(
-                                                                    innerZip.getT1() + innerZip.getT2()));
-                                }).log("zip");
+                                                                    innerZip.getT1()
+                                                                            + innerZip.getT2()));
+                                })
+                        .log("zip");
 
         return externalMono.block();
     }
