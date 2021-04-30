@@ -1,6 +1,7 @@
 package com.mongodb.redis.integration.utils;
 
 import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.document.Item;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class MockObjectUtils {
+
   public static ReactiveHashOperations<String, String, Book> getMockHashOps() {
     return new ReactiveHashOperations<>() {
       @Override
@@ -87,5 +89,17 @@ public class MockObjectUtils {
         return null;
       }
     };
+  }
+
+  public static List<Item> getItemsList() {
+    return List.of(
+        new Item(null, "Samsung TV", 40000.0),
+        new Item(null, "LG TV", 42000.0),
+        new Item(null, "Apple Watch", 90000.99),
+        getItemById("ABC"));
+  }
+
+  public static Item getItemById(String id) {
+    return new Item(id, "Bose Headphone", 900.99);
   }
 }

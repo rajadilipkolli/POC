@@ -10,18 +10,17 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-@SuppressWarnings("preview")
 @Component
 public record BookHandler(ReactiveBookService reactiveBookService) {
+
+  // build notFound response
+  static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
 
   public Mono<ServerResponse> getAll() {
     return FunctionalEndpointUtils.defaultReadResponse(this.reactiveBookService.findAllBooks());
   }
 
   public Mono<ServerResponse> getBook(ServerRequest request) {
-    // build notFound response
-    Mono<ServerResponse> notFound = ServerResponse.notFound().build();
-
     // get book from repository
     Mono<Book> bookMono = this.reactiveBookService.getBookById(FunctionalEndpointUtils.id(request));
 
@@ -39,13 +38,13 @@ public record BookHandler(ReactiveBookService reactiveBookService) {
     return ServerResponse.accepted()
         .contentType(MediaType.APPLICATION_JSON)
         .body(this.reactiveBookService.deleteBook(FunctionalEndpointUtils.id(request)), Book.class)
-        .switchIfEmpty(ServerResponse.notFound().build());
+        .switchIfEmpty(notFound);
   }
 
   public Mono<ServerResponse> deleteAllBooks() {
     return ServerResponse.accepted()
         .contentType(MediaType.APPLICATION_JSON)
         .body(this.reactiveBookService.deleteAll(), Void.class)
-        .switchIfEmpty(ServerResponse.notFound().build());
+        .switchIfEmpty(notFound);
   }
 }

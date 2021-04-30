@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.repository.ReactiveBookRepository;
+import com.mongodb.redis.integration.repository.BookReactiveRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -28,6 +29,9 @@ import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestPropertySource(
+    properties =
+        "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration")
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestContainer {
 
   @Autowired private TestRestTemplate testRestTemplate;
@@ -36,17 +40,23 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
   @Autowired private ReactiveMongoOperations operations;
 
-  @Autowired private ReactiveBookRepository bookReactiveRepository;
+  @Autowired private BookReactiveRepository bookReactiveRepository;
 
   @BeforeAll
   void init() {
-    if (!this.operations.collectionExists(Book.class).block()) {
-      this.operations
-          .createCollection(
-              Book.class, CollectionOptions.empty().size(1024 * 1024).maxDocuments(100))
-          .then()
-          .block();
-    }
+
+    this.operations
+        .collectionExists(Book.class)
+        .subscribe(
+            aBoolean -> {
+              if (!aBoolean) {
+                this.operations
+                    .createCollection(
+                        Book.class, CollectionOptions.empty().size(1024 * 1024).maxDocuments(100))
+                    .subscribe();
+              }
+            });
+
     this.bookReactiveRepository
         .save(
             Book.builder()
@@ -55,8 +65,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .author("Raja")
                 .bookId("1")
                 .build())
-        .then()
-        .block();
+        .subscribe();
   }
 
   @Test

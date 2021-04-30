@@ -5,18 +5,18 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 import com.mongodb.redis.integration.handler.BookHandler;
 import com.mongodb.redis.integration.handler.ValidationBookHandler;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-@Configuration(proxyBeanMethods = false)
-public class RoutingConfiguration {
+@Component
+public class RouterFunctionConfiguration {
 
   /**
    * monoRouterFunction.
@@ -27,7 +27,7 @@ public class RoutingConfiguration {
   @Bean
   public RouterFunction<ServerResponse> monoRouterFunction(
       BookHandler bookHandler, ValidationBookHandler validationBookHandler) {
-    return route(
+    return RouterFunctions.route(
             GET("/api/book").and(accept(MediaType.APPLICATION_JSON)),
             request -> bookHandler.getAll())
         .andRoute(
