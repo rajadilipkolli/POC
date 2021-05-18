@@ -25,6 +25,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>15</java.version>
 		<testcontainers.version>1.15.3</testcontainers.version>
+		<sonar.projectKey>rajadileepkolli_POC</sonar.projectKey>
+		<sonar.moduleKey>${artifactId}</sonar.moduleKey>
+		<sonar.organization>rajadileepkolli</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<repositories>
