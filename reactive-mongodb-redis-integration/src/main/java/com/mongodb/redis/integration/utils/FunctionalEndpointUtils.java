@@ -11,15 +11,15 @@ import reactor.core.publisher.Mono;
 @UtilityClass
 public class FunctionalEndpointUtils {
 
-  public static String id(ServerRequest serverRequest) {
-    // parse id from path-variable
-    return serverRequest.pathVariable("id");
-  }
+    public static String id(ServerRequest serverRequest) {
+        // parse id from path-variable
+        return serverRequest.pathVariable("id");
+    }
 
-  public static Mono<ServerResponse> defaultReadResponse(Publisher<Book> books) {
-    return ServerResponse.ok()
-        .contentType(MediaType.APPLICATION_JSON)
-        .body(books, Book.class)
-        .switchIfEmpty(ServerResponse.notFound().build());
-  }
+    public static Mono<ServerResponse> defaultReadResponse(Publisher<Book> books) {
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(books, Book.class)
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
 }

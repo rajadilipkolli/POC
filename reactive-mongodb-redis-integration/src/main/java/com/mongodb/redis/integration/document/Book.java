@@ -22,18 +22,18 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @AllArgsConstructor
 public class Book implements Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
-  @Id private String bookId;
+    @Id private String bookId;
 
-  @Indexed(unique = true)
-  @NotBlank(message = "Book title can't be Blank")
-  @Size(max = 140, message = "Book title size must be between 0 and 140")
-  private String title;
+    @Indexed(unique = true)
+    @NotBlank(message = "Book title can't be Blank")
+    @Size(max = 140, message = "Book title size must be between 0 and 140")
+    private String title;
 
-  private String author;
+    private String author;
 
-  private String text;
+    private String text;
 
-  @Version private Long version;
+    @Version private Long version;
 }

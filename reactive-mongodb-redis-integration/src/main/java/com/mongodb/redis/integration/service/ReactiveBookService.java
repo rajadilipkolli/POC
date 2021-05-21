@@ -21,108 +21,117 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ReactiveBookService {
 
-  /** KeyName of the region where cache stored. */
-  public static final String CACHEABLES_REGION_KEY = "reactivebooks";
+    /** KeyName of the region where cache stored. */
+    public static final String CACHEABLES_REGION_KEY = "reactivebooks";
 
-  private final BookReactiveRepository bookReactiveRepository;
+    private final BookReactiveRepository bookReactiveRepository;
 
-  private final ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
 
-  private final ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate;
+    private final ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate;
 
-  private ReactiveHashOperations<String, String, Book> bookReactiveHashOperations;
+    private ReactiveHashOperations<String, String, Book> bookReactiveHashOperations;
 
-  @PostConstruct
-  void setUpReactiveHashOperations() {
-    bookReactiveHashOperations = this.reactiveJsonBookRedisTemplate.opsForHash();
-  }
+    @PostConstruct
+    void setUpReactiveHashOperations() {
+        bookReactiveHashOperations = this.reactiveJsonBookRedisTemplate.opsForHash();
+    }
 
-  public Mono<Book> findBookByTitle(String title) {
-    return this.bookReactiveRepository
-        .findByTitle(title)
-        .switchIfEmpty(
-            Mono.error(new BookNotFoundException("Book with Title " + title + " NotFound!")));
-  }
+    public Mono<Book> findBookByTitle(String title) {
+        return this.bookReactiveRepository
+                .findByTitle(title)
+                .switchIfEmpty(
+                        Mono.error(
+                                new BookNotFoundException(
+                                        "Book with Title " + title + " NotFound!")));
+    }
 
-  public Flux<Book> findAllBooks() {
+    public Flux<Book> findAllBooks() {
 
-    return this.bookReactiveHashOperations
-        .values(CACHEABLES_REGION_KEY)
-        .log("Fetching from cache")
-        .switchIfEmpty(
-            this.bookReactiveRepository
-                .findAll()
-                .log("Fetching from Database")
-                .flatMap(this::putToCache));
-  }
+        return this.bookReactiveHashOperations
+                .values(CACHEABLES_REGION_KEY)
+                .log("Fetching from cache")
+                .switchIfEmpty(
+                        this.bookReactiveRepository
+                                .findAll()
+                                .log("Fetching from Database")
+                                .flatMap(this::putToCache));
+    }
 
-  public Mono<Book> getBookById(String bookId) {
-    return this.bookReactiveHashOperations
-        .get(CACHEABLES_REGION_KEY, bookId)
-        .log("Fetching from cache")
-        .switchIfEmpty(
-            this.bookReactiveRepository
+    public Mono<Book> getBookById(String bookId) {
+        return this.bookReactiveHashOperations
+                .get(CACHEABLES_REGION_KEY, bookId)
+                .log("Fetching from cache")
+                .switchIfEmpty(
+                        this.bookReactiveRepository
+                                .findById(bookId)
+                                .log("Fetching from Database")
+                                .flatMap(this::putToCache));
+    }
+
+    public Mono<Book> createBook(Book bookToPersist) {
+        Consumer<Book> publishEventConsumer =
+                persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook));
+        return this.bookReactiveRepository
+                .save(bookToPersist)
+                .log("Saving to DB")
+                .flatMap(this::putToCache)
+                .doOnSuccess(publishEventConsumer)
+                .doOnError(
+                        error ->
+                                log.error(
+                                        "The following error happened on creatingBook method!",
+                                        error));
+    }
+
+    public Mono<Book> updateBook(String bookId, Book requestedBook) {
+        return this.bookReactiveRepository
                 .findById(bookId)
-                .log("Fetching from Database")
-                .flatMap(this::putToCache));
-  }
+                .log()
+                .map(updateBookFunction(requestedBook))
+                .flatMap(this.bookReactiveRepository::save)
+                .log("Updating in Database")
+                .flatMap(this::putToCache);
+    }
 
-  public Mono<Book> createBook(Book bookToPersist) {
-    Consumer<Book> publishEventConsumer =
-        persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook));
-    return this.bookReactiveRepository
-        .save(bookToPersist)
-        .log("Saving to DB")
-        .flatMap(this::putToCache)
-        .doOnSuccess(publishEventConsumer)
-        .doOnError(
-            error -> log.error("The following error happened on creatingBook method!", error));
-  }
+    public Mono<Book> deleteBook(String bookId) {
+        return this.bookReactiveRepository
+                .findById(bookId)
+                .flatMap(
+                        book ->
+                                this.bookReactiveRepository
+                                        .deleteById(book.getBookId())
+                                        .log("Deleting from Database")
+                                        .thenReturn(book)
+                                        .flatMap(
+                                                returnedBook ->
+                                                        this.bookReactiveHashOperations
+                                                                .remove(
+                                                                        CACHEABLES_REGION_KEY,
+                                                                        bookId)
+                                                                .log("Deleting From Cache")
+                                                                .thenReturn(returnedBook)));
+    }
 
-  public Mono<Book> updateBook(String bookId, Book requestedBook) {
-    return this.bookReactiveRepository
-        .findById(bookId)
-        .log()
-        .map(updateBookFunction(requestedBook))
-        .flatMap(this.bookReactiveRepository::save)
-        .log("Updating in Database")
-        .flatMap(this::putToCache);
-  }
+    public Mono<Boolean> deleteAll() {
+        return this.bookReactiveHashOperations
+                .delete(CACHEABLES_REGION_KEY)
+                .log("Deleting All Cache");
+    }
 
-  public Mono<Book> deleteBook(String bookId) {
-    return this.bookReactiveRepository
-        .findById(bookId)
-        .flatMap(
-            book ->
-                this.bookReactiveRepository
-                    .deleteById(book.getBookId())
-                    .log("Deleting from Database")
-                    .thenReturn(book)
-                    .flatMap(
-                        returnedBook ->
-                            this.bookReactiveHashOperations
-                                .remove(CACHEABLES_REGION_KEY, bookId)
-                                .log("Deleting From Cache")
-                                .thenReturn(returnedBook)));
-  }
+    private Mono<Book> putToCache(Book book) {
+        return this.bookReactiveHashOperations
+                .put(CACHEABLES_REGION_KEY, book.getBookId(), book)
+                .log("Pushing to Cache")
+                .thenReturn(book);
+    }
 
-  public Mono<Boolean> deleteAll() {
-    return this.bookReactiveHashOperations.delete(CACHEABLES_REGION_KEY).log("Deleting All Cache");
-  }
-
-  private Mono<Book> putToCache(Book book) {
-    return this.bookReactiveHashOperations
-        .put(CACHEABLES_REGION_KEY, book.getBookId(), book)
-        .log("Pushing to Cache")
-        .thenReturn(book);
-  }
-
-  private Function<Book, Book> updateBookFunction(Book requestedBook) {
-    return persistedBook -> {
-      persistedBook.setAuthor(requestedBook.getAuthor());
-      persistedBook.setText(requestedBook.getText());
-      persistedBook.setTitle(requestedBook.getTitle());
-      return persistedBook;
-    };
-  }
+    private Function<Book, Book> updateBookFunction(Book requestedBook) {
+        return persistedBook -> {
+            persistedBook.setAuthor(requestedBook.getAuthor());
+            persistedBook.setText(requestedBook.getText());
+            persistedBook.setTitle(requestedBook.getTitle());
+            return persistedBook;
+        };
+    }
 }

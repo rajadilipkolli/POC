@@ -12,6 +12,11 @@
 	<packaging>jar</packaging>
 	<name>Jooq Entities Generation</name>
 
+	<properties>
+		<spotless.check.skip>true</spotless.check.skip>
+	</properties>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>com.example.poc</groupId>

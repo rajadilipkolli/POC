@@ -18,31 +18,32 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Component
 public class RouterFunctionConfiguration {
 
-  /**
-   * monoRouterFunction.
-   *
-   * @param bookHandler a {@link BookHandler} object.
-   * @return a {@link org.springframework.web.reactive.function.server.RouterFunction} object.
-   */
-  @Bean
-  public RouterFunction<ServerResponse> monoRouterFunction(
-      BookHandler bookHandler, ValidationBookHandler validationBookHandler) {
-    return RouterFunctions.route(
-            GET("/api/book").and(accept(MediaType.APPLICATION_JSON)),
-            request -> bookHandler.getAll())
-        .andRoute(
-            GET("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)), bookHandler::getBook)
-        .andRoute(
-            POST("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
-            validationBookHandler::handleRequest)
-        .andRoute(
-            PUT("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
-            validationBookHandler::handleRequest)
-        .andRoute(
-            DELETE("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
-            bookHandler::deleteBook)
-        .andRoute(
-            DELETE("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
-            request -> bookHandler.deleteAllBooks());
-  }
+    /**
+     * monoRouterFunction.
+     *
+     * @param bookHandler a {@link BookHandler} object.
+     * @return a {@link org.springframework.web.reactive.function.server.RouterFunction} object.
+     */
+    @Bean
+    public RouterFunction<ServerResponse> monoRouterFunction(
+            BookHandler bookHandler, ValidationBookHandler validationBookHandler) {
+        return RouterFunctions.route(
+                        GET("/api/book").and(accept(MediaType.APPLICATION_JSON)),
+                        request -> bookHandler.getAll())
+                .andRoute(
+                        GET("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                        bookHandler::getBook)
+                .andRoute(
+                        POST("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
+                        validationBookHandler::handleRequest)
+                .andRoute(
+                        PUT("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                        validationBookHandler::handleRequest)
+                .andRoute(
+                        DELETE("/api/book/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                        bookHandler::deleteBook)
+                .andRoute(
+                        DELETE("/api/book/").and(accept(MediaType.APPLICATION_JSON)),
+                        request -> bookHandler.deleteAllBooks());
+    }
 }
