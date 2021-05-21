@@ -24,7 +24,7 @@ public class JPAPostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    BiFunction<String, String, PostNotFoundException> supplierBiFunction =
+    private final BiFunction<String, String, PostNotFoundException> supplierBiFunction =
             (userName, title) ->
                     new PostNotFoundException(
                             String.format(

@@ -19,15 +19,16 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
 
     private final PostRepository postRepository;
 
-    final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO =
+    private final Function<Entry<String, List<PostCommentsDTO>>, PostDTO> mapToPostDTO =
             entry -> PostDTO.builder().title(entry.getKey()).comments(entry.getValue()).build();
 
-    final Function<PostCommentProjection, String> titleClassifier = PostCommentProjection::getTitle;
+    private final Function<PostCommentProjection, String> titleClassifier =
+            PostCommentProjection::getTitle;
 
-    final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments =
+    private final Function<PostCommentProjection, PostCommentsDTO> mapToPostComments =
             postCommentProjection -> new PostCommentsDTO(postCommentProjection.getReview());
 
-    final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector =
+    private final Collector<PostCommentProjection, ?, List<PostCommentsDTO>> downStreamCollector =
             Collectors.mapping(this.mapToPostComments, Collectors.toList());
 
     @Override

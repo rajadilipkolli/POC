@@ -1,5 +1,7 @@
 package com.learning.java.algorithm.arrays;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 
 /**
@@ -10,6 +12,7 @@ import java.util.Arrays;
  *
  * For example, given [1,2,3,4], return [24,12,8,6].
  */
+@Slf4j
 public class ProductOfArrayExceptSelf {
 
 	public static void main(String[] args) {
@@ -17,7 +20,7 @@ public class ProductOfArrayExceptSelf {
 		int[] nums = new int[] { 1, 2, 3, 4 };
 		long startTime = System.nanoTime();
 		int[] response = productExceptSelfON(nums);
-		System.out.println("timeTaken -> " + (System.nanoTime() - startTime) + " array" + Arrays.toString(response));
+		log.info("timeTaken -> " + (System.nanoTime() - startTime) + " array" + Arrays.toString(response));
 
 	}
 

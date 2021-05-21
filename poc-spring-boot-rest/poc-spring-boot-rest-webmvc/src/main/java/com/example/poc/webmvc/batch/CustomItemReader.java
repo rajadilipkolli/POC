@@ -19,7 +19,7 @@ public class CustomItemReader<T> extends AbstractPagingItemReader<List<Long>> {
 
     private final PostRepository postRepository;
 
-    private volatile List<List<Long>> ids = new ArrayList<>();
+    private List<List<Long>> ids = new ArrayList<>();
 
     private String titleValue;
 

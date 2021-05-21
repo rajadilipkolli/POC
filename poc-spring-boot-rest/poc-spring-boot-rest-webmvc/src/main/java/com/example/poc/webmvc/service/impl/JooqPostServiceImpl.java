@@ -9,6 +9,7 @@ import static com.poc.restfulpoc.jooq.Tables.TAG;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.service.PostService;
+import java.util.Collections;
 import java.util.List;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,7 @@ public class JooqPostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> fetchAllPostsByUserName(String userName) {
-        // TODO Auto-generated method stub
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -48,13 +48,17 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePostByIdAndUserName(String userName, String title) {}
-
-    @Override
-    public PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title) {
-        return null;
+    public void deletePostByIdAndUserName(String userName, String title) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void createPost(PostRequestDTO postRequestDTO, String userName) {}
+    public PostDTO updatePostByUserNameAndId(PostDTO postDTO, String title) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void createPost(PostRequestDTO postRequestDTO, String userName) {
+        throw new UnsupportedOperationException();
+    }
 }

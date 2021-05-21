@@ -9,10 +9,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+@Slf4j
 public class Traditional {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -21,18 +23,18 @@ public class Traditional {
         Instant start = Instant.now();
         traditional.executeMethod();
         Instant end = Instant.now();
-        System.out.println("TimeTaken to execute sync :: " + Duration.between(start, end));
+        log.info("TimeTaken to execute sync :: {}", Duration.between(start, end));
         start = Instant.now();
         traditional.executeMethodAsync();
         end = Instant.now();
-        System.out.println("TimeTaken to execute async :: " + Duration.between(start, end));
+        log.info("TimeTaken to execute async :: {}", Duration.between(start, end));
         start = Instant.now();
-        traditional.executeMethodReactive();
+        traditional.executeMethodReactive().block();
         end = Instant.now();
-        System.out.println("TimeTaken to execute async :: " + Duration.between(start, end));
+        log.info("TimeTaken to execute reactively :: {}", Duration.between(start, end));
     }
 
-    private Integer executeMethodReactive() {
+    private Mono<Integer> executeMethodReactive() {
 
         Scheduler scheduler = Schedulers.parallel();
 
@@ -45,32 +47,27 @@ public class Traditional {
         Supplier<Mono<Integer>> thirdMethodSupplier =
                 () -> Mono.fromCallable(this::thirdMethod).log("third").subscribeOn(scheduler);
 
-        Mono<Integer> externalMono =
-                Mono.zip(
-                                firstMethodSupplier.get(),
-                                secondMethodSupplier.get(),
-                                thirdMethodSupplier.get())
-                        .flatMap(
-                                data -> {
-                                    Integer total = sum(data.getT1(), data.getT2());
-                                    Integer diff = diff(data.getT3(), data.getT1());
+        return Mono.zip(
+                        firstMethodSupplier.get(),
+                        secondMethodSupplier.get(),
+                        thirdMethodSupplier.get())
+                .flatMap(
+                        data -> {
+                            Integer total = sum(data.getT1(), data.getT2());
+                            Integer diff = diff(data.getT3(), data.getT1());
 
-                                    return Mono.zip(
-                                                    Mono.fromCallable(() -> divide(total, diff))
-                                                            .log("divide")
-                                                            .subscribeOn(scheduler),
-                                                    Mono.fromCallable(() -> multiply(total, diff))
-                                                            .log("multiply")
-                                                            .subscribeOn(scheduler))
-                                            .flatMap(
-                                                    innerZip ->
-                                                            Mono.just(
-                                                                    innerZip.getT1()
-                                                                            + innerZip.getT2()));
-                                })
-                        .log("zip");
-
-        return externalMono.block();
+                            return Mono.zip(
+                                            Mono.fromCallable(() -> divide(total, diff))
+                                                    .log("divide")
+                                                    .subscribeOn(scheduler),
+                                            Mono.fromCallable(() -> multiply(total, diff))
+                                                    .log("multiply")
+                                                    .subscribeOn(scheduler))
+                                    .flatMap(
+                                            innerZip ->
+                                                    Mono.just(innerZip.getT1() + innerZip.getT2()));
+                        })
+                .log("zip");
     }
 
     private int executeMethod() {
@@ -87,7 +84,7 @@ public class Traditional {
         Integer multi = multiply(total, diff);
 
         int value = d + multi;
-        System.out.println(value);
+        log.info("Value :{}", value);
         return value;
     }
 
@@ -112,12 +109,13 @@ public class Traditional {
                     try {
                         return future4.get() + future5.get();
                     } catch (InterruptedException | ExecutionException e) {
+                        Thread.currentThread().interrupt();
                         return null;
                     }
                 };
         CompletableFuture<Integer> finalTotal =
                 CompletableFuture.allOf(future4, future5).thenApplyAsync(function);
-        System.out.println("Final Total :: " + finalTotal.get());
+        log.info("Final Total :: {}", finalTotal.get());
         return finalTotal.get();
     }
 
@@ -125,9 +123,9 @@ public class Traditional {
         try {
             TimeUnit.SECONDS.sleep(4);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("divide");
+        log.info("executed divide method");
         return total / diff;
     }
 
@@ -135,9 +133,9 @@ public class Traditional {
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("multiply");
+        log.info("executed multiply method");
         return total * diff;
     }
 
@@ -149,9 +147,9 @@ public class Traditional {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("1");
+        log.info("executed 1st method");
         return 1;
     }
 
@@ -159,9 +157,9 @@ public class Traditional {
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("2");
+        log.info("executed 2nd method");
         return 2;
     }
 
@@ -169,9 +167,9 @@ public class Traditional {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("3");
+        log.info("executed 3rd method");
         return 3;
     }
 }
