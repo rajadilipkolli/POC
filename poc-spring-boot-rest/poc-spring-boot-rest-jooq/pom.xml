@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>poc-spring-boot-rest</artifactId>
@@ -19,6 +21,12 @@
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-meta-extensions-hibernate</artifactId>
+			<version>${jooq.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -62,6 +70,13 @@
 											<key>packages</key>
 											<value>com.poc.restfulpoc.entities</value>
 										</property>
+										<!-- Whether JPA 2.1 AttributeConverters should be auto-mapped 
+											to jOOQ Converters. Custom <forcedType/> configurations will have a higher 
+											priority than these auto-mapped converters. This defaults to true. -->
+										<property>
+											<key>useAttributeConverters</key>
+											<value>true</value>
+										</property>
 									</properties>
 									<includes>.*</includes>
 								</database>
@@ -79,15 +94,15 @@
 					</execution>
 				</executions>
 			</plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
-                </configuration>
-            </plugin>
-        </plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerArgs>--enable-preview</compilerArgs>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

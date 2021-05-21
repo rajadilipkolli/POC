@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationEvent;
 
 public class PostCreatedEvent extends ApplicationEvent {
 
+    private static final long serialVersionUID = 1L;
+
     public PostCreatedEvent(ReactivePost post) {
         super(post);
     }

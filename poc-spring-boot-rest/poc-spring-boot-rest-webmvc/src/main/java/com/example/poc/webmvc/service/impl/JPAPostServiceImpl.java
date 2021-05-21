@@ -12,12 +12,14 @@ import java.util.function.BiFunction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("jpaPostService")
+@Primary
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService {
+public class JPAPostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
