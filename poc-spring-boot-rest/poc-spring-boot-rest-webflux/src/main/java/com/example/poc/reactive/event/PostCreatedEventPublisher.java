@@ -4,12 +4,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import reactor.core.publisher.FluxSink;
 
 @Component
+@Slf4j
 public class PostCreatedEventPublisher
         implements ApplicationListener<PostCreatedEvent>, Consumer<FluxSink<PostCreatedEvent>> {
 
@@ -38,6 +40,7 @@ public class PostCreatedEventPublisher
 
     @Override
     public void onApplicationEvent(PostCreatedEvent event) {
-        this.queue.offer(event);
+        var eventAdded = this.queue.offer(event);
+        log.info("Event :{} added :{}", event, eventAdded);
     }
 }

@@ -38,7 +38,7 @@ public class ProblemJacksonAutoConfiguration {
   public ObjectMapper objectMapper(
       ProblemModule problemModule,
       ConstraintViolationProblemModule constraintViolationProblemModule) {
-    ObjectMapper objectMapper = new ObjectMapper();
+    var objectMapper = new ObjectMapper();
     objectMapper.registerModules(problemModule, constraintViolationProblemModule);
     return objectMapper;
   }

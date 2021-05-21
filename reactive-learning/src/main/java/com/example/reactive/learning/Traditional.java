@@ -11,7 +11,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 @Slf4j
@@ -19,10 +18,10 @@ public class Traditional {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        Traditional traditional = new Traditional();
-        Instant start = Instant.now();
+        var traditional = new Traditional();
+        var start = Instant.now();
         traditional.executeMethod();
-        Instant end = Instant.now();
+        var end = Instant.now();
         log.info("TimeTaken to execute sync :: {}", Duration.between(start, end));
         start = Instant.now();
         traditional.executeMethodAsync();
@@ -36,7 +35,7 @@ public class Traditional {
 
     private Mono<Integer> executeMethodReactive() {
 
-        Scheduler scheduler = Schedulers.parallel();
+        var scheduler = Schedulers.parallel();
 
         Supplier<Mono<Integer>> firstMethodSupplier =
                 () -> Mono.fromCallable(this::firstMethod).log("first").subscribeOn(scheduler);
