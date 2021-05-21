@@ -94,15 +94,90 @@ class ItemControllerTest {
   @Test
   void getOneItemNotFound() {
 
-    given(this.itemReactiveRepository.findById("ABC")).willReturn(Mono.empty());
+    given(this.itemReactiveRepository.findById("BCD")).willReturn(Mono.empty());
 
     this.webTestClient
         .get()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "BCD")
         .exchange()
         .expectStatus()
         .isNotFound()
         .expectBody()
         .isEmpty();
+  }
+
+  @Test
+  void saveItem() {
+
+    Item item = MockObjectUtils.getItemById("ABC");
+    given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+
+    this.webTestClient
+        .post()
+        .uri(ItemConstants.ITEM_END_POINT_V_1)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(Mono.just(item), Item.class)
+        .exchange()
+        .expectStatus()
+        .isCreated()
+        .expectBody()
+        .jsonPath("$.price", item.getPrice());
+  }
+
+  @Test
+  void updateItem() {
+    double newPrice = 129.95;
+
+    Item item = MockObjectUtils.getItemById("ABC");
+    item.setPrice(newPrice);
+
+    given(this.itemReactiveRepository.findById("ABC"))
+        .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
+
+    given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+
+    this.webTestClient
+        .put()
+        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(Mono.just(item), Item.class)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectBody()
+        .jsonPath("$.price", newPrice);
+  }
+
+  @Test
+  void updateItem_is_not_found() {
+    double newPrice = 129.95;
+
+    Item item = MockObjectUtils.getItemById("DEF");
+    item.setPrice(newPrice);
+
+    given(this.itemReactiveRepository.findById("DEF")).willReturn(Mono.empty());
+    this.webTestClient
+        .put()
+        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "DEF")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .body(Mono.just(item), Item.class)
+        .exchange()
+        .expectStatus()
+        .isNotFound();
+  }
+
+  @Test
+  void deleteItem() {
+    this.webTestClient
+        .delete()
+        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectBody(Void.class);
   }
 }

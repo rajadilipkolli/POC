@@ -4,6 +4,7 @@ import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.repository.ItemReactiveRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
 
   private final ItemReactiveRepository itemReactiveRepository;
@@ -33,5 +35,30 @@ public class ItemController {
   @ResponseStatus(HttpStatus.CREATED)
   public Mono<Item> postItem(@RequestBody Item item) {
     return itemReactiveRepository.save(item);
+  }
+
+  @PutMapping(ItemConstants.ITEM_END_POINT_V_1 + "/{id}")
+  public Mono<ResponseEntity<Item>> updateItem(@RequestBody Item item, @PathVariable String id) {
+    return itemReactiveRepository
+        .findById(id)
+        .flatMap(
+            currentItem -> {
+              currentItem.setPrice(item.getPrice());
+              currentItem.setDescription(item.getDescription());
+              return itemReactiveRepository.save(currentItem);
+            })
+        .map(updateItem -> new ResponseEntity<>(updateItem, HttpStatus.OK))
+        .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
+
+  @DeleteMapping(ItemConstants.ITEM_END_POINT_V_1 + "/{id}")
+  public Mono<Void> deleteItemById(@PathVariable String id) {
+    return itemReactiveRepository.deleteById(id);
+  }
+
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<String> handleRunTimeException(RuntimeException ex) {
+    log.error("Exception caught in handleRunTimeException() ", ex);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
   }
 }

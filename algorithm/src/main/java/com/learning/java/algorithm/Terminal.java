@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Terminal {
-    public static void main(String args[]) throws NoSuchAlgorithmException, InvalidKeyException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
         String url = "https://exxonmobil.captiveye002.com/desplaines/refresh/default_embed.asp?id=1542377888&signature=signature1";
         String hmac = "";
         SecretKey secretKey = null;

@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public record BookHandler(ReactiveBookService reactiveBookService) {
 
   // build notFound response
-  static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
+  private static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
 
   public Mono<ServerResponse> getAll() {
     return FunctionalEndpointUtils.defaultReadResponse(this.reactiveBookService.findAllBooks());

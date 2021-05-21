@@ -14,6 +14,7 @@ import com.example.poc.webmvc.service.PostService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.MediaTypes;
@@ -25,11 +26,17 @@ class PostControllerTest {
 
     @Autowired private MockMvc mvc;
 
-    @MockBean private PostService postService;
+    @MockBean
+    @Qualifier("jpaPostService")
+    private PostService jpaPostService;
+
+    @MockBean
+    @Qualifier("jooqPostService")
+    private PostService jooqPostService;
 
     @Test
     void shouldReturnAllPostsWithLinks() throws Exception {
-        given(this.postService.fetchAllPostsByUserName("junit"))
+        given(this.jpaPostService.fetchAllPostsByUserName("junit"))
                 .willReturn(List.of(MockObjectCreator.getPostDTO()));
 
         this.mvc
