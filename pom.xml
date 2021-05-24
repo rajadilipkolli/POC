@@ -23,13 +23,42 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>15</java.version>
+		<java.version>16</java.version>
 		<testcontainers.version>1.15.3</testcontainers.version>
 		<sonar.projectKey>rajadileepkolli_POC</sonar.projectKey>
 		<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
 		<sonar.organization>rajadileepkolli</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <spotless.version>2.11.1</spotless.version>
 	</properties>
+
+	
+	<build>
+	  <plugins>
+        <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <version>${spotless.version}</version>
+            <configuration>
+                <java>
+                    <googleJavaFormat>
+                        <version>1.10.0</version>
+                        <style>AOSP</style>
+                    </googleJavaFormat>
+                    <endWithNewline /> <!-- files must end with a newline -->
+                </java>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+      </plugins>
+	</build>
 
 	<repositories>
 		<repository>
