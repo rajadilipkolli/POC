@@ -3,6 +3,7 @@ package com.mongodb.redis.integration.handler;
 import com.mongodb.redis.integration.request.BookDTO;
 import com.mongodb.redis.integration.service.ReactiveCachingService;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -11,7 +12,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-public record BookHandler(ReactiveCachingService reactiveCachingService) {
+@RequiredArgsConstructor
+public class BookHandler {
+
+    private final ReactiveCachingService reactiveCachingService;
 
     // build notFound response
     private static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
