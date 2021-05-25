@@ -1,7 +1,6 @@
 package com.mongodb.redis.integration.service;
 
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.request.BookDTO;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -32,24 +31,15 @@ public class ReactiveCachingService {
         return this.bookReactiveHashOperations
                 .values(CACHEABLES_REGION_KEY)
                 .log("Fetching from cache")
-                .switchIfEmpty(
-                        reactiveBookService
-                                .findAllBooks()
-                                .log("Fetching from DB")
-                                .flatMap(this::convertToBookDTO)
-                                .flatMap(this::putToCache));
+                .switchIfEmpty(getAllBooksFromDbAndPutInCache());
     }
 
-    private Mono<BookDTO> convertToBookDTO(Book book) {
-        return Mono.just(
-                new BookDTO(book.getBookId(), book.getTitle(), book.getAuthor(), book.getText()));
-    }
-
-    private Mono<BookDTO> putToCache(BookDTO bookDTO) {
-        return this.bookReactiveHashOperations
-                .put(CACHEABLES_REGION_KEY, bookDTO.getBookId(), bookDTO)
-                .log("Pushing to Cache")
-                .thenReturn(bookDTO);
+    private Flux<BookDTO> getAllBooksFromDbAndPutInCache() {
+        return reactiveBookService
+                .findAllBooks()
+                .log("Fetching from DB")
+                .flatMap(this::convertToBookDTOMono)
+                .flatMap(this::putToCache);
     }
 
     public Mono<BookDTO> getBookById(String bookId) {
@@ -57,25 +47,18 @@ public class ReactiveCachingService {
                 .get(CACHEABLES_REGION_KEY, bookId)
                 .log("Fetching from cache")
                 .switchIfEmpty(
-                        this.reactiveBookService
-                                .getBookById(bookId)
-                                .flatMap(this::convertToBookDTO)
-                                .flatMap(this::putToCache));
+                        getBookDTOAfterUpdatingCache(this.reactiveBookService.getBookById(bookId)));
     }
 
-    public Mono<Long> deleteBook(String bookId) {
+    public Mono<BookDTO> deleteBook(String bookId) {
         return this.reactiveBookService
                 .deleteBook(bookId)
                 .flatMap(
                         book ->
                                 this.bookReactiveHashOperations
                                         .remove(CACHEABLES_REGION_KEY, bookId)
-                                        .log("Deleting From Cache"))
-                .switchIfEmpty(
-                        Mono.error(
-                                () ->
-                                        new BookNotFoundException(
-                                                "Book with Id " + bookId + " Not Found")));
+                                        .log("Deleting From Cache")
+                                        .thenReturn(convertToBookDTO(book)));
     }
 
     public Mono<Boolean> deleteAll() {
@@ -90,22 +73,48 @@ public class ReactiveCachingService {
 
     public Mono<BookDTO> createBook(BookDTO bookDTO) {
         Book book = convertToBook(bookDTO);
-        return this.reactiveBookService
-                .createBook(book)
-                .flatMap(this::convertToBookDTO)
-                .flatMap(this::putToCache);
-    }
-
-    private Book convertToBook(BookDTO bookDTO) {
-        return new Book(
-                bookDTO.getBookId(), bookDTO.getTitle(), bookDTO.getAuthor(), bookDTO.getText());
+        return getBookDTOAfterUpdatingCache(this.reactiveBookService.createBook(book));
     }
 
     public Mono<BookDTO> updateBook(String bookId, BookDTO validatedBook) {
         Book book = convertToBook(validatedBook);
-        return this.reactiveBookService
-                .updateBook(bookId, book)
-                .flatMap(this::convertToBookDTO)
-                .flatMap(this::putToCache);
+        return getBookDTOAfterUpdatingCache(this.reactiveBookService.updateBook(bookId, book));
+    }
+
+    // converts to BookDTO and updates Cache
+    private Mono<BookDTO> getBookDTOAfterUpdatingCache(Mono<Book> bookMono) {
+        return bookMono.flatMap(this::convertToBookDTOMono).flatMap(this::putToCache);
+    }
+
+    // convert to Book from BookDTO
+    private Book convertToBook(BookDTO bookDTO) {
+        return new Book(
+                bookDTO.getBookId(),
+                bookDTO.getTitle(),
+                bookDTO.getAuthor(),
+                bookDTO.getText(),
+                bookDTO.getVersion());
+    }
+
+    // convert to Mono<BookDTO> from Book
+    private Mono<BookDTO> convertToBookDTOMono(Book book) {
+        return Mono.just(convertToBookDTO(book));
+    }
+
+    private BookDTO convertToBookDTO(Book book) {
+        return new BookDTO(
+                book.getBookId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getText(),
+                book.getVersion());
+    }
+
+    // updates the value in cache
+    private Mono<BookDTO> putToCache(BookDTO bookDTO) {
+        return this.bookReactiveHashOperations
+                .put(CACHEABLES_REGION_KEY, bookDTO.getBookId(), bookDTO)
+                .log("Pushing to Cache")
+                .thenReturn(bookDTO);
     }
 }

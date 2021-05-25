@@ -120,7 +120,9 @@ public interface ReactiveBookAPI {
                                                                                         BookDTO
                                                                                                 .class))),
                                 responses = {
-                                    @ApiResponse(responseCode = "202"),
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "updated book successfully"),
                                     @ApiResponse(
                                             responseCode = "404",
                                             description = "Book not found")
@@ -135,7 +137,9 @@ public interface ReactiveBookAPI {
                                 tags = {"Books"},
                                 parameters = @Parameter(name = "id", in = ParameterIn.PATH),
                                 responses = {
-                                    @ApiResponse(responseCode = "202"),
+                                    @ApiResponse(
+                                            responseCode = "202",
+                                            description = "successful operation"),
                                     @ApiResponse(
                                             responseCode = "404",
                                             description = "Book not found")
@@ -148,7 +152,11 @@ public interface ReactiveBookAPI {
                                 operationId = "deletesAllBook",
                                 summary = "Deletes all Books",
                                 tags = {"Books"},
-                                responses = {@ApiResponse(responseCode = "202")}))
+                                responses = {
+                                    @ApiResponse(
+                                            responseCode = "202",
+                                            description = "successful operation")
+                                }))
     })
     RouterFunction<ServerResponse> monoRouterFunction(
             BookHandler bookHandler, ValidationBookHandler validationBookHandler);

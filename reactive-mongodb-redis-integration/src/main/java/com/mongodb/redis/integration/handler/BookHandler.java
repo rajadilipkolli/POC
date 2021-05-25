@@ -44,7 +44,7 @@ public class BookHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(
                         this.reactiveCachingService.deleteBook(FunctionalEndpointUtils.id(request)),
-                        Long.class)
+                        BookDTO.class)
                 .switchIfEmpty(notFound);
     }
 
