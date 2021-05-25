@@ -16,27 +16,27 @@ import reactor.core.publisher.Flux;
 @Profile("!test")
 public class ItemDataInitiliazer implements CommandLineRunner {
 
-  private final ItemReactiveRepository itemReactiveRepository;
+    private final ItemReactiveRepository itemReactiveRepository;
 
-  @Override
-  public void run(String... args) throws Exception {
-    initialDataSetUp();
-  }
+    @Override
+    public void run(String... args) throws Exception {
+        initialDataSetUp();
+    }
 
-  private void initialDataSetUp() {
-    this.itemReactiveRepository
-        .deleteAll()
-        .thenMany(Flux.fromIterable(getItemsList()))
-        .flatMap(this.itemReactiveRepository::save)
-        .thenMany(this.itemReactiveRepository.findAll())
-        .subscribe(item -> log.info("Items Inserted from CommandlineRunner : {}", item));
-  }
+    private void initialDataSetUp() {
+        this.itemReactiveRepository
+                .deleteAll()
+                .thenMany(Flux.fromIterable(getItemsList()))
+                .flatMap(this.itemReactiveRepository::save)
+                .thenMany(this.itemReactiveRepository.findAll())
+                .subscribe(item -> log.info("Items Inserted from CommandlineRunner : {}", item));
+    }
 
-  public static List<Item> getItemsList() {
-    return List.of(
-        new Item(null, "Samsung TV", 399.99),
-        new Item(null, "LG TV", 4200.0),
-        new Item(null, "Apple Watch", 9000.99),
-        new Item(null, "Bose Headphone", 900.99));
-  }
+    public static List<Item> getItemsList() {
+        return List.of(
+                new Item(null, "Samsung TV", 399.99),
+                new Item(null, "LG TV", 4200.0),
+                new Item(null, "Apple Watch", 9000.99),
+                new Item(null, "Bose Headphone", 900.99));
+    }
 }

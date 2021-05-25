@@ -1,8 +1,7 @@
 package com.poc.restfulpoc.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,8 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "PostTag")
 @Table(name = "post_tag")
@@ -19,8 +18,7 @@ import java.util.Objects;
 @Getter
 public class PostTag {
 
-    @EmbeddedId
-    private PostTagId id;
+    @EmbeddedId private PostTagId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("postId")
@@ -60,5 +58,4 @@ public class PostTag {
     public int hashCode() {
         return Objects.hash(this.post, this.tag);
     }
-
 }

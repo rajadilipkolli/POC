@@ -6,9 +6,9 @@ import org.springframework.context.ApplicationEvent;
 
 public class BookCreatedEvent extends ApplicationEvent {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
-  public BookCreatedEvent(Book book) {
-    super(book);
-  }
+    public BookCreatedEvent(Book book) {
+        super(book);
+    }
 }

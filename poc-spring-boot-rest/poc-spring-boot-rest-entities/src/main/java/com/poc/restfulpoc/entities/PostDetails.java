@@ -1,9 +1,7 @@
 package com.poc.restfulpoc.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "PostDetails")
 @Table(name = "post_details")
@@ -23,10 +22,14 @@ import java.util.Objects;
 public class PostDetails {
 
     @Id
-    @GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence",
-            parameters = { @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+    @GenericGenerator(
+            name = "sequenceGenerator",
+            strategy = "enhanced-sequence",
+            parameters = {
+                @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+                @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+                @org.hibernate.annotations.Parameter(name = "increment_size", value = "5")
+            })
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Long id;
 

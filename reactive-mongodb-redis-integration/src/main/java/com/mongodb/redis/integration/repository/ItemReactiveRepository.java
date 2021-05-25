@@ -6,5 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface ItemReactiveRepository extends ReactiveMongoRepository<Item, String> {
 
-  Flux<Item> findByDescription(String description);
+    Flux<Item> findByDescription(String description);
 }
