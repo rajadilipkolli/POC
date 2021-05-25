@@ -17,6 +17,7 @@
 
 	<properties>
 		<problem-spring-web.version>0.26.2</problem-spring-web.version>
+		<openapi.version>1.5.9</openapi.version>
 
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
@@ -59,6 +60,18 @@
 			<artifactId>problem-spring-webflux</artifactId>
 			<version>${problem-spring-web.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>${openapi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-data-rest</artifactId>
+			<version>${openapi.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
