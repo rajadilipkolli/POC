@@ -1,6 +1,6 @@
 package com.mongodb.redis.integration.utils;
 
-import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.request.BookDTO;
 import lombok.experimental.UtilityClass;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
@@ -16,10 +16,10 @@ public class FunctionalEndpointUtils {
         return serverRequest.pathVariable("id");
     }
 
-    public static Mono<ServerResponse> defaultReadResponse(Publisher<Book> books) {
+    public static Mono<ServerResponse> defaultReadResponse(Publisher<BookDTO> books) {
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(books, Book.class)
+                .body(books, BookDTO.class)
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

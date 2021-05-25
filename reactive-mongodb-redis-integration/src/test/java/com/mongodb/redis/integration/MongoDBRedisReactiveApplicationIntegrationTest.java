@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.BookReactiveRepository;
+import com.mongodb.redis.integration.request.BookDTO;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -101,7 +102,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
     @Test
     void test01GetAll() {
-        EntityExchangeResult<List<Book>> result =
+        EntityExchangeResult<List<BookDTO>> result =
                 this.webTestClient
                         .get()
                         .uri("/api/book/")
@@ -109,12 +110,12 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                         .exchange()
                         .expectStatus()
                         .isOk()
-                        .expectBodyList(Book.class)
+                        .expectBodyList(BookDTO.class)
                         .returnResult();
         assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(1);
         assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
         assertThat(result.getUriTemplate()).isEqualTo("/api/book/");
-        Book response = Objects.requireNonNull(result.getResponseBody()).get(0);
+        BookDTO response = Objects.requireNonNull(result.getResponseBody()).get(0);
         assertThat(response.getTitle()).isEqualTo("MongoDbCookBook");
         assertThat(response.getAuthor()).isEqualTo("Raja");
         assertThat(response.getText()).isEqualTo("MongoDB Data Book");
@@ -129,7 +130,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(Book.class)
+                .expectBody(BookDTO.class)
                 .consumeWith(
                         (response) -> {
                             assertThat(response.getResponseBody()).isNotNull();
@@ -143,19 +144,14 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
     @Test
     void test03PostBook() {
-        final Book book =
-                Book.builder()
-                        .author("Raja")
-                        .text("This is a Test Book")
-                        .title("JUNIT_TITLE")
-                        .build();
+        BookDTO bookDTO = new BookDTO(null, "JUNIT_TITLE", "Raja", "This is a Test Book");
 
         this.webTestClient
                 .post()
                 .uri("/api/book/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(book))
+                .body(BodyInserters.fromValue(bookDTO))
                 .exchange()
                 .expectStatus()
                 .isCreated()
@@ -163,26 +159,20 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .contentType(MediaType.APPLICATION_JSON)
                 .expectHeader()
                 .exists("location")
-                .expectBody(Book.class)
+                .expectBody(BookDTO.class)
                 .consumeWith((response) -> assertThat(response.getResponseBody()).isNull());
     }
 
     @Test
     void test04PutBook() {
-        Book book =
-                Book.builder()
-                        .title("MongoDbCookBook")
-                        .text("MongoDB Data Book1")
-                        .author("Raja")
-                        .bookId("1")
-                        .build();
+        BookDTO bookDTO = new BookDTO("1", "MongoDbCookBook", "Raja", "MongoDB Data Book1");
 
         this.webTestClient
                 .put()
                 .uri("/api/book/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(book))
+                .body(BodyInserters.fromValue(bookDTO))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -201,7 +191,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .exchange()
                 .expectStatus()
                 .isAccepted()
-                .expectBody(Book.class);
+                .expectBody(Long.class);
         this.webTestClient
                 .get()
                 .uri("/api/book/{id}", Collections.singletonMap("id", 1))
