@@ -2,8 +2,6 @@ package com.mongodb.redis.integration.document;
 
 import java.io.Serial;
 import java.io.Serializable;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,18 +20,23 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @AllArgsConstructor
 public class Book implements Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
-  @Id private String bookId;
+    @Id private String bookId;
 
-  @Indexed(unique = true)
-  @NotBlank(message = "Book title can't be Blank")
-  @Size(max = 140, message = "Book title size must be between 0 and 140")
-  private String title;
+    @Indexed(unique = true)
+    private String title;
 
-  private String author;
+    private String author;
 
-  private String text;
+    private String text;
 
-  @Version private Long version;
+    @Version private Long version;
+
+    public Book(String bookId, String title, String author, String text) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+        this.text = text;
+    }
 }

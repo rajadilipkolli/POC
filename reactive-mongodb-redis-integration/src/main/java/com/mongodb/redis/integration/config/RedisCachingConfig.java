@@ -1,6 +1,6 @@
 package com.mongodb.redis.integration.config;
 
-import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.request.BookDTO;
 import javax.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -20,31 +20,33 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @RequiredArgsConstructor
 public class RedisCachingConfig extends CachingConfigurerSupport {
 
-  private final RedisConnectionFactory connectionFactory;
+    private final RedisConnectionFactory connectionFactory;
 
-  @Bean
-  @Override
-  public CacheErrorHandler errorHandler() {
-    return new CustomCacheErrorHandler();
-  }
+    @Bean
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new CustomCacheErrorHandler();
+    }
 
-  @Bean
-  public ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate(
-      ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
+    @Bean
+    public ReactiveRedisTemplate<String, BookDTO> reactiveJsonBookRedisTemplate(
+            ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 
-    Jackson2JsonRedisSerializer<Book> serializer = new Jackson2JsonRedisSerializer<>(Book.class);
+        Jackson2JsonRedisSerializer<BookDTO> serializer =
+                new Jackson2JsonRedisSerializer<>(BookDTO.class);
 
-    RedisSerializationContext<String, Book> serializationContext =
-        RedisSerializationContext.<String, Book>newSerializationContext(new StringRedisSerializer())
-            .hashKey(new StringRedisSerializer())
-            .hashValue(serializer)
-            .build();
+        RedisSerializationContext<String, BookDTO> serializationContext =
+                RedisSerializationContext.<String, BookDTO>newSerializationContext(
+                                new StringRedisSerializer())
+                        .hashKey(new StringRedisSerializer())
+                        .hashValue(serializer)
+                        .build();
 
-    return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
-  }
+        return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
+    }
 
-  @PreDestroy
-  public void flushTestDb() {
-    this.connectionFactory.getConnection().flushDb();
-  }
+    @PreDestroy
+    public void flushTestDb() {
+        this.connectionFactory.getConnection().flushDb();
+    }
 }

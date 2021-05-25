@@ -23,161 +23,161 @@ import reactor.test.StepVerifier;
 @ActiveProfiles("test")
 class ItemControllerTest {
 
-  @Autowired private WebTestClient webTestClient;
+    @Autowired private WebTestClient webTestClient;
 
-  @MockBean private ItemReactiveRepository itemReactiveRepository;
+    @MockBean private ItemReactiveRepository itemReactiveRepository;
 
-  @Test
-  void getAllItems() {
+    @Test
+    void getAllItems() {
 
-    given(this.itemReactiveRepository.findAll())
-        .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
+        given(this.itemReactiveRepository.findAll())
+                .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
 
-    this.webTestClient
-        .get()
-        .uri(ItemConstants.ITEM_END_POINT_V_1)
-        .exchange()
-        .expectStatus()
-        .isOk()
-        .expectHeader()
-        .contentType(MediaType.APPLICATION_JSON)
-        .expectBodyList(Item.class)
-        .hasSize(4)
-        .consumeWith(
-            response -> {
-              List<Item> items = response.getResponseBody();
-              assertThat(items).isNotEmpty();
-              items.forEach(item -> assertThat(item.getDescription()).isNotNull());
-            });
-  }
-
-  @Test
-  void getAllItems_approach2() {
-
-    given(this.itemReactiveRepository.findAll())
-        .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
-
-    Flux<Item> itemsFlux =
         this.webTestClient
-            .get()
-            .uri(ItemConstants.ITEM_END_POINT_V_1)
-            .exchange()
-            .expectStatus()
-            .isOk()
-            .expectHeader()
-            .contentType(MediaType.APPLICATION_JSON)
-            .returnResult(Item.class)
-            .getResponseBody();
+                .get()
+                .uri(ItemConstants.ITEM_END_POINT_V_1)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectHeader()
+                .contentType(MediaType.APPLICATION_JSON)
+                .expectBodyList(Item.class)
+                .hasSize(4)
+                .consumeWith(
+                        response -> {
+                            List<Item> items = response.getResponseBody();
+                            assertThat(items).isNotEmpty();
+                            items.forEach(item -> assertThat(item.getDescription()).isNotNull());
+                        });
+    }
 
-    StepVerifier.create(itemsFlux.log("approach 2"))
-        .expectSubscription()
-        .expectNextCount(4)
-        .verifyComplete();
-  }
+    @Test
+    void getAllItems_approach2() {
 
-  @Test
-  void getOneItemSuccess() {
+        given(this.itemReactiveRepository.findAll())
+                .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
 
-    given(this.itemReactiveRepository.findById("ABC"))
-        .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
+        Flux<Item> itemsFlux =
+                this.webTestClient
+                        .get()
+                        .uri(ItemConstants.ITEM_END_POINT_V_1)
+                        .exchange()
+                        .expectStatus()
+                        .isOk()
+                        .expectHeader()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Item.class)
+                        .getResponseBody();
 
-    this.webTestClient
-        .get()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
-        .exchange()
-        .expectStatus()
-        .isOk()
-        .expectBody()
-        .jsonPath("$.price", "900.99");
-  }
+        StepVerifier.create(itemsFlux.log("approach 2"))
+                .expectSubscription()
+                .expectNextCount(4)
+                .verifyComplete();
+    }
 
-  @Test
-  void getOneItemNotFound() {
+    @Test
+    void getOneItemSuccess() {
 
-    given(this.itemReactiveRepository.findById("BCD")).willReturn(Mono.empty());
+        given(this.itemReactiveRepository.findById("ABC"))
+                .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
 
-    this.webTestClient
-        .get()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "BCD")
-        .exchange()
-        .expectStatus()
-        .isNotFound()
-        .expectBody()
-        .isEmpty();
-  }
+        this.webTestClient
+                .get()
+                .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.price", "900.99");
+    }
 
-  @Test
-  void saveItem() {
+    @Test
+    void getOneItemNotFound() {
 
-    Item item = MockObjectUtils.getItemById("ABC");
-    given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+        given(this.itemReactiveRepository.findById("BCD")).willReturn(Mono.empty());
 
-    this.webTestClient
-        .post()
-        .uri(ItemConstants.ITEM_END_POINT_V_1)
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON)
-        .body(Mono.just(item), Item.class)
-        .exchange()
-        .expectStatus()
-        .isCreated()
-        .expectBody()
-        .jsonPath("$.price", item.getPrice());
-  }
+        this.webTestClient
+                .get()
+                .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "BCD")
+                .exchange()
+                .expectStatus()
+                .isNotFound()
+                .expectBody()
+                .isEmpty();
+    }
 
-  @Test
-  void updateItem() {
-    double newPrice = 129.95;
+    @Test
+    void saveItem() {
 
-    Item item = MockObjectUtils.getItemById("ABC");
-    item.setPrice(newPrice);
+        Item item = MockObjectUtils.getItemById("ABC");
+        given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
 
-    given(this.itemReactiveRepository.findById("ABC"))
-        .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
+        this.webTestClient
+                .post()
+                .uri(ItemConstants.ITEM_END_POINT_V_1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus()
+                .isCreated()
+                .expectBody()
+                .jsonPath("$.price", item.getPrice());
+    }
 
-    given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+    @Test
+    void updateItem() {
+        double newPrice = 129.95;
 
-    this.webTestClient
-        .put()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON)
-        .body(Mono.just(item), Item.class)
-        .exchange()
-        .expectStatus()
-        .isOk()
-        .expectBody()
-        .jsonPath("$.price", newPrice);
-  }
+        Item item = MockObjectUtils.getItemById("ABC");
+        item.setPrice(newPrice);
 
-  @Test
-  void updateItem_is_not_found() {
-    double newPrice = 129.95;
+        given(this.itemReactiveRepository.findById("ABC"))
+                .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
 
-    Item item = MockObjectUtils.getItemById("DEF");
-    item.setPrice(newPrice);
+        given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
 
-    given(this.itemReactiveRepository.findById("DEF")).willReturn(Mono.empty());
-    this.webTestClient
-        .put()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "DEF")
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON)
-        .body(Mono.just(item), Item.class)
-        .exchange()
-        .expectStatus()
-        .isNotFound();
-  }
+        this.webTestClient
+                .put()
+                .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.price", newPrice);
+    }
 
-  @Test
-  void deleteItem() {
-    this.webTestClient
-        .delete()
-        .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
-        .accept(MediaType.APPLICATION_JSON)
-        .exchange()
-        .expectStatus()
-        .isOk()
-        .expectBody(Void.class);
-  }
+    @Test
+    void updateItem_is_not_found() {
+        double newPrice = 129.95;
+
+        Item item = MockObjectUtils.getItemById("DEF");
+        item.setPrice(newPrice);
+
+        given(this.itemReactiveRepository.findById("DEF")).willReturn(Mono.empty());
+        this.webTestClient
+                .put()
+                .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "DEF")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
+    }
+
+    @Test
+    void deleteItem() {
+        this.webTestClient
+                .delete()
+                .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "ABC")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(Void.class);
+    }
 }

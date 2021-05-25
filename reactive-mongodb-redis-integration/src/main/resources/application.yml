@@ -2,6 +2,9 @@
 spring:
   main:
     banner-mode: OFF
+  mongodb:
+    embedded:
+      version: 4.0.12
 
   data:
     mongodb:

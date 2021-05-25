@@ -13,26 +13,29 @@ import reactor.test.StepVerifier;
 @DataMongoTest
 class BookReactiveRepositoryTest {
 
-  @Autowired BookReactiveRepository bookRepository;
+    @Autowired BookReactiveRepository bookRepository;
 
-  @BeforeAll
-  void setUp() {
-    this.bookRepository.save(Book.builder().title("prius").author("hybrid").build()).then().block();
-  }
+    @BeforeAll
+    void setUp() {
+        this.bookRepository
+                .save(Book.builder().title("prius").author("hybrid").build())
+                .then()
+                .block();
+    }
 
-  @AfterAll
-  void tearDown() {
-    this.bookRepository.deleteAll().then().block();
-  }
+    @AfterAll
+    void tearDown() {
+        this.bookRepository.deleteAll().then().block();
+    }
 
-  @Test
-  void findByTitleReturnsBook() {
-    StepVerifier.create(this.bookRepository.findByTitle("prius"))
-        .consumeNextWith(
-            (Book book) -> {
-              assertThat(book.getTitle()).isEqualTo("prius");
-              assertThat(book.getAuthor()).isEqualTo("hybrid");
-            })
-        .verifyComplete();
-  }
+    @Test
+    void findByTitleReturnsBook() {
+        StepVerifier.create(this.bookRepository.findByTitle("prius"))
+                .consumeNextWith(
+                        (Book book) -> {
+                            assertThat(book.getTitle()).isEqualTo("prius");
+                            assertThat(book.getAuthor()).isEqualTo("hybrid");
+                        })
+                .verifyComplete();
+    }
 }

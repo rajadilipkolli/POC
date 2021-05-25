@@ -1,10 +1,10 @@
 package com.poc.restfulpoc.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "Post")
 @Table(name = "post")
@@ -28,10 +26,14 @@ import java.util.Objects;
 public class Post {
 
     @Id
-    @GenericGenerator(name = "sequenceGenerator", strategy = "enhanced-sequence",
-            parameters = { @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "5") })
+    @GenericGenerator(
+            name = "sequenceGenerator",
+            strategy = "enhanced-sequence",
+            parameters = {
+                @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
+                @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+                @org.hibernate.annotations.Parameter(name = "increment_size", value = "5")
+            })
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Long id;
 
@@ -45,7 +47,11 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "post",
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private PostDetails details;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -91,7 +97,7 @@ public class Post {
     }
 
     public void removeTag(Tag tag) {
-        for (Iterator<PostTag> iterator = this.tags.iterator(); iterator.hasNext();) {
+        for (Iterator<PostTag> iterator = this.tags.iterator(); iterator.hasNext(); ) {
             PostTag postTag = iterator.next();
 
             if (postTag.getPost().equals(this) && postTag.getTag().equals(tag)) {
@@ -114,12 +120,12 @@ public class Post {
             return false;
         }
         Post other = (Post) obj;
-        return Objects.equals(this.details, other.details) && Objects.equals(this.title, other.title);
+        return Objects.equals(this.details, other.details)
+                && Objects.equals(this.title, other.title);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.details, this.title);
     }
-
 }

@@ -3,18 +3,14 @@ package com.example.poc.reactive.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
-import com.example.poc.reactive.config.DatabaseConfig;
 import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
-import com.example.poc.reactive.mapping.PostMapperImpl;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.util.StringUtils;
@@ -23,12 +19,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@DataR2dbcTest
-@Import({PostServiceImpl.class, DatabaseConfig.class, PostMapperImpl.class, ReactivePost.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WithMockUser
 @Slf4j
-@Disabled
-class ReactivePostServiceTest extends AbstractPostgreSQLContainerBase {
+class ReactivePostServiceIntegrationTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private PostRepository postRepository;
 
