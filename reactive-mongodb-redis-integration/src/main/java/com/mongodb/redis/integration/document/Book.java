@@ -32,11 +32,4 @@ public class Book implements Serializable {
     private String text;
 
     @Version private Long version;
-
-    public Book(String bookId, String title, String author, String text) {
-        this.bookId = bookId;
-        this.title = title;
-        this.author = author;
-        this.text = text;
-    }
 }

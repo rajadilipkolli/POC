@@ -27,24 +27,28 @@ public class BookHandler {
 
     public Mono<ServerResponse> getBook(ServerRequest request) {
         // get book from repository
-        Mono<BookDTO> bookMono =
+        Mono<BookDTO> bookDTOMono =
                 this.reactiveCachingService.getBookById(FunctionalEndpointUtils.id(request));
 
         // build response
-        return bookMono.flatMap(
-                        (BookDTO book) ->
+        return bookDTOMono
+                .flatMap(
+                        bookDTO ->
                                 ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .body(BodyInserters.fromValue(book)))
+                                        .body(BodyInserters.fromValue(bookDTO)))
                 .switchIfEmpty(notFound);
     }
 
     public Mono<ServerResponse> deleteBook(ServerRequest request) {
-        return ServerResponse.accepted()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(
-                        this.reactiveCachingService.deleteBook(FunctionalEndpointUtils.id(request)),
-                        Long.class)
+        Mono<BookDTO> bookDTOMono =
+                this.reactiveCachingService.deleteBook(FunctionalEndpointUtils.id(request));
+        return bookDTOMono
+                .flatMap(
+                        bookDTO ->
+                                ServerResponse.accepted()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .body(bookDTO, BookDTO.class))
                 .switchIfEmpty(notFound);
     }
 

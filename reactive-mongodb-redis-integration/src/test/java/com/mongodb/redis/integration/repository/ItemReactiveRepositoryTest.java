@@ -2,6 +2,7 @@ package com.mongodb.redis.integration.repository;
 
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import reactor.test.StepVerifier;
 
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@Slf4j
 class ItemReactiveRepositoryTest {
 
     @Autowired private ItemReactiveRepository itemReactiveRepository;
@@ -24,7 +26,7 @@ class ItemReactiveRepositoryTest {
                 .deleteAll()
                 .thenMany(Flux.fromIterable(MockObjectUtils.getItemsList()))
                 .flatMap(itemReactiveRepository::save)
-                .doOnNext(item -> System.out.println("Inserted Item is : " + item))
+                .doOnNext(item -> log.info("Inserted Item is : {}", item))
                 .blockLast();
     }
 

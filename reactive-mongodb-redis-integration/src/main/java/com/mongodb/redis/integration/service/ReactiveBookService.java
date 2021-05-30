@@ -56,7 +56,7 @@ public class ReactiveBookService {
     public Mono<Book> updateBook(String bookId, Book requestedBook) {
         return this.bookReactiveRepository
                 .findById(bookId)
-                .log()
+                .switchIfEmpty(Mono.empty())
                 .map(updateBookFunction(requestedBook))
                 .flatMap(this.bookReactiveRepository::save)
                 .log("Updating in Database");
@@ -65,12 +65,14 @@ public class ReactiveBookService {
     public Mono<Book> deleteBook(String bookId) {
         return this.bookReactiveRepository
                 .findById(bookId)
+                .log("finding in Database")
                 .flatMap(
                         book ->
                                 this.bookReactiveRepository
                                         .deleteById(book.getBookId())
                                         .log("Deleting from Database")
-                                        .thenReturn(book));
+                                        .thenReturn(book))
+                .switchIfEmpty(Mono.empty());
     }
 
     public Mono<Void> deleteAll() {

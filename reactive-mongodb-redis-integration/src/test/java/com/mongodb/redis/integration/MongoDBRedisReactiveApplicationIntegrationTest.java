@@ -144,7 +144,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
     @Test
     void test03PostBook() {
-        BookDTO bookDTO = new BookDTO(null, "JUNIT_TITLE", "Raja", "This is a Test Book");
+        BookDTO bookDTO = new BookDTO(null, "JUNIT_TITLE", "Raja", "This is a Test Book", 0L);
 
         this.webTestClient
                 .post()
@@ -165,7 +165,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
     @Test
     void test04PutBook() {
-        BookDTO bookDTO = new BookDTO("1", "MongoDbCookBook", "Raja", "MongoDB Data Book1");
+        BookDTO bookDTO = new BookDTO("1", "MongoDbCookBook", "Raja", "MongoDB Data Book1", 0L);
 
         this.webTestClient
                 .put()

@@ -1,5 +1,7 @@
 package com.mongodb.redis.integration.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,6 +17,8 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash
 public class BookDTO implements Serializable {
 
+    @Serial private static final long serialVersionUID = 1L;
+
     @Id private String bookId;
 
     @NotBlank(message = "Book title can't be Blank")
@@ -24,4 +28,6 @@ public class BookDTO implements Serializable {
     private String author;
 
     private String text;
+
+    @JsonIgnore private Long version;
 }
