@@ -58,7 +58,8 @@ public class ReactiveCachingService {
                                 this.bookReactiveHashOperations
                                         .remove(CACHEABLES_REGION_KEY, bookId)
                                         .log("Deleting From Cache")
-                                        .thenReturn(convertToBookDTO(book)));
+                                        .thenReturn(convertToBookDTO(book)))
+                .switchIfEmpty(Mono.empty());
     }
 
     public Mono<Boolean> deleteAll() {
@@ -83,7 +84,9 @@ public class ReactiveCachingService {
 
     // converts to BookDTO and updates Cache
     private Mono<BookDTO> getBookDTOAfterUpdatingCache(Mono<Book> bookMono) {
-        return bookMono.flatMap(this::convertToBookDTOMono).flatMap(this::putToCache);
+        return bookMono.flatMap(this::convertToBookDTOMono)
+                .flatMap(this::putToCache)
+                .switchIfEmpty(Mono.empty());
     }
 
     // convert to Book from BookDTO

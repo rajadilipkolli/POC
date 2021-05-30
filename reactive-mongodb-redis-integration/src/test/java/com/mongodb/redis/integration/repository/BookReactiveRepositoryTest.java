@@ -47,7 +47,7 @@ class BookReactiveRepositoryTest {
                             assertThat(book.getAuthor()).isEqualTo("hybrid");
                             assertThat(book.getText()).isEqualTo("Junit");
                             assertThat(book.getBookId()).isNotNull();
-                            assertThat(book.getVersion()).isEqualTo(0);
+                            assertThat(book.getVersion()).isZero();
                         })
                 .verifyComplete();
     }
