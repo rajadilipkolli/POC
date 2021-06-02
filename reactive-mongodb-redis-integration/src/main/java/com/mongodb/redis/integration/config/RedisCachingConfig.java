@@ -1,6 +1,6 @@
 package com.mongodb.redis.integration.config;
 
-import com.mongodb.redis.integration.document.Book;
+import com.mongodb.redis.integration.request.BookDTO;
 import javax.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -29,14 +29,14 @@ public class RedisCachingConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public ReactiveRedisTemplate<String, Book> reactiveJsonBookRedisTemplate(
+    public ReactiveRedisTemplate<String, BookDTO> reactiveJsonBookRedisTemplate(
             ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 
-        Jackson2JsonRedisSerializer<Book> serializer =
-                new Jackson2JsonRedisSerializer<>(Book.class);
+        Jackson2JsonRedisSerializer<BookDTO> serializer =
+                new Jackson2JsonRedisSerializer<>(BookDTO.class);
 
-        RedisSerializationContext<String, Book> serializationContext =
-                RedisSerializationContext.<String, Book>newSerializationContext(
+        RedisSerializationContext<String, BookDTO> serializationContext =
+                RedisSerializationContext.<String, BookDTO>newSerializationContext(
                                 new StringRedisSerializer())
                         .hashKey(new StringRedisSerializer())
                         .hashValue(serializer)

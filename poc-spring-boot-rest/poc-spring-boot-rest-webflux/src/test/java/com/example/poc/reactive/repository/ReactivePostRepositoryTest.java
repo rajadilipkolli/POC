@@ -3,23 +3,17 @@ package com.example.poc.reactive.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
-import com.example.poc.reactive.config.DatabaseConfig;
 import com.example.poc.reactive.entity.ReactivePost;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.r2dbc.core.DatabaseClient;
-import org.springframework.security.test.context.support.WithMockUser;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
 @DataR2dbcTest
-@Import({DatabaseConfig.class, ReactivePost.class})
-@WithMockUser(username = "username")
 class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private PostRepository postRepository;
@@ -67,7 +61,6 @@ class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
     }
 
     @Test
-    @Disabled
     void executesFindAll() {
 
         ReactivePost dave = new ReactivePost("Dave", "Matthews");
@@ -84,7 +77,6 @@ class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
     }
 
     @Test
-    @Disabled
     void executesAnnotatedQuery() {
 
         ReactivePost dave = new ReactivePost("Dave", "Matthews");

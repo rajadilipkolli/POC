@@ -16,7 +16,6 @@
 		<spotless.check.skip>true</spotless.check.skip>
 	</properties>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>com.example.poc</groupId>

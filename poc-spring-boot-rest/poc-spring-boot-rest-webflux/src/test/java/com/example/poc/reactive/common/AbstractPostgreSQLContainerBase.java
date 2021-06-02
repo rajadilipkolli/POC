@@ -31,7 +31,15 @@ public class AbstractPostgreSQLContainerBase {
                                 + postgreSQLContainer.getDatabaseName());
         propertyRegistry.add("spring.r2dbc.username", postgreSQLContainer::getUsername);
         propertyRegistry.add("spring.r2dbc.password", postgreSQLContainer::getPassword);
-        propertyRegistry.add("spring.liquibase.url", postgreSQLContainer::getJdbcUrl);
+        propertyRegistry.add(
+                "spring.liquibase.url",
+                () ->
+                        "jdbc:postgresql://"
+                                + postgreSQLContainer.getHost()
+                                + ":"
+                                + postgreSQLContainer.getFirstMappedPort()
+                                + "/"
+                                + postgreSQLContainer.getDatabaseName());
         propertyRegistry.add("spring.liquibase.user", postgreSQLContainer::getUsername);
         propertyRegistry.add("spring.liquibase.password", postgreSQLContainer::getPassword);
     }

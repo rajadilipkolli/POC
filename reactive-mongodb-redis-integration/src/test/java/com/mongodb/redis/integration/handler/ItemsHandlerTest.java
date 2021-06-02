@@ -67,7 +67,7 @@ class ItemsHandlerTest {
     }
 
     @Test
-    void testGetAllItems_approach2() {
+    public void testGetAllItems_approach2() {
 
         Flux<Item> itemsFlux =
                 webTestClient
@@ -118,7 +118,7 @@ class ItemsHandlerTest {
     }
 
     @Test
-    void testCreateItem() {
+    public void testCreateItem() {
 
         Item item = new Item(null, "Iphone X", 999.99);
 
@@ -153,7 +153,7 @@ class ItemsHandlerTest {
     }
 
     @Test
-    void testUpdateItem() {
+    public void testUpdateItem() {
         double newPrice = 129.99;
         Item item = new Item(null, "Beats HeadPhones", newPrice);
         webTestClient
@@ -170,7 +170,7 @@ class ItemsHandlerTest {
     }
 
     @Test
-    void testUpdateItem_notFound() {
+    public void testUpdateItem_notFound() {
         double newPrice = 129.99;
         Item item = new Item(null, "Beats HeadPhones", newPrice);
         webTestClient

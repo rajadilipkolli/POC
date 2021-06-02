@@ -2,8 +2,6 @@ package com.mongodb.redis.integration.document;
 
 import java.io.Serial;
 import java.io.Serializable;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +25,6 @@ public class Book implements Serializable {
     @Id private String bookId;
 
     @Indexed(unique = true)
-    @NotBlank(message = "Book title can't be Blank")
-    @Size(max = 140, message = "Book title size must be between 0 and 140")
     private String title;
 
     private String author;

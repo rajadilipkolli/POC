@@ -1,8 +1,9 @@
 package com.mongodb.redis.integration.handler;
 
-import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.service.ReactiveBookService;
+import com.mongodb.redis.integration.request.BookDTO;
+import com.mongodb.redis.integration.service.ReactiveCachingService;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -11,42 +12,49 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-public record BookHandler(ReactiveBookService reactiveBookService) {
+@RequiredArgsConstructor
+public class BookHandler {
+
+    private final ReactiveCachingService reactiveCachingService;
 
     // build notFound response
     private static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
 
     public Mono<ServerResponse> getAll() {
-        return FunctionalEndpointUtils.defaultReadResponse(this.reactiveBookService.findAllBooks());
+        return FunctionalEndpointUtils.defaultReadResponse(
+                this.reactiveCachingService.findAllBooks());
     }
 
     public Mono<ServerResponse> getBook(ServerRequest request) {
         // get book from repository
-        Mono<Book> bookMono =
-                this.reactiveBookService.getBookById(FunctionalEndpointUtils.id(request));
+        Mono<BookDTO> bookDTOMono =
+                this.reactiveCachingService.getBookById(FunctionalEndpointUtils.id(request));
 
         // build response
-        return bookMono.flatMap(
-                        (Book book) ->
+        return bookDTOMono
+                .flatMap(
+                        bookDTO ->
                                 ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .body(BodyInserters.fromValue(book)))
+                                        .body(BodyInserters.fromValue(bookDTO)))
                 .switchIfEmpty(notFound);
     }
 
     public Mono<ServerResponse> deleteBook(ServerRequest request) {
-        return ServerResponse.accepted()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(
-                        this.reactiveBookService.deleteBook(FunctionalEndpointUtils.id(request)),
-                        Book.class)
+        Mono<BookDTO> bookDTOMono =
+                this.reactiveCachingService.deleteBook(FunctionalEndpointUtils.id(request));
+        return bookDTOMono
+                .flatMap(
+                        bookDTO ->
+                                ServerResponse.accepted()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .body(bookDTO, BookDTO.class))
                 .switchIfEmpty(notFound);
     }
 
     public Mono<ServerResponse> deleteAllBooks() {
         return ServerResponse.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.reactiveBookService.deleteAll(), Void.class)
-                .switchIfEmpty(notFound);
+                .body(this.reactiveCachingService.deleteAll(), Void.class);
     }
 }
