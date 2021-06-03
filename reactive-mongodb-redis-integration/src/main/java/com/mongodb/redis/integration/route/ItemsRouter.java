@@ -37,4 +37,12 @@ public class ItemsRouter {
                                 .and(accept(MediaType.APPLICATION_JSON)),
                         itemsHandler::updateItem);
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> itemStreamFunction(ItemsHandler itemsHandler) {
+        return RouterFunctions.route(
+                GET(ItemConstants.ITEM_STREAM_FUNCTIONAL_END_POINT_V_1)
+                        .and(accept(MediaType.APPLICATION_JSON)),
+                itemsHandler::itemsStream);
+    }
 }

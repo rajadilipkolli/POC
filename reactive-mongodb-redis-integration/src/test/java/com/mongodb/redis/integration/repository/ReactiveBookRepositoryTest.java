@@ -13,9 +13,9 @@ import reactor.test.StepVerifier;
 
 @DataMongoTest
 @Slf4j
-class BookReactiveRepositoryTest {
+class ReactiveBookRepositoryTest {
 
-    @Autowired BookReactiveRepository bookRepository;
+    @Autowired ReactiveBookRepository bookRepository;
 
     @BeforeAll
     void setUp() {

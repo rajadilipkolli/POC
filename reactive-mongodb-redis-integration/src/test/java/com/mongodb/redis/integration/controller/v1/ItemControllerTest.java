@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.Item;
-import com.mongodb.redis.integration.repository.ItemReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,12 @@ class ItemControllerTest {
 
     @Autowired private WebTestClient webTestClient;
 
-    @MockBean private ItemReactiveRepository itemReactiveRepository;
+    @MockBean private ReactiveItemRepository reactiveItemRepository;
 
     @Test
     void getAllItems() {
 
-        given(this.itemReactiveRepository.findAll())
+        given(this.reactiveItemRepository.findAll())
                 .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
 
         this.webTestClient
@@ -54,7 +54,7 @@ class ItemControllerTest {
     @Test
     void getAllItems_approach2() {
 
-        given(this.itemReactiveRepository.findAll())
+        given(this.reactiveItemRepository.findAll())
                 .willReturn(Flux.fromIterable(MockObjectUtils.getItemsList()));
 
         Flux<Item> itemsFlux =
@@ -78,7 +78,7 @@ class ItemControllerTest {
     @Test
     void getOneItemSuccess() {
 
-        given(this.itemReactiveRepository.findById("ABC"))
+        given(this.reactiveItemRepository.findById("ABC"))
                 .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
 
         this.webTestClient
@@ -94,7 +94,7 @@ class ItemControllerTest {
     @Test
     void getOneItemNotFound() {
 
-        given(this.itemReactiveRepository.findById("BCD")).willReturn(Mono.empty());
+        given(this.reactiveItemRepository.findById("BCD")).willReturn(Mono.empty());
 
         this.webTestClient
                 .get()
@@ -110,7 +110,7 @@ class ItemControllerTest {
     void saveItem() {
 
         Item item = MockObjectUtils.getItemById("ABC");
-        given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+        given(this.reactiveItemRepository.save(item)).willReturn(Mono.just(item));
 
         this.webTestClient
                 .post()
@@ -132,10 +132,10 @@ class ItemControllerTest {
         Item item = MockObjectUtils.getItemById("ABC");
         item.setPrice(newPrice);
 
-        given(this.itemReactiveRepository.findById("ABC"))
+        given(this.reactiveItemRepository.findById("ABC"))
                 .willReturn(Mono.just(MockObjectUtils.getItemById("ABC")));
 
-        given(this.itemReactiveRepository.save(item)).willReturn(Mono.just(item));
+        given(this.reactiveItemRepository.save(item)).willReturn(Mono.just(item));
 
         this.webTestClient
                 .put()
@@ -157,7 +157,7 @@ class ItemControllerTest {
         Item item = MockObjectUtils.getItemById("DEF");
         item.setPrice(newPrice);
 
-        given(this.itemReactiveRepository.findById("DEF")).willReturn(Mono.empty());
+        given(this.reactiveItemRepository.findById("DEF")).willReturn(Mono.empty());
         this.webTestClient
                 .put()
                 .uri(ItemConstants.ITEM_END_POINT_V_1.concat("/{id}"), "DEF")

@@ -2,7 +2,7 @@ package com.mongodb.redis.integration.controller.v1;
 
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.Item;
-import com.mongodb.redis.integration.repository.ItemReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,16 +16,16 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ItemController {
 
-    private final ItemReactiveRepository itemReactiveRepository;
+    private final ReactiveItemRepository reactiveItemRepository;
 
     @GetMapping(ItemConstants.ITEM_END_POINT_V_1)
     public Flux<Item> getAllItems() {
-        return itemReactiveRepository.findAll();
+        return reactiveItemRepository.findAll();
     }
 
     @GetMapping(ItemConstants.ITEM_END_POINT_V_1 + "/{id}")
     public Mono<ResponseEntity<Item>> getItemById(@PathVariable String id) {
-        return itemReactiveRepository
+        return reactiveItemRepository
                 .findById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -34,18 +34,18 @@ public class ItemController {
     @PostMapping(ItemConstants.ITEM_END_POINT_V_1)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Item> postItem(@RequestBody Item item) {
-        return itemReactiveRepository.save(item);
+        return reactiveItemRepository.save(item);
     }
 
     @PutMapping(ItemConstants.ITEM_END_POINT_V_1 + "/{id}")
     public Mono<ResponseEntity<Item>> updateItem(@RequestBody Item item, @PathVariable String id) {
-        return itemReactiveRepository
+        return reactiveItemRepository
                 .findById(id)
                 .flatMap(
                         currentItem -> {
                             currentItem.setPrice(item.getPrice());
                             currentItem.setDescription(item.getDescription());
-                            return itemReactiveRepository.save(currentItem);
+                            return reactiveItemRepository.save(currentItem);
                         })
                 .map(updateItem -> new ResponseEntity<>(updateItem, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -53,7 +53,7 @@ public class ItemController {
 
     @DeleteMapping(ItemConstants.ITEM_END_POINT_V_1 + "/{id}")
     public Mono<Void> deleteItemById(@PathVariable String id) {
-        return itemReactiveRepository.deleteById(id);
+        return reactiveItemRepository.deleteById(id);
     }
 
     @ExceptionHandler(RuntimeException.class)

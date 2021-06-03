@@ -20,12 +20,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration(proxyBeanMethods = false)
 public class RouterFunctionConfiguration implements ReactiveBookAPI {
 
-    /**
-     * monoRouterFunction.
-     *
-     * @param bookHandler a {@link BookHandler} object.
-     * @return a {@link org.springframework.web.reactive.function.server.RouterFunction} object.
-     */
     @Bean
     @Override
     public RouterFunction<ServerResponse> monoRouterFunction(

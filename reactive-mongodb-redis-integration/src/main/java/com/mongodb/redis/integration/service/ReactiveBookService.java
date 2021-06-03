@@ -1,9 +1,9 @@
 package com.mongodb.redis.integration.service;
 
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.event.BookCreatedEvent;
+import com.mongodb.redis.integration.event.CreatedBookEvent;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
-import com.mongodb.redis.integration.repository.BookReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ReactiveBookService {
 
-    private final BookReactiveRepository bookReactiveRepository;
+    private final ReactiveBookRepository reactiveBookRepository;
 
     private final ApplicationEventPublisher publisher;
 
     public Mono<Book> findBookByTitle(String title) {
-        return this.bookReactiveRepository
+        return this.reactiveBookRepository
                 .findByTitle(title)
                 .switchIfEmpty(
                         Mono.error(
@@ -32,17 +32,17 @@ public class ReactiveBookService {
     }
 
     public Flux<Book> findAllBooks() {
-        return this.bookReactiveRepository.findAll();
+        return this.reactiveBookRepository.findAll();
     }
 
     public Mono<Book> getBookById(String bookId) {
-        return this.bookReactiveRepository.findById(bookId).log("Fetching from Database");
+        return this.reactiveBookRepository.findById(bookId).log("Fetching from Database");
     }
 
     public Mono<Book> createBook(Book bookToPersist) {
         Consumer<Book> publishEventConsumer =
-                persistedBook -> this.publisher.publishEvent(new BookCreatedEvent(persistedBook));
-        return this.bookReactiveRepository
+                persistedBook -> this.publisher.publishEvent(new CreatedBookEvent(persistedBook));
+        return this.reactiveBookRepository
                 .save(bookToPersist)
                 .log("Saving to DB")
                 .doOnSuccess(publishEventConsumer)
@@ -54,21 +54,21 @@ public class ReactiveBookService {
     }
 
     public Mono<Book> updateBook(String bookId, Book requestedBook) {
-        return this.bookReactiveRepository
+        return this.reactiveBookRepository
                 .findById(bookId)
                 .switchIfEmpty(Mono.empty())
                 .map(updateBookFunction(requestedBook))
-                .flatMap(this.bookReactiveRepository::save)
+                .flatMap(this.reactiveBookRepository::save)
                 .log("Updating in Database");
     }
 
     public Mono<Book> deleteBook(String bookId) {
-        return this.bookReactiveRepository
+        return this.reactiveBookRepository
                 .findById(bookId)
                 .log("finding in Database")
                 .flatMap(
                         book ->
-                                this.bookReactiveRepository
+                                this.reactiveBookRepository
                                         .deleteById(book.getBookId())
                                         .log("Deleting from Database")
                                         .thenReturn(book))
@@ -76,7 +76,7 @@ public class ReactiveBookService {
     }
 
     public Mono<Void> deleteAll() {
-        return this.bookReactiveRepository.deleteAll().log("Deleting from Database");
+        return this.reactiveBookRepository.deleteAll().log("Deleting from Database");
     }
 
     private Function<Book, Book> updateBookFunction(Book requestedBook) {

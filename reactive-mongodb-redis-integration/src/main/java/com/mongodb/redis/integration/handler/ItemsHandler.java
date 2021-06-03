@@ -5,7 +5,9 @@ import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.document.Item;
-import com.mongodb.redis.integration.repository.ItemReactiveRepository;
+import com.mongodb.redis.integration.document.ItemCapped;
+import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
+import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ItemsHandler {
 
-    private final ItemReactiveRepository itemReactiveRepository;
+    private final ReactiveItemRepository reactiveItemRepository;
+    private final ReactiveItemCappedRepository reactiveItemCappedRepository;
 
     // build notFound response
     private static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
@@ -27,12 +30,12 @@ public class ItemsHandler {
     public Mono<ServerResponse> getAllItems(ServerRequest serverRequest) {
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.itemReactiveRepository.findAll(), Item.class);
+                .body(this.reactiveItemRepository.findAll(), Item.class);
     }
 
     public Mono<ServerResponse> getItemById(ServerRequest serverRequest) {
         String id = FunctionalEndpointUtils.id(serverRequest);
-        Mono<Item> itemMono = this.itemReactiveRepository.findById(id);
+        Mono<Item> itemMono = this.reactiveItemRepository.findById(id);
         // build response
         return itemMono.flatMap(
                         item ->
@@ -45,7 +48,7 @@ public class ItemsHandler {
     public Mono<ServerResponse> createItem(ServerRequest serverRequest) {
         Mono<Item> itemToBeInserted = serverRequest.bodyToMono(Item.class);
         return itemToBeInserted
-                .flatMap(this.itemReactiveRepository::save)
+                .flatMap(this.reactiveItemRepository::save)
                 .flatMap(
                         item ->
                                 ServerResponse.created(
@@ -60,7 +63,7 @@ public class ItemsHandler {
         String id = FunctionalEndpointUtils.id(serverRequest);
         return ServerResponse.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.itemReactiveRepository.deleteById(id), Book.class)
+                .body(this.reactiveItemRepository.deleteById(id), Book.class)
                 .switchIfEmpty(notFound);
     }
 
@@ -71,14 +74,14 @@ public class ItemsHandler {
                         .bodyToMono(Item.class)
                         .flatMap(
                                 item -> {
-                                    return itemReactiveRepository
+                                    return reactiveItemRepository
                                             .findById(id)
                                             .flatMap(
                                                     currentItem -> {
                                                         currentItem.setPrice(item.getPrice());
                                                         currentItem.setDescription(
                                                                 item.getDescription());
-                                                        return this.itemReactiveRepository.save(
+                                                        return this.reactiveItemRepository.save(
                                                                 currentItem);
                                                     });
                                 });
@@ -89,5 +92,11 @@ public class ItemsHandler {
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .body(fromValue(item)))
                 .switchIfEmpty(notFound);
+    }
+
+    public Mono<ServerResponse> itemsStream(ServerRequest serverRequest) {
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_NDJSON)
+                .body(reactiveItemCappedRepository.findItemsBy(), ItemCapped.class);
     }
 }

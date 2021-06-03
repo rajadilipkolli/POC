@@ -4,11 +4,11 @@ import com.mongodb.redis.integration.document.Book;
 import java.io.Serial;
 import org.springframework.context.ApplicationEvent;
 
-public class BookCreatedEvent extends ApplicationEvent {
+public class CreatedBookEvent extends ApplicationEvent {
 
     @Serial private static final long serialVersionUID = 1L;
 
-    public BookCreatedEvent(Book book) {
+    public CreatedBookEvent(Book book) {
         super(book);
     }
 }

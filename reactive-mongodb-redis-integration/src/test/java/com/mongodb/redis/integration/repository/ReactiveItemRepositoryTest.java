@@ -16,23 +16,23 @@ import reactor.test.StepVerifier;
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
-class ItemReactiveRepositoryTest {
+class ReactiveItemRepositoryTest {
 
-    @Autowired private ItemReactiveRepository itemReactiveRepository;
+    @Autowired private ReactiveItemRepository reactiveItemRepository;
 
     @BeforeAll
     void setUp() {
-        itemReactiveRepository
+        reactiveItemRepository
                 .deleteAll()
                 .thenMany(Flux.fromIterable(MockObjectUtils.getItemsList()))
-                .flatMap(itemReactiveRepository::save)
+                .flatMap(reactiveItemRepository::save)
                 .doOnNext(item -> log.info("Inserted Item is : {}", item))
                 .blockLast();
     }
 
     @Test
     void test01_getAllItems() {
-        Flux<Item> allItems = itemReactiveRepository.findAll();
+        Flux<Item> allItems = reactiveItemRepository.findAll();
 
         StepVerifier.create(allItems.log())
                 .expectSubscription()
@@ -42,7 +42,7 @@ class ItemReactiveRepositoryTest {
 
     @Test
     void test02_getItemById() {
-        Mono<Item> itemMono = this.itemReactiveRepository.findById("ABC");
+        Mono<Item> itemMono = this.reactiveItemRepository.findById("ABC");
 
         StepVerifier.create(itemMono.log())
                 .expectSubscription()
@@ -53,7 +53,7 @@ class ItemReactiveRepositoryTest {
     @Test
     void test03_findItemByDescription() {
         StepVerifier.create(
-                        itemReactiveRepository
+                        reactiveItemRepository
                                 .findByDescription("Bose Headphone")
                                 .log("findByDescription"))
                 .expectSubscription()
@@ -64,7 +64,7 @@ class ItemReactiveRepositoryTest {
     @Test
     void test04_saveItem() {
         Item item = new Item(null, "Home Mini", 30.0);
-        StepVerifier.create(itemReactiveRepository.save(item).log("saveItem"))
+        StepVerifier.create(reactiveItemRepository.save(item).log("saveItem"))
                 .expectSubscription()
                 .expectNextMatches(
                         item1 ->
@@ -78,14 +78,14 @@ class ItemReactiveRepositoryTest {
     void test05_updateItem() {
         double newPrice = 520.99;
         Flux<Item> updatedItem =
-                this.itemReactiveRepository
+                this.reactiveItemRepository
                         .findByDescription("Samsung TV")
                         .map(
                                 item -> {
                                     item.setPrice(newPrice);
                                     return item;
                                 })
-                        .flatMap(item -> itemReactiveRepository.save(item));
+                        .flatMap(item -> reactiveItemRepository.save(item));
 
         StepVerifier.create(updatedItem.log("update item"))
                 .expectSubscription()
@@ -96,14 +96,14 @@ class ItemReactiveRepositoryTest {
     @Test
     void test06_deleteItem() {
         Mono<Void> deletedItem =
-                itemReactiveRepository
+                reactiveItemRepository
                         .findById("ABC")
                         .map(Item::getId)
-                        .flatMap(itemId -> itemReactiveRepository.deleteById(itemId));
+                        .flatMap(itemId -> reactiveItemRepository.deleteById(itemId));
 
         StepVerifier.create(deletedItem.log("Delete Item")).expectSubscription().verifyComplete();
 
-        StepVerifier.create(itemReactiveRepository.findById("ABC"))
+        StepVerifier.create(reactiveItemRepository.findById("ABC"))
                 .expectSubscription()
                 .expectNextCount(0)
                 .verifyComplete();

@@ -48,7 +48,7 @@ public class BookHandler {
                         bookDTO ->
                                 ServerResponse.accepted()
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .body(bookDTO, BookDTO.class))
+                                        .build())
                 .switchIfEmpty(notFound);
     }
 

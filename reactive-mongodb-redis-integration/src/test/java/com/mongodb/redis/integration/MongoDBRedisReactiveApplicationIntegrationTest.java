@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.repository.BookReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +22,7 @@ import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -33,6 +34,7 @@ import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
 @TestPropertySource(
         properties =
                 "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration")
+@ActiveProfiles("test")
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestContainer {
 
     @Autowired private TestRestTemplate testRestTemplate;
@@ -41,7 +43,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
     @Autowired private ReactiveMongoOperations operations;
 
-    @Autowired private BookReactiveRepository bookReactiveRepository;
+    @Autowired private ReactiveBookRepository reactiveBookRepository;
 
     @BeforeAll
     void init() {
@@ -61,7 +63,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                             }
                         });
 
-        this.bookReactiveRepository
+        this.reactiveBookRepository
                 .save(
                         Book.builder()
                                 .title("MongoDbCookBook")
@@ -187,11 +189,12 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
     void test05DeleteBook() {
         this.webTestClient
                 .delete()
-                .uri("/api/book/{id}", 1)
+                .uri("/api/book/{id}", Collections.singletonMap("id", 1))
                 .exchange()
                 .expectStatus()
                 .isAccepted()
-                .expectBody(Long.class);
+                .expectBody()
+                .isEmpty();
         this.webTestClient
                 .get()
                 .uri("/api/book/{id}", Collections.singletonMap("id", 1))

@@ -4,7 +4,7 @@ import static com.mongodb.redis.integration.constants.ItemConstants.ITEM_FUNCTIO
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.document.Item;
-import com.mongodb.redis.integration.repository.ItemReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +30,14 @@ class ItemsHandlerTest {
 
     @Autowired private WebTestClient webTestClient;
 
-    @Autowired private ItemReactiveRepository itemReactiveRepository;
+    @Autowired private ReactiveItemRepository reactiveItemRepository;
 
     @BeforeAll
     void setUp() {
-        this.itemReactiveRepository
+        this.reactiveItemRepository
                 .deleteAll()
                 .thenMany(Flux.fromIterable(MockObjectUtils.getItemsList()))
-                .flatMap(itemReactiveRepository::save)
+                .flatMap(reactiveItemRepository::save)
                 .doOnNext(
                         item -> {
                             log.info("Inserted Record :{}", item);
@@ -82,7 +82,7 @@ class ItemsHandlerTest {
                         .returnResult(Item.class)
                         .getResponseBody();
 
-        this.itemReactiveRepository
+        this.reactiveItemRepository
                 .count()
                 .flatMap(
                         count -> {

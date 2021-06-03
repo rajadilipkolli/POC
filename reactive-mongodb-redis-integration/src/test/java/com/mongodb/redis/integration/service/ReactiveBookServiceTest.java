@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
-import com.mongodb.redis.integration.repository.BookReactiveRepository;
+import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import reactor.test.StepVerifier;
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class ReactiveBookServiceTest {
 
-    @Mock private BookReactiveRepository bookReactiveRepository;
+    @Mock private ReactiveBookRepository reactiveBookRepository;
 
     @Mock private ApplicationEventPublisher publisher;
 
@@ -39,7 +39,7 @@ class ReactiveBookServiceTest {
     @Test
     void getBookDetailsReturnBookInfo() {
 
-        given(this.bookReactiveRepository.findByTitle(eq("JUNIT_TITLE")))
+        given(this.reactiveBookRepository.findByTitle(eq("JUNIT_TITLE")))
                 .willReturn(Mono.just(dummyBook));
 
         Mono<Book> book = this.reactiveBookService.findBookByTitle("JUNIT_TITLE");
@@ -58,7 +58,7 @@ class ReactiveBookServiceTest {
 
     @Test
     void getBookDetailsWhenBookNotFound() {
-        given(this.bookReactiveRepository.findByTitle(eq("prius"))).willReturn(Mono.empty());
+        given(this.reactiveBookRepository.findByTitle(eq("prius"))).willReturn(Mono.empty());
 
         Mono<Book> errorBook = this.reactiveBookService.findBookByTitle("prius");
 
@@ -75,7 +75,7 @@ class ReactiveBookServiceTest {
 
     @Test
     void getAllBookDetails() {
-        given(this.bookReactiveRepository.findAll()).willReturn(Flux.just(dummyBook));
+        given(this.reactiveBookRepository.findAll()).willReturn(Flux.just(dummyBook));
 
         StepVerifier.create(this.reactiveBookService.findAllBooks())
                 .expectNextMatches(
