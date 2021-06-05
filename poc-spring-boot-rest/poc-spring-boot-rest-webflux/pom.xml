@@ -19,9 +19,9 @@
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <dependency-check-maven.version>6.1.6</dependency-check-maven.version>
+        <dependency-check-maven.version>6.2.0</dependency-check-maven.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <fabric8-docker-maven.version>0.35.0</fabric8-docker-maven.version>
+        <fabric8-docker-maven.version>0.36.0</fabric8-docker-maven.version>
         <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
@@ -238,7 +238,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.42</version>
+                        <version>8.43</version>
                     </dependency>
                 </dependencies>
                 <configuration>
