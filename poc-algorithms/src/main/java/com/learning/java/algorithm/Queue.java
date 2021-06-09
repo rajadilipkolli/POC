@@ -20,7 +20,6 @@ public class Queue {
 
     boolean isEmpty() {
         return head == -1;
-
     }
 
     int insert(int element) {
@@ -43,7 +42,6 @@ public class Queue {
         } else {
             head--;
             return array[++rear];
-
         }
     }
 }

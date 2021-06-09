@@ -16,8 +16,8 @@ class SegregationCount {
 
     // Function to merge two sorted sub-arrays arr[low .. mid] and
     // arr[mid + 1 .. high]
-    public static void merge(int[] arr, int[] aux, int low, int mid,
-                             int high, Map<Integer, Integer> count) {
+    public static void merge(
+            int[] arr, int[] aux, int low, int mid, int high, Map<Integer, Integer> count) {
         int k = low, i = low, j = mid + 1;
         int c = 0;
 
@@ -49,8 +49,8 @@ class SegregationCount {
     }
 
     // Function to sort array arr [low..high] in descending order
-    public static void mergeSort(int[] arr, int[] aux, int low,
-                                 int high, Map<Integer, Integer> count) {
+    public static void mergeSort(
+            int[] arr, int[] aux, int low, int high, Map<Integer, Integer> count) {
         // base case: run size is equal to 1
         if (high == low) {
             return;

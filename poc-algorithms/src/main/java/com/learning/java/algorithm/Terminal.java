@@ -1,18 +1,19 @@
 package com.learning.java.algorithm;
 
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Terminal {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
-        String url = "https://exxonmobil.captiveye002.com/desplaines/refresh/default_embed.asp?id=1542377888&signature=signature1";
+        String url =
+                "https://exxonmobil.captiveye002.com/desplaines/refresh/default_embed.asp?id=1542377888&signature=signature1";
         String hmac = "";
         SecretKey secretKey = null;
         // Create formatter
@@ -40,6 +41,5 @@ public class Terminal {
         }
 
         System.out.println(hmac);
-
     }
 }

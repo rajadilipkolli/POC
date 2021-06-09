@@ -34,7 +34,6 @@ class UtilTest {
         int[] A = {1, 2, 3};
         int k = 2;
 
-
         Arrays.sort(A);
 
         // process elements from left to right

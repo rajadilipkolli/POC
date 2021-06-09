@@ -10,5 +10,4 @@ public class EmployeeComparator implements Comparator<Employee> {
         else if (o1.getAge() < o2.getAge()) return -1;
         else return 0;
     }
-
 }

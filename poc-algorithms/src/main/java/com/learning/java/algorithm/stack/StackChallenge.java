@@ -21,15 +21,15 @@ public class StackChallenge {
         var charArray = string.toLowerCase().toCharArray();
         var characterStack = new LinkedList<Character>();
         StringBuilder stringWithNoPunctuations = new StringBuilder();
-        for (var ch : charArray){
-            if (ch >= 'a' && ch <= 'z'){
+        for (var ch : charArray) {
+            if (ch >= 'a' && ch <= 'z') {
                 stringWithNoPunctuations.append(ch);
                 characterStack.push(ch);
             }
         }
 
         StringBuilder reverseString = new StringBuilder(characterStack.size());
-        while (!characterStack.isEmpty()){
+        while (!characterStack.isEmpty()) {
             reverseString.append(characterStack.pop());
         }
         return stringWithNoPunctuations.toString().equals(reverseString.toString());

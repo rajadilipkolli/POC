@@ -104,12 +104,12 @@ public class EmployeeDoubleLinkedList {
         nodeToInsert.setPrevious(current.getPrevious());
         current.setPrevious(nodeToInsert);
 
-        if(head == current){
+        if (head == current) {
             head = nodeToInsert;
-        } else{
+        } else {
             nodeToInsert.getPrevious().setNext(nodeToInsert);
         }
-        size ++;
+        size++;
         return true;
     }
 }

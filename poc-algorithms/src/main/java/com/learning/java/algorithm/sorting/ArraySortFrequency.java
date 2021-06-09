@@ -26,12 +26,10 @@ public class ArraySortFrequency {
                 i++;
                 count++;
             }
-
         }
 
         for (int value : array) {
             System.out.print(value + "");
         }
-
     }
 }

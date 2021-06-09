@@ -51,5 +51,4 @@ public class DoubleLinkedListMain {
         list.addBefore(new Employee("Someone", "Else", 1111), marySmith);
         list.printList();
     }
-
 }

@@ -20,8 +20,7 @@ public class LinkedList {
         Node new_node = new Node(data);
         new_node.next = null;
 
-        if (list.head == null)
-            list.head = new_node;
+        if (list.head == null) list.head = new_node;
         else {
             Node last = list.head;
             while (last.next != null) {
@@ -32,13 +31,11 @@ public class LinkedList {
             last.next = new_node;
         }
         return list;
-
     }
 
     public static LinkedList remove(LinkedList list, int data) {
 
-        if (list.head == null)
-            System.out.println("list is empty");
+        if (list.head == null) System.out.println("list is empty");
         else {
             Node last = list.head;
             if (last.data == data) {
@@ -60,16 +57,13 @@ public class LinkedList {
                     }
                 }
             }
-
         }
         return list;
-
     }
 
     public static void print(LinkedList list) {
 
-        if (list.head == null)
-            System.out.println("list is empty");
+        if (list.head == null) System.out.println("list is empty");
         else {
             Node last = list.head;
             while (last.next != null) {
@@ -80,7 +74,6 @@ public class LinkedList {
             // Insert the new_node at last node
 
         }
-
     }
 
     public static void main(String args[]) {

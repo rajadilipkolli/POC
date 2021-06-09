@@ -14,13 +14,12 @@ class InversionCount {
                 aux[k++] = arr[i++];
             } else {
                 aux[k++] = arr[j++];
-                inversionCount += (mid - i + 1);    // NOTE
+                inversionCount += (mid - i + 1); // NOTE
             }
         }
 
         // Copy remaining elements
-        while (i <= mid)
-            aux[k++] = arr[i++];
+        while (i <= mid) aux[k++] = arr[i++];
 
         // Don't need to copy second half
 
@@ -35,7 +34,7 @@ class InversionCount {
     // Sort array arr [low..high] using auxiliary array aux
     public static int mergeSort(int[] arr, int[] aux, int low, int high) {
         // Base case
-        if (high == low) {    // if run size == 1
+        if (high == low) { // if run size == 1
             return 0;
         }
 
@@ -63,7 +62,6 @@ class InversionCount {
         int[] aux = Arrays.copyOf(arr, arr.length);
 
         // get inversion count by performing merge sort on arr
-        System.out.println("Inversion count is " +
-                mergeSort(arr, aux, 0, arr.length - 1));
+        System.out.println("Inversion count is " + mergeSort(arr, aux, 0, arr.length - 1));
     }
 }

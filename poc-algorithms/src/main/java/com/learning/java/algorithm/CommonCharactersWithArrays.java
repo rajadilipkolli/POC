@@ -5,9 +5,8 @@ import java.util.Arrays;
 class CommonCharactersWithArrays {
 
     // Function to return the count of
-// valid indices pairs 
-    static int countPairs(String s1, int n1,
-                          String s2, int n2) {
+    // valid indices pairs
+    static int countPairs(String s1, int n1, String s2, int n2) {
 
         // To store the frequencies of characters
         // of string s1 and s2
@@ -48,4 +47,4 @@ class CommonCharactersWithArrays {
         int n2 = s2.length();
         System.out.println(countPairs(s1, n1, s2, n2));
     }
-} 
+}

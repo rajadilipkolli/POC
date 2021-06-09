@@ -25,7 +25,5 @@ public class SingleLinkedListMain {
         list.removeFromFront();
         System.out.println(list.getSize());
         list.printList();
-
     }
-
 }

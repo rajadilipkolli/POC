@@ -16,7 +16,5 @@ public class ContiguousArray {
             }
         }
         System.out.println(count);
-
     }
-
 }

@@ -23,7 +23,6 @@ public class LongestString {
                         maxString = maxString.replaceFirst(arr[j], "");
 
                         diffString = diffString + arr[j];
-
                     }
                     if (arr[i].equalsIgnoreCase(diffString)) {
                         System.out.println(arr[i].length());

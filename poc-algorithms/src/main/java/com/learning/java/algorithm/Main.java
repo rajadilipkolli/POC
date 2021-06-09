@@ -29,7 +29,6 @@ class Main {
     public static void main(String[] args) {
         int[] arr = {5, 4, 3, 2, 1};
 
-        System.out.print("The number of strictly increasing sub-arrays are "
-                + getCount(arr));
+        System.out.print("The number of strictly increasing sub-arrays are " + getCount(arr));
     }
 }

@@ -19,7 +19,6 @@ public class CommonCharacters {
                     containsList.add(j);
                     count++;
                     break;
-
                 }
             }
         }

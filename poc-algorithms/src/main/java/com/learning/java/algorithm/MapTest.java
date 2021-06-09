@@ -26,7 +26,6 @@ public class MapTest {
         hm.put(2, e2);
         hm.put(3, e3);
 
-
         ArrayList<Employee> al = new ArrayList(hm.values());
         Collections.sort(al, new MyComparator());
 
