@@ -10,6 +10,6 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "/frontend/"
+    directory: "/frontend/blog-angular-ui/"
     schedule:
       interval: "daily"
