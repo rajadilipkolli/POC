@@ -19,7 +19,6 @@
     <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     <springdoc-open-ui.version>1.5.9</springdoc-open-ui.version>
 
-    <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
     <dependency-check-maven.version>6.2.1</dependency-check-maven.version>
     <fabric8-docker-maven.version>0.36.0</fabric8-docker-maven.version>
@@ -205,79 +204,7 @@
           </includeOnlyProperties>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <runOrder>alphabetical</runOrder>
-          <argLine>--enable-preview</argLine>
-          <reportsDirectory>${junit.utReportFolder}</reportsDirectory>
-          <excludes>
-            <exclude>**/*IT*</exclude>
-            <exclude>**/*IntTest*</exclude>
-            <exclude>**/*IntegrationTest*</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <configuration>
-          <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-          <runOrder>alphabetical</runOrder>
-          <argLine>--enable-preview</argLine>
-          <reportsDirectory>${junit.itReportFolder}</reportsDirectory>
-          <includes>
-            <include>**/*IT*</include>
-            <include>**/*IntTest*</include>
-            <include>**/*IntegrationTest*</include>
-          </includes>
-        </configuration>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>verify</id>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>8.43</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <configLocation>build-config/checkstyle/checkstyle.xml</configLocation>
-          <suppressionsLocation>build-config/checkstyle/suppressions.xml</suppressionsLocation>
-          <encoding>UTF-8</encoding>
-          <consoleOutput>true</consoleOutput>
-          <failsOnError>true</failsOnError>
-          <linkXRef>false</linkXRef>
-        </configuration>
-        <executions>
-          <execution>
-            <id>checkstyle-validation</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-     <!-- <plugin>
+       <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>${maven-pmd-plugin.version}</version>

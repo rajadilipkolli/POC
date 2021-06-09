@@ -28,6 +28,7 @@
 		<testcontainers.version>1.15.3</testcontainers.version>
 
 		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+		<maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
 
 		<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
 		<sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
@@ -71,6 +72,78 @@
 					<execution>
 						<goals>
 							<goal>sonar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<runOrder>alphabetical</runOrder>
+					<argLine>--enable-preview</argLine>
+					<reportsDirectory>${junit.utReportFolder}</reportsDirectory>
+					<excludes>
+						<exclude>**/*IT*</exclude>
+						<exclude>**/*IntTest*</exclude>
+						<exclude>**/*IntegrationTest*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
+					<runOrder>alphabetical</runOrder>
+					<argLine>--enable-preview</argLine>
+					<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
+					<includes>
+						<include>**/*IT*</include>
+						<include>**/*IntTest*</include>
+						<include>**/*IntegrationTest*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify</id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven-checkstyle-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>8.43</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<configLocation>build-config/checkstyle/checkstyle.xml</configLocation>
+					<suppressionsLocation>build-config/checkstyle/suppressions.xml</suppressionsLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle-validation</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
