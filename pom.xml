@@ -81,7 +81,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<runOrder>alphabetical</runOrder>
-					<argLine>--enable-preview</argLine>
+					<argLine>--enable-preview -Xmx1024M ${argLine}</argLine>
 					<reportsDirectory>${junit.utReportFolder}</reportsDirectory>
 					<excludes>
 						<exclude>**/*IT*</exclude>
@@ -96,7 +96,7 @@
 				<configuration>
 					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
 					<runOrder>alphabetical</runOrder>
-					<argLine>--enable-preview</argLine>
+					<argLine>--enable-preview -Xmx1024M ${argLine}</argLine>
 					<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
 					<includes>
 						<include>**/*IT*</include>
