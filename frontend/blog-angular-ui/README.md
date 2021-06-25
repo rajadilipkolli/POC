@@ -30,10 +30,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## How to update the local angular-cli version
 
-    `npm install --save-dev @angular/cli@latest
+    npm install --save-dev @angular/cli@latest
     npm i 
     ng update @angular/cli 
-    ng update @angular/core`
+    ng update @angular/core
 
     if repository is not saved then use an `allow-dirty` flag to bypass the repo check.
     e.g ng update @angular/cli @angular/core --allow-dirty
