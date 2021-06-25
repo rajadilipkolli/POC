@@ -67,7 +67,6 @@ public class JPAPostServiceImpl implements PostService {
                 this.postRepository
                         .findByDetailsCreatedByAndTitle(postDTO.getCreatedBy(), title)
                         .orElseThrow(() -> supplierBiFunction.apply(postDTO.getCreatedBy(), title));
-        ;
         this.postMapper.updateReferenceValues(postDTO, post);
         return this.postMapper.mapPostToDTO(this.postRepository.save(post));
     }

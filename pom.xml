@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.0</version>
+		<version>2.5.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -24,7 +24,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>15</java.version>
-		<spotless.version>2.12.0</spotless.version>
+		<spotless.version>2.12.1</spotless.version>
 		<testcontainers.version>1.15.3</testcontainers.version>
 
 		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
