@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.User;
 
 @Configuration(proxyBeanMethods = false)
 @EnableR2dbcAuditing
-public class DatabaseConfig {
+public class AuditingDatabaseConfig {
 
     @Bean
     ReactiveAuditorAware<String> auditorAware() {

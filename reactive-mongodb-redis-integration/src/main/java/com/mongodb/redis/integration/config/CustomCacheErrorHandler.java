@@ -7,7 +7,6 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 @Slf4j
 class CustomCacheErrorHandler implements CacheErrorHandler {
 
-    /** {@inheritDoc} */
     @Override
     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
         log.error(
@@ -17,7 +16,6 @@ class CustomCacheErrorHandler implements CacheErrorHandler {
                 exception);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void handleCachePutError(
             RuntimeException exception, Cache cache, Object key, Object value) {
@@ -28,7 +26,6 @@ class CustomCacheErrorHandler implements CacheErrorHandler {
                 exception);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
         log.error(
@@ -38,7 +35,6 @@ class CustomCacheErrorHandler implements CacheErrorHandler {
                 exception);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void handleCacheClearError(RuntimeException exception, Cache cache) {
         log.error("Cache {} is down to clear", cache.getName(), exception);
