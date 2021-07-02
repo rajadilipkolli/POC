@@ -1,4 +1,4 @@
-name: Build
+name: Java CI
 on:
   push:
     branches:
@@ -7,24 +7,28 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '16' ]
+    name: Build on Java ${{ matrix.Java }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Set up JDK 16
-        uses: actions/setup-java@v1
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v2.1.0
         with:
-          java-version: 16
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.6
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
-        uses: actions/cache@v2.1.0
+        uses: actions/cache@v2.1.6
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -33,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -B package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file pom.xml
+        run: mvn -B clean package sonar:sonar --file pom.xml
       - name: Codecov
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v1.5.2
 
 
