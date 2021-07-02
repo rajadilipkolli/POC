@@ -24,7 +24,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>16</java.version>
-		<spotless.version>2.12.1</spotless.version>
 		<testcontainers.version>1.15.3</testcontainers.version>
 
 		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
@@ -125,7 +124,7 @@
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>8.43</version>
+						<version>8.44</version>
 					</dependency>
 				</dependencies>
 				<configuration>
@@ -223,27 +222,6 @@
 						<phase>verify</phase>
 						<goals>
 							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-				<version>${spotless.version}</version>
-				<configuration>
-					<java>
-						<googleJavaFormat>
-							<version>1.9</version>
-							<style>AOSP</style>
-						</googleJavaFormat>
-					</java>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
