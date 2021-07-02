@@ -33,6 +33,10 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Google Java Format
+        uses: axel-op/googlejavaformat-action@v3.4.0
+        with:
+          version: 1.10.0
       - name: Build with Maven and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
