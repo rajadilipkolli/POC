@@ -39,6 +39,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B clean package sonar:sonar --file pom.xml
       - name: Codecov
-        uses: codecov/codecov-action@v2.0.1
+        uses: codecov/codecov-action@v2.0.2
 
 
