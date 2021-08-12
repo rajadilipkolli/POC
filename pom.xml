@@ -24,7 +24,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>15</java.version>
-		<spotless.version>2.12.1</spotless.version>
+		<spotless.version>2.12.2</spotless.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
 
 		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
