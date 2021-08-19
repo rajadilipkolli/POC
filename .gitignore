@@ -28,3 +28,4 @@
 *.checkstyle
 *.args
 /poc-spring-boot-rest/poc-spring-boot-rest-jooq/src/
+/frontend/blog-angular-ui/node/
