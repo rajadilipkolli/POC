@@ -37,3 +37,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
     if repository is not saved then use an `allow-dirty` flag to bypass the repo check.
     e.g ng update @angular/cli @angular/core --allow-dirty
+	
+	
+	use npm outdated to check the available updates
+	
+	
+## Update using npm-update-ckeck package 
+ 
+This is a package available at npmjs.org , named npm-update-check, which works the same as npm update command. 
+ 
+But the difference is that it's a utility that automatically adjusts packages which are listed into package.json file , whenever any updates are required. For that we need to install it via command: 
+npm install -g npm-check-updates  
+After installing the above package to a global location, now we will be able to update packages automatically. The next step is to update all the packages by running the command:
+ncu -u // tells to update via npm package  
+And then install it via npm install.

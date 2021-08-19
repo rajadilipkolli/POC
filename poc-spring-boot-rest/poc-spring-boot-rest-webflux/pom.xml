@@ -20,7 +20,7 @@
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>6.2.2</dependency-check-maven.version>
 
-        <fabric8-docker-maven.version>0.36.0</fabric8-docker-maven.version>
+        <fabric8-docker-maven.version>0.37.0</fabric8-docker-maven.version>
     </properties>
 
     <dependencies>
@@ -176,35 +176,6 @@
                         <includeOnlyProperty>^git.branch$</includeOnlyProperty>
                     </includeOnlyProperties>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.43</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <configLocation>build-config/checkstyle/checkstyle.xml</configLocation>
-                    <suppressionsLocation>build-config/checkstyle/suppressions.xml</suppressionsLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <linkXRef>false</linkXRef>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>checkstyle-validation</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <!-- <plugin>
                <groupId>org.apache.maven.plugins</groupId>
