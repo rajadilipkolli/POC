@@ -16,7 +16,7 @@
 	<name>Spring Boot MongoDb Redis Cache Implementation in Functional Style</name>
 
 	<properties>
-		<problem-spring-web.version>0.26.2</problem-spring-web.version>
+		<problem-spring-web.version>0.27.0</problem-spring-web.version>
 		<openapi.version>1.5.10</openapi.version>
 	</properties>
 
