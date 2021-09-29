@@ -12,6 +12,7 @@ import com.example.poc.webmvc.service.PostService;
 import java.util.Collections;
 import java.util.List;
 import org.jooq.DSLContext;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service(value = "jooqPostService")
@@ -29,6 +30,7 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     @Override
+    @Cacheable(value = "posts", key = "#userName+#title", unless = "#result == null")
     public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
 
         return dsl.select(POST.TITLE, POST.CONTENT, POST_DETAILS.CREATED_BY, POST.CREATEDON)
