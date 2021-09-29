@@ -15,7 +15,7 @@
   <description>Demo project for Spring Boot WebMVC with JPA</description>
   
   <properties>
-    <java.version>15</java.version>
+    <java.version>17</java.version>
     <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     <springdoc-open-ui.version>1.5.10</springdoc-open-ui.version>
 

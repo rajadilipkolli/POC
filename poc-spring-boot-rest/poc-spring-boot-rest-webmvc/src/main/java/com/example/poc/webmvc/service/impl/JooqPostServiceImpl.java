@@ -12,6 +12,7 @@ import com.example.poc.webmvc.service.PostService;
 import java.util.Collections;
 import java.util.List;
 import org.jooq.DSLContext;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service(value = "jooqPostService")
