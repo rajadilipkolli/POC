@@ -17,7 +17,7 @@
 
 	<properties>
 		<problem-spring-web.version>0.27.0</problem-spring-web.version>
-		<openapi.version>1.5.10</openapi.version>
+		<openapi.version>1.5.11</openapi.version>
 	</properties>
 
 	<dependencies>
