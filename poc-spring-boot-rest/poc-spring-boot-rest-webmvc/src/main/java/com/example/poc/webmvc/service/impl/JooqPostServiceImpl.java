@@ -36,7 +36,7 @@ public class JooqPostServiceImpl implements PostService {
             POST.TITLE,
             POST.CONTENT,
             POST_DETAILS.CREATED_BY,
-            POST.CREATED_ON,
+            POST_DETAILS.CREATED_ON,
             multiset(
                     select(POST_COMMENT.REVIEW)
                         .from(POST_COMMENT)
@@ -66,7 +66,7 @@ public class JooqPostServiceImpl implements PostService {
             POST.TITLE,
             POST.CONTENT,
             POST_DETAILS.CREATED_BY,
-            POST.CREATED_ON,
+            POST_DETAILS.CREATED_ON,
             multiset(
                     select(POST_COMMENT.REVIEW)
                         .from(POST_COMMENT)

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.example.poc.webmvc.common.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 
-class SpringBootRestWebmvcIntegrationTest extends AbstractIntegrationTest {
+class SpringBootRestWebMvcIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void test() {

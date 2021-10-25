@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity(name = "Post")
 @Table(name = "post")
@@ -42,7 +43,8 @@ public class Post {
     @Column(length = 4096)
     private String content;
 
-    private LocalDateTime createdOn;
+    @LastModifiedDate
+    private LocalDateTime updatedOn;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
@@ -58,17 +60,17 @@ public class Post {
     private List<PostTag> tags = new ArrayList<>();
 
     public Post() {
-        this.createdOn = LocalDateTime.now();
+        this.updatedOn = LocalDateTime.now();
     }
 
     public Post(Long id) {
         this.id = id;
-        this.createdOn = LocalDateTime.now();
+        this.updatedOn = LocalDateTime.now();
     }
 
     public Post(String title) {
         this.title = title;
-        this.createdOn = LocalDateTime.now();
+        this.updatedOn = LocalDateTime.now();
     }
 
     public void addComment(PostComment comment) {

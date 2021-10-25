@@ -1,7 +1,6 @@
 package com.example.poc.webmvc.repository;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.webmvc.common.AbstractPostgreSQLContainerBase;
@@ -37,7 +36,7 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
     void init() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         Post post = new Post();
-        post.setCreatedOn(currentDateTime);
+        post.setUpdatedOn(currentDateTime);
         post.setTitle("Post Title");
         post.setContent("Post Content");
         PostDetails postDetails = new PostDetails();
@@ -87,8 +86,7 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
                         .collect(groupingBy(titleAndContentClassifier, downStreamCollector))
                         .entrySet()
                         .stream()
-                        .map(mapToPostDTO)
-                        .collect(toUnmodifiableList());
+                        .map(mapToPostDTO).toList();
 
         assertThat(postDTOS).isNotEmpty().hasSize(1);
         PostDTO postDTO = postDTOS.get(0);

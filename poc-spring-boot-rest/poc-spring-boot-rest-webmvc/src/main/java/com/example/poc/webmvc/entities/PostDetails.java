@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity(name = "PostDetails")
 @Table(name = "post_details")
@@ -33,7 +34,8 @@ public class PostDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "created_on")
+    @Column(name = "created_on", updatable = false)
+    @CreatedDate
     private LocalDateTime createdOn;
 
     @Column(name = "created_by")

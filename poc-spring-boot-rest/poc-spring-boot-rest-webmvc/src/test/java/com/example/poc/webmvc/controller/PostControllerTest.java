@@ -36,7 +36,7 @@ class PostControllerTest {
 
     @Test
     void shouldReturnAllPostsWithLinks() throws Exception {
-        given(this.jpaPostService.fetchAllPostsByUserName("junit"))
+        given(this.jooqPostService.fetchAllPostsByUserName("junit"))
                 .willReturn(List.of(MockObjectCreator.getPostDTO()));
 
         this.mvc
