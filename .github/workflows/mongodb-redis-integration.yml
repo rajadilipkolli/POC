@@ -1,0 +1,50 @@
+name: mongodb-redis-integration CI
+on:
+  push:
+    paths:
+      - "mongodb-redis-integration/**"
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "mongodb-redis-integration/**"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+    name: Build on Java ${{ matrix.Java }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v2.3.1
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Build with Maven and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          cd mongodb-redis-integration
+          mvn -B clean package sonar:sonar --file pom.xml 
+      - name: Codecov
+        uses: codecov/codecov-action@v2.1.0
+
+

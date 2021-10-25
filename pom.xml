@@ -292,14 +292,8 @@
 	</pluginRepositories>
 
 	<modules>
-		<module>poc-algorithms</module>
-		<module>poc-reactive-learning</module>
-		<module>mongodb-redis-integration</module>
 		<module>reactive-mongodb-redis-integration</module>
 		<module>poc-spring-boot-rest</module>
-		<module>poc-spring-boot-rabbitmq</module>
 		<!-- <module>spring-boot-mongodb-security-ui</module> -->
-		<module>quarkus-project</module>
-		<module>frontend/blog-angular-ui</module>
 	</modules>
 </project>

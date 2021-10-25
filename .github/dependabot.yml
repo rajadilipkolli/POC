@@ -17,4 +17,29 @@ updates:
       - dependency-name: "@angular/*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"] 
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  - package-ecosystem: maven
+    directory: "/poc-algorithms"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/poc-reactive-learning"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/mongodb-redis-integration"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/quarkus-project"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/poc-spring-boot-rabbitmq"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
