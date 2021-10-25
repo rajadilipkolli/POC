@@ -1,5 +1,6 @@
-package com.poc.restfulpoc.entities;
+package com.example.poc.webmvc.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostTagId implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Column(name = "post_id")

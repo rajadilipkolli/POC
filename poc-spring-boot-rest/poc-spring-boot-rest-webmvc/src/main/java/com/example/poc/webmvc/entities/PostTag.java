@@ -1,4 +1,4 @@
-package com.poc.restfulpoc.entities;
+package com.example.poc.webmvc.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
