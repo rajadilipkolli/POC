@@ -294,7 +294,6 @@
 	<modules>
 		<module>reactive-mongodb-redis-integration</module>
 		<module>poc-spring-boot-rest</module>
-		<module>poc-spring-boot-rabbitmq</module>
 		<!-- <module>spring-boot-mongodb-security-ui</module> -->
 	</modules>
 </project>
