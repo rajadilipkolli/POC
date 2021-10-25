@@ -30,6 +30,7 @@
 
 		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
 		<jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
+		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
 		<jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
@@ -77,11 +78,6 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-webflux-ui</artifactId>
-			<version>${openapi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-data-rest</artifactId>
 			<version>${openapi.version}</version>
 		</dependency>
 
