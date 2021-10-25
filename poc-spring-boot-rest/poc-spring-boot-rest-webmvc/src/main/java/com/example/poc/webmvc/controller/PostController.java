@@ -70,7 +70,7 @@ public class PostController implements PostAPI {
                 WebMvcLinkBuilder.linkTo(
                                 WebMvcLinkBuilder.methodOn(this.getClass())
                                         .getPostsByUserName(userName))
-                        .withRel("get-all-posts-by-username-title");
+                        .withRel("get-all-posts-by-username");
         postDTO.add(getAllPostsLink);
 
         return ResponseEntity.of(Optional.of(postDTO));
