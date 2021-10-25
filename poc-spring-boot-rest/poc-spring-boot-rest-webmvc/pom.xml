@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>poc-spring-boot-rest</artifactId>
-        <groupId>com.example.poc</groupId>
-        <version>0.4.0-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.5.6</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
     
     <artifactId>poc-spring-boot-rest-webmvc</artifactId>
     <name>Spring Boot Rest Webmvc</name>
@@ -16,8 +17,9 @@
   
   <properties>
     <java.version>17</java.version>
+	<testcontainers.version>1.16.2</testcontainers.version>
     <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-    <springdoc-open-ui.version>1.5.10</springdoc-open-ui.version>
+    <springdoc-open-ui.version>1.5.12</springdoc-open-ui.version>
 
     <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
     <dependency-check-maven.version>6.4.1</dependency-check-maven.version>
@@ -157,7 +159,6 @@
         <configuration>
           <source>${java.version}</source> <!-- depending on your project -->
           <target>${java.version}</target> <!-- depending on your project -->
-          <compilerArgs>--enable-preview</compilerArgs>
           <annotationProcessorPaths>
             <path>
               <groupId>org.mapstruct</groupId>
