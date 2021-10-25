@@ -296,6 +296,5 @@
 		<module>poc-spring-boot-rest</module>
 		<module>poc-spring-boot-rabbitmq</module>
 		<!-- <module>spring-boot-mongodb-security-ui</module> -->
-		<module>quarkus-project</module>
 	</modules>
 </project>
