@@ -33,7 +33,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
         this.postDto.setCreatedBy("junit");
         this.postDto.setTitle("PostTitle");
         this.postDto.setContent("post created By Junit");
-        this.postDto.setCreatedOn(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(currentDateTime));
+        this.postDto.setCreatedOn(currentDateTime);
         this.postDto.setTags(Collections.singletonList(new TagDTO("junit")));
         this.postDto.setComments(Collections.singletonList(new PostCommentsDTO("junit Review")));
     }

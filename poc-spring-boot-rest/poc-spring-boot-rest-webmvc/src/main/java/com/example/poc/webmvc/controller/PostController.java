@@ -54,7 +54,7 @@ public class PostController implements PostAPI {
     public ResponseEntity<PostsDTO> getPostsByUserName(@PathVariable("user_name") String userName) {
 
         List<PostDTO> posts =
-                this.jpaPostService.fetchAllPostsByUserName(userName).stream()
+                this.jooqPostService.fetchAllPostsByUserName(userName).stream()
                         .map(postDTO -> this.addLinkToPostBiFunction.apply(userName, postDTO))
                         .collect(Collectors.toList());
         return ResponseEntity.of(Optional.of(new PostsDTO(posts)));
@@ -65,13 +65,12 @@ public class PostController implements PostAPI {
             @PathVariable("user_name") String userName, @PathVariable("title") String title) {
         PostDTO postDTO =
                 this.addLinkToPostBiFunction.apply(
-                        userName, this.jpaPostService.fetchPostByUserNameAndTitle(userName, title));
-        //        PostDTO postDTO = jooqPostService.fetchPostByUserNameAndTitle(userName, title);
+                        userName, this.jooqPostService.fetchPostByUserNameAndTitle(userName, title));
         Link getAllPostsLink =
                 WebMvcLinkBuilder.linkTo(
                                 WebMvcLinkBuilder.methodOn(this.getClass())
                                         .getPostsByUserName(userName))
-                        .withRel("get-all-posts-by-username");
+                        .withRel("get-all-posts-by-username-title");
         postDTO.add(getAllPostsLink);
 
         return ResponseEntity.of(Optional.of(postDTO));

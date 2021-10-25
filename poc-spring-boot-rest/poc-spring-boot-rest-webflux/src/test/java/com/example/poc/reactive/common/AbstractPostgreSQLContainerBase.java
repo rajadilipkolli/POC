@@ -19,7 +19,7 @@ public class AbstractPostgreSQLContainerBase {
     }
 
     @DynamicPropertySource
-    static void setPostgreSQLContainer(DynamicPropertyRegistry propertyRegistry) {
+    static void addApplicationProperties(DynamicPropertyRegistry propertyRegistry) {
         propertyRegistry.add(
                 "spring.r2dbc.url",
                 () ->
