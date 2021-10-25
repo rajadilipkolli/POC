@@ -6,7 +6,7 @@ import com.example.poc.webmvc.exception.PostNotFoundException;
 import com.example.poc.webmvc.mapper.PostMapper;
 import com.example.poc.webmvc.repository.PostRepository;
 import com.example.poc.webmvc.service.PostService;
-import com.poc.restfulpoc.entities.Post;
+import com.example.poc.webmvc.entities.Post;
 import java.util.List;
 import java.util.function.BiFunction;
 import lombok.RequiredArgsConstructor;

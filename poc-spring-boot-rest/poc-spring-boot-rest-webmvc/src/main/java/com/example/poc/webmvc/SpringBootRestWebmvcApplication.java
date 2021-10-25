@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"com.poc.restfulpoc.entities"})
+@EntityScan(basePackages = {"com.example.poc.webmvc.entities"})
 public class SpringBootRestWebmvcApplication {
 
     public static void main(String[] args) {
