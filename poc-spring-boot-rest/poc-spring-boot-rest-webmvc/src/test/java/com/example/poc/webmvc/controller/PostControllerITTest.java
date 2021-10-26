@@ -56,7 +56,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
                 .hasSize(2)
                 .contains(new TagDTO("Java"), new TagDTO("Spring Boot"));
         assertThat(postDTO.getCreatedBy()).isEqualTo("raja");
-        assertThat(postDTO.getContent()).isNull();
+        assertThat(postDTO.getContent()).isEqualTo("Dummy Content");
         assertThat(postDTO.getTitle()).isEqualTo("A Beautiful Post in Java");
     }
 
