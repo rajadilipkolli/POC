@@ -33,7 +33,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
         this.postDto.setCreatedBy("junit");
         this.postDto.setTitle("PostTitle");
         this.postDto.setContent("post created By Junit");
-        this.postDto.setCreatedOn(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(currentDateTime));
+        this.postDto.setCreatedOn(currentDateTime);
         this.postDto.setTags(Collections.singletonList(new TagDTO("junit")));
         this.postDto.setComments(Collections.singletonList(new PostCommentsDTO("junit Review")));
     }
@@ -56,7 +56,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
                 .hasSize(2)
                 .contains(new TagDTO("Java"), new TagDTO("Spring Boot"));
         assertThat(postDTO.getCreatedBy()).isEqualTo("raja");
-        assertThat(postDTO.getContent()).isNull();
+        assertThat(postDTO.getContent()).isEqualTo("Dummy Content");
         assertThat(postDTO.getTitle()).isEqualTo("A Beautiful Post in Java");
     }
 

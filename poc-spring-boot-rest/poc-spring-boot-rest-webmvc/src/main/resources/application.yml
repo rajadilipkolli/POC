@@ -2,6 +2,7 @@ logging:
   level:
     sql: INFO
     web: INFO
+    org.jooq.tools.LoggerListener: DEBUG
 management:
   endpoint:
     health:

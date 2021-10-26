@@ -1,6 +1,8 @@
 package com.example.poc.webmvc.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
 
     private String createdBy;
 
-    private String createdOn;
+    private LocalDateTime createdOn;
 
     @Builder.Default private List<PostCommentsDTO> comments = new ArrayList<>();
 

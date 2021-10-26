@@ -7,7 +7,7 @@ CREATE TABLE POST
     ID BIGINT NOT NULL,
     TITLE VARCHAR(255),
     CONTENT VARCHAR(255),
-    created_on timestamp,
+    updated_on timestamp,
     PRIMARY KEY   (ID)
 );
 

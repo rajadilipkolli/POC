@@ -1,13 +1,13 @@
 INSERT INTO
     POST
-    (TITLE, ID)
+    (TITLE, CONTENT, ID)
 VALUES
     (
-        'A Beautiful Post in Java', 1
+        'A Beautiful Post in Java', 'Dummy Content', 1
     )
 ,
     (
-        'Second Post', 2
+        'Second Post', 'Dummy Content', 2
     )
 ;
 

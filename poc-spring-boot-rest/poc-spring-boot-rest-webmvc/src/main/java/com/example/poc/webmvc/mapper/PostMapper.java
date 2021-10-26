@@ -4,11 +4,11 @@ import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.dto.TagDTO;
-import com.poc.restfulpoc.entities.Post;
-import com.poc.restfulpoc.entities.PostComment;
-import com.poc.restfulpoc.entities.PostDetails;
-import com.poc.restfulpoc.entities.PostTag;
-import com.poc.restfulpoc.entities.Tag;
+import com.example.poc.webmvc.entities.Post;
+import com.example.poc.webmvc.entities.PostComment;
+import com.example.poc.webmvc.entities.PostDetails;
+import com.example.poc.webmvc.entities.PostTag;
+import com.example.poc.webmvc.entities.Tag;
 import java.util.List;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
@@ -29,7 +29,7 @@ public interface PostMapper {
     @Mapping(target = "comments", ignore = true)
     @Mapping(target = "tags", ignore = true)
     @Mapping(target = "details", ignore = true)
-    @Mapping(source = "createdOn", target = "createdOn")
+    @Mapping(source = "createdOn", target = "updatedOn")
     Post postDtoToPostIgnoringChild(PostDTO postDTO);
 
     @Mapping(target = "createdOn", ignore = true)
@@ -43,7 +43,7 @@ public interface PostMapper {
     PostDetails postDTOToPostDetails(PostDTO postDTO);
 
     @Mapping(target = "details", ignore = true)
-    @Mapping(target = "createdOn", ignore = true)
+    @Mapping(target = "updatedOn", ignore = true)
     void updateReferenceValues(PostDTO postDTO, @MappingTarget Post post);
 
     PostTag tagDTOToPostTag(TagDTO tagDTO);
