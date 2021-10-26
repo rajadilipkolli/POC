@@ -8,6 +8,7 @@ import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,7 @@ import reactor.test.StepVerifier;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WithMockUser
 @Slf4j
+@Disabled
 class ReactivePostServiceIntegrationTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private PostRepository postRepository;
