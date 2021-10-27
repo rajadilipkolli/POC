@@ -1,13 +1,13 @@
-name: poc-spring-boot-rest CI
+name: poc-spring-boot-webflux CI
 on:
   push:
     paths:
-      - "poc-spring-boot-rest/**"
+      - "poc-spring-boot-rest/poc-spring-boot-rest-webflux/**"
     branches:
       - master
   pull_request:
     paths:
-      - "poc-spring-boot-rest/**"
+      - "poc-spring-boot-rest/poc-spring-boot-rest-webflux/**"
     types:
       - opened
       - synchronize
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '17' ]
+        java: [ '11' ]
     name: Build on Java ${{ matrix.Java }}
     steps:
       - uses: actions/checkout@v2
@@ -37,7 +37,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd poc-spring-boot-rest
-          mvn -B clean package --file pom.xml 
+          cd poc-spring-boot-rest-webflux
+          mvn -B clean -Pnative package --file pom.xml 
       - name: Codecov
         uses: codecov/codecov-action@v2.1.0
 
