@@ -17,24 +17,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ '11' ]
-    name: Build on Java ${{ matrix.Java }}
+    name: Build on GraalVM
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v2.3.1
+      - uses: ilammy/msvc-dev-cmd@v1.5.0
+      - uses: microsoft/setup-msbuild@v1
+      - uses: ayltai/setup-graalvm@v1
         with:
-          java-version: ${{ matrix.java }}
-          distribution: 'adopt'
-          cache: 'maven'
+          java-version: 11
+          graalvm-version: 20.3.0
+          native-image: true
       - name: Build with Maven and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd poc-spring-boot-rest
           cd poc-spring-boot-rest-webflux
