@@ -38,12 +38,9 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Build with Maven and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd mongodb-redis-integration
-          mvn -B clean package sonar:sonar --file pom.xml 
+          mvn -B clean package
       - name: Codecov
         uses: codecov/codecov-action@v2.1.0
 
