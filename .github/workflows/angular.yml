@@ -2,9 +2,17 @@ name: Angular CI
 
 on:
   push:
-    branches: [ master ]
+    paths:
+      - "frontend/blog-angular-ui/**"
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    paths:
+      - "frontend/blog-angular-ui/**"
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   build:
