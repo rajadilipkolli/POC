@@ -24,7 +24,7 @@
         <springdoc-open-ui.version>1.5.12</springdoc-open-ui.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <dependency-check-maven.version>6.4.1</dependency-check-maven.version>
+        <dependency-check-maven.version>6.5.0</dependency-check-maven.version>
 
         <db.username>local</db.username>
         <db.password>local</db.password>
