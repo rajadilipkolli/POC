@@ -22,7 +22,7 @@
 		<java.version>17</java.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<problem-spring-web.version>0.27.0</problem-spring-web.version>
-		<openapi.version>1.5.13</openapi.version>
+		<openapi.version>1.6.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
 
