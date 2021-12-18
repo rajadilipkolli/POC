@@ -23,7 +23,7 @@
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>6.5.0</dependency-check-maven.version>
 
-        <fabric8-docker-maven.version>0.38.0</fabric8-docker-maven.version>
+        <fabric8-docker-maven.version>0.38.1</fabric8-docker-maven.version>
     </properties>
 
     <dependencies>
