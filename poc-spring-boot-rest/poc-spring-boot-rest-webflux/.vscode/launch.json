@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<poc-spring-boot-rest-webflux>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.poc.reactive.Application",
+            "projectName": "poc-spring-boot-rest-webflux",
+            "args": "--spring.profiles.active=native"
+        }
+    ]
+}

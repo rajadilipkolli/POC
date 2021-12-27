@@ -15,9 +15,9 @@
     <name>Spring Boot Rest Webflux</name>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <repackage.classifier/>
-        <spring-native.version>0.10.4</spring-native.version>
+        <spring-native.version>0.11.1</spring-native.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 
         <testcontainers.version>1.16.2</testcontainers.version>
@@ -29,10 +29,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-r2dbc</artifactId>
@@ -53,6 +49,10 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>io.r2dbc</groupId>
@@ -150,6 +150,9 @@
                 <groupId>org.springframework.experimental</groupId>
                 <artifactId>spring-aot-maven-plugin</artifactId>
                 <version>${spring-native.version}</version>
+                <configuration>
+                    <mode>native-agent</mode>
+                </configuration>
                 <executions>
                     <execution>
                         <id>test-generate</id>
@@ -190,6 +193,13 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-agentlib:native-image-agent=access-filter-file=access-filter.json,config-merge-dir=target/classes/META-INF/native-image</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -306,14 +316,13 @@
             <id>native</id>
             <properties>
                 <repackage.classifier>exec</repackage.classifier>
-                <native-buildtools.version>0.9.3</native-buildtools.version>
+                <native-buildtools.version>0.9.9</native-buildtools.version>
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>org.graalvm.buildtools</groupId>
-                    <artifactId>junit-platform-native</artifactId>
-                    <version>${native-buildtools.version}</version>
-                    <scope>test</scope>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <scope>test</scope>
                 </dependency>
             </dependencies>
             <build>
@@ -322,18 +331,27 @@
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
                         <version>${native-buildtools.version}</version>
+                        <extensions>true</extensions>
                         <executions>
-                            <execution>
-                                <id>build-native</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                            </execution>
+                        <execution>
+                            <id>test-native</id>
+                            <phase>test</phase>
+                            <goals>
+                            <goal>test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>build-native</id>
+                            <phase>package</phase>
+                            <goals>
+                            <goal>build</goal>
+                            </goals>
+                        </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
+
 </project>
