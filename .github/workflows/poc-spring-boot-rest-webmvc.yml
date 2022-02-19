@@ -1,13 +1,13 @@
-name: poc-spring-boot-rest CI
+name: poc-spring-boot-webmvc CI
 on:
   push:
     paths:
-      - "poc-spring-boot-rest/**"
+      - "poc-spring-boot-rest/poc-spring-boot-rest-webmvc/**"
     branches:
       - master
   pull_request:
     paths:
-      - "poc-spring-boot-rest/**"
+      - "poc-spring-boot-rest/poc-spring-boot-rest-webmvc/**"
     types:
       - opened
       - synchronize
@@ -37,6 +37,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd poc-spring-boot-rest
+          cd poc-spring-boot-rest-webmvc
           mvn -B clean package --file pom.xml 
       - name: Codecov
         uses: codecov/codecov-action@v2.1.0
