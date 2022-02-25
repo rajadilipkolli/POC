@@ -1,1 +1,1 @@
-com.example.poc.reactive.config.CustomConfigurator
+org.springframework.boot.logging.logback.CustomConfigurator
