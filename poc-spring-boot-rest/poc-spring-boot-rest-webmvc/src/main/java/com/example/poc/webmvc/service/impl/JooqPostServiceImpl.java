@@ -29,9 +29,61 @@ public class JooqPostServiceImpl implements PostService {
     this.dsl = dsl;
   }
 
+  /**
+   *
+   * {@snippet : 
+        String generatedQuery = 
+           
+          """
+            SELECT
+            "public"."post"."title"              ,
+            "public"."post"."content"            ,
+            "public"."post_details"."created_by" ,
+            "public"."post_details"."created_on" ,
+            (
+              SELECT
+              COALESCE(jsonb_agg(jsonb_build_array("v0")), jsonb_build_array())
+              FROM
+              (
+              SELECT
+              "public"."post_comment"."review" AS "v0"
+              FROM
+              "public"."post_comment"
+              WHERE
+              "public"."post_comment"."post_id" = "public"."post"."id" ) AS "t" ) AS "comments" ,
+            (
+              SELECT
+              COALESCE(jsonb_agg(jsonb_build_array("v0")), jsonb_build_array())
+              FROM
+              (
+              SELECT
+              "public"."tag"."name" AS "v0"
+              FROM
+              "public"."tag"
+              JOIN
+              "public"."post_tag"
+              ON
+              "public"."post"."id" = "public"."post_tag"."post_id"
+              WHERE
+              "public"."post_tag"."tag_id" = "public"."tag"."id" ) AS "t" ) AS "tags"
+        FROM
+            public"."post"
+        JOIN
+            "public"."post_details"
+        ON
+            "public"."post"."id" = "public"."post_details"."post_id"
+        WHERE
+            "public"."post_details"."created_by" = '?'
+    """;
+   }
+   *
+   * @param userName name of post createdBy
+   * @return list of posts
+   */
   @Override
   @Cacheable(value = "posts", key = "#userName", unless = "#result == null")
   public List<PostDTO> fetchAllPostsByUserName(String userName) {
+
     return dsl.select(
             POST.TITLE,
             POST.CONTENT,
