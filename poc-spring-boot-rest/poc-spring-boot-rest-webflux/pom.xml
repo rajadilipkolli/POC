@@ -15,7 +15,7 @@
     <name>Spring Boot Rest Webflux</name>
 
     <properties>
-        <java.version>18</java.version>
+        <java.version>17</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 
         <testcontainers.version>1.16.2</testcontainers.version>
