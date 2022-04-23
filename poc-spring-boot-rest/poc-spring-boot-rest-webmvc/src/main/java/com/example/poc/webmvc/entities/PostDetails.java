@@ -10,10 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity(name = "PostDetails")
@@ -23,14 +23,7 @@ import org.springframework.data.annotation.CreatedDate;
 public class PostDetails {
 
     @Id
-    @GenericGenerator(
-            name = "sequenceGenerator",
-            strategy = "enhanced-sequence",
-            parameters = {
-                @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
-                @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-                @org.hibernate.annotations.Parameter(name = "increment_size", value = "5")
-            })
+    @SequenceGenerator(allocationSize = 5, name = "sequenceGenerator")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Long id;
 

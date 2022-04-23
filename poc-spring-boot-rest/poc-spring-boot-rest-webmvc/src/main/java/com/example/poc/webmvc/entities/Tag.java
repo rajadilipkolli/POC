@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "Tag")
 @Table(name = "tag")
@@ -20,14 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Tag {
 
     @Id
-    @GenericGenerator(
-            name = "sequenceGenerator",
-            strategy = "enhanced-sequence",
-            parameters = {
-                @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo"),
-                @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-                @org.hibernate.annotations.Parameter(name = "increment_size", value = "5")
-            })
+    @SequenceGenerator(allocationSize = 5, name = "sequenceGenerator")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Long id;
 

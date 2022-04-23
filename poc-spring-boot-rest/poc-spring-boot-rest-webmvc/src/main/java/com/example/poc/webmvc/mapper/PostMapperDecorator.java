@@ -11,7 +11,6 @@ import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.Tag;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -112,16 +111,14 @@ public abstract class PostMapperDecorator implements PostMapper {
                         post.getComments().stream()
                                 .filter(
                                         postComment ->
-                                                !updatePostCommentsRequest.contains(postComment))
-                                .collect(Collectors.toList());
+                                                !updatePostCommentsRequest.contains(postComment)).toList();
                 postCommentsToRemove.forEach(post::removeComment);
 
                 // Update the existing database rows which can be found
                 // in the incoming collection (updateCustomerRequest.getOrders())
                 List<PostComment> newPostComments =
                         updatePostCommentsRequest.stream()
-                                .filter(postComment -> !post.getComments().contains(postComment))
-                                .collect(Collectors.toList());
+                                .filter(postComment -> !post.getComments().contains(postComment)).toList();
 
                 updatePostCommentsRequest.stream()
                         .filter(postComment -> !newPostComments.contains(postComment))
@@ -158,24 +155,22 @@ public abstract class PostMapperDecorator implements PostMapper {
                         this.postMapperDelegate.tagDTOListToTagList(postDTO.getTags());
 
                 List<Tag> existingTags =
-                        post.getTags().stream().map(PostTag::getTag).collect(Collectors.toList());
+                        post.getTags().stream().map(PostTag::getTag).toList();
 
                 // Remove the existing database rows that are no
                 // longer found in the incoming collection (updateTagsRequest)
                 List<Tag> tagsToRemoveList =
                         existingTags.stream()
-                                .filter(tag -> !updateTagsRequest.contains(tag))
-                                .collect(Collectors.toList());
+                                .filter(tag -> !updateTagsRequest.contains(tag)).toList();
                 tagsToRemoveList.forEach(post::removeTag);
 
                 List<String> tagNames =
-                        existingTags.stream().map(Tag::getName).collect(Collectors.toList());
+                        existingTags.stream().map(Tag::getName).toList();
                 // Update the existing database rows which can be found
                 // in the incoming collection (updateTagsRequest)
                 List<Tag> newTagsList =
                         updateTagsRequest.stream()
-                                .filter(tag -> !tagNames.contains(tag.getName()))
-                                .collect(Collectors.toList());
+                                .filter(tag -> !tagNames.contains(tag.getName())).toList();
 
                 // Add the rows found in the incoming collection,
                 // which cannot be found in the current database snapshot

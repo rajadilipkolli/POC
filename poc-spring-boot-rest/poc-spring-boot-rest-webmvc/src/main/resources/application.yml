@@ -13,10 +13,6 @@ management:
         include: configprops,env,health,info,logfile,loggers,metrics
 
 spring:
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: deferred
   datasource:
     url: jdbc:postgresql://localhost:5432/rest
     username: local
