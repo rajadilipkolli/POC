@@ -3,6 +3,7 @@ package com.example.poc.webmvc.batch;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -25,8 +26,8 @@ public class JobInvokerController {
                         .addString("key", "Post")
                         .addDate("currentDate", new Date())
                         .toJobParameters();
-        this.jobLauncher.run(this.executionJob, jobParameters);
+        JobExecution jobExecution = this.jobLauncher.run(this.executionJob, jobParameters);
 
-        return "Batch job has been invoked";
+        return "Batch job has been invoked as " + jobExecution.getJobId();
     }
 }

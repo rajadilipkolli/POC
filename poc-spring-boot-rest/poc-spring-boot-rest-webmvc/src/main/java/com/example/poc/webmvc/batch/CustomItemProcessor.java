@@ -41,6 +41,6 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
                 .entrySet()
                 .stream()
                 .map(this.mapToPostDTO)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 }
