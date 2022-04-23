@@ -19,7 +19,7 @@
         <java.version>18</java.version>
 
         <jooq.version>3.15.3</jooq.version>
-        <testcontainers.version>1.16.2</testcontainers.version>
+        <testcontainers.version>1.17.1</testcontainers.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <springdoc-open-ui.version>1.6.8</springdoc-open-ui.version>
 
