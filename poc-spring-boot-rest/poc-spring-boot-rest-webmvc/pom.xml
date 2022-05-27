@@ -21,7 +21,7 @@
         <jooq.version>3.15.3</jooq.version>
         <testcontainers.version>1.17.2</testcontainers.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <springdoc-open-ui.version>1.6.8</springdoc-open-ui.version>
+        <springdoc-open-ui.version>1.6.9</springdoc-open-ui.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>7.1.0</dependency-check-maven.version>
