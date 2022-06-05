@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <org.mapstruct.version>1.5.0.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.5.1.Final</org.mapstruct.version>
 
         <testcontainers.version>1.17.2</testcontainers.version>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
