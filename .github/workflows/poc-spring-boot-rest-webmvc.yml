@@ -40,6 +40,6 @@ jobs:
           cd poc-spring-boot-rest-webmvc
           mvn -B clean package --file pom.xml 
       - name: Codecov
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@v3.1.1
 
 
