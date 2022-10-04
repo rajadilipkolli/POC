@@ -20,7 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>18</java.version>
-		<testcontainers.version>1.17.3</testcontainers.version>
+		<testcontainers.version>1.17.4</testcontainers.version>
 		<problem-spring-web.version>0.27.0</problem-spring-web.version>
 		<openapi.version>1.6.11</openapi.version>
 
