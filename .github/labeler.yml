@@ -9,4 +9,5 @@
 "type: dependency-upgrade":
   - frontend/blog-angular-ui/pom.xml
   - frontend/blog-angular-ui/package.json
+  - frontend/blog-angular-ui/package-lock.json
   - quarkus-project/pom.xml
