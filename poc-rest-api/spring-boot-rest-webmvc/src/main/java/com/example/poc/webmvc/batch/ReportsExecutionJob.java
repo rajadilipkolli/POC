@@ -1,49 +1,45 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.dto.PostDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.listener.JobExecutionListenerSupport;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
-@Component
+@Configuration
 @EnableBatchProcessing
 @RequiredArgsConstructor
-public class ReportsExecutionJob extends JobExecutionListenerSupport {
-
-    private final JobBuilderFactory jobBuilderFactory;
-
-    private final StepBuilderFactory stepBuilderFactory;
+public class ReportsExecutionJob implements JobExecutionListener {
 
     @Bean(name = "executionJob")
     public Job reportsExecutionJob(
             CustomItemReader<List<Long>> reader,
             CustomItemProcessor processor,
-            CustomItemWriter<List<PostDTO>> writer) {
+            CustomItemWriter<List<PostDTO>> writer,
+            JobRepository jobRepository,
+            PlatformTransactionManager transactionManager) {
 
         Step step =
-                this.stepBuilderFactory
-                        .get("execution-step")
+                new StepBuilder("execution-step", jobRepository)
                         .allowStartIfComplete(true)
-                        .<List<Long>, List<PostDTO>>chunk(1)
+                        .<List<Long>, List<PostDTO>>chunk(2, transactionManager)
                         .reader(reader)
                         .processor(processor)
                         .writer(writer)
                         .build();
 
-        return this.jobBuilderFactory
-                .get("reporting-job")
+        return new JobBuilder("reporting-job", jobRepository)
+                .start(step)
                 .incrementer(new RunIdIncrementer())
                 .listener(this)
                 .start(step)

@@ -29,3 +29,4 @@
 *.args
 /frontend/blog-angular-ui/node/
 /frontend/blog-angular-ui/.angular/
+poc-rest-api/spring-boot-rest-webmvc/src/main/java/com/example/poc/webmvc/testcontainersflyway/

@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.repository;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -86,7 +87,8 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
                         .collect(groupingBy(titleAndContentClassifier, downStreamCollector))
                         .entrySet()
                         .stream()
-                        .map(mapToPostDTO).toList();
+                        .map(mapToPostDTO)
+                        .toList();
 
         assertThat(postDTOS).isNotEmpty().hasSize(1);
         PostDTO postDTO = postDTOS.get(0);

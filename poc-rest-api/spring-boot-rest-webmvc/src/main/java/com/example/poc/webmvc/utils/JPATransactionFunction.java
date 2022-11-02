@@ -1,7 +1,8 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.utils;
 
+import jakarta.persistence.EntityManager;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
 
 @FunctionalInterface
 public interface JPATransactionFunction<T> extends Function<EntityManager, T> {

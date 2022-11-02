@@ -1,12 +1,13 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.service.impl;
 
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
+import com.example.poc.webmvc.entities.Post;
 import com.example.poc.webmvc.exception.PostNotFoundException;
 import com.example.poc.webmvc.mapper.PostMapper;
 import com.example.poc.webmvc.repository.PostRepository;
 import com.example.poc.webmvc.service.PostService;
-import com.example.poc.webmvc.entities.Post;
 import java.util.List;
 import java.util.function.BiFunction;
 import lombok.RequiredArgsConstructor;

@@ -6,8 +6,7 @@ Below are the projects that I have completed POC
 
  - link:poc-mongodb-redis-cache/mongodb-redis-integration/ReadMe.adoc[mongodb-redis-integration] -> adding fault tolerant caching layer to MongoDB.
  - link:poc-mongodb-redis-cache/reactive-mongodb-redis-integration/ReadMe.md[reactive-mongodb-redis-integration] -> adding fault tolerant reactive caching layer to reactive MongoDB.
- - link:poc-rest-api/spring-boot-rest-webmvc/README.md[spring-boot-rest-webmvc] -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
- - link:poc-rest-api/spring-boot-rest-webflux/README.md[spring-boot-rest-webflux] -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
+ - link:poc-rest-api/spring-boot-rest/README.md[spring-boot-rest-webmvc] -> Enterprise application integrated with spring data, datasource-proxy, JPA, ActiveMQ(for demostration)
  - link:poc-spring-boot-rabbitmq/README.md[spring-boot-rabbit-mq] -> Sample to produce and consume Messages in RabbitMQ
 
 === Filing Issues

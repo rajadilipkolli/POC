@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.controller;
 
 import com.example.poc.webmvc.api.PostAPI;
@@ -5,11 +6,11 @@ import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.dto.PostsDTO;
 import com.example.poc.webmvc.service.PostService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -65,7 +66,8 @@ public class PostController implements PostAPI {
             @PathVariable("user_name") String userName, @PathVariable("title") String title) {
         PostDTO postDTO =
                 this.addLinkToPostBiFunction.apply(
-                        userName, this.jooqPostService.fetchPostByUserNameAndTitle(userName, title));
+                        userName,
+                        this.jooqPostService.fetchPostByUserNameAndTitle(userName, title));
         Link getAllPostsLink =
                 WebMvcLinkBuilder.linkTo(
                                 WebMvcLinkBuilder.methodOn(this.getClass())

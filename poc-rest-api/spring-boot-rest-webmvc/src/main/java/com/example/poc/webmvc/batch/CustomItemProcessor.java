@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.dto.PostCommentProjection;
@@ -14,7 +15,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component
+@Component("customItemProcessor")
 public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostDTO>> {
 
     private final PostRepository postRepository;
@@ -32,9 +33,9 @@ public class CustomItemProcessor implements ItemProcessor<List<Long>, List<PostD
             Collectors.mapping(this.mapToPostComments, Collectors.toList());
 
     @Override
-    public List<PostDTO> process(List<Long> items) {
+    public List<PostDTO> process(List<Long> postIds) {
 
-        List<PostCommentProjection> postCommentProjections = this.postRepository.findByIds(items);
+        List<PostCommentProjection> postCommentProjections = this.postRepository.findByIds(postIds);
 
         return postCommentProjections.stream()
                 .collect(Collectors.groupingBy(this.titleClassifier, this.downStreamCollector))

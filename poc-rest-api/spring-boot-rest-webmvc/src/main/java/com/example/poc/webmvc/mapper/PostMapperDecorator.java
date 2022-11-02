@@ -1,14 +1,15 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.mapper;
 
 import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.TagDTO;
-import com.example.poc.webmvc.repository.PostCommentRepository;
-import com.example.poc.webmvc.repository.TagRepository;
 import com.example.poc.webmvc.entities.Post;
 import com.example.poc.webmvc.entities.PostComment;
 import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.Tag;
+import com.example.poc.webmvc.repository.PostCommentRepository;
+import com.example.poc.webmvc.repository.TagRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,14 +112,16 @@ public abstract class PostMapperDecorator implements PostMapper {
                         post.getComments().stream()
                                 .filter(
                                         postComment ->
-                                                !updatePostCommentsRequest.contains(postComment)).toList();
+                                                !updatePostCommentsRequest.contains(postComment))
+                                .toList();
                 postCommentsToRemove.forEach(post::removeComment);
 
                 // Update the existing database rows which can be found
                 // in the incoming collection (updateCustomerRequest.getOrders())
                 List<PostComment> newPostComments =
                         updatePostCommentsRequest.stream()
-                                .filter(postComment -> !post.getComments().contains(postComment)).toList();
+                                .filter(postComment -> !post.getComments().contains(postComment))
+                                .toList();
 
                 updatePostCommentsRequest.stream()
                         .filter(postComment -> !newPostComments.contains(postComment))
@@ -154,23 +157,23 @@ public abstract class PostMapperDecorator implements PostMapper {
                 List<Tag> updateTagsRequest =
                         this.postMapperDelegate.tagDTOListToTagList(postDTO.getTags());
 
-                List<Tag> existingTags =
-                        post.getTags().stream().map(PostTag::getTag).toList();
+                List<Tag> existingTags = post.getTags().stream().map(PostTag::getTag).toList();
 
                 // Remove the existing database rows that are no
                 // longer found in the incoming collection (updateTagsRequest)
                 List<Tag> tagsToRemoveList =
                         existingTags.stream()
-                                .filter(tag -> !updateTagsRequest.contains(tag)).toList();
+                                .filter(tag -> !updateTagsRequest.contains(tag))
+                                .toList();
                 tagsToRemoveList.forEach(post::removeTag);
 
-                List<String> tagNames =
-                        existingTags.stream().map(Tag::getName).toList();
+                List<String> tagNames = existingTags.stream().map(Tag::getName).toList();
                 // Update the existing database rows which can be found
                 // in the incoming collection (updateTagsRequest)
                 List<Tag> newTagsList =
                         updateTagsRequest.stream()
-                                .filter(tag -> !tagNames.contains(tag.getName())).toList();
+                                .filter(tag -> !tagNames.contains(tag.getName()))
+                                .toList();
 
                 // Add the rows found in the incoming collection,
                 // which cannot be found in the current database snapshot

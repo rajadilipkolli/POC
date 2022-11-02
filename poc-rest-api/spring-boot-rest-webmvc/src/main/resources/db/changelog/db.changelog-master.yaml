@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/V1_0__create_tables_script.sql
+  - include:
+      file: db/migration/V1_1__insert_data_script.sql
+
+  - changeSet:
+      dbms: postgresql
+      id: create-spring-batch-metadata
+      author: raja
+      changes:
+        - sqlFile:
+            encoding: UTF-8
+            path: classpath:/org/springframework/batch/core/schema-postgresql.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

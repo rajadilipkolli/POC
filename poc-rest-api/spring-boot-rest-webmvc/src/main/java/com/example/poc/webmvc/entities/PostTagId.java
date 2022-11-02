@@ -1,10 +1,11 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostTagId implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     @Column(name = "post_id")
     private Long postId;

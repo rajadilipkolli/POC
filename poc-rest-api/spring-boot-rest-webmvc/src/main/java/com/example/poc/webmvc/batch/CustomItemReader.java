@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.repository.PostRepository;
@@ -53,7 +54,4 @@ public class CustomItemReader<T> extends AbstractPagingItemReader<List<Long>> {
         }
         results.add(this.ids.get(getPage() * getPageSize()));
     }
-
-    @Override
-    protected void doJumpToPage(int itemIndex) {}
 }

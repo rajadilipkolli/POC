@@ -1,13 +1,13 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.repository.impl;
 
 import com.example.poc.webmvc.entities.Post;
 import com.example.poc.webmvc.repository.CustomizedPostRepository;
-import org.hibernate.annotations.QueryHints;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.jpa.AvailableHints;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class CustomizedPostRepositoryImpl extends JpaUtility implements CustomizedPostRepository {
@@ -37,8 +37,9 @@ public class CustomizedPostRepositoryImpl extends JpaUtility implements Customiz
                                             Post.class)
                                     .setParameter("user", userName)
                                     .setParameter("title", title)
-                                    .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-                                    .setHint(QueryHints.READ_ONLY, true)
+                                    //
+                                    // .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                                    .setHint(AvailableHints.HINT_READ_ONLY, true)
                                     .getResultList();
                     if (!postList.isEmpty()) {
                         return Optional.of(
@@ -60,8 +61,9 @@ public class CustomizedPostRepositoryImpl extends JpaUtility implements Customiz
                                                         """,
                                                 Post.class)
                                         .setParameter("posts", postList)
-                                        .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-                                        .setHint(QueryHints.READ_ONLY, true)
+                                        //
+                                        // .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                                        .setHint(AvailableHints.HINT_READ_ONLY, true)
                                         .getSingleResult());
                     }
                     return Optional.empty();

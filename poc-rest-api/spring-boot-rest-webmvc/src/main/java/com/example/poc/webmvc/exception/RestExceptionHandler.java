@@ -1,13 +1,15 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import java.util.Objects;
-import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
@@ -36,7 +38,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
         final String error = ex.getParameterName() + " parameter is missing";
         return buildResponseEntity(new ApiError(status, error, ex));
@@ -51,7 +53,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
             HttpMediaTypeNotSupportedException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
         final StringBuilder builder = new StringBuilder();
         builder.append(ex.getContentType());
@@ -73,7 +75,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage("Validation error");
@@ -83,14 +85,14 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handles javax.validation.ConstraintViolationException. Thrown when @Validated fails.
+     * Handles jakarta.validation.ConstraintViolationException. Thrown when @Validated fails.
      *
      * @param ex the ConstraintViolationException
      * @return the ApiError object
      */
-    @ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
     protected ResponseEntity<Object> handleConstraintViolation(
-            javax.validation.ConstraintViolationException ex) {
+            jakarta.validation.ConstraintViolationException ex) {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage("Validation error");
         apiError.addValidationErrors(ex.getConstraintViolations());
@@ -99,7 +101,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Handles PostNotFoundException. Created to encapsulate errors with more detail than
-     * javax.persistence.EntityNotFoundException.
+     * jakarta.persistence.EntityNotFoundException.
      *
      * @param ex the EntityNotFoundException
      * @return the ApiError object
@@ -120,7 +122,7 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
         final ServletWebRequest servletWebRequest = (ServletWebRequest) request;
         log.info(
@@ -140,21 +142,21 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotWritable(
             HttpMessageNotWritableException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
         final String error = "Error writing JSON output";
         return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
     }
 
     /**
-     * Handle javax.persistence.EntityNotFoundException.
+     * Handle jakarta.persistence.EntityNotFoundException.
      *
-     * @param ex a {@link javax.persistence.EntityNotFoundException} object.
+     * @param ex a {@link jakarta.persistence.EntityNotFoundException} object.
      * @return a {@link org.springframework.http.ResponseEntity} object.
      */
-    @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
+    @ExceptionHandler(jakarta.persistence.EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(
-            javax.persistence.EntityNotFoundException ex) {
+            jakarta.persistence.EntityNotFoundException ex) {
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
     }
 

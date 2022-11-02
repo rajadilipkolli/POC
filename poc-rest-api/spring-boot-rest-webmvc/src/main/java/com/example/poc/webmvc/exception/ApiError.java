@@ -1,18 +1,20 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
+import jakarta.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -25,7 +27,7 @@ import org.springframework.validation.ObjectError;
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
 
-    private HttpStatus status;
+    private HttpStatusCode status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
@@ -70,7 +72,7 @@ public class ApiError {
      * @param message a {@link java.lang.String} object.
      * @param ex a {@link java.lang.Throwable} object.
      */
-    public ApiError(HttpStatus status, String message, Throwable ex) {
+    public ApiError(HttpStatusCode status, String message, Throwable ex) {
         this();
         this.status = status;
         this.message = message;
