@@ -1,0 +1,12 @@
+"component : angular":
+ - frontend/blog-angular-ui/**/*
+"component : quarkus":
+ - quarkus-project/**/*
+"status: waiting-for-triage":
+  - ./*
+  - ./**/*
+"type: documentation": docs/**/*
+"type: dependency-upgrade":
+  - frontend/blog-angular-ui/pom.xml
+  - frontend/blog-angular-ui/package.json
+  - quarkus-project/pom.xml
