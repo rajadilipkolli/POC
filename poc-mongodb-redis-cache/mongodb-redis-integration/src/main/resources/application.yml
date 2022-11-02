@@ -1,0 +1,14 @@
+# See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+spring:
+  main:
+    banner-mode: OFF
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+    redis:
+      host: localhost
+      port: 6379
+  mvc:
+    problemdetails:
+      enabled: true
