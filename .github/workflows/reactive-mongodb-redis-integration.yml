@@ -2,12 +2,12 @@ name: reactive-mongodb-redis-integration CI
 on:
   push:
     paths:
-      - "reactive-mongodb-redis-integration/**"
+      - "poc-mongodb-redis-cache/reactive-mongodb-redis-integration/**"
     branches:
       - master
   pull_request:
     paths:
-      - "reactive-mongodb-redis-integration/**"
+      - "poc-mongodb-redis-cache/reactive-mongodb-redis-integration/**"
     types:
       - opened
       - synchronize
@@ -23,7 +23,7 @@ jobs:
     name: Build on Java ${{ matrix.Java }}
     defaults:
       run:
-        working-directory: "reactive-mongodb-redis-integration"
+        working-directory: "poc-mongodb-redis-cache/reactive-mongodb-redis-integration"
     steps:
       - uses: actions/checkout@v3
         with:
