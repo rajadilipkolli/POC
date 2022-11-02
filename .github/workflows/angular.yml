@@ -17,6 +17,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "frontend/blog-angular-ui"
     strategy:
       matrix:
         node: [ '16', '18' ]
@@ -39,8 +42,6 @@ jobs:
       
       - name: npm ci and npm run build
         run: |
-          cd frontend
-          cd blog-angular-ui
           npm ci
           npm run build:ci
           

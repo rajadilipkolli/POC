@@ -20,6 +20,9 @@ jobs:
     strategy:
       matrix:
         java: [ '18' ]
+    defaults:
+      run:
+        working-directory: "mongodb-redis-integration"
     name: Build on Java ${{ matrix.Java }}
     steps:
       - uses: actions/checkout@v3
@@ -38,9 +41,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Build with Maven and analyze
-        run: |
-          cd mongodb-redis-integration
-          mvn -B clean package
+        run: ./mvnw -B clean package
       - name: Codecov
         uses: codecov/codecov-action@v3.1.1
 
