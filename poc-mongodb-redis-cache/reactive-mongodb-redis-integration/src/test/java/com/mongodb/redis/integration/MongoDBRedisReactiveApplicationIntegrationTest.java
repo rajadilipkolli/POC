@@ -3,7 +3,6 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
@@ -13,29 +12,20 @@ import java.util.Objects;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
+import test.java.com.mongodb.redis.integration.config.AbstractIntegrationTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestMethodOrder(MethodOrderer.MethodName.class)
-@ActiveProfiles("test")
-@AutoConfigureWebTestClient
-class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestContainer {
+class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired private TestRestTemplate testRestTemplate;
-
-    @Autowired private WebTestClient webTestClient;
 
     @Autowired private ReactiveMongoOperations operations;
 
