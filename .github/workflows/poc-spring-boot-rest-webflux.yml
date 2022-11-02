@@ -2,12 +2,12 @@ name: poc-spring-boot-webflux CI
 on:
   push:
     paths:
-      - "poc-rest-api/poc-spring-boot-rest-webflux/**"
+      - "poc-rest-api/spring-boot-rest-webflux/**"
     branches:
       - master
   pull_request:
     paths:
-      - "poc-rest-api/poc-spring-boot-rest-webflux/**"
+      - "poc-rest-api/spring-boot-rest-webflux/**"
     types:
       - opened
       - synchronize
@@ -20,7 +20,7 @@ jobs:
     name: Build on GraalVM
     defaults:
       run:
-        working-directory: "poc-rest-api/poc-spring-boot-rest-webflux"
+        working-directory: "poc-rest-api/spring-boot-rest-webflux"
     steps:
       - uses: actions/checkout@v3
         with:

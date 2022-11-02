@@ -11,7 +11,7 @@
     <url>http://maven.apache.org</url>
 
     <modules>
-        <module>poc-spring-boot-rest-webmvc</module>
-        <module>poc-spring-boot-rest-webflux</module>
+        <module>spring-boot-rest-webmvc</module>
+        <module>spring-boot-rest-webflux</module>
     </modules>
 </project>

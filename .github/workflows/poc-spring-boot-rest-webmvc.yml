@@ -2,12 +2,12 @@ name: poc-spring-boot-webmvc CI
 on:
   push:
     paths:
-      - "poc-rest-api/poc-spring-boot-rest-webmvc/**"
+      - "poc-rest-api/spring-boot-rest-webmvc/**"
     branches:
       - master
   pull_request:
     paths:
-      - "poc-rest-api/poc-spring-boot-rest-webmvc/**"
+      - "poc-rest-api/spring-boot-rest-webmvc/**"
     types:
       - opened
       - synchronize
@@ -22,7 +22,7 @@ jobs:
         java: [ '18' ]
     defaults:
       run:
-        working-directory: "poc-rest-api/poc-spring-boot-rest-webmvc"
+        working-directory: "poc-rest-api/spring-boot-rest-webmvc"
     name: Build on Java ${{ matrix.Java }}
     steps:
       - uses: actions/checkout@v3
