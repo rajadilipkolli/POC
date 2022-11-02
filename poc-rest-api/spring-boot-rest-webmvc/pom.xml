@@ -310,7 +310,7 @@
                                 </database>
                                 <target>
                                     <packageName>com.example.poc.webmvc.testcontainersflyway.db</packageName>
-                                    <directory>src/main/java</directory>
+                                    <directory>target/generated-sources</directory>
                                 </target>
                             </generator>
                         </configuration>
