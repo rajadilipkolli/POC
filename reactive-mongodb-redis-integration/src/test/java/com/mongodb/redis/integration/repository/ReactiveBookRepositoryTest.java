@@ -2,6 +2,7 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
 import com.mongodb.redis.integration.document.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +14,7 @@ import reactor.test.StepVerifier;
 
 @DataMongoTest
 @Slf4j
-class ReactiveBookRepositoryTest {
+class ReactiveBookRepositoryTest extends AbstractMongoDBTestContainer {
 
     @Autowired ReactiveBookRepository bookRepository;
 

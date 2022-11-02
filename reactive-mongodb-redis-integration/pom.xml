@@ -7,7 +7,7 @@
 	<parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.0.0-RC1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 	
@@ -19,10 +19,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>18</java.version>
+		<java.version>17</java.version>
 		<testcontainers.version>1.17.5</testcontainers.version>
-		<problem-spring-web.version>0.27.0</problem-spring-web.version>
-		<openapi.version>1.6.12</openapi.version>
+		<openapi.version>2.0.0-RC1</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
 
@@ -62,11 +61,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.zalando</groupId>
-			<artifactId>problem-spring-webflux</artifactId>
-			<version>${problem-spring-web.version}</version>
-		</dependency>
 
 		<dependency>
 		    <groupId>org.mongodb</groupId>
@@ -75,7 +69,7 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
 			<version>${openapi.version}</version>
 		</dependency>
 
@@ -108,11 +102,6 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>mongodb</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -298,5 +287,25 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

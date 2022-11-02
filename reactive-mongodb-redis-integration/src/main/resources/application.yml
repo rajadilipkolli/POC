@@ -2,11 +2,11 @@
 spring:
   main:
     banner-mode: OFF
-  mongodb:
-    embedded:
-      version: 4.0.12
 
   data:
     mongodb:
       host: localhost
       port: 27017
+  webflux:
+    problemdetails:
+      enabled: true

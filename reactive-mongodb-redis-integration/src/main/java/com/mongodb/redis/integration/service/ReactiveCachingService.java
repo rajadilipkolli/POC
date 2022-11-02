@@ -2,7 +2,7 @@ package com.mongodb.redis.integration.service;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.request.BookDTO;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;

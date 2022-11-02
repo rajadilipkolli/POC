@@ -1,5 +1,6 @@
 package com.mongodb.redis.integration.repository;
 
+import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import reactor.test.StepVerifier;
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
-class ReactiveItemRepositoryTest {
+class ReactiveItemRepositoryTest extends AbstractRedisTestContainer {
 
     @Autowired private ReactiveItemRepository reactiveItemRepository;
 
