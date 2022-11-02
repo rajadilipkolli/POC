@@ -21,8 +21,8 @@ public abstract class AbstractRedisTestContainer extends AbstractMongoDBTestCont
 
     @DynamicPropertySource
     static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-        propertyRegistry.add("spring.redis.host", REDIS_DB_CONTAINER::getHost);
-        propertyRegistry.add("spring.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
+        propertyRegistry.add("spring.data.redis.host", REDIS_DB_CONTAINER::getHost);
+        propertyRegistry.add("spring.data.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
     }
 
     private static class RedisContainer extends GenericContainer<RedisContainer> {

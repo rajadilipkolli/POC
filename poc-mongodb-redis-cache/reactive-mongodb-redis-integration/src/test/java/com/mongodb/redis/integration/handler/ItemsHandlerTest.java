@@ -4,37 +4,26 @@ package com.mongodb.redis.integration.handler;
 import static com.mongodb.redis.integration.constants.ItemConstants.ITEM_FUNCTIONAL_END_POINT_V_1;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
+import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@SpringBootTest
-@DirtiesContext
-@AutoConfigureWebTestClient
-@ActiveProfiles("test")
 @Slf4j
-class ItemsHandlerTest extends AbstractMongoDBTestContainer {
-
-    @Autowired private WebTestClient webTestClient;
+class ItemsHandlerTest extends AbstractIntegrationTest {
 
     @Autowired private ReactiveItemRepository reactiveItemRepository;
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         this.reactiveItemRepository
                 .deleteAll()

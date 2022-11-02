@@ -3,6 +3,7 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
@@ -21,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
-import test.java.com.mongodb.redis.integration.config.AbstractIntegrationTest;
 
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegrationTest {
 

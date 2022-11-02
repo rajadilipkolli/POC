@@ -1,7 +1,7 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.handler;
 
-import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
+import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
@@ -10,29 +10,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-@SpringBootTest
-@DirtiesContext
-@AutoConfigureWebTestClient
-@ActiveProfiles("test")
 @Slf4j
-class ItemStreamsHandlerTest extends AbstractMongoDBTestContainer {
+class ItemStreamsHandlerTest extends AbstractIntegrationTest {
 
     @Autowired private ReactiveItemCappedRepository reactiveItemCappedRepository;
 
     @Autowired private MongoOperations mongoOperations;
-
-    @Autowired private WebTestClient webTestClient;
 
     @BeforeAll
     void setUp() {
