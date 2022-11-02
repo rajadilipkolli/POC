@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.config;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -20,7 +21,7 @@ public abstract class AbstractRedisContainerBaseTest extends AbstractMongoContai
 
     @DynamicPropertySource
     static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-        propertyRegistry.add("spring.redis.host", REDIS_DB_CONTAINER::getHost);
-        propertyRegistry.add("spring.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
+        propertyRegistry.add("spring.data.redis.host", REDIS_DB_CONTAINER::getHost);
+        propertyRegistry.add("spring.data.redis.port", REDIS_DB_CONTAINER::getFirstMappedPort);
     }
 }

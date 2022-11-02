@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.config;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -8,7 +9,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public abstract class AbstractMongoContainerBaseTest {
 
-    static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo:5.0");
+    static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo:6.0.2");
 
     @Container
     protected static final MongoDBContainer MONGO_DB_CONTAINER =

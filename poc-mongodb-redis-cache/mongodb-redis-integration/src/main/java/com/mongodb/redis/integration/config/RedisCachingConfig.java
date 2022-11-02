@@ -1,8 +1,9 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.config;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
 @RequiredArgsConstructor
-public class RedisCachingConfig extends CachingConfigurerSupport {
+public class RedisCachingConfig implements CachingConfigurer {
 
     private final RedisConnectionFactory connectionFactory;
 

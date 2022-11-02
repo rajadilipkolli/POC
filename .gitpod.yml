@@ -1,3 +1,8 @@
+github:
+  prebuilds:
+    addComment: false
+    addBadge: true
+
 image: gitpod/workspace-java-17
 
 ports:
