@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.document;
 
 import lombok.AllArgsConstructor;

@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,12 +11,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.data.mongodb.core.CollectionOptions;
@@ -27,10 +25,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @ActiveProfiles("test")
+@AutoConfigureWebTestClient
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestContainer {
 
     @Autowired private TestRestTemplate testRestTemplate;
@@ -46,27 +46,29 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
 
         this.operations
                 .collectionExists(Book.class)
-                .subscribe(
+                .map(
                         aBoolean -> {
                             if (!aBoolean) {
-                                this.operations
-                                        .createCollection(
-                                                Book.class,
-                                                CollectionOptions.empty()
-                                                        .size(1024 * 1024)
-                                                        .maxDocuments(100))
-                                        .subscribe();
+                                {
+                                    return this.operations
+                                            .createCollection(
+                                                    Book.class,
+                                                    CollectionOptions.empty()
+                                                            .size(1024 * 1024)
+                                                            .maxDocuments(100))
+                                            .subscribe();
+                                }
                             }
-                        });
-
-        this.reactiveBookRepository
-                .save(
-                        Book.builder()
-                                .title("MongoDbCookBook")
-                                .text("MongoDB Data Book")
-                                .author("Raja")
-                                .bookId("1")
-                                .build())
+                            return Mono.empty();
+                        })
+                .then(
+                        this.reactiveBookRepository.save(
+                                Book.builder()
+                                        .title("MongoDbCookBook")
+                                        .text("MongoDB Data Book")
+                                        .author("Raja")
+                                        .bookId("1")
+                                        .build()))
                 .subscribe();
     }
 
@@ -230,14 +232,10 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .expectStatus()
                 .isBadRequest()
                 .expectHeader()
-                .contentType("application/problem+json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.status")
-                .isEqualTo("400")
-                .jsonPath("$.title")
-                .isEqualTo("Bad Request")
-                .jsonPath("$.detail")
-                .isNotEmpty();
+                .isEqualTo("400");
 
         book = Book.builder().build();
         this.webTestClient
@@ -250,13 +248,9 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractRedisTestCo
                 .expectStatus()
                 .isBadRequest()
                 .expectHeader()
-                .contentType("application/problem+json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.status")
-                .isEqualTo("400")
-                .jsonPath("$.title")
-                .isEqualTo("Bad Request")
-                .jsonPath("$.detail")
-                .isNotEmpty();
+                .isEqualTo("400");
     }
 }

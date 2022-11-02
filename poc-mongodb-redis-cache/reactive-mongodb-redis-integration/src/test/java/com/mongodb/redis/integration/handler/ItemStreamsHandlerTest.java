@@ -1,5 +1,7 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.handler;
 
+import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
@@ -24,7 +26,8 @@ import reactor.test.StepVerifier;
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 @Slf4j
-class ItemStreamsHandlerTest {
+class ItemStreamsHandlerTest extends AbstractMongoDBTestContainer {
+
     @Autowired private ReactiveItemCappedRepository reactiveItemCappedRepository;
 
     @Autowired private MongoOperations mongoOperations;

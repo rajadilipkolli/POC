@@ -1,8 +1,10 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.handler;
 
 import static com.mongodb.redis.integration.constants.ItemConstants.ITEM_FUNCTIONAL_END_POINT_V_1;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.AbstractMongoDBTestContainer;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
@@ -26,7 +28,7 @@ import reactor.test.StepVerifier;
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 @Slf4j
-class ItemsHandlerTest {
+class ItemsHandlerTest extends AbstractMongoDBTestContainer {
 
     @Autowired private WebTestClient webTestClient;
 

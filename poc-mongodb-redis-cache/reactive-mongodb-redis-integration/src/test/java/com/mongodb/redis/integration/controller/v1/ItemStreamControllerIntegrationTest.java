@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.controller.v1;
 
 import com.mongodb.redis.integration.config.AbstractRedisTestContainer;
@@ -15,16 +16,12 @@ import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@TestPropertySource(
-        properties =
-                "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration")
 @AutoConfigureWebTestClient
 @Slf4j
 class ItemStreamControllerIntegrationTest extends AbstractRedisTestContainer {

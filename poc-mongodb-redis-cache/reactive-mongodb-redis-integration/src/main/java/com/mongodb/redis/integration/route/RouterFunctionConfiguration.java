@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.route;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
@@ -28,18 +29,18 @@ public class RouterFunctionConfiguration implements ReactiveBookAPI {
                         GET(BookConstants.BOOKS_END_POINT).and(accept(MediaType.APPLICATION_JSON)),
                         request -> bookHandler.getAll())
                 .andRoute(
-                        GET(BookConstants.BOOKS_END_POINT + "/{id}")
+                        GET(BookConstants.BOOKS_END_POINT + "{id}")
                                 .and(accept(MediaType.APPLICATION_JSON)),
                         bookHandler::getBook)
                 .andRoute(
                         POST(BookConstants.BOOKS_END_POINT).and(accept(MediaType.APPLICATION_JSON)),
                         validationBookHandler::handleRequest)
                 .andRoute(
-                        PUT(BookConstants.BOOKS_END_POINT + "/{id}")
+                        PUT(BookConstants.BOOKS_END_POINT + "{id}")
                                 .and(accept(MediaType.APPLICATION_JSON)),
                         validationBookHandler::handleRequest)
                 .andRoute(
-                        DELETE(BookConstants.BOOKS_END_POINT + "/{id}")
+                        DELETE(BookConstants.BOOKS_END_POINT + "{id}")
                                 .and(accept(MediaType.APPLICATION_JSON)),
                         bookHandler::deleteBook)
                 .andRoute(

@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.handler;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;

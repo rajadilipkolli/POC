@@ -1,10 +1,11 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serial;
-import java.io.Serializable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

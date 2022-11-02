@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0-RC1</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-	
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.0-RC1</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
 	<artifactId>reactive-mongodb-redis-integration</artifactId>
 	<packaging>jar</packaging>
 
@@ -24,6 +24,7 @@
 		<openapi.version>2.0.0-RC1</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+		<spotless.version>2.27.2</spotless.version>
 
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 		<jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
@@ -63,8 +64,8 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.mongodb</groupId>
-		    <artifactId>mongodb-driver-sync</artifactId>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
 		</dependency>
 
 		<dependency>
@@ -285,27 +286,51 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<java>
+						<googleJavaFormat>
+							<version>1.15.0</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
+						<licenseHeader>
+							<content>/* Licensed under Apache-2.0 $YEAR */</content>
+						</licenseHeader>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>
