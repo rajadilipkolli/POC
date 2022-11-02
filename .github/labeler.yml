@@ -2,6 +2,10 @@
  - frontend/blog-angular-ui/**/*
 "component : quarkus":
  - quarkus-project/**/*
+"component : spring-boot-rest-webmvc":
+ - poc-rest-api/spring-boot-rest-webmvc/**/*
+"component : spring-boot-rest-webflux":
+ - poc-rest-api/spring-boot-rest-webflux/**/*
 "status: waiting-for-triage":
   - ./*
   - ./**/*
@@ -11,3 +15,5 @@
   - frontend/blog-angular-ui/package.json
   - frontend/blog-angular-ui/package-lock.json
   - quarkus-project/pom.xml
+  - poc-rest-api/spring-boot-rest-webmvc/pom.xml
+  - poc-rest-api/spring-boot-rest-webflux/pom.xml
