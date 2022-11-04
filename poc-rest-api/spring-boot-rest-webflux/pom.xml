@@ -22,8 +22,6 @@
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>7.3.0</dependency-check-maven.version>
-
-        <fabric8-docker-maven.version>0.40.2</fabric8-docker-maven.version>
     </properties>
 
     <dependencies>
@@ -117,6 +115,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <buildpacks>
+                          <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea</buildpack>
+                          <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
+                        </buildpacks>
+                      </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -197,29 +201,6 @@
                  </execution>
                </executions>
              </plugin> -->
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${fabric8-docker-maven.version}</version>
-                <configuration>
-                    <verbose>true</verbose>
-                    <images>
-                        <image>
-                            <external>
-                                <type>compose</type>
-                                <basedir>docker</basedir>
-                                <composeFile>docker-compose.yml</composeFile>
-                            </external>
-                            <run>
-                                <wait>
-                                    <time>5000</time>
-                                    <!--<log>Docker databases are ready to accept connections</log>-->
-                                </wait>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>

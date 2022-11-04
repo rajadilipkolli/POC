@@ -4,7 +4,7 @@ services:
   #  Create a service named postgres.
   postgres:
     #   Use the Docker Image postgres. This will pull the newest release.
-    image: postgres
+    image: postgres:15-alpine
     #   Give the container the name postgres. You can change to something else.
     container_name: postgres
     #   Setup the username, password, and database name. You can change these values.
@@ -21,6 +21,18 @@ services:
       - postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
 
 networks:
   postgres:
