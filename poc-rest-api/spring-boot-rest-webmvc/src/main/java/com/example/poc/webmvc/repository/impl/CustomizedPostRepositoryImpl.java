@@ -37,8 +37,6 @@ public class CustomizedPostRepositoryImpl extends JpaUtility implements Customiz
                                             Post.class)
                                     .setParameter("user", userName)
                                     .setParameter("title", title)
-                                    //
-                                    // .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
                                     .setHint(AvailableHints.HINT_READ_ONLY, true)
                                     .getResultList();
                     if (!postList.isEmpty()) {
@@ -46,8 +44,7 @@ public class CustomizedPostRepositoryImpl extends JpaUtility implements Customiz
                                 entityManager
                                         .createQuery(
                                                 """
-                                                        SELECT distinct
-                                                                  p
+                                                        SELECT p
                                                         FROM
                                                                   Post p
                                                                   LEFT JOIN
@@ -61,8 +58,6 @@ public class CustomizedPostRepositoryImpl extends JpaUtility implements Customiz
                                                         """,
                                                 Post.class)
                                         .setParameter("posts", postList)
-                                        //
-                                        // .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
                                         .setHint(AvailableHints.HINT_READ_ONLY, true)
                                         .getSingleResult());
                     }
