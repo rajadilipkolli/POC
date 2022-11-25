@@ -6,6 +6,12 @@
  - poc-rest-api/spring-boot-rest-webmvc/**/*
 "component : spring-boot-rest-webflux":
  - poc-rest-api/spring-boot-rest-webflux/**/*
+"component : mongodb-redis-integration":
+ - poc-mongodb-redis-cache/mongodb-redis-integration/**/*
+"component : reactive-mongodb-redis-integration":
+ - poc-mongodb-redis-cache/reactive-mongodb-redis-integration/**/*
+"component : algorithms":
+ - poc-algorithms/**/*
 "status: waiting-for-triage":
   - ./*
   - ./**/*
@@ -17,3 +23,6 @@
   - quarkus-project/pom.xml
   - poc-rest-api/spring-boot-rest-webmvc/pom.xml
   - poc-rest-api/spring-boot-rest-webflux/pom.xml
+  - poc-mongodb-redis-cache/mongodb-redis-integration/pom.xml
+  - poc-mongodb-redis-cache/reactive-mongodb-redis-integration/pom.xml
+  - poc-algorithms/pom.xml
