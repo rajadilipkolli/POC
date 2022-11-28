@@ -1,6 +1,8 @@
 package com.example.reactive.learning;
 
 import java.time.Duration;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
@@ -8,7 +10,7 @@ import reactor.test.StepVerifier;
 class FluxAndMonoWithTimeTest {
 
     @Test
-    public void infiniteSequence() throws InterruptedException {
+    void infiniteSequence() throws InterruptedException {
 
         Flux<Long> infiniteFlux =
                 Flux.interval(Duration.ofMillis(100)).log(); // starts from 0 --> ......
@@ -19,7 +21,7 @@ class FluxAndMonoWithTimeTest {
     }
 
     @Test
-    public void infiniteSequenceTest() {
+    void infiniteSequenceTest() {
 
         Flux<Long> finiteFlux = Flux.interval(Duration.ofMillis(100)).take(3).log();
 
@@ -30,7 +32,7 @@ class FluxAndMonoWithTimeTest {
     }
 
     @Test
-    public void infiniteSequenceMap() {
+    void infiniteSequenceMap() {
 
         Flux<Integer> finiteFlux =
                 Flux.interval(Duration.ofMillis(100)).map(Long::intValue).take(3).log();
@@ -39,10 +41,11 @@ class FluxAndMonoWithTimeTest {
     }
 
     @Test
-    public void infiniteSequenceMap_withDelay() {
+    @Disabled
+    void infiniteSequenceMap_withDelay() {
 
         Flux<Integer> finiteFlux =
-                Flux.interval(Duration.ofMillis(100))
+                Flux.interval(Duration.ofMillis(10))
                         .delayElements(Duration.ofSeconds(1))
                         .map(Long::intValue)
                         .take(3)
