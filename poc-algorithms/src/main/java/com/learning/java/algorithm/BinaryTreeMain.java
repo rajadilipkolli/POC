@@ -14,7 +14,5 @@ public class BinaryTreeMain {
         br.delete(10);
 
         br.add(1);
-
-
     }
 }

@@ -43,5 +43,4 @@ public class EmployeeLinkedList {
         removedNode.setNext(null);
         return removedNode;
     }
-
 }

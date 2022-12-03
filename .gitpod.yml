@@ -1,0 +1,25 @@
+github:
+  prebuilds:
+    addComment: false
+    addBadge: true
+
+image: gitpod/workspace-java-17
+
+vscode:
+  extensions:
+    - pivotal.vscode-boot-dev-pack
+    - Pivotal.vscode-spring-boot
+    - redhat.java
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-java-dependency
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-java-test
+    - vscjava.vscode-maven
+    - vscjava.vscode-spring-boot-dashboard
+    - vscjava.vscode-spring-initializr
+
+ports:
+  - port: 6379
+    visibility: public
+  - port: 27027
+    visibility: public

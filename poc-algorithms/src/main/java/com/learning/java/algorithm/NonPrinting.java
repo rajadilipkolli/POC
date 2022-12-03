@@ -26,13 +26,10 @@ public class NonPrinting {
             }
         }
 
-
         String k = returnkey(m);
         m.remove(k);
         String key = returnkey(m);
         System.out.println(key);
-
-
     }
 
     static String returnkey(Map<String, Integer> m) {

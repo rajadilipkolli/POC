@@ -1,0 +1,42 @@
+name: reactive-mongodb-redis-integration CI
+on:
+  push:
+    paths:
+      - "poc-mongodb-redis-cache/reactive-mongodb-redis-integration/**"
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "poc-mongodb-redis-cache/reactive-mongodb-redis-integration/**"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '18' ]
+    name: Build on Java ${{ matrix.Java }}
+    defaults:
+      run:
+        working-directory: "poc-mongodb-redis-cache/reactive-mongodb-redis-integration"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3.7.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'zulu'
+          cache: 'maven'
+      - name: Build with Maven and analyze
+        run: ./mvnw -B clean package --file pom.xml 
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.1
+
+

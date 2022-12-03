@@ -41,7 +41,7 @@ class Util {
 
     public static void main(String[] args) {
 
-        int n = 2;        // N-digit
+        int n = 2; // N-digit
         String res = "";
 
         findNdigitNums(res, n, 0);

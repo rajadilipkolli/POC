@@ -12,15 +12,11 @@ public class ZeroArray {
                 if (i < arr1.length - 1 && arr1[i] == arr1[i + 1]) {
                     arr1[count1] = 2 * arr1[i];
 
-                    if (i < arr1.length - 2)
-                        i++;
-                } else
-                    arr1[count1] = arr1[i];
+                    if (i < arr1.length - 2) i++;
+                } else arr1[count1] = arr1[i];
                 count1++;
             }
-
         }
-
 
         int[] arr2 = {1, 2, 3, 4, 5};
         int[] arr3 = new int[5];

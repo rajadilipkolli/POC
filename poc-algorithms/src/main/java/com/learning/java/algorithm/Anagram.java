@@ -32,15 +32,11 @@ public class Anagram {
                     if (Arrays.equals(sc1, sc)) {
                         duplicateLst.add(s11);
                         count++;
-
                     }
                 }
             }
             System.out.print("count for string " + s + " ");
             System.out.println(count > 1 ? count : "");
         }
-
     }
-
-
 }

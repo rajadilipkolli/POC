@@ -1,0 +1,45 @@
+name: poc-spring-boot-webflux CI
+on:
+  push:
+    paths:
+      - "poc-rest-api/spring-boot-rest-webflux/**"
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "poc-rest-api/spring-boot-rest-webflux/**"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build on GraalVM
+    defaults:
+      run:
+        working-directory: "poc-rest-api/spring-boot-rest-webflux"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: 'maven'
+      - name: Printing Values
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          gu --version
+          native-image --version
+      - name: Build with Maven and analyze
+        run: ./mvnw -B clean -Pnative package spring-boot:build-image --file pom.xml 
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.1

@@ -1,0 +1,54 @@
+logging:
+  level:
+    sql: INFO
+    web: INFO
+    org.jooq.tools.LoggerListener: DEBUG
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: configprops,env,health,info,logfile,loggers,metrics
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rest
+    username: local
+    password: local
+    hikari:
+      auto-commit: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        connection:
+          provider_disables_autocommit: true
+        generate_statistics: false
+        id:
+          new_generator_mappings: true
+          optimizer:
+            pooled:
+              preferred: pooled-lo
+        jdbc:
+          batch_size: 25
+          lob:
+            non_contextual_creation: true
+          time_zone: UTC
+        order_inserts: true
+        order_updates: true
+        query:
+          fail_on_pagination_over_collection_fetch: true
+          in_clause_parameter_padding: true
+    show-sql: true
+    #Disables starting of job automatically
+  batch:
+    job:
+      enabled: false
+
+springdoc:
+  swagger-ui:
+    operationsSorter=method: method

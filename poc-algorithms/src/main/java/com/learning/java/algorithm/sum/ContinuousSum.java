@@ -17,23 +17,24 @@ public class ContinuousSum {
                         if (a[j + 1] > 0 && Math.abs(negativeSum) >= a[i]) {
                             break;
                         }
-
                     }
                     if (a[j] > 0 && a[j + 1] < 0) {
                         endIndex = j;
                         break;
                     }
-
                 }
                 if (prevSum < sum) {
                     prevSum = sum;
                     startIndex = i;
-
                 }
-
             }
-
         }
-        System.out.println("largest sum " + prevSum + " starting index at " + startIndex + " ending index at "+endIndex);
+        System.out.println(
+                "largest sum "
+                        + prevSum
+                        + " starting index at "
+                        + startIndex
+                        + " ending index at "
+                        + endIndex);
     }
 }

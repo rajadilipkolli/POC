@@ -4,14 +4,11 @@ public class SegregatePN {
     public static void main(String args[]) {
         int[] a = {9, -3, 5, -2, -8, -6, 1, 3};
         quicksort(a, 0, a.length - 1);
-
-
     }
 
     static void quicksort(int a[], int low, int high) {
         if (low < high) {
             int pi = partition(a, low, high);
-
         }
         for (int l = 0; l < a.length; l++) {
             System.out.print(a[l]);

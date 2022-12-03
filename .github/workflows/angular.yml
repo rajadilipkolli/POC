@@ -1,0 +1,47 @@
+name: Angular CI
+
+on:
+  push:
+    paths:
+      - "frontend/blog-angular-ui/**"
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "frontend/blog-angular-ui/**"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "frontend/blog-angular-ui"
+    strategy:
+      matrix:
+        node: [ '16', '18' ]
+    name: Node ${{ matrix.node }} sample
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Cache node modules
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: Setup node - ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      
+      - name: npm ci and npm run build
+        run: |
+          npm ci
+          npm run build:ci
+          

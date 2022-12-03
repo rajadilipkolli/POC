@@ -12,5 +12,4 @@ public class Employee {
     private String lastName;
 
     private int id;
-
 }

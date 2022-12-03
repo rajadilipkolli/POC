@@ -18,8 +18,6 @@ public class PalindromeRemoval {
                     i = i + 1;
                     j = j - 1;
                 }
-
-
             }
             if (ch[i] != ch[j] && i + 1 == j) {
                 count++;

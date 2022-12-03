@@ -7,7 +7,6 @@ public class NextPermutation {
             i--;
         }
 
-
         int j = array.length - 1;
 
         while (array[j] <= array[i - 1]) {

@@ -13,19 +13,15 @@ public class Quadruplets {
     }
 
     static void quadruplets(int a[], String res, int n, int sum) {
-        if (sum == 0)
-            System.out.println(res);
+        if (sum == 0) System.out.println(res);
 
-        if (n == 0)
-            res = "";
+        if (n == 0) res = "";
 
         for (int i = 0; i < a.length; i++) {
             if (n > 0) {
                 res = res + a[i];
                 quadruplets(a, res, n - 1, sum - a[i]);
             }
-
-
         }
     }
 }

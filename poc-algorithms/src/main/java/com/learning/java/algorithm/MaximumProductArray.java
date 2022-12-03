@@ -7,13 +7,11 @@ public class MaximumProductArray {
         int sum = 1;
         for (int i = 0; i < arr.length; i++) {
             sum = sum * arr[i];
-            if (maxSum < sum && sum > 0)
-                maxSum = sum;
+            if (maxSum < sum && sum > 0) maxSum = sum;
 
             if (sum == 0) {
                 sum = 1;
             }
-
         }
         System.out.println("sum is" + maxSum);
     }

@@ -26,4 +26,3 @@ class TestQueue {
         System.out.println(queue.pop());
     }
 }
-

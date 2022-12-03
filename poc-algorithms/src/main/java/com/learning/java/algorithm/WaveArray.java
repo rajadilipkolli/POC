@@ -2,9 +2,7 @@ package com.learning.java.algorithm;
 
 import java.util.Arrays;
 
-/**
- * Swapping alternative values after sorting
- */
+/** Swapping alternative values after sorting */
 public class WaveArray {
 
     public static void main(String[] args) {

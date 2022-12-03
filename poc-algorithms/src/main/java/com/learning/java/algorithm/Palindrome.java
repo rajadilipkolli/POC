@@ -18,7 +18,6 @@ public class Palindrome {
             m = i % 10;
             i = i / 10;
             k = k * 10 + m;
-
         }
         return k;
     }
