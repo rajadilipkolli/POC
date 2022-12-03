@@ -54,6 +54,11 @@ services:
       - redis2
       - redis3
 
+  redisinsight:
+    image: 'redislabs/redisinsight:latest'
+    ports:
+      - '127.0.0.1:8001:8001'
+
 volumes:
   mongo-data:
 

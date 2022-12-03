@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2022 */
 package com.mongodb.redis.integration.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
