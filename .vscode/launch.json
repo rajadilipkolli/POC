@@ -9,6 +9,16 @@
             "projectName": "reactive-learning",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MongoDBRedisApplication<mongodb-redis-integration>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mongodb.redis.integration.MongoDBRedisApplication",
+            "projectName": "mongodb-redis-integration",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

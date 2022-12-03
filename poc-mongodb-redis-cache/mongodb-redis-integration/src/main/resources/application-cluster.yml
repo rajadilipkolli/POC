@@ -1,0 +1,11 @@
+# See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+spring:
+  data:
+    redis:
+      cluster:
+        nodes:
+          - 172.18.0.2:7000
+          - 172.18.0.3:7001
+          - 172.18.0.4:7002
+        max-redirects: 2
+      
