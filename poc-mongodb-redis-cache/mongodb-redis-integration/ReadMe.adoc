@@ -26,7 +26,7 @@
 
 Spring Cache framework provides an interceptor for cache errors, org.springframework.cache.interceptor.CacheErrorHandler, for the application to take action upon. We will go through this setup in a Spring Boot application, where the application class has to implement org.springframework.cache.annotation.CachingConfigurer, and it can override the errorHandler method.
 
-```
+```java
 @EnableCaching
 @Configuration
 public class RedisConfiguration extends CachingConfigurerSupport {
@@ -93,6 +93,10 @@ RouterFunction handle all incoming requests. It takes a ServerRequest, and retur
 
 === TO-DO
 Perform Load Test and check if keys are removed
+
+=== Links
+ * Swagger - http://localhost:8080/swagger-ui.html
+ 
 
 ==== Reference
 - http://caseyscarborough.com/blog/2014/12/18/caching-data-in-spring-using-redis/
