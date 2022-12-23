@@ -16,7 +16,10 @@
 		"vscode": {
 			"extensions": [
 				"ms-azuretools.vscode-docker",
-				"Pivotal.vscode-boot-dev-pack"
+				"Pivotal.vscode-boot-dev-pack",
+				"redhat.java",
+				"vscjava.vscode-java-debug",
+				"vscjava.vscode-java-pack"
 			]
 		}
 	}
