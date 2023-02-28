@@ -21,7 +21,7 @@
         <testcontainers.version>1.17.6</testcontainers.version>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <dependency-check-maven.version>8.1.1</dependency-check-maven.version>
+        <dependency-check-maven.version>8.1.2</dependency-check-maven.version>
     </properties>
 
     <dependencies>
