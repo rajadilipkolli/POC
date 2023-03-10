@@ -19,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
-		<springdoc-open-ui.version>2.0.2</springdoc-open-ui.version>
+		<springdoc-open-ui.version>2.0.3</springdoc-open-ui.version>
 
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<spotless.version>2.34.0</spotless.version>
