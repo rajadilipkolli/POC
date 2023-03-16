@@ -19,7 +19,7 @@
         <java.version>17</java.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
-        <springdoc-open-ui.version>2.0.3</springdoc-open-ui.version>
+        <springdoc-open-ui.version>2.0.4</springdoc-open-ui.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>8.1.2</dependency-check-maven.version>
