@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '30' ]
+        java: [ '20' ]
     name: Build on Java ${{ matrix.Java }}
     defaults:
       run:
