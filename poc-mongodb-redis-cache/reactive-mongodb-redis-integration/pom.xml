@@ -8,7 +8,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.5</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<artifactId>reactive-mongodb-redis-integration</artifactId>
@@ -21,7 +21,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
-		<openapi.version>2.0.4</openapi.version>
+		<openapi.version>2.1.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
 		<spotless.version>2.35.0</spotless.version>
