@@ -20,7 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
-		<testcontainers.version>1.17.6</testcontainers.version>
+		<testcontainers.version>1.18.0</testcontainers.version>
 		<openapi.version>2.1.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
