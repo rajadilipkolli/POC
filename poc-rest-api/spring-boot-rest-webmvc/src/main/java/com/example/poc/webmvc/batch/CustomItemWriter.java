@@ -1,12 +1,15 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.dto.PostDTO;
-import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Slf4j

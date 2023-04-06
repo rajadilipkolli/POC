@@ -1,8 +1,9 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.webmvc.service;
 
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
+
 import java.util.List;
 
 public interface PostService {

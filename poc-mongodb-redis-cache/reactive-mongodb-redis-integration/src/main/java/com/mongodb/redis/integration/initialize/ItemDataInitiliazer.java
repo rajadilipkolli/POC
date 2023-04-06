@@ -1,20 +1,24 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.initialize;
 
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
-import java.time.Duration;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
+
 import reactor.core.publisher.Flux;
+
+import java.time.Duration;
+import java.util.List;
 
 @Component
 @Slf4j

@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.webmvc.mapper;
 
 import com.example.poc.webmvc.dto.PostCommentsDTO;
@@ -10,11 +10,13 @@ import com.example.poc.webmvc.entities.PostComment;
 import com.example.poc.webmvc.entities.PostDetails;
 import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.Tag;
-import java.util.List;
+
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 @DecoratedWith(PostMapperDecorator.class)

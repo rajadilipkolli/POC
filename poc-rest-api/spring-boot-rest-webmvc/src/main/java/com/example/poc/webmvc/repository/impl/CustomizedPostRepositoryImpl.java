@@ -1,13 +1,15 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.webmvc.repository.impl;
 
 import com.example.poc.webmvc.entities.Post;
 import com.example.poc.webmvc.repository.CustomizedPostRepository;
-import java.util.List;
-import java.util.Optional;
+
 import org.hibernate.jpa.AvailableHints;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomizedPostRepositoryImpl extends JpaUtility implements CustomizedPostRepository {

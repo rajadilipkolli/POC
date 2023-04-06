@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.route;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
+
 import reactor.core.publisher.Mono;
 
 public abstract class AbstractValidationHandler<T, U extends Validator> {

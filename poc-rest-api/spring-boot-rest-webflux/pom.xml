@@ -22,6 +22,7 @@
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>8.2.1</dependency-check-maven.version>
+        <spotless.version>2.36.0</spotless.version>
     </properties>
 
     <dependencies>
@@ -207,6 +208,30 @@
                     <failOnError>false</failOnError>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<java>
+						<googleJavaFormat>
+							<version>1.16.0</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
+						<licenseHeader>
+							<content>/* Licensed under Apache-2.0 $YEAR */</content>
+						</licenseHeader>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 

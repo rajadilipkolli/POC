@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.service;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.accepted;
@@ -10,11 +11,14 @@ import com.example.poc.reactive.event.PostCreatedEvent;
 import com.example.poc.reactive.exception.PostNotFoundException;
 import com.example.poc.reactive.mapping.PostMapper;
 import com.example.poc.reactive.repository.PostRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerResponse;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -22,7 +22,7 @@
 		<springdoc-open-ui.version>2.1.0</springdoc-open-ui.version>
 
 		<testcontainers.version>1.18.0</testcontainers.version>
-		<spotless.version>2.35.0</spotless.version>
+		<spotless.version>2.36.0</spotless.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
 		<properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
 		<maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
@@ -313,7 +313,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.15.0</version>
+							<version>1.16.0</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 						<licenseHeader>

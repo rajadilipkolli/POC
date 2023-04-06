@@ -1,17 +1,21 @@
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.reactive.entity.ReactivePost;
-import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.r2dbc.core.DatabaseClient;
+
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
+
+import java.util.List;
 
 @DataR2dbcTest
 class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {

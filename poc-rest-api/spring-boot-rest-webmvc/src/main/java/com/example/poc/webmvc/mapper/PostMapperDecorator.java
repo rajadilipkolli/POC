@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.webmvc.mapper;
 
 import com.example.poc.webmvc.dto.PostCommentsDTO;
@@ -10,10 +10,12 @@ import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.Tag;
 import com.example.poc.webmvc.repository.PostCommentRepository;
 import com.example.poc.webmvc.repository.TagRepository;
-import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import java.util.List;
+import java.util.Optional;
 
 public abstract class PostMapperDecorator implements PostMapper {
 
