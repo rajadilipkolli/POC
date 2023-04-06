@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2023 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.exception;
 
 import lombok.Getter;

@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.controller.v1;
 
 import static org.assertj.core.api.Assertions.assertThat;
