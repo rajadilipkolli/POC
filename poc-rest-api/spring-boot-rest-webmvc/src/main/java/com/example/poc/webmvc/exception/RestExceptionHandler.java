@@ -2,8 +2,9 @@
 package com.example.poc.webmvc.exception;
 
 import jakarta.validation.ConstraintViolationException;
-import java.util.Objects;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,8 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Objects;
 
 @ControllerAdvice
 @Slf4j

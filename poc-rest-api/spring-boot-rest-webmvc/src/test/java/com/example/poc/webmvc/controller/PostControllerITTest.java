@@ -8,8 +8,7 @@ import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostsDTO;
 import com.example.poc.webmvc.dto.TagDTO;
-import java.time.LocalDateTime;
-import java.util.Collections;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class PostControllerITTest extends AbstractIntegrationTest {

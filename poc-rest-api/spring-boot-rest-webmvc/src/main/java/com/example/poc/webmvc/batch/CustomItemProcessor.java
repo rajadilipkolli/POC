@@ -5,14 +5,17 @@ import com.example.poc.webmvc.dto.PostCommentProjection;
 import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.repository.PostRepository;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component("customItemProcessor")

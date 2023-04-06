@@ -3,6 +3,7 @@ package com.example.poc.webmvc.repository;
 
 import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.PostTagId;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

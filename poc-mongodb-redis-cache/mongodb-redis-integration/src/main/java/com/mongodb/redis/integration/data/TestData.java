@@ -3,7 +3,9 @@ package com.mongodb.redis.integration.data;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.BookRepository;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;

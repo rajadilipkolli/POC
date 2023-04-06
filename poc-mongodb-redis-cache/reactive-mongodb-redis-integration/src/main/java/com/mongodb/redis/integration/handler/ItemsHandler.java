@@ -10,13 +10,17 @@ import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
-import java.net.URI;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @Component
 @RequiredArgsConstructor

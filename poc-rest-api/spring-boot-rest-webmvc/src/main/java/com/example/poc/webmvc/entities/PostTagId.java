@@ -3,12 +3,14 @@ package com.example.poc.webmvc.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Objects;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Getter

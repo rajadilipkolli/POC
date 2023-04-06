@@ -3,11 +3,15 @@ package com.mongodb.redis.integration.service;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.request.BookDTO;
+
 import jakarta.annotation.PostConstruct;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

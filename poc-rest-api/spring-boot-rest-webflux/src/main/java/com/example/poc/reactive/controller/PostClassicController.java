@@ -1,10 +1,12 @@
+/* Licensed under Apache-2.0 2023 */
 package com.example.poc.reactive.controller;
 
 import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.service.PostService;
-import java.net.URI;
+
 import lombok.RequiredArgsConstructor;
+
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.ServerResponse;
+
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/posts")

@@ -1,7 +1,9 @@
+/* Licensed under Apache-2.0 2023 */
 package com.example.poc.reactive.exception;
 
-import java.io.Serial;
 import lombok.Getter;
+
+import java.io.Serial;
 
 public class PostNotFoundException extends Exception {
 

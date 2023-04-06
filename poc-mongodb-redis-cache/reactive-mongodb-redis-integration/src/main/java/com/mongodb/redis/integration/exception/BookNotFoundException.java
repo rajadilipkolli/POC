@@ -1,8 +1,9 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.exception;
 
-import java.io.Serial;
 import lombok.Getter;
+
+import java.io.Serial;
 
 public class BookNotFoundException extends Exception {
 

@@ -6,11 +6,9 @@ import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.dto.PostsDTO;
 import com.example.poc.webmvc.service.PostService;
+
 import jakarta.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -24,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")

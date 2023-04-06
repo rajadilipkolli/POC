@@ -5,7 +5,7 @@ import static com.example.poc.webmvc.utils.AppConstants.PROFILE_IT;
 import static com.example.poc.webmvc.utils.AppConstants.PROFILE_TEST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -15,6 +15,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.time.Duration;
 
 @ActiveProfiles({PROFILE_TEST, PROFILE_IT})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

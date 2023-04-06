@@ -2,15 +2,19 @@
 package com.mongodb.redis.integration.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.io.Serial;
-import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor

@@ -11,6 +11,7 @@ import com.mongodb.redis.integration.api.ReactiveBookAPI;
 import com.mongodb.redis.integration.constants.BookConstants;
 import com.mongodb.redis.integration.handler.BookHandler;
 import com.mongodb.redis.integration.handler.ValidationBookHandler;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

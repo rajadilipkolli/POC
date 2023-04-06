@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.AbstractMongoContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
+
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

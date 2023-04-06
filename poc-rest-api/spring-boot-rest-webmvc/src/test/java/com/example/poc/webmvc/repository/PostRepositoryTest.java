@@ -1,8 +1,9 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.example.poc.webmvc.repository;
 
-import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import static java.util.stream.Collectors.groupingBy;
 
 import com.example.poc.webmvc.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.webmvc.dto.PostCommentProjection;
@@ -12,18 +13,20 @@ import com.example.poc.webmvc.dto.RootValueDTO;
 import com.example.poc.webmvc.entities.Post;
 import com.example.poc.webmvc.entities.PostComment;
 import com.example.poc.webmvc.entities.PostDetails;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
