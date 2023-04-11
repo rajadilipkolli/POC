@@ -42,4 +42,4 @@ jobs:
       - name: Build with Maven and analyze
         run: ./mvnw -B clean -Pnative package spring-boot:build-image --file pom.xml 
       - name: Codecov
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v3.1.2
