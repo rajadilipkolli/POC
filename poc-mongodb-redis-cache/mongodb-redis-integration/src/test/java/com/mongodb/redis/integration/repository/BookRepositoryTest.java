@@ -3,7 +3,6 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractMongoContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 
 import org.bson.Document;
@@ -11,11 +10,30 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mongo.MongoConnectionDetails;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.autoconfigure.service.connection.ServiceConnection;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+
+import java.time.Duration;
 
 @DataMongoTest
-class BookRepositoryTest extends AbstractMongoContainerBaseTest {
+@Testcontainers(disabledWithoutDocker = true)
+class BookRepositoryTest {
+
+    static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo:6.0.2");
+
+    @Container
+    @ServiceConnection(value = MongoConnectionDetails.class)
+    protected static final MongoDBContainer MONGO_DB_CONTAINER =
+            new MongoDBContainer(mongoDockerImageName)
+                    .withStartupAttempts(3)
+                    .withStartupTimeout(Duration.ofMinutes(2))
+                    .withExposedPorts(27017);
 
     @Autowired private BookRepository bookRepository;
 

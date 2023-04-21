@@ -3,7 +3,7 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.redis.integration.config.AbstractRedisContainerBaseTest;
+import com.mongodb.redis.integration.config.AbstractContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class MongoDBRedisApplicationIntegrationTest extends AbstractRedisContainerBaseTest {
+class MongoDBRedisApplicationIntegrationTest extends AbstractContainerBaseTest {
 
     @Autowired private TestRestTemplate testRestTemplate;
 
