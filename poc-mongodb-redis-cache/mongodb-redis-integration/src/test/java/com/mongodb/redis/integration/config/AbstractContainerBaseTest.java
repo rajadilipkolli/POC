@@ -10,12 +10,13 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
 
-@Testcontainers(disabledWithoutDocker = true, parallel = true)
+@Testcontainers(disabledWithoutDocker = true)
 public abstract class AbstractContainerBaseTest {
 
     static DockerImageName redisDockerImageName = DockerImageName.parse("redis");
 
-    @Container @ServiceConnection
+    @Container
+    @ServiceConnection(name = "redis")
     protected static final GenericContainer REDIS_DB_CONTAINER =
             new GenericContainer(redisDockerImageName).withExposedPorts(6379);
 
@@ -24,7 +25,7 @@ public abstract class AbstractContainerBaseTest {
     @Container @ServiceConnection
     protected static final MongoDBContainer MONGO_DB_CONTAINER =
             new MongoDBContainer(mongoDockerImageName)
+                    .withSharding()
                     .withStartupAttempts(3)
-                    .withStartupTimeout(Duration.ofMinutes(2))
-                    .withExposedPorts(27017);
+                    .withStartupTimeout(Duration.ofMinutes(2));
 }

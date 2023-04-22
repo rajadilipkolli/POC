@@ -3,6 +3,7 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.AbstractMongoContainerBaseTest;
 import com.mongodb.redis.integration.document.Book;
 
 import org.bson.Document;
@@ -11,22 +12,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 @DataMongoTest
-@Testcontainers(disabledWithoutDocker = true)
-class BookRepositoryTest {
-
-    static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo:6.0.2");
-
-    @Container @ServiceConnection
-    protected static final MongoDBContainer MONGO_DB_CONTAINER =
-            new MongoDBContainer(mongoDockerImageName).withExposedPorts(27017);
+class BookRepositoryTest extends AbstractMongoContainerBaseTest {
 
     @Autowired private BookRepository bookRepository;
 
