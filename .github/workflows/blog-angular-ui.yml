@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '18' ]
+        java: [ '20' ]
     defaults:
       run:
         working-directory: "frontend/blog-angular-ui"
