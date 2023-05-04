@@ -2,7 +2,11 @@
 	"name": "Java",
 	"image": "mcr.microsoft.com/devcontainers/java:17-bullseye",
 	"features": {
-		"ghcr.io/devcontainers/features/java:1": {},
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "17",
+			"installMaven": "true",
+			"installGradle": "false"
+		},
 		"ghcr.io/devcontainers/features/node:1": {
 			"version": "lts"
 		},
@@ -10,6 +14,7 @@
 		"ghcr.io/devcontainers/features/git-lfs:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {},
 		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+		"ghcr.io/devcontainers-contrib/features/angular-cli:1": {},
 		"ghcr.io/devcontainers/features/powershell:1": {}
 	},
 	"customizations": {

@@ -118,8 +118,8 @@
           }
         }
       }
-    }},
-  "defaultProject": "blog-angular-ui",
+    }
+  },
   "cli": {
     "analytics": false
   }
