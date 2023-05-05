@@ -9,7 +9,8 @@ import org.testcontainers.utility.DockerImageName;
 
 public abstract class AbstractMongoContainerBaseTest {
 
-    static DockerImageName mongoDockerImageName = DockerImageName.parse("mongo:6.0.2");
+    private static final DockerImageName mongoDockerImageName =
+            DockerImageName.parse("mongo:6.0.5");
 
     @Container
     protected static final MongoDBContainer MONGO_DB_CONTAINER =
