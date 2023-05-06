@@ -6,6 +6,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -13,7 +14,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
-public abstract class AbstractIntegrationTest extends AbstractRedisTestContainer {
+@Import(MyContainersConfiguration.class)
+public abstract class AbstractIntegrationTest {
 
     @Autowired protected WebTestClient webTestClient;
 }

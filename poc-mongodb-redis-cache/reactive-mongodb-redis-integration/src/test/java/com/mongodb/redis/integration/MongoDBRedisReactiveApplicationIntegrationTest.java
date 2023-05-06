@@ -9,7 +9,9 @@ import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.data.mongodb.core.CollectionOptions;
