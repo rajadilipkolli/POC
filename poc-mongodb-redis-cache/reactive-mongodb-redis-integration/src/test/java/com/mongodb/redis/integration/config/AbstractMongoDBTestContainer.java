@@ -9,11 +9,11 @@ import org.testcontainers.utility.DockerImageName;
 
 public abstract class AbstractMongoDBTestContainer {
 
-    static DockerImageName dockerImageName = DockerImageName.parse("mongo:6.0.2");
+    static DockerImageName dockerImageName = DockerImageName.parse("mongo:6.0.6");
 
     @Container
     protected static final MongoDBContainer MONGO_DB_CONTAINER =
-            new MongoDBContainer(dockerImageName).withExposedPorts(27017);
+            new MongoDBContainer(dockerImageName);
 
     static {
         MONGO_DB_CONTAINER.start();
