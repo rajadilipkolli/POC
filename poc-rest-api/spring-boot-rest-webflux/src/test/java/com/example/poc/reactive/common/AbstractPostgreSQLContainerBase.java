@@ -10,10 +10,7 @@ public class AbstractPostgreSQLContainerBase {
 
     @Container
     protected static final PostgreSQLContainer<?> postgreSQLContainer =
-            new PostgreSQLContainer<>("postgres:15-alpine")
-                    .withDatabaseName("integration-tests-db")
-                    .withUsername("username")
-                    .withPassword("password");
+            new PostgreSQLContainer<>("postgres:15.3-alpine");
 
     static {
         postgreSQLContainer.start();

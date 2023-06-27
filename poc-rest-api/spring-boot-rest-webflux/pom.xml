@@ -18,7 +18,6 @@
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 
-        <testcontainers.version>1.18.3</testcontainers.version>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>8.3.1</dependency-check-maven.version>
@@ -97,18 +96,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -215,7 +202,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.16.0</version>
+							<version>1.17.0</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 						<licenseHeader>
