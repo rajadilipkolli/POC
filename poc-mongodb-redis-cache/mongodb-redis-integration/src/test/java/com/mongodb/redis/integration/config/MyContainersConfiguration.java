@@ -15,7 +15,7 @@ public class MyContainersConfiguration {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer("mongo:6.0.5")
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.6"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2));
