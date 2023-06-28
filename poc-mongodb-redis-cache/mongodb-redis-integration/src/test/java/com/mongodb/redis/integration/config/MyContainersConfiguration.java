@@ -1,14 +1,13 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.mongodb.redis.integration.config;
 
+import java.time.Duration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
-
-import java.time.Duration;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class MyContainersConfiguration {

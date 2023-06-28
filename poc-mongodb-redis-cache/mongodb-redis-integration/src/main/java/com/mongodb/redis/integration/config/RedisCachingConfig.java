@@ -2,9 +2,7 @@
 package com.mongodb.redis.integration.config;
 
 import jakarta.annotation.PreDestroy;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
