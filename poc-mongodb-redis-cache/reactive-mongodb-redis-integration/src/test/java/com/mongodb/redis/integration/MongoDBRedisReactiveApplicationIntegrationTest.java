@@ -7,7 +7,9 @@ import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
-
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -21,12 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.web.reactive.function.BodyInserters;
-
 import reactor.core.publisher.Mono;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegrationTest {
 

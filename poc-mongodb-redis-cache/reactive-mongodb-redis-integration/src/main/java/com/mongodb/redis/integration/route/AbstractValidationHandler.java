@@ -8,7 +8,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
-
 import reactor.core.publisher.Mono;
 
 public abstract class AbstractValidationHandler<T, U extends Validator> {

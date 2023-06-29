@@ -2,10 +2,8 @@
 package com.mongodb.redis.integration.event;
 
 import com.mongodb.redis.integration.document.Book;
-
-import org.springframework.context.ApplicationEvent;
-
 import java.io.Serial;
+import org.springframework.context.ApplicationEvent;
 
 public class CreatedBookEvent extends ApplicationEvent {
 

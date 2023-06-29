@@ -5,7 +5,6 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.handler.ItemsHandler;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

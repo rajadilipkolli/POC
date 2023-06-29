@@ -5,18 +5,14 @@ import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.event.CreatedBookEvent;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Service;
-
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j

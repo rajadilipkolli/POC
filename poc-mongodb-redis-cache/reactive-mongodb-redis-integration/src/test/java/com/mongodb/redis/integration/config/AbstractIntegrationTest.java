@@ -2,7 +2,6 @@
 package com.mongodb.redis.integration.config;
 
 import com.mongodb.redis.integration.TestMongoDBRedisReactiveApplication;
-
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;

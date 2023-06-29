@@ -5,20 +5,16 @@ import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
-
+import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.MediaType;
-
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
 
 @Slf4j
 class ItemStreamsHandlerTest extends AbstractIntegrationTest {

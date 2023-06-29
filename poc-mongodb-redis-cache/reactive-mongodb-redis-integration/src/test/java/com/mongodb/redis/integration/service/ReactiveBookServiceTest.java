@@ -7,7 +7,6 @@ import static org.mockito.BDDMockito.given;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;

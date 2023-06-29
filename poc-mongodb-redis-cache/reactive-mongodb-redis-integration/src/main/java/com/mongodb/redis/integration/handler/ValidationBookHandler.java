@@ -5,7 +5,7 @@ import com.mongodb.redis.integration.request.BookDTO;
 import com.mongodb.redis.integration.route.AbstractValidationHandler;
 import com.mongodb.redis.integration.service.ReactiveCachingService;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
-
+import java.net.URI;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -14,11 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.net.URI;
 
 @Component
 public class ValidationBookHandler extends AbstractValidationHandler<BookDTO, Validator> {
