@@ -2,20 +2,17 @@
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.repository.PostRepository;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.item.database.AbstractPagingItemReader;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.item.database.AbstractPagingItemReader;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component

@@ -4,10 +4,8 @@ package com.example.poc.webmvc.common;
 import com.example.poc.webmvc.dto.PostCommentsDTO;
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.TagDTO;
-
-import lombok.experimental.UtilityClass;
-
 import java.util.List;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class MockObjectCreator {

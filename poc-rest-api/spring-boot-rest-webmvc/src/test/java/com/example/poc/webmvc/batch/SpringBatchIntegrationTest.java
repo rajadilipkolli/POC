@@ -4,7 +4,7 @@ package com.example.poc.webmvc.batch;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.poc.webmvc.common.AbstractIntegrationTest;
-
+import java.util.Date;
 import org.junit.jupiter.api.*;
 import org.springframework.batch.core.*;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -12,8 +12,6 @@ import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
-
-import java.util.Date;
 
 @SpringBatchTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)

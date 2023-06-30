@@ -3,7 +3,6 @@ package com.example.poc.webmvc.service;
 
 import com.example.poc.webmvc.dto.PostDTO;
 import com.example.poc.webmvc.dto.PostRequestDTO;
-
 import java.util.List;
 
 public interface PostService {

@@ -11,14 +11,11 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
-import lombok.Getter;
-import lombok.Setter;
-
-import org.springframework.data.annotation.CreatedDate;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity(name = "PostDetails")
 @Table(name = "post_details")

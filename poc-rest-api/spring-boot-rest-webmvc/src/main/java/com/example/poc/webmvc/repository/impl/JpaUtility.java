@@ -2,10 +2,8 @@
 package com.example.poc.webmvc.repository.impl;
 
 import com.example.poc.webmvc.utils.JPATransactionFunction;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
 import org.springframework.stereotype.Repository;
 
 @Repository

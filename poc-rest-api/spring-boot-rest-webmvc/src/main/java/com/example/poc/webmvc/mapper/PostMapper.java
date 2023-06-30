@@ -10,13 +10,11 @@ import com.example.poc.webmvc.entities.PostComment;
 import com.example.poc.webmvc.entities.PostDetails;
 import com.example.poc.webmvc.entities.PostTag;
 import com.example.poc.webmvc.entities.Tag;
-
+import java.util.List;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 @DecoratedWith(PostMapperDecorator.class)

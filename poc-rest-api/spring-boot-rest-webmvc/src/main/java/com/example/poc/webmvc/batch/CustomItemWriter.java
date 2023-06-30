@@ -2,14 +2,11 @@
 package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.dto.PostDTO;
-
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @Slf4j
