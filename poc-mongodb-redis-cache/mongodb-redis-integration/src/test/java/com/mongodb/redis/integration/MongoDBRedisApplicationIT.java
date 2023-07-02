@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = TestMongoDBRedisApplication.class)
 @ActiveProfiles("test")
-class MongoDBRedisApplicationIntegrationTest {
+class MongoDBRedisApplicationIT {
 
     @Autowired private TestRestTemplate testRestTemplate;
 
