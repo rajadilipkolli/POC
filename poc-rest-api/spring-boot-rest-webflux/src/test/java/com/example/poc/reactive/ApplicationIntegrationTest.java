@@ -3,7 +3,6 @@ package com.example.poc.reactive;
 
 import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.reactive.entity.ReactivePost;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;

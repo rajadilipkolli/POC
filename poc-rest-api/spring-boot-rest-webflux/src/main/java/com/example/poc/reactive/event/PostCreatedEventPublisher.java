@@ -1,16 +1,14 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.event;
 
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
-
-import reactor.core.publisher.FluxSink;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
+import reactor.core.publisher.FluxSink;
 
 @Component
 public class PostCreatedEventPublisher

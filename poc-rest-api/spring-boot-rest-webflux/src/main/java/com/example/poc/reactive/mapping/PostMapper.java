@@ -3,7 +3,6 @@ package com.example.poc.reactive.mapping;
 
 import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
