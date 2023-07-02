@@ -19,6 +19,16 @@
             "projectName": "mongodb-redis-integration",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-TestMongoDBRedisApplication<mongodb-redis-integration>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mongodb.redis.integration.TestMongoDBRedisApplication",
+            "projectName": "mongodb-redis-integration",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

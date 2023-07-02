@@ -3,6 +3,7 @@ package com.mongodb.redis.integration;
 
 import java.time.Duration;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.devtools.restart.RestartScope;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ public class TestMongoDBRedisApplication {
 
     @Bean
     @ServiceConnection
+    @RestartScope
     public MongoDBContainer mongoDBContainer() {
         return new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.7"))
                 .withSharding()
@@ -24,6 +26,7 @@ public class TestMongoDBRedisApplication {
 
     @Bean
     @ServiceConnection(name = "redis")
+    @RestartScope
     public GenericContainer redisContainer() {
         return new GenericContainer(DockerImageName.parse("redis")).withExposedPorts(6379);
     }

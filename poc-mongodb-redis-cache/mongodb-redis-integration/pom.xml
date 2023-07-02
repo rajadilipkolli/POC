@@ -10,6 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
+	<groupId>com.mongodb.redis.integration</groupId>
 	<artifactId>mongodb-redis-integration</artifactId>
 	<packaging>jar</packaging>
 
