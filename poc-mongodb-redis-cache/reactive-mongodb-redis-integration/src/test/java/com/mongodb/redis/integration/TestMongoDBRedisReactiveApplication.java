@@ -16,7 +16,7 @@ public class TestMongoDBRedisReactiveApplication {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.6"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.7"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2));
