@@ -75,6 +75,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -117,41 +118,33 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>${properties-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<files>
-								<file>sonar-project.properties</file>
-							</files>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>${sonar-maven-plugin.version}</version>
+				<groupId>io.github.git-commit-id</groupId>
+				<artifactId>git-commit-id-maven-plugin</artifactId>
 				<executions>
 					<execution>
 						<goals>
-							<goal>sonar</goal>
+							<goal>revision</goal>
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<failOnNoGitDirectory>false</failOnNoGitDirectory>
+					<failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<includeOnlyProperties>
+						<includeOnlyProperty>^git.branch$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+					</includeOnlyProperties>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<runOrder>alphabetical</runOrder>
-					<argLine>-Xmx1024M ${argLine}</argLine>
 					<reportsDirectory>${junit.utReportFolder}</reportsDirectory>
 					<excludes>
 						<exclude>**/*IT*</exclude>
@@ -163,10 +156,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven-failsafe-plugin.version}</version>
 				<configuration>
 					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
 					<runOrder>alphabetical</runOrder>
-					<argLine>-Xmx1024M ${argLine}</argLine>
 					<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
 					<includes>
 						<include>**/*IT*</include>
@@ -190,28 +183,23 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${maven-checkstyle-plugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.puppycrawl.tools</groupId>
-						<artifactId>checkstyle</artifactId>
-						<version>10.12.1</version>
-					</dependency>
-				</dependencies>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
 				<configuration>
-					<configLocation>build-config/checkstyle/checkstyle.xml</configLocation>
-					<suppressionsLocation>build-config/checkstyle/suppressions.xml</suppressionsLocation>
-					<encoding>UTF-8</encoding>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
-					<linkXRef>false</linkXRef>
+					<java>
+						<googleJavaFormat>
+							<version>1.17.0</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
+						<licenseHeader>
+							<content>/* Licensed under Apache-2.0 $YEAR */</content>
+						</licenseHeader>
+					</java>
 				</configuration>
 				<executions>
 					<execution>
-						<id>checkstyle-validation</id>
-						<phase>validate</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
@@ -256,7 +244,8 @@
 							<destFile>${jacoco.utReportFile}</destFile>
 						</configuration>
 					</execution>
-					<!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
+					<!-- Ensures that the code coverage report for unit tests is created after unit
+                    tests have been run -->
 					<execution>
 						<id>post-unit-test</id>
 						<phase>test</phase>
@@ -278,7 +267,8 @@
 							<destFile>${jacoco.itReportFile}</destFile>
 						</configuration>
 					</execution>
-					<!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
+					<!-- Ensures that the code coverage report for integration tests is created
+                    after integration tests have been run -->
 					<execution>
 						<id>post-integration-tests</id>
 						<phase>post-integration-test</phase>
@@ -290,35 +280,34 @@
 							<outputDirectory>${jacoco.itReportFolder}</outputDirectory>
 						</configuration>
 					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>${properties-maven-plugin.version}</version>
+				<executions>
 					<execution>
-						<id>default-report</id>
-						<phase>verify</phase>
+						<phase>initialize</phase>
 						<goals>
-							<goal>report</goal>
+							<goal>read-project-properties</goal>
 						</goals>
+						<configuration>
+							<files>
+								<file>sonar-project.properties</file>
+							</files>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-				<version>${spotless.version}</version>
-				<configuration>
-					<java>
-						<googleJavaFormat>
-							<version>1.17.0</version>
-							<style>AOSP</style>
-						</googleJavaFormat>
-						<licenseHeader>
-							<content>/* Licensed under Apache-2.0 $YEAR */</content>
-						</licenseHeader>
-					</java>
-				</configuration>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonar-maven-plugin.version}</version>
 				<executions>
 					<execution>
-						<phase>compile</phase>
 						<goals>
-							<goal>check</goal>
+							<goal>sonar</goal>
 						</goals>
 					</execution>
 				</executions>
