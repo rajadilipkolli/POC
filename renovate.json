@@ -3,6 +3,7 @@
     "config:base"
   ],
   "labels": ["dependencies"],
+  "schedule": ["every weekend"],
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
