@@ -22,7 +22,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Schema(description = "All details related to posts.")
 public class PostDTO extends RepresentationModel<PostDTO> {
 
-    @Schema(description = "Title is mandatory", required = true)
+    @Schema(description = "Title is mandatory", requiredMode = Schema.RequiredMode.REQUIRED)
     private String title;
 
     private String content;

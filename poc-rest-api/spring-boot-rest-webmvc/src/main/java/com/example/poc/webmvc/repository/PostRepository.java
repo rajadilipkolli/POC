@@ -38,11 +38,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, CustomizedPos
 
     @Query(
             "SELECT distinct p FROM Post p LEFT JOIN FETCH p.tags pt LEFT JOIN FETCH pt.tag JOIN p.details where p in :posts")
-    @QueryHints({
-        //    @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value =
-        // "false"),
-        @QueryHint(name = AvailableHints.HINT_READ_ONLY, value = "true")
-    })
+    @QueryHints({@QueryHint(name = AvailableHints.HINT_READ_ONLY, value = "true")})
     List<Post> findPostsWithAllDetails(@Param("posts") List<Post> postList);
 
     @Modifying

@@ -4,7 +4,6 @@ package com.example.poc.webmvc.entities;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,11 +41,7 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            mappedBy = "post",
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
     private PostDetails details;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
