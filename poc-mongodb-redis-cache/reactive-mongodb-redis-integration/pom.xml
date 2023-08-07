@@ -20,7 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
-		<openapi.version>2.1.0</openapi.version>
+		<openapi.version>2.2.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
 		<spotless.version>2.38.0</spotless.version>
