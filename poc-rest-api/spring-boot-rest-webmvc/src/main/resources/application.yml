@@ -51,4 +51,4 @@ spring:
 
 springdoc:
   swagger-ui:
-    operationsSorter=method: method
+    operationsSorter: method
