@@ -18,7 +18,7 @@ public class TestMongoDBRedisApplication {
     @ServiceConnection
     @RestartScope
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.7"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.0"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2));
