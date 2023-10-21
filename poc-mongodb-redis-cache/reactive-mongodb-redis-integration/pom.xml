@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.1.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -19,7 +19,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 		<openapi.version>2.2.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
@@ -284,7 +284,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.16.0</version>
+							<version>1.17.0</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 						<licenseHeader>
