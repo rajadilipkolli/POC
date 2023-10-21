@@ -17,6 +17,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '21' ]
     name: Build on GraalVM
     defaults:
       run:
@@ -27,11 +30,9 @@ jobs:
           fetch-depth: 0
       - uses: graalvm/setup-graalvm@v1
         with:
-          version: 'latest'
-          java-version: '21'
-          components: 'native-image'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          cache: 'maven'
+          distribution: 'graalvm'
+          java-version: ${{ matrix.java }}
+          cache: "maven"
       - name: Printing Values
         run: |
           echo "GRAALVM_HOME: $GRAALVM_HOME"
