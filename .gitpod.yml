@@ -1,9 +1,4 @@
-github:
-  prebuilds:
-    addComment: false
-    addBadge: true
-
-image: gitpod/workspace-java-17
+image: gitpod/workspace-java-21
 
 vscode:
   extensions:

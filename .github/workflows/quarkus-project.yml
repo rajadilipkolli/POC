@@ -4,7 +4,7 @@ on:
     paths:
       - "quarkus-project/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "quarkus-project/**"

@@ -4,7 +4,7 @@ on:
     paths:
       - "poc-rest-api/spring-boot-rest-webmvc/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "poc-rest-api/spring-boot-rest-webmvc/**"

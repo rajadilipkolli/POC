@@ -4,7 +4,7 @@ on:
     paths:
       - "poc-mongodb-redis-cache/mongodb-redis-integration/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "poc-mongodb-redis-cache/mongodb-redis-integration/**"

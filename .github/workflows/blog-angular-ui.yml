@@ -4,7 +4,7 @@ on:
     paths:
       - "frontend/blog-angular-ui/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "frontend/blog-angular-ui/**"

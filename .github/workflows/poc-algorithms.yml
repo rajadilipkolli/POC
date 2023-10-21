@@ -4,7 +4,7 @@ on:
     paths:
       - "poc-algorithms/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "poc-algorithms/**"

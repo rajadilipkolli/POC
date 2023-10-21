@@ -4,7 +4,7 @@ on:
     paths:
       - "poc-reactive-learning/**"
     branches:
-      - master
+      - main
   pull_request:
     paths:
       - "poc-reactive-learning/**"
