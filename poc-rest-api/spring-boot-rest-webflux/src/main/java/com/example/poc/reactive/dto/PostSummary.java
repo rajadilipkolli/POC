@@ -1,9 +1,4 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.dto;
 
-import lombok.Data;
-
-@Data
-public class PostSummary {
-    private String title;
-}
+public record PostSummary(String title) {}

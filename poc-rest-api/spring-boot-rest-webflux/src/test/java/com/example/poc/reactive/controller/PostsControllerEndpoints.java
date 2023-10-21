@@ -63,21 +63,19 @@ class PostsControllerEndpoints {
     void save() {
         String content = UUID.randomUUID().toString();
         ReactivePost data = ReactivePost.builder().id(123).content(content).build();
-        PostDto postDto = new PostDto();
-        postDto.setContent(content);
+        PostDto postDto = new PostDto("title", content);
         given(this.postService.savePost(any(PostDto.class))).willReturn(Mono.just(data));
-        MediaType jsonUtf8 = MediaType.APPLICATION_JSON;
         this.webTestClient
                 .mutateWith(csrf())
                 .post()
                 .uri("/posts")
-                .contentType(jsonUtf8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(postDto), PostDto.class)
                 .exchange()
                 .expectStatus()
                 .isCreated()
                 .expectHeader()
-                .contentType(jsonUtf8);
+                .contentType(MediaType.APPLICATION_JSON);
     }
 
     @Test

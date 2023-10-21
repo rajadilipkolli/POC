@@ -24,7 +24,6 @@ import reactor.test.StepVerifier;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WithMockUser
 @Slf4j
-@Disabled
 class ReactivePostServiceIntegrationTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private PostRepository postRepository;
