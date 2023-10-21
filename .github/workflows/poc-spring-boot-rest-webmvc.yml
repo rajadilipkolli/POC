@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '20' ]
+        java: [ '21' ]
     defaults:
       run:
         working-directory: "poc-rest-api/spring-boot-rest-webmvc"

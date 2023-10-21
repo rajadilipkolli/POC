@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '20']
+        java: [ '21']
     defaults:
       run:
         working-directory: "poc-mongodb-redis-cache/mongodb-redis-integration"
