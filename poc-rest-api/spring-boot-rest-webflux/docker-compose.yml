@@ -14,7 +14,7 @@ services:
       - POSTGRES_DB=rest
     #   Maps port 5432 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
     ports:
-      - 5432:5432
+      - "5432:5432"
     #   Set a volume some that database is not lost after shutting down the container.
     #   I used the name postgres-data but you can changed it to something else.
     networks:

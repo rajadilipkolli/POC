@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
 @WebFluxTest(controllers = {PostClassicController.class})
 @AutoConfigureWebTestClient
 @WithMockUser(username = "username")
-class PostsControllerEndpoints {
+class PostsControllerEndpointsTest {
 
     @MockBean private PostService postService;
 

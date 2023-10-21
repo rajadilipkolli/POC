@@ -3,7 +3,6 @@ package com.example.poc.reactive.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.poc.reactive.common.AbstractPostgreSQLContainerBase;
 import com.example.poc.reactive.entity.ReactivePost;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +13,13 @@ import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
-@DataR2dbcTest
-class ReactivePostRepositoryTest extends AbstractPostgreSQLContainerBase {
+@DataR2dbcTest(
+        properties = {
+            "spring.test.database.replace=none",
+            "spring.r2dbc.url=r2dbc:tc:postgresql:///databasename?TC_IMAGE_TAG=16-alpine",
+            "spring.liquibase.url=jdbc:tc:postgresql:16-alpine:///databasename"
+        })
+class ReactivePostRepositoryTest {
 
     @Autowired private PostRepository postRepository;
 
