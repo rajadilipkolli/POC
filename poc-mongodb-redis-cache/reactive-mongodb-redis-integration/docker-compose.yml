@@ -8,11 +8,20 @@ services:
       - 27017:27017
 
   redis:
-    image: redis
-    volumes:
-      - redis-data:/data/db/redis
+    image: 'redis:7.2.2-alpine'
     ports:
-      - 6379:6379
+      - '127.0.0.1:6379:6379/tcp'
+    volumes:
+      - 'redis_data:/data:rw'
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    healthcheck:
+      test: redis-cli ping
+      interval: 3s
+      timeout: 5s
+      retries: 5
       
 volumes:
   mongo-data:

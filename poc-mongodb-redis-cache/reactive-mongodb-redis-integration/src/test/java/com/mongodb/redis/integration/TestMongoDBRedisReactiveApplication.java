@@ -16,18 +16,16 @@ public class TestMongoDBRedisReactiveApplication {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.0"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.2"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2));
     }
 
-    private static final DockerImageName redisDockerImageName = DockerImageName.parse("redis");
-
     @Bean
     @ServiceConnection(name = "redis")
     public GenericContainer redisContainer() {
-        return new GenericContainer(redisDockerImageName).withExposedPorts(6379);
+        return new GenericContainer(DockerImageName.parse("redis").withTag("7.2.2-alpine")).withExposedPorts(6379);
     }
 
     public static void main(String[] args) {
