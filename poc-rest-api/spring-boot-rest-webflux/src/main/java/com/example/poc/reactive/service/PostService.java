@@ -17,5 +17,5 @@ public interface PostService {
 
     Mono<ServerResponse> deletePostById(Integer id);
 
-    Mono<ServerResponse> update(Integer id, ReactivePost reactivePost);
+    Mono<ServerResponse> update(Integer id, PostDto postDto);
 }

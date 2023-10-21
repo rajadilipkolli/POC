@@ -73,9 +73,7 @@ class PostsControllerEndpointsTest {
                 .body(Mono.just(postDto), PostDto.class)
                 .exchange()
                 .expectStatus()
-                .isCreated()
-                .expectHeader()
-                .contentType(MediaType.APPLICATION_JSON);
+                .isCreated();
     }
 
     @Test
@@ -96,16 +94,14 @@ class PostsControllerEndpointsTest {
 
     @Test
     void update() {
-        ReactivePost data =
-                ReactivePost.builder().id(123).content(UUID.randomUUID().toString()).build();
+        PostDto data = new PostDto("title", "content");
 
-        given(this.postService.update(data.getId(), data))
-                .willReturn(ServerResponse.noContent().build());
+        given(this.postService.update(123, data)).willReturn(ServerResponse.noContent().build());
 
         this.webTestClient
                 .mutateWith(csrf())
                 .put()
-                .uri("/posts/" + data.getId())
+                .uri("/posts/123")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(data), ReactivePost.class)
                 .exchange()

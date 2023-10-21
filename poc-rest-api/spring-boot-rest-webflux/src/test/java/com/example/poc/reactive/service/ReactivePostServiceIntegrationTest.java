@@ -96,8 +96,7 @@ class ReactivePostServiceIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void update() {
-        ReactivePost test1 =
-                ReactivePost.builder().title("Junit1").content("sixth Content").build();
+        PostDto test1 = new PostDto("Junit2", "seventh Content");
 
         Mono<ServerResponse> saved =
                 this.postService

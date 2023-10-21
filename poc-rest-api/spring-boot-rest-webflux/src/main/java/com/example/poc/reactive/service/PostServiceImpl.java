@@ -53,26 +53,24 @@ public class PostServiceImpl implements PostService {
     public Mono<ServerResponse> deletePostById(Integer id) {
         return this.postRepository
                 .findById(id)
-                .flatMap(
+                .map(
                         p -> {
-                            log.debug("found post: {}", p);
-                            return this.postRepository.deleteById(p.getId()).thenReturn(p);
+                            log.debug("found post: {}", p.getId());
+                            return this.postRepository.deleteById(p.getId());
                         })
                 .flatMap(deleted -> accepted().build())
                 .switchIfEmpty(notFound().build());
     }
 
     @Override
-    public Mono<ServerResponse> update(Integer id, ReactivePost reactivePost) {
+    public Mono<ServerResponse> update(Integer id, PostDto postDto) {
         return this.postRepository
                 .findById(id)
                 .map(
                         post -> {
-                            post.setTitle(reactivePost.getTitle());
-                            post.setContent(reactivePost.getContent());
-                            return post;
+                            postMapper.updatePost(postDto, post);
+                            return postRepository.save(post);
                         })
-                .flatMap(this.postRepository::save)
                 .flatMap(post -> noContent().build())
                 .switchIfEmpty(notFound().build());
     }

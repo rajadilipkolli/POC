@@ -7,7 +7,6 @@ import com.example.poc.reactive.service.PostService;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,6 @@ public class PostClassicController {
 
     private final PostService postService;
 
-    private final MediaType mediaType = MediaType.APPLICATION_JSON;
-
     @GetMapping
     public Publisher<ReactivePost> all() {
         return this.postService.findAllPosts();
@@ -47,14 +44,13 @@ public class PostClassicController {
                         persistedPost ->
                                 ResponseEntity.created(
                                                 URI.create("/posts/" + persistedPost.getId()))
-                                        .contentType(this.mediaType)
                                         .build());
     }
 
     @PutMapping("/{id}")
     public Mono<ServerResponse> update(
-            @PathVariable("id") Integer id, @RequestBody ReactivePost reactivePost) {
-        return this.postService.update(id, reactivePost);
+            @PathVariable("id") Integer id, @RequestBody PostDto postDto) {
+        return this.postService.update(id, postDto);
     }
 
     @DeleteMapping("/{id}")
