@@ -33,12 +33,11 @@ jobs:
           distribution: 'graalvm'
           java-version: ${{ matrix.java }}
           cache: "maven"
-      - name: Printing Values
+      - name: Printing versions
         run: |
           echo "GRAALVM_HOME: $GRAALVM_HOME"
           echo "JAVA_HOME: $JAVA_HOME"
           java --version
-          gu --version
           native-image --version
       - name: Build with Maven and analyze
         run: ./mvnw -B clean -Pnative package spring-boot:build-image --file pom.xml 
