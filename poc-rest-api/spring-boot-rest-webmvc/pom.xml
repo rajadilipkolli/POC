@@ -21,7 +21,7 @@
         <springdoc-open-ui.version>2.2.0</springdoc-open-ui.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <dependency-check-maven.version>8.4.0</dependency-check-maven.version>
+        <dependency-check-maven.version>8.4.1</dependency-check-maven.version>
         <spotless.version>2.40.0</spotless.version>
 
         <db.username>local</db.username>
