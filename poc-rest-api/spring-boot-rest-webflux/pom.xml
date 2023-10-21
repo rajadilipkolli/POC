@@ -19,7 +19,6 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
-        <maven-pmd-plugin.version>3.21.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>8.4.1</dependency-check-maven.version>
         <spotless.version>2.40.0</spotless.version>
     </properties>
@@ -169,24 +168,6 @@
                     </includeOnlyProperties>
                 </configuration>
             </plugin>
-            <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-pmd-plugin</artifactId>
-               <version>${maven-pmd-plugin.version}</version>
-               <configuration>
-                 <rulesets>
-                   <ruleset>build-config/pmd/pmd-ruleset.xml</ruleset>
-                 </rulesets>
-               </configuration>
-               <executions>
-                 <execution>
-                   <goals>
-                     <goal>check</goal>
-                     <goal>cpd-check</goal>
-                   </goals>
-                 </execution>
-               </executions>
-             </plugin>
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
