@@ -3,12 +3,14 @@ package com.example.poc.reactive.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.poc.reactive.common.TestContainersConfig;
 import com.example.poc.reactive.entity.ReactivePost;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
+import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
@@ -16,9 +18,8 @@ import reactor.test.StepVerifier;
 @DataR2dbcTest(
         properties = {
             "spring.test.database.replace=none",
-            "spring.r2dbc.url=r2dbc:tc:postgresql:///databasename?TC_IMAGE_TAG=16-alpine",
-            "spring.liquibase.url=jdbc:tc:postgresql:16-alpine:///databasename"
         })
+@ImportTestcontainers(TestContainersConfig.class)
 class ReactivePostRepositoryTest {
 
     @Autowired private PostRepository postRepository;

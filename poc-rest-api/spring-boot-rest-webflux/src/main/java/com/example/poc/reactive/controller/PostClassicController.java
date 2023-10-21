@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -48,13 +47,12 @@ public class PostClassicController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ServerResponse> update(
-            @PathVariable("id") Integer id, @RequestBody PostDto postDto) {
+    public Mono<ReactivePost> update(@PathVariable("id") Integer id, @RequestBody PostDto postDto) {
         return this.postService.update(id, postDto);
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ServerResponse> delete(@PathVariable("id") Integer id) {
+    public Mono<ResponseEntity<Object>> delete(@PathVariable("id") Integer id) {
         return this.postService.deletePostById(id);
     }
 }

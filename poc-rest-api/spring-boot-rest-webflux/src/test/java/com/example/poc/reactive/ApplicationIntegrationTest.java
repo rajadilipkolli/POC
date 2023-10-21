@@ -9,7 +9,7 @@ class ApplicationIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void willLoadPosts() {
-        this.webClient
+        this.webTestClient
                 .get()
                 .uri("/posts")
                 .exchange()

@@ -15,9 +15,9 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -82,21 +82,22 @@ class PostsControllerEndpointsTest {
         ReactivePost data =
                 ReactivePost.builder().id(123).content(UUID.randomUUID().toString()).build();
         given(this.postService.deletePostById(data.getId()))
-                .willReturn(ServerResponse.accepted().build());
+                .willReturn(Mono.just(ResponseEntity.accepted().build()));
         this.webTestClient
                 .mutateWith(csrf())
                 .delete()
                 .uri("/posts/" + data.getId())
                 .exchange()
                 .expectStatus()
-                .isOk();
+                .isAccepted();
     }
 
     @Test
     void update() {
         PostDto data = new PostDto("title", "content");
 
-        given(this.postService.update(123, data)).willReturn(ServerResponse.noContent().build());
+        given(this.postService.update(123, data))
+                .willReturn(Mono.just(new ReactivePost("title", "content")));
 
         this.webTestClient
                 .mutateWith(csrf())
