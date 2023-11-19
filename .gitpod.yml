@@ -1,4 +1,4 @@
-image: gitpod/workspace-java-21
+image: gitpod/workspace-java-17
 
 vscode:
   extensions:
