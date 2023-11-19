@@ -91,7 +91,7 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
                         .toList();
 
         assertThat(postDTOS).isNotEmpty().hasSize(1);
-        PostDTO postDTO = postDTOS.get(0);
+        PostDTO postDTO = postDTOS.getFirst();
         assertThat(postDTO.getTitle()).isEqualTo("Post Title");
         assertThat(postDTO.getContent()).isEqualTo("Post Content");
         assertThat(postDTO.getComments()).isNotEmpty().hasSizeGreaterThanOrEqualTo(2);
@@ -103,6 +103,6 @@ class PostRepositoryTest extends AbstractPostgreSQLContainerBase {
     void shouldReturnPostWhenUserNameIsPassed() {
         List<Post> postList = this.postRepository.findByDetailsCreatedBy("JUNIT");
         assertThat(postList).isNotEmpty().hasSize(1);
-        assertThat(postList.get(0).getDetails().getCreatedBy()).isEqualTo("JUNIT");
+        assertThat(postList.getFirst().getDetails().getCreatedBy()).isEqualTo("JUNIT");
     }
 }

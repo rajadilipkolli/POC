@@ -32,14 +32,12 @@ jobs:
         uses: actions/setup-java@v3.13.0
         with:
           java-version: ${{ matrix.java }}
-          distribution: 'zulu'
+          distribution: 'temurin'
           cache: 'maven'
       - name: Build with Maven and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -B clean verify --file pom.xml 
-      - name: Codecov
-        uses: codecov/codecov-action@v3.1.4
+        run: ./mvnw -B clean verify --file pom.xml
 
 

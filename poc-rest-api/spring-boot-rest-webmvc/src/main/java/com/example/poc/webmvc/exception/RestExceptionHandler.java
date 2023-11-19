@@ -189,11 +189,11 @@ class RestExceptionHandler extends ResponseEntityExceptionHandler {
             MethodArgumentTypeMismatchException ex, WebRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage(
-                String.format(
-                        "The parameter '%s' of value '%s' could not be converted to type '%s'",
-                        ex.getName(),
-                        ex.getValue(),
-                        Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
+                "The parameter '%s' of value '%s' could not be converted to type '%s'"
+                        .formatted(
+                                ex.getName(),
+                                ex.getValue(),
+                                Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
         apiError.setDebugMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

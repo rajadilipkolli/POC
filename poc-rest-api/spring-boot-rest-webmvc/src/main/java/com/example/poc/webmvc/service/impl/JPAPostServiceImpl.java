@@ -28,8 +28,7 @@ public class JPAPostServiceImpl implements PostService {
     private final BiFunction<String, String, PostNotFoundException> supplierBiFunction =
             (userName, title) ->
                     new PostNotFoundException(
-                            String.format(
-                                    "Post with title %s for user %s not found", title, userName));
+                            "Post with title %s for user %s not found".formatted(title, userName));
 
     @Transactional(readOnly = true)
     @Override
