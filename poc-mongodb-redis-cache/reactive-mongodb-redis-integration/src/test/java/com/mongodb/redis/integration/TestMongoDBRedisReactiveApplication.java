@@ -16,7 +16,7 @@ public class TestMongoDBRedisReactiveApplication {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.2"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.3"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2));
@@ -25,7 +25,7 @@ public class TestMongoDBRedisReactiveApplication {
     @Bean
     @ServiceConnection(name = "redis")
     public GenericContainer redisContainer() {
-        return new GenericContainer(DockerImageName.parse("redis").withTag("7.2.2-alpine"))
+        return new GenericContainer(DockerImageName.parse("redis").withTag("7.2.3-alpine"))
                 .withExposedPorts(6379);
     }
 
