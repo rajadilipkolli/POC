@@ -224,7 +224,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
                 .expectStatus()
                 .isBadRequest()
                 .expectHeader()
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .expectBody()
                 .jsonPath("$.status")
                 .isEqualTo("400");
@@ -240,7 +240,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
                 .expectStatus()
                 .isBadRequest()
                 .expectHeader()
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .expectBody()
                 .jsonPath("$.status")
                 .isEqualTo("400");
