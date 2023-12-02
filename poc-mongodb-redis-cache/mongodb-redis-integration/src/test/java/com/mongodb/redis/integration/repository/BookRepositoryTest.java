@@ -3,6 +3,7 @@ package com.mongodb.redis.integration.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.MongoDBTestContainerConfig;
 import com.mongodb.redis.integration.document.Book;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
@@ -10,31 +11,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 @DataMongoTest
-@Testcontainers(disabledWithoutDocker = true, parallel = true)
+@ImportTestcontainers(MongoDBTestContainerConfig.class)
 class BookRepositoryTest {
-
-    @Container
-    static final MongoDBContainer MONGO_DB_CONTAINER =
-            new MongoDBContainer(DockerImageName.parse("mongo").withTag("6.0.6"));
-
-    static {
-        MONGO_DB_CONTAINER.start();
-    }
-
-    @DynamicPropertySource
-    static void setProperties(DynamicPropertyRegistry propertyRegistry) {
-        propertyRegistry.add("spring.data.mongodb.host", MONGO_DB_CONTAINER::getHost);
-        propertyRegistry.add("spring.data.mongodb.port", MONGO_DB_CONTAINER::getFirstMappedPort);
-    }
 
     @Autowired private BookRepository bookRepository;
 

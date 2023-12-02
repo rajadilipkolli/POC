@@ -1,34 +1,26 @@
 /* Licensed under Apache-2.0 2023 */
 package com.mongodb.redis.integration;
 
-import java.time.Duration;
+import com.mongodb.redis.integration.config.MongoDBTestContainerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.devtools.restart.RestartScope;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
+@ImportTestcontainers(MongoDBTestContainerConfig.class)
 public class TestMongoDBRedisApplication {
-
-    @Bean
-    @ServiceConnection
-    @RestartScope
-    public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("7.0.4"))
-                .withSharding()
-                .withStartupAttempts(3)
-                .withStartupTimeout(Duration.ofMinutes(2));
-    }
 
     @Bean
     @ServiceConnection(name = "redis")
     @RestartScope
     public GenericContainer redisContainer() {
-        return new GenericContainer(DockerImageName.parse("redis")).withExposedPorts(6379);
+        return new GenericContainer(DockerImageName.parse("redis").withTag("7.2.3-alpine"))
+                .withExposedPorts(6379);
     }
 
     public static void main(String[] args) {
