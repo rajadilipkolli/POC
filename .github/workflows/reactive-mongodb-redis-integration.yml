@@ -35,8 +35,6 @@ jobs:
           distribution: 'zulu'
           cache: 'maven'
       - name: Build with Maven and analyze
-        run: ./mvnw -B clean verify --file pom.xml 
-      - name: Codecov
-        uses: codecov/codecov-action@v3.1.4
+        run: ./mvnw -B clean verify --file pom.xml
 
 
