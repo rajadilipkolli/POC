@@ -1,14 +1,14 @@
 version: "3"
 services:
   mongo:
-    image: mongo:7.0.4
+    image: mongo:7.0.5
     volumes:
       - mongo-data:/data/db/mongo
     ports:
       - 27017:27017
 
   redis:
-    image: 'redis:7.2.3-alpine'
+    image: 'redis:7.2.4-alpine'
     ports:
       - '127.0.0.1:6379:6379/tcp'
     volumes:

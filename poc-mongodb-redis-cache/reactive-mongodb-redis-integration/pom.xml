@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.0</version>
+		<version>3.2.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -23,7 +23,7 @@
 		<openapi.version>2.3.0</openapi.version>
 
 		<maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
-		<spotless.version>2.41.1</spotless.version>
+		<spotless.version>2.43.0</spotless.version>
 
 		<jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 		<jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
@@ -176,7 +176,7 @@
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
-						<version>10.12.6</version>
+						<version>10.13.0</version>
 					</dependency>
 				</dependencies>
 				<configuration>
