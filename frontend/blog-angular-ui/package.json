@@ -35,7 +35,7 @@
     "@angular/language-service": "16.2.12",
     "@types/jasmine": "5.1.4",
     "@types/jasminewd2": "2.0.13",
-    "@types/node": "20.11.17",
+    "@types/node": "20.11.19",
     "codelyzer": "6.0.2",
     "jasmine-core": "5.1.2",
     "jasmine-spec-reporter": "7.0.0",
@@ -45,7 +45,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
     "protractor": "7.0.0",
-    "puppeteer": "21.11.0",
+    "puppeteer": "22.1.0",
     "ts-node": "10.9.2",
     "typescript": "5.1.6",
     "tslint": "6.1.3"
