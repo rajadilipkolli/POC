@@ -37,6 +37,6 @@ jobs:
       - name: Build with Maven and analyze
         run: ./mvnw -B clean verify
       - name: Codecov
-        uses: codecov/codecov-action@v4.1.0
+        uses: codecov/codecov-action@v4.1.1
 
 
