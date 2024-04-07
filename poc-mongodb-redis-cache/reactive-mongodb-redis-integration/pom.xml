@@ -20,7 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>21</java.version>
-		<openapi.version>2.4.0</openapi.version>
+		<springdoc-open-ui.version>2.5.0</springdoc-open-ui.version>
 
 		<maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
 		<spotless.version>2.43.0</spotless.version>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-			<version>${openapi.version}</version>
+			<version>${springdoc-open-ui.version}</version>
 		</dependency>
 
 		<dependency>
