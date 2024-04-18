@@ -35,8 +35,6 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
       - name: Build with Maven and analyze
-        run: ./mvnw -B clean package
-      - name: Codecov
-        uses: codecov/codecov-action@v4.3.0
+        run: ./mvnw -B clean package -Pnative
 
 
