@@ -26,7 +26,7 @@ public class HelloResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/greet")
     public String greet(@QueryParam("name") String name) {
-        return "Hello " + name;
+        return name != null && !name.isEmpty() ? "Hello " + name : "Hello";
     }
 
     @GET
