@@ -19,6 +19,15 @@ class HelloResourceTest {
     }
 
     @Test
+    void testGreetEndpoint() {
+        given().queryParam("name", "raja")
+                .when().get("/hello/greet")
+                .then()
+                .statusCode(200)
+                .body(is("Hello raja"));
+    }
+
+    @Test
     void testGreetingEndpoint() {
         given().pathParam("name", "raja")
                 .when().get("/hello/polite/{name}")
