@@ -4,6 +4,8 @@ public class Employee {
 
     private String name;
 
+    private int age;
+
     public String getName() {
         return name;
     }
@@ -19,6 +21,4 @@ public class Employee {
     public void setAge(int age) {
         this.age = age;
     }
-
-    private int age;
 }

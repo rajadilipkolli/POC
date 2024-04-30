@@ -9,7 +9,7 @@ import java.util.TreeMap;
 public class MapTest {
 
     public static void main(String[] args) {
-        TreeMap<Integer, Employee> hm = new TreeMap();
+        TreeMap<Integer, Employee> hm = new TreeMap<>();
         Employee e1 = new Employee();
         e1.setName("e1");
         e1.setAge(50);
@@ -26,7 +26,7 @@ public class MapTest {
         hm.put(2, e2);
         hm.put(3, e3);
 
-        ArrayList<Employee> al = new ArrayList(hm.values());
+        ArrayList<Employee> al = new ArrayList<>(hm.values());
         Collections.sort(al, new MyComparator());
 
         System.out.println("//sort by values \n");

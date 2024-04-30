@@ -16,7 +16,7 @@ public class LinkedList {
         }
     }
 
-    public static LinkedList insert(LinkedList list, int data) {
+    public LinkedList insert(LinkedList list, int data) {
         Node new_node = new Node(data);
         new_node.next = null;
 
@@ -33,7 +33,7 @@ public class LinkedList {
         return list;
     }
 
-    public static LinkedList remove(LinkedList list, int data) {
+    public LinkedList remove(LinkedList list, int data) {
 
         if (list.head == null) System.out.println("list is empty");
         else {
@@ -61,7 +61,7 @@ public class LinkedList {
         return list;
     }
 
-    public static void print(LinkedList list) {
+    public void print(LinkedList list) {
 
         if (list.head == null) System.out.println("list is empty");
         else {

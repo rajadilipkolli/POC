@@ -34,7 +34,6 @@ public class NonPrinting {
 
     static String returnkey(Map<String, Integer> m) {
         int first = 0;
-        int second = 0;
         String key = null;
         for (Entry<String, Integer> m1 : m.entrySet()) {
 

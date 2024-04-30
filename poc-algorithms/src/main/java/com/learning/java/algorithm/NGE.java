@@ -1,6 +1,7 @@
 package com.learning.java.algorithm;
 
 public class NGE {
+
     public static void main(String[] args) {
         int[] arr = {11, 13, 21, 3};
 
@@ -13,7 +14,7 @@ public class NGE {
                     break;
                 }
             }
-            System.out.println(arr[i] + "next element" + next);
+            System.out.println(arr[i] + " next element " + next);
         }
     }
 }

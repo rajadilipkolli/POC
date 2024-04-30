@@ -1,6 +1,7 @@
 package com.learning.java.algorithm;
 
 public class SegregatePN {
+
     public static void main(String args[]) {
         int[] a = {9, -3, 5, -2, -8, -6, 1, 3};
         quicksort(a, 0, a.length - 1);
