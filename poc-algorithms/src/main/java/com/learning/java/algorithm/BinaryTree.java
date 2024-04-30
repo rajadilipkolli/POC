@@ -36,9 +36,7 @@ public class BinaryTree {
     }
 
     private int getSizeRecursive(Node current) {
-        return current == null
-                ? 0
-                : getSizeRecursive(current.left) + 1 + getSizeRecursive(current.right);
+        return current == null ? 0 : getSizeRecursive(current.left) + 1 + getSizeRecursive(current.right);
     }
 
     public boolean containsNode(int value) {
@@ -191,8 +189,7 @@ public class BinaryTree {
         while (!stack.isEmpty()) {
             current = stack.peek();
             boolean hasChild = (current.left != null || current.right != null);
-            boolean isPrevLastChild =
-                    (prev == current.right || (prev == current.left && current.right == null));
+            boolean isPrevLastChild = (prev == current.right || (prev == current.left && current.right == null));
 
             if (!hasChild || isPrevLastChild) {
                 current = stack.pop();

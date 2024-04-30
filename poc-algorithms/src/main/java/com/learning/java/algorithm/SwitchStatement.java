@@ -15,11 +15,10 @@ public class SwitchStatement {
                     str.append("8 ");
                 case 9:
                     str.append("9 ");
-                case 10:
-                    {
-                        str.append("10 ");
-                        break;
-                    }
+                case 10: {
+                    str.append("10 ");
+                    break;
+                }
                 case 13:
                     str.append("13 ");
                 default:

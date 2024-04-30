@@ -13,9 +13,8 @@ public class CountOccurrenceOfCharInRepeatedString {
     }
 
     private static int countChar(String str, char findCountOfChar, int n) {
-        return (int)
-                IntStream.rangeClosed(0, n)
-                        .filter(i -> str.charAt(i % str.length()) == findCountOfChar)
-                        .count();
+        return (int) IntStream.rangeClosed(0, n)
+                .filter(i -> str.charAt(i % str.length()) == findCountOfChar)
+                .count();
     }
 }

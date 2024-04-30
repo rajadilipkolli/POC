@@ -9,9 +9,7 @@ public class InsertionSort {
 
         int[] intArray = {20, 35, -15, 7, 55, 1, -22};
 
-        for (int firstUnsortedIndex = 1;
-                firstUnsortedIndex < intArray.length;
-                firstUnsortedIndex++) {
+        for (int firstUnsortedIndex = 1; firstUnsortedIndex < intArray.length; firstUnsortedIndex++) {
             int newElement = intArray[firstUnsortedIndex];
 
             int i;

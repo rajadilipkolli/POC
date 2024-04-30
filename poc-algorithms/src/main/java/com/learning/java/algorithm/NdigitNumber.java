@@ -1,6 +1,6 @@
 package com.learning.java.algorithm;
 
-class Util {
+class NdigitNumber {
 
     // Function to find all N-digit numbers with equal sum of digits at even
     // and odd index in Bottom-up manner

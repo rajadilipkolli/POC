@@ -19,11 +19,7 @@ public class ProductOfArrayExceptSelf {
         int[] nums = new int[] {1, 2, 3, 4};
         long startTime = System.nanoTime();
         int[] response = productExceptSelfON(nums);
-        log.info(
-                "timeTaken -> "
-                        + (System.nanoTime() - startTime)
-                        + " array"
-                        + Arrays.toString(response));
+        log.info("timeTaken -> {} ns array {}", System.nanoTime() - startTime, Arrays.toString(response));
     }
 
     private static int[] productExceptSelfON(int[] input) {

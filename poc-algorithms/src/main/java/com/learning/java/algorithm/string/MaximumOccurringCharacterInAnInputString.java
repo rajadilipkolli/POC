@@ -17,14 +17,11 @@ public class MaximumOccurringCharacterInAnInputString {
         System.out.println("Max occurring character is " + getMaxOccurringChar(str));
 
         String anotherString = "test sample";
-        System.out.println(
-                "Max occurring character in lexicographically is"
-                        + getMaxOccurringCharsLexicographically(anotherString.toCharArray()));
+        System.out.println("Max occurring character in lexicographically is"
+                + getMaxOccurringCharsLexicographically(anotherString.toCharArray()));
 
         anotherString = "bbaaabccc";
-        System.out.println(
-                "Max occurring character which occurs first is "
-                        + getMaxOccurringCharFirst(anotherString));
+        System.out.println("Max occurring character which occurs first is " + getMaxOccurringCharFirst(anotherString));
     }
 
     private static char getMaxOccurringCharFirst(String anotherString) {

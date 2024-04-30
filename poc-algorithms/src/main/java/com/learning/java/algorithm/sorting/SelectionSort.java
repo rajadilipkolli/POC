@@ -15,9 +15,7 @@ public class SelectionSort {
     }
 
     private static void selectionSort(int[] arr) {
-        for (int largestUnSortedIndex = arr.length - 1;
-                largestUnSortedIndex > 1;
-                largestUnSortedIndex--) {
+        for (int largestUnSortedIndex = arr.length - 1; largestUnSortedIndex > 1; largestUnSortedIndex--) {
             int largestValue = 0;
             for (int j = 1; j <= largestUnSortedIndex; j++) {
                 if (arr[largestValue] < arr[j]) {

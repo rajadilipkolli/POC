@@ -12,20 +12,18 @@ public class TwoNumberSumProblem {
         long startTime = System.nanoTime();
         int[] values = findSumBySorting(inputArray, target);
         long endTime = System.nanoTime();
-        System.out.println(
-                "TimeComplexity O(nlogn) output numbers "
-                        + Arrays.toString(values)
-                        + " ,timeTaken "
-                        + (endTime - startTime));
+        System.out.println("TimeComplexity O(nlogn) output numbers "
+                + Arrays.toString(values)
+                + " ,timeTaken "
+                + (endTime - startTime));
 
         startTime = System.nanoTime();
         values = findSumByHashMap(inputArray, target);
         endTime = System.nanoTime();
-        System.out.println(
-                "TimeComplexity O(n) output numbers "
-                        + Arrays.toString(values)
-                        + " ,timeTaken "
-                        + (endTime - startTime));
+        System.out.println("TimeComplexity O(n) output numbers "
+                + Arrays.toString(values)
+                + " ,timeTaken "
+                + (endTime - startTime));
     }
 
     private static int[] findSumByHashMap(int[] inputArray, int target) {

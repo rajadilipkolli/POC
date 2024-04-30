@@ -24,15 +24,10 @@ public class HashMapSort {
         hme.put("t31", e11);
         hme.put("t21", e21);
         hme.put("t11", e31);
-        Map m =
-                hme.entrySet().stream()
-                        .sorted((e1, e2) -> e1.getValue().getAge() - e2.getValue().getAge())
-                        .collect(
-                                Collectors.toMap(
-                                        Map.Entry::getKey,
-                                        Map.Entry::getValue,
-                                        (oldValue, newValue) -> oldValue,
-                                        LinkedHashMap::new));
+        Map m = hme.entrySet().stream()
+                .sorted((e1, e2) -> e1.getValue().getAge() - e2.getValue().getAge())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
         m.keySet().forEach(System.out::println);
     }

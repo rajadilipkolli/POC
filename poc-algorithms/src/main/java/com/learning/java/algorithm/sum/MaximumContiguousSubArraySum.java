@@ -32,7 +32,6 @@ public class MaximumContiguousSubArraySum {
         }
 
         System.out.println(bestSum);
-        System.out.println(
-                "Continuous Array is from " + maxStart + " position to " + maxEnd + " position");
+        System.out.println("Continuous Array is from " + maxStart + " position to " + maxEnd + " position");
     }
 }

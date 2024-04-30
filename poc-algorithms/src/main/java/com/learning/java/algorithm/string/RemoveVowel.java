@@ -1,6 +1,5 @@
 package com.learning.java.algorithm.string;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RemoveVowel {
@@ -14,17 +13,16 @@ public class RemoveVowel {
     }
 
     private static String removeConsecutiveVowels(String str) {
-        Character[] vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
 
-        List<Character> al = Arrays.asList(vowels);
+        List<Character> vowelsList = List.of('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U');
 
         StringBuilder sb = new StringBuilder(str);
 
         for (int i = 0; i < sb.length() - 1; i++) {
-            if (al.contains(sb.charAt(i)) && al.contains(sb.charAt(i + 1))) {
+            if (vowelsList.contains(sb.charAt(i)) && vowelsList.contains(sb.charAt(i + 1))) {
                 int endPosition = i + 2;
                 for (int j = i + 2; j < sb.length(); j++) {
-                    if (al.contains(sb.charAt(j))) {
+                    if (vowelsList.contains(sb.charAt(j))) {
                         endPosition++;
                     } else {
                         break;
@@ -38,15 +36,13 @@ public class RemoveVowel {
     }
 
     private static String removeVowel(String str) {
-        Character[] vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
-
-        List<Character> al = Arrays.asList(vowels);
+        List<Character> vowelsList = List.of('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U');
 
         StringBuilder sb = new StringBuilder(str);
 
         for (int i = 0; i < sb.length(); i++) {
 
-            if (al.contains(sb.charAt(i))) {
+            if (vowelsList.contains(sb.charAt(i))) {
                 sb.replace(i, i + 1, "");
                 i--;
             }

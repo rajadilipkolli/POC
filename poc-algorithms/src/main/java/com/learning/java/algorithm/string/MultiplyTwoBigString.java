@@ -9,22 +9,17 @@ public class MultiplyTwoBigString {
 
         long startTime = System.nanoTime();
         System.out.println(
-                "Multiply Brute Force Way -> "
-                        + multiply(a, b)
-                        + ", TimeTaken -> "
-                        + (System.nanoTime() - startTime));
+                "Multiply Brute Force Way -> " + multiply(a, b) + ", TimeTaken -> " + (System.nanoTime() - startTime));
         startTime = System.nanoTime();
-        System.out.println(
-                "Multiply Optimized Way -> "
-                        + multiplyOptimized(a, b)
-                        + ", TimeTaken -> "
-                        + (System.nanoTime() - startTime));
+        System.out.println("Multiply Optimized Way -> "
+                + multiplyOptimized(a, b)
+                + ", TimeTaken -> "
+                + (System.nanoTime() - startTime));
         startTime = System.nanoTime();
-        System.out.println(
-                "Multiply MostOptimized Way -> "
-                        + multiplyMostOptimized(a, b)
-                        + ", TimeTaken -> "
-                        + (System.nanoTime() - startTime));
+        System.out.println("Multiply MostOptimized Way -> "
+                + multiplyMostOptimized(a, b)
+                + ", TimeTaken -> "
+                + (System.nanoTime() - startTime));
     }
 
     private static String multiplyMostOptimized(String num1, String num2) {
@@ -82,16 +77,13 @@ public class MultiplyTwoBigString {
 
     private static String multiply(String firstStringArray, String secondStringArray) {
 
-        int[][] tempArray =
-                new int[firstStringArray.length()]
-                        [secondStringArray.length() + firstStringArray.length()];
+        int[][] tempArray = new int[firstStringArray.length()][secondStringArray.length() + firstStringArray.length()];
 
         for (int i = firstStringArray.length(); i > 0; i--) {
             int tempValueToAdd = 0;
             int arrayRowIndex = firstStringArray.length() - i;
             int arrayColumnIndex =
-                    (firstStringArray.length() + secondStringArray.length())
-                            - (firstStringArray.length() - i);
+                    (firstStringArray.length() + secondStringArray.length()) - (firstStringArray.length() - i);
             for (int j = secondStringArray.length(); j > 0; j--) {
                 int a = firstStringArray.charAt(i - 1) - '0';
                 int b = secondStringArray.charAt(j - 1) - '0';

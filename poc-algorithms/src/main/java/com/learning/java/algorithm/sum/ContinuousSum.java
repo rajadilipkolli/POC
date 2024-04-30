@@ -30,11 +30,6 @@ public class ContinuousSum {
             }
         }
         System.out.println(
-                "largest sum "
-                        + prevSum
-                        + " starting index at "
-                        + startIndex
-                        + " ending index at "
-                        + endIndex);
+                "largest sum " + prevSum + " starting index at " + startIndex + " ending index at " + endIndex);
     }
 }
