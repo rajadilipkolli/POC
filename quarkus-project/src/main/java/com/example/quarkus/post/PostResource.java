@@ -1,7 +1,4 @@
 package com.example.quarkus.post;
-
-import java.util.logging.Logger;
-
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -16,11 +13,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-@Path("/posts")
+@Path("/posts/")
 @RequestScoped
 public class PostResource {
-
-    private final static Logger LOGGER = Logger.getLogger(PostResource.class.getName());
 
     @Context
     UriInfo uriInfo;
@@ -33,7 +28,6 @@ public class PostResource {
     }
 
     @POST
-    @Path("/posts")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response savePost(@Valid Post post) {
         Post saved = this.postRepository.save(Post.of(post.getTitle(), post.getContent()));
