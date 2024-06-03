@@ -23,7 +23,7 @@
 		<springdoc-open-ui.version>2.5.0</springdoc-open-ui.version>
 
 		<spotless.version>2.43.0</spotless.version>
-		<sonar-maven-plugin.version>3.11.0.3922</sonar-maven-plugin.version>
+		<sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
 		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
 		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
 
