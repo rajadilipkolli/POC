@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <org.mapstruct.version>1.6.0</org.mapstruct.version>
+        <org.mapstruct.version>1.6.1</org.mapstruct.version>
         <springdoc-open-ui.version>2.6.0</springdoc-open-ui.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
