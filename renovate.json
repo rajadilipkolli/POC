@@ -1,12 +1,21 @@
 {
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
-  "labels": ["dependencies"],
-  "schedule": ["every weekend"],
+  "labels": [
+    "dependencies"
+  ],
+  "schedule": [
+    "every weekend"
+  ],
   "packageRules": [
     {
-      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     }
   ]
