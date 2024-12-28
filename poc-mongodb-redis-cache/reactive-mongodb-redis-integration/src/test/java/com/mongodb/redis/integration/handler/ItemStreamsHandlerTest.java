@@ -30,6 +30,7 @@ class ItemStreamsHandlerTest extends AbstractIntegrationTest {
                 ItemCapped.class, CollectionOptions.empty().maxDocuments(50).size(5000).capped());
         Flux<ItemCapped> itemCappedFlux =
                 Flux.interval(Duration.ofMillis(5))
+                        .onBackpressureBuffer()
                         .map(i -> new ItemCapped(null, "Random Item " + i, 100.00 + i))
                         .take(5);
 
