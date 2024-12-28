@@ -110,6 +110,12 @@
 			<artifactId>mongodb</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.redis.testcontainers</groupId>
+            <artifactId>testcontainers-redis</artifactId>
+            <version>1.6.4</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

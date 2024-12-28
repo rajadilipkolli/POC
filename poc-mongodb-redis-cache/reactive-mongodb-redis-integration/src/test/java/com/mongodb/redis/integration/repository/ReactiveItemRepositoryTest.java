@@ -1,7 +1,7 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.repository;
 
-import com.mongodb.redis.integration.config.MongoDBTestContainerConfig;
+import com.mongodb.redis.integration.config.TestContainersConfig;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import reactor.test.StepVerifier;
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
-@Import(MongoDBTestContainerConfig.class)
+@Import(TestContainersConfig.class)
 class ReactiveItemRepositoryTest {
 
     @Autowired private ReactiveItemRepository reactiveItemRepository;

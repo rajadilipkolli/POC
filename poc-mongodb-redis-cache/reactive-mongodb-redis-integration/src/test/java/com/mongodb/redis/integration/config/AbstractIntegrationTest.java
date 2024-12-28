@@ -1,7 +1,6 @@
 /* Licensed under Apache-2.0 2022 */
 package com.mongodb.redis.integration.config;
 
-import com.mongodb.redis.integration.TestMongoDBRedisReactiveApplication;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = TestMongoDBRedisReactiveApplication.class)
+        classes = TestContainersConfig.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
