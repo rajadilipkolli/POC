@@ -17,7 +17,7 @@ public class TestMongoDBRedisReactiveApplication {
     @Bean
     @ServiceConnection(name = "redis")
     public GenericContainer redisContainer() {
-        return new GenericContainer(DockerImageName.parse("redis").withTag("7.2.3-alpine"))
+        return new GenericContainer(DockerImageName.parse("redis").withTag("7.4.1-alpine"))
                 .withExposedPorts(6379);
     }
 
