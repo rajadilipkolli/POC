@@ -22,7 +22,7 @@
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>11.1.1</dependency-check-maven.version>
-        <spotless.version>2.43.0</spotless.version>
+        <spotless.version>2.44.1</spotless.version>
 
         <db.username>local</db.username>
         <db.password>local</db.password>
