@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <spotless.version>2.44.1</spotless.version>
+        <spotless.version>2.44.2</spotless.version>
         <sonar.skip>true</sonar.skip>
     </properties>
 
