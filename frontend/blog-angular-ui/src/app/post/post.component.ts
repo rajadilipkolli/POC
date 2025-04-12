@@ -5,9 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+    selector: 'app-post',
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.css'],
+    standalone: false
 })
 export class PostComponent implements OnInit {
 
@@ -40,6 +41,10 @@ export class PostComponent implements OnInit {
         response => {
           console.log(response);
           this.router.navigate(['posts']);
+        },
+        error => {
+          console.error('Error updating post:', error);
+          // Consider adding user feedback for the error
         }
       );
   }

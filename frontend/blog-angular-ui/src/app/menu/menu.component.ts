@@ -3,9 +3,10 @@ import { HardcodedAuthenticationService } from '../service/hardcoded-authenticat
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.css'],
+    standalone: false
 })
 export class MenuComponent implements OnInit {
 

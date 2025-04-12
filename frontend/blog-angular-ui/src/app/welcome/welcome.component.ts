@@ -5,9 +5,10 @@ import { WelcomeDataService, PingResponse } from '../service/data/welcome-data.s
 const newLocal = 'name';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
+    selector: 'app-welcome',
+    templateUrl: './welcome.component.html',
+    styleUrls: ['./welcome.component.css'],
+    standalone: false
 })
 export class WelcomeComponent implements OnInit {
 
