@@ -41,6 +41,10 @@ export class PostComponent implements OnInit {
         response => {
           console.log(response);
           this.router.navigate(['posts']);
+        },
+        error => {
+          console.error('Error updating post:', error);
+          // Consider adding user feedback for the error
         }
       );
   }
