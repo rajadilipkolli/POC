@@ -1,10 +1,11 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { PostComponent } from './post.component';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PostComponent', () => {
   let component: PostComponent;
@@ -12,16 +13,15 @@ describe('PostComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule, 
-        HttpClientTestingModule,
-        FormsModule
-      ],
-      declarations: [ PostComponent ],
-      providers: [
-        DatePipe
-      ]
-    })
+    declarations: [PostComponent],
+    imports: [RouterTestingModule,
+        FormsModule],
+    providers: [
+        DatePipe,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
   }));
 

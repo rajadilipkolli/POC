@@ -3,9 +3,10 @@ import { HardcodedAuthenticationService } from '../service/hardcoded-authenticat
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
 
 @Component({
-  selector: 'app-logout',
-  templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css']
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    styleUrls: ['./logout.component.css'],
+    standalone: false
 })
 export class LogoutComponent implements OnInit {
 

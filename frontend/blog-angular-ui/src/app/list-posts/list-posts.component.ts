@@ -34,16 +34,17 @@ export class Comment {
 
 export class Tag {
   constructor(
-    public review: string
+    public name: string  // Changed from 'review' to 'name' to match the template
   ) {
 
   }
 }
 
 @Component({
-  selector: 'app-list-posts',
-  templateUrl: './list-posts.component.html',
-  styleUrls: ['./list-posts.component.css']
+    selector: 'app-list-posts',
+    templateUrl: './list-posts.component.html',
+    styleUrls: ['./list-posts.component.css'],
+    standalone: false
 })
 export class ListPostsComponent implements OnInit {
 
