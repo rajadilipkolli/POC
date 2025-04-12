@@ -1,1 +1,224 @@
-<h1> Welcome to my POC World </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Projects Repository</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #0066cc;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .badges {
+            margin: 20px 0;
+        }
+        .badge {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .project {
+            background-color: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        .project h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .technology-tag {
+            background-color: #e6f2ff;
+            color: #0066cc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .button {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0052a3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to POC Projects Repository</h1>
+        <p>A collection of Proof of Concept projects demonstrating various technologies and integration patterns</p>
+        <div class="badges">
+            <img src="https://github.com/rajadilipkolli/POC/workflows/Java%20CI/badge.svg?branch=master" alt="Build Status" class="badge">
+            <img src="https://codecov.io/gh/rajadilipkolli/POC/branch/master/graph/badge.svg" alt="Codecov" class="badge">
+            <img src="https://img.shields.io/:license-apache-blue.svg?style=flat-square" alt="License" class="badge">
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>What is this Repository?</h2>
+            <p>This repository contains a collection of Proof of Concept (POC) projects developed to explore various technologies, frameworks, and integration patterns. It serves as a learning resource and reference implementation for developers interested in Java-based technologies.</p>
+            <a href="https://gitpod.io/#https://github.com/rajadilipkolli/POC" class="button">Open in Gitpod</a>
+        </section>
+
+        <section>
+            <h2>Key Projects</h2>
+            
+            <div class="project">
+                <h3>MongoDB Redis Integration</h3>
+                <p>A demonstration of adding fault-tolerant caching layer to MongoDB using Redis.</p>
+                <div>
+                    <span class="technology-tag">Spring Boot</span>
+                    <span class="technology-tag">MongoDB</span>
+                    <span class="technology-tag">Redis</span>
+                    <span class="technology-tag">Caching</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <h3>Reactive MongoDB Redis Integration</h3>
+                <p>Implementation of reactive programming with MongoDB and Redis for improved performance and resource utilization.</p>
+                <div>
+                    <span class="technology-tag">Spring Boot</span>
+                    <span class="technology-tag">MongoDB</span>
+                    <span class="technology-tag">Redis</span>
+                    <span class="technology-tag">Reactive Programming</span>
+                    <span class="technology-tag">WebFlux</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <h3>Spring Boot REST API</h3>
+                <p>Enterprise application showcasing RESTful web services with various integrations.</p>
+                <div>
+                    <span class="technology-tag">Spring Boot</span>
+                    <span class="technology-tag">JPA</span>
+                    <span class="technology-tag">Hibernate</span>
+                    <span class="technology-tag">DataSource Proxy</span>
+                    <span class="technology-tag">Flyway</span>
+                    <span class="technology-tag">ActiveMQ</span>
+                    <span class="technology-tag">Swagger</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <h3>Quarkus Project</h3>
+                <p>Example application using Quarkus, a Kubernetes-native Java framework.</p>
+                <div>
+                    <span class="technology-tag">Quarkus</span>
+                    <span class="technology-tag">REST API</span>
+                    <span class="technology-tag">Java</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <h3>Algorithms</h3>
+                <p>Collection of common algorithms implemented in Java.</p>
+                <div>
+                    <span class="technology-tag">Java</span>
+                    <span class="technology-tag">Algorithms</span>
+                    <span class="technology-tag">Data Structures</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technologies Used</h2>
+            <p>This repository demonstrates the use of numerous technologies including:</p>
+            <div>
+                <span class="technology-tag">Java</span>
+                <span class="technology-tag">Spring Boot</span>
+                <span class="technology-tag">Spring WebMVC</span>
+                <span class="technology-tag">Spring WebFlux</span>
+                <span class="technology-tag">MongoDB</span>
+                <span class="technology-tag">Redis</span>
+                <span class="technology-tag">PostgreSQL</span>
+                <span class="technology-tag">JPA/Hibernate</span>
+                <span class="technology-tag">Liquibase</span>
+                <span class="technology-tag">Flyway</span>
+                <span class="technology-tag">Docker</span>
+                <span class="technology-tag">TestContainers</span>
+                <span class="technology-tag">JUnit</span>
+                <span class="technology-tag">ActiveMQ</span>
+                <span class="technology-tag">Quarkus</span>
+                <span class="technology-tag">Angular</span>
+                <span class="technology-tag">REST API</span>
+                <span class="technology-tag">Reactive Programming</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Getting Started</h2>
+            <p>To get started with this project:</p>
+            <ol>
+                <li>Clone the repository</li>
+                <li>Set up your IDE with Lombok support as described <a href="http://www.vogella.com/tutorials/Lombok/article.html">here</a></li>
+                <li>Import the project as a Maven project</li>
+                <li>Navigate to the specific POC you're interested in</li>
+                <li>Follow the specific README instructions for that project</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Contributing</h2>
+            <p>Contributions are welcome! If you'd like to contribute:</p>
+            <ul>
+                <li>Report bugs or suggest features by <a href="https://github.com/rajadilipkolli/POC/issues/new">creating an issue</a></li>
+                <li>Submit pull requests with improvements or new POC projects</li>
+                <li>Please adhere to the <a href="CODE_OF_CONDUCT.md">Code of Conduct</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>Licensed under the Apache License, Version 2.0</p>
+        <p>Created and maintained by <a href="https://github.com/rajadilipkolli">Raja Dilip Kolli</a></p>
+    </footer>
+</body>
+</html>
