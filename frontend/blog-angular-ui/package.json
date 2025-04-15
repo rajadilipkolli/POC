@@ -38,7 +38,7 @@
     "@types/jasminewd2": "2.0.13",
     "@types/node": "18.19.86",
     "cross-env": "^7.0.3",
-    "jasmine-core": "5.1.0",
+    "jasmine-core": "5.6.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
