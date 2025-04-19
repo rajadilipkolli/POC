@@ -40,6 +40,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw -B clean verify --file pom.xml 
       - name: Codecov
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.4.2
 
 
