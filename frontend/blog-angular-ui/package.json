@@ -36,7 +36,7 @@
     "@angular/language-service": "19.2.10",
     "@types/jasmine": "5.1.8",
     "@types/jasminewd2": "2.0.13",
-    "@types/node": "22.15.17",
+    "@types/node": "22.15.18",
     "cross-env": "^7.0.3",
     "jasmine-core": "5.7.1",
     "jasmine-spec-reporter": "7.0.0",
