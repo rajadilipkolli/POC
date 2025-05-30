@@ -15,7 +15,7 @@ public class TestContainersConfig {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.0.4"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.0.9"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2))
@@ -25,6 +25,6 @@ public class TestContainersConfig {
     @Bean
     @ServiceConnection("redis")
     RedisContainer redisContainer() {
-        return new RedisContainer(DockerImageName.parse("redis").withTag("7.4.1-alpine"));
+        return new RedisContainer(DockerImageName.parse("redis").withTag("8.0.2-alpine"));
     }
 }
