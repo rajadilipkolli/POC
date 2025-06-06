@@ -41,7 +41,7 @@ class PostControllerTest {
                 .willReturn(List.of(MockObjectCreator.getPostDTO()));
 
         this.mvc
-                .perform(get("/users/junit/posts").accept(MediaTypes.HAL_JSON_VALUE)) //
+                .perform(get("/api/users/junit/posts").accept(MediaTypes.HAL_JSON_VALUE)) //
                 .andDo(print()) //
                 .andExpect(status().isOk()) //
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)) //
@@ -58,7 +58,7 @@ class PostControllerTest {
                 .andExpect(
                         jsonPath(
                                 "$.postList[0].links[0].href",
-                                is("http://localhost/users/junit/posts/junitTitle")))
+                                is("http://localhost/api/users/junit/posts/junitTitle")))
                 .andReturn();
     }
 }

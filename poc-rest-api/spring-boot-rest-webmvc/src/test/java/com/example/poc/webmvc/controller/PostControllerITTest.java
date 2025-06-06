@@ -41,7 +41,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
     @Test
     void test01_FetchingPostsByUserId() {
         ResponseEntity<PostsDTO> response =
-                userRestTemplate().getForEntity("/users/raja/posts", PostsDTO.class);
+                userRestTemplate().getForEntity("/api/users/raja/posts", PostsDTO.class);
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -65,11 +65,11 @@ class PostControllerITTest extends AbstractIntegrationTest {
 
         ResponseEntity<PostDTO> postResponse =
                 userRestTemplate()
-                        .postForEntity("/users/junit/posts/", this.postDto, PostDTO.class);
+                        .postForEntity("/api/users/junit/posts/", this.postDto, PostDTO.class);
         assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(postResponse.getHeaders().getContentLength()).isEqualTo(0);
         String location = postResponse.getHeaders().getFirst("Location");
-        assertThat(location).contains("/users/junit/posts/" + this.postDto.getTitle());
+        assertThat(location).contains("/api/users/junit/posts/" + this.postDto.getTitle());
 
         ResponseEntity<PostDTO> getResponse =
                 userRestTemplate().getForEntity(location, PostDTO.class);
@@ -96,7 +96,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
         final ResponseEntity<PostDTO> response =
                 userRestTemplate()
                         .exchange(
-                                "/users/junit/posts/" + this.postDto.getTitle(),
+                                "/api/users/junit/posts/" + this.postDto.getTitle(),
                                 HttpMethod.PUT,
                                 entity,
                                 PostDTO.class);
@@ -116,9 +116,9 @@ class PostControllerITTest extends AbstractIntegrationTest {
 
     @Test
     void test04_DeletingPost() {
-        adminRestTemplate().delete("/users/junit/posts/" + this.postDto.getTitle());
+        adminRestTemplate().delete("/api/users/junit/posts/" + this.postDto.getTitle());
         ResponseEntity<PostsDTO> response =
-                userRestTemplate().getForEntity("/users/junit/posts", PostsDTO.class);
+                userRestTemplate().getForEntity("/api/users/junit/posts", PostsDTO.class);
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();

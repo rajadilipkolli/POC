@@ -19,7 +19,7 @@ public class JobInvokerController {
 
     private final Job executionJob;
 
-    @GetMapping("/run-batch-job")
+    @GetMapping("/api/run-batch-job")
     public String handle() throws Exception {
 
         JobParameters jobParameters =

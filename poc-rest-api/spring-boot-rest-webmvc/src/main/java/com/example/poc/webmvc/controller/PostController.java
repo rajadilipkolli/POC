@@ -7,6 +7,7 @@ import com.example.poc.webmvc.dto.PostRequestDTO;
 import com.example.poc.webmvc.dto.PostsDTO;
 import com.example.poc.webmvc.service.PostService;
 import jakarta.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -23,10 +24,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class PostController implements PostAPI {
 
     private final PostService jpaPostService;
@@ -86,12 +88,13 @@ public class PostController implements PostAPI {
             UriComponentsBuilder ucBuilder) {
         this.jpaPostService.createPost(postRequestDTO, userName);
 
-        return ResponseEntity.created(
-                        ucBuilder
-                                .path("/users/{user_name}/posts/{title}")
-                                .buildAndExpand(userName, postRequestDTO.title())
-                                .toUri())
-                .build();
+        URI location =
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("{title}")
+                        .buildAndExpand(postRequestDTO.title())
+                        .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{user_name}/posts/{title}")
