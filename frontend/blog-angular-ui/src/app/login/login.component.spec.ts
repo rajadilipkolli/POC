@@ -1,7 +1,7 @@
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule, provideRouter } from '@angular/router';
+import { Router, provideRouter } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
