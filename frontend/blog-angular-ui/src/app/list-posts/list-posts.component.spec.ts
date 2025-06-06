@@ -65,7 +65,7 @@ describe('ListPostsComponent', () => {
   });
 
   it('should handle error when loading posts', () => {
-    const consoleSpy = spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'error');
     component.ngOnInit();    
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
     req.error(new ErrorEvent('error'));
@@ -106,7 +106,7 @@ describe('ListPostsComponent', () => {
   });
 
   it('should handle error when deleting post', () => {
-    const consoleSpy = spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'error');
     const testTitle = 'Test Title';
     
     component.deletePost(testTitle);
@@ -126,7 +126,7 @@ describe('ListPostsComponent', () => {
     expect(component.posts).toEqual(mockPosts.postList);
   });
   it('should handle error when refreshing posts', () => {
-    const consoleSpy = spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'error');
     
     component.refreshPosts();
 

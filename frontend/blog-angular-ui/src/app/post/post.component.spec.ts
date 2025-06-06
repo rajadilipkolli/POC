@@ -86,7 +86,7 @@ describe('PostComponent', () => {
     expect(component.title).toBe(mockPost.title);
   });
   it('should handle error when loading post', () => {
-    const consoleSpy = spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'error');
     component.ngOnInit();
 
     const req = httpTestingController.expectOne(
@@ -115,8 +115,9 @@ describe('PostComponent', () => {
 
     expect(router.navigate).toHaveBeenCalledWith(['posts']);
   });
+
   it('should handle error when updating post', () => {
-    const consoleSpy = spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'error');
     const navigateSpy = spyOn(router, 'navigate');
 
     component.post = { ...mockPost };
