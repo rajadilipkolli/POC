@@ -4,7 +4,6 @@ package com.example.poc.webmvc.common;
 import static com.example.poc.webmvc.utils.AppConstants.PROFILE_IT;
 import static com.example.poc.webmvc.utils.AppConstants.PROFILE_TEST;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,8 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 public abstract class AbstractIntegrationTest extends AbstractPostgreSQLContainerBase {
 
     @Autowired private Environment environment;
-
-    @Autowired private ObjectMapper mapper;
 
     protected TestRestTemplate restTemplate() {
         return configure(new TestRestTemplate());
@@ -47,8 +44,8 @@ public abstract class AbstractIntegrationTest extends AbstractPostgreSQLContaine
         @Bean
         RestTemplateBuilder restTemplateBuilder() {
             return new RestTemplateBuilder()
-                    .setConnectTimeout(Duration.ofSeconds(1))
-                    .setReadTimeout(Duration.ofSeconds(1));
+                    .connectTimeout(Duration.ofSeconds(1))
+                    .readTimeout(Duration.ofSeconds(1));
         }
     }
 }

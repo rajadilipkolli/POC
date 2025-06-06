@@ -18,9 +18,9 @@ class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         ApplicationProperties.Cors propertiesCors = applicationProperties.getCors();
         registry.addMapping(propertiesCors.getPathPattern())
-                .allowedMethods(propertiesCors.getAllowedMethods())
-                .allowedHeaders(propertiesCors.getAllowedHeaders())
-                .allowedOriginPatterns(propertiesCors.getAllowedOriginPatterns())
+                .allowedMethods(propertiesCors.getAllowedMethodsArray())
+                .allowedHeaders(propertiesCors.getAllowedHeadersArray())
+                .allowedOriginPatterns(propertiesCors.getAllowedOriginPatternsArray())
                 .allowCredentials(propertiesCors.isAllowCredentials());
     }
 }

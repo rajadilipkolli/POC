@@ -52,3 +52,11 @@ spring:
 springdoc:
   swagger-ui:
     operationsSorter: method
+
+application:
+  cors:
+    path-pattern: "/api/**"
+    allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+    allowed-headers: "Content-Type,Authorization,X-Requested-With,Accept,Origin,Access-Control-Request-Method"
+    allowed-origin-patterns: "*"
+    allow-credentials: true

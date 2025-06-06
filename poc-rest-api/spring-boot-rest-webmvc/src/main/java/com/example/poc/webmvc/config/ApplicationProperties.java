@@ -21,5 +21,17 @@ public class ApplicationProperties {
         private String allowedHeaders = "Content-Type,Authorization,X-Requested-With,Accept,Origin";
         private String allowedOriginPatterns = "*";
         private boolean allowCredentials = true;
+
+        public String[] getAllowedMethodsArray() {
+            return allowedMethods.split(",");
+        }
+
+        public String[] getAllowedHeadersArray() {
+            return allowedHeaders.split(",");
+        }
+
+        public String[] getAllowedOriginPatternsArray() {
+            return allowedOriginPatterns.split(",");
+        }
     }
 }
