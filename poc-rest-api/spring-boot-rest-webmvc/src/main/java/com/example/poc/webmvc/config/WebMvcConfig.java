@@ -18,9 +18,29 @@ class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         ApplicationProperties.Cors propertiesCors = applicationProperties.getCors();
         registry.addMapping(propertiesCors.getPathPattern())
-                .allowedMethods(propertiesCors.getAllowedMethods().split(","))
-                .allowedHeaders(propertiesCors.getAllowedHeaders().split(","))
-                .allowedOriginPatterns(propertiesCors.getAllowedOriginPatterns().split(","))
+                .allowedMethods(splitAndTrim(propertiesCors.getAllowedMethods()))
+                .allowedHeaders(splitAndTrim(propertiesCors.getAllowedHeaders()))
+                .allowedOriginPatterns(splitAndTrim(propertiesCors.getAllowedOriginPatterns()))
                 .allowCredentials(propertiesCors.isAllowCredentials());
+    }
+
+    private String[] splitAndTrim(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return new String[0];
+        }
+        String[] parts = value.split(",");
+        int count = 0;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+            if (!parts[i].isEmpty()) {
+                parts[count++] = parts[i];
+            }
+        }
+        if (count == parts.length) {
+            return parts;
+        }
+        String[] result = new String[count];
+        System.arraycopy(parts, 0, result, 0, count);
+        return result;
     }
 }
