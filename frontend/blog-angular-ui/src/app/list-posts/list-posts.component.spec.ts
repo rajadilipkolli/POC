@@ -20,11 +20,9 @@ describe('ListPostsComponent', () => {
     new Post('Test Title 1', 'Content 1', 'user1', new Date().toISOString(), mockComments, mockTags),
     new Post('Test Title 2', 'Content 2', 'user1', new Date().toISOString(), [], [])
   ]);
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ListPostsComponent],
-      imports: [RouterModule.forRoot([])],
+      imports: [RouterModule.forRoot([]), ListPostsComponent],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
@@ -32,12 +30,11 @@ describe('ListPostsComponent', () => {
       ]
     }).compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(ListPostsComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    postDataService = TestBed.inject(PostDataService);
+    let postDataService = TestBed.inject(PostDataService);
     httpTestingController = TestBed.inject(HttpTestingController);
     // Remove fixture.detectChanges() from here to prevent initial HTTP request
   });

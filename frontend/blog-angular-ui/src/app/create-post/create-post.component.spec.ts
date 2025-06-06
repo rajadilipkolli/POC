@@ -14,25 +14,30 @@ describe('CreatePostComponent', () => {
   let fixture: ComponentFixture<CreatePostComponent>;
   let httpTestingController: HttpTestingController;
   let router: Router;
-  let datePipe: DatePipe;
-
+  let datePipe: jasmine.SpyObj<DatePipe>;
+  const fixedDate = '2025-06-06T10:00:00';
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatePostComponent],
-      imports: [RouterModule.forRoot([]), FormsModule],
+      imports: [RouterModule.forRoot([]), FormsModule, CreatePostComponent],
       providers: [
-        DatePipe,
+        {
+          provide: DatePipe,
+          useValue: jasmine.createSpyObj('DatePipe', ['transform'])
+        },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     }).compileComponents();
-  }));
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreatePostComponent);
+  }));  beforeEach(() => {    fixture = TestBed.createComponent(CreatePostComponent);
     component = fixture.componentInstance;
     httpTestingController = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);
-    datePipe = TestBed.inject(DatePipe);
+    datePipe = TestBed.inject(DatePipe) as jasmine.SpyObj<DatePipe>;
+    
+    // Reset and set up the spy for each test
+    datePipe.transform.calls.reset();
+    datePipe.transform.and.returnValue(fixedDate);
+    
     // We don't need to call detectChanges() here to prevent multiple HTTP calls
   });
 
@@ -51,9 +56,10 @@ describe('CreatePostComponent', () => {
     expect(component.post.comments).toEqual([]);
     expect(component.post.tags).toEqual([]);
   });
+  
+  
   it('should create post successfully', () => {
-    const transformedDate = '2025-06-06T10:00:00';
-    spyOn(datePipe, 'transform').and.returnValue(transformedDate);
+    // No need to spy on datePipe.transform again since it's already set up in beforeEach
     spyOn(router, 'navigate');
     spyOn(console, 'log');
 
@@ -70,7 +76,7 @@ describe('CreatePostComponent', () => {
     expect(req.request.body.title).toEqual(testPost.title);
     expect(req.request.body.content).toEqual(testPost.content);
     expect(req.request.body.createdBy).toEqual(testPost.createdBy);
-    expect(req.request.body.createdOn).toEqual(transformedDate);
+    expect(req.request.body.createdOn).toEqual(fixedDate);
     expect(req.request.body.comments).toEqual([]);
     expect(req.request.body.tags).toEqual([]);
     
@@ -95,17 +101,14 @@ describe('CreatePostComponent', () => {
     expect(router.navigate).not.toHaveBeenCalled();
     expect(console.log).toHaveBeenCalled();
   });
-
   it('should transform date when creating post', () => {
-    const transformedDate = '2025-06-06T10:00:00';
-    spyOn(datePipe, 'transform').and.returnValue(transformedDate);
-
+    // No need to spy on datePipe.transform again
     component.createPost();
 
     const req = httpTestingController.expectOne(
       `${API_URL}/users/raja/posts/`
     );
-    expect(req.request.body.createdOn).toBe(transformedDate);
+    expect(req.request.body.createdOn).toBe(fixedDate);
     req.flush({ message: 'Post created successfully' });
   });
 
@@ -118,13 +121,12 @@ describe('CreatePostComponent', () => {
     expect(component.post.tags).toEqual([]);
     expect(component.message).toBe('');
   });
+  
   it('should handle post with empty fields', () => {
     const emptyPost = new Post('', '', '', new Date().toISOString(), [], []);
     component.post = emptyPost;
     
-    const transformedDate = '2025-06-06T10:00:00';
-    spyOn(datePipe, 'transform').and.returnValue(transformedDate);
-    
+    // No need to spy on datePipe.transform again
     component.createPost();
 
     const req = httpTestingController.expectOne(
@@ -133,7 +135,7 @@ describe('CreatePostComponent', () => {
     // Compare individual properties rather than the whole object
     expect(req.request.body.title).toBe('');
     expect(req.request.body.content).toBe('');
-    expect(req.request.body.createdOn).toBe(transformedDate);
+    expect(req.request.body.createdOn).toBe(fixedDate);
     req.flush({ message: 'Post created successfully' });
   });
 });

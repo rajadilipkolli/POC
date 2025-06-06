@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostDataService } from '../service/data/post-data.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 
 export class PostList {
@@ -44,7 +45,8 @@ export class Tag {
     selector: 'app-list-posts',
     templateUrl: './list-posts.component.html',
     styleUrls: ['./list-posts.component.css'],
-    
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ListPostsComponent implements OnInit {
   posts: Post[] = [];

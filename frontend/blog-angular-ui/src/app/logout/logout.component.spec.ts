@@ -8,11 +8,9 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [LogoutComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, LogoutComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();

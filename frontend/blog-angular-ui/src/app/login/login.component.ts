@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
 import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
 
@@ -7,7 +9,8 @@ import { HardcodedAuthenticationService } from '../service/hardcoded-authenticat
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    
+    standalone: true,
+    imports: [CommonModule, FormsModule]
 })
 export class LoginComponent implements OnInit {
 

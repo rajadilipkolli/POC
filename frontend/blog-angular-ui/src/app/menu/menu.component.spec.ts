@@ -8,11 +8,9 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [MenuComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, MenuComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();

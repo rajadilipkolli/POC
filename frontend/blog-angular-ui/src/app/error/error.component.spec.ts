@@ -5,10 +5,9 @@ import { ErrorComponent } from './error.component';
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorComponent ]
+      imports: [ ErrorComponent ]
     })
     .compileComponents();
   }));

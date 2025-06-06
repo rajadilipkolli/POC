@@ -8,11 +8,9 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [WelcomeComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, WelcomeComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();

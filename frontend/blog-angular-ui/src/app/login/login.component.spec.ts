@@ -15,11 +15,9 @@ describe('LoginComponent', () => {
   let router: Router;
   let hardcodedAuthService: HardcodedAuthenticationService;
   let httpTestingController: HttpTestingController;
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, LoginComponent],
       providers: [
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
@@ -30,13 +28,12 @@ describe('LoginComponent', () => {
     })
     .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
     hardcodedAuthService = TestBed.inject(HardcodedAuthenticationService);
-    basicAuthService = TestBed.inject(BasicAuthenticationService);
+    let basicAuthService = TestBed.inject(BasicAuthenticationService);
     httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
   });
