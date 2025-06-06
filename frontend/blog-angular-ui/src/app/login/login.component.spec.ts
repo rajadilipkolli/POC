@@ -1,13 +1,13 @@
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import { Router, RouterModule, provideRouter } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
+import { API_URL } from '../app.constants';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,8 +20,9 @@ describe('LoginComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [RouterTestingModule, FormsModule],
+      imports: [FormsModule],
       providers: [
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         HardcodedAuthenticationService,
@@ -57,17 +58,7 @@ describe('LoginComponent', () => {
     expect(component.invalidLogin).toBeFalse();
   });
 
-  it('should set invalidLogin to true when hardcoded authentication fails', () => {
-    spyOn(hardcodedAuthService, 'authenticate').and.returnValue(false);
-    spyOn(router, 'navigate');
-
-    component.handleLogin();
-
-    expect(component.invalidLogin).toBeTrue();
-    expect(router.navigate).not.toHaveBeenCalled();
-  });
-
-  it('should navigate to welcome page when hardcoded authentication succeeds', () => {
+  it('should handle successful hardcoded authentication', () => {
     spyOn(hardcodedAuthService, 'authenticate').and.returnValue(true);
     spyOn(router, 'navigate');
 
@@ -77,33 +68,81 @@ describe('LoginComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['welcome', component.userName]);
   });
 
-  it('should handle basic auth login success', () => {
+  it('should handle failed hardcoded authentication', () => {
+    spyOn(hardcodedAuthService, 'authenticate').and.returnValue(false);
     spyOn(router, 'navigate');
-    const mockResponse = { message: 'Success' };
+
+    component.handleLogin();
+
+    expect(component.invalidLogin).toBeTrue();
+    expect(router.navigate).not.toHaveBeenCalled();
+  });
+
+  it('should handle successful basic auth login', () => {
+    spyOn(router, 'navigate');
+    component.userName = 'testUser';
+    component.passWord = 'testPass';
 
     component.handleBasicAuthLogin();
 
-    const req = httpTestingController.expectOne(request => 
-      request.url.includes('/pingWithAuthentication')
-    );
-    req.flush(mockResponse);
+    const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
+    expect(req.request.headers.get('Authorization')).toBeDefined();
+    req.flush({ message: 'Success' });
 
     expect(component.invalidLogin).toBeFalse();
     expect(router.navigate).toHaveBeenCalledWith(['welcome', component.userName]);
   });
 
-  it('should handle basic auth login failure', () => {
+  it('should handle failed basic auth login', () => {
     spyOn(router, 'navigate');
-    spyOn(console, 'log'); // Prevent actual console logging
+    spyOn(console, 'log');
 
     component.handleBasicAuthLogin();
 
-    const req = httpTestingController.expectOne(request => 
-      request.url.includes('/pingWithAuthentication')
-    );
-    req.error(new ErrorEvent('Network error'));
+    const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
+    const errorResponse = new ProgressEvent('error');
+    req.error(errorResponse);
 
     expect(component.invalidLogin).toBeTrue();
     expect(router.navigate).not.toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalled();
+  });
+
+  it('should set proper Authorization header in basic auth request', () => {
+    component.userName = 'testUser';
+    component.passWord = 'testPass';
+    const expectedAuthHeader = 'Basic ' + window.btoa(component.userName + ':' + component.passWord);
+
+    component.handleBasicAuthLogin();
+
+    const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
+    expect(req.request.headers.get('Authorization')).toBe(expectedAuthHeader);
+    req.flush({ message: 'Success' });
+  });
+
+  it('should clear invalid login state on successful auth', () => {
+    component.invalidLogin = true;
+    spyOn(router, 'navigate');
+
+    component.handleBasicAuthLogin();
+
+    const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
+    req.flush({ message: 'Success' });
+
+    expect(component.invalidLogin).toBeFalse();
+  });
+
+  it('should preserve error state on failed auth', () => {
+    component.invalidLogin = true;
+    spyOn(router, 'navigate');
+    spyOn(console, 'log');
+
+    component.handleBasicAuthLogin();
+
+    const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
+    const errorResponse = new ProgressEvent('error');
+    req.error(errorResponse);
+
+    expect(component.invalidLogin).toBeTrue();
   });
 });
