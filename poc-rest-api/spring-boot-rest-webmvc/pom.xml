@@ -303,7 +303,7 @@
                                 </database>
                                 <target>
                                     <packageName>com.example.poc.webmvc.testcontainersflyway.db</packageName>
-                                    <directory>target/generated-sources</directory>
+                                    <directory>target/generated-sources/jooq</directory>
                                 </target>
                             </generator>
                         </configuration>
@@ -329,7 +329,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.18.1</version>
+							<version>1.25.2</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 						<licenseHeader>

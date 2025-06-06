@@ -23,13 +23,13 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
     @Autowired private Job jobUnderTest;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.jobRepositoryTestUtils.removeJobExecutions();
         this.jobLauncherTestUtils.setJob(this.jobUnderTest);
     }
 
     @Test
-    public void givenReferenceOutput_whenJobExecuted_thenSuccess() throws Exception {
+    void givenReferenceOutput_whenJobExecuted_thenSuccess() throws Exception {
         // given
 
         // when
@@ -44,7 +44,7 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testMyJob() throws Exception {
+    void testMyJob() throws Exception {
         // given
         JobParameters jobParameters = this.jobLauncherTestUtils.getUniqueJobParameters();
 

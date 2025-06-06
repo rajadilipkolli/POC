@@ -1,4 +1,4 @@
-version: "3"
+name: Spring Boot REST API with PostgreSQL
 
 services:
   #  Create a service named postgres.
