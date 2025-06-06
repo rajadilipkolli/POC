@@ -8,10 +8,10 @@ import { DatePipe } from '@angular/common';
     selector: 'app-post',
     templateUrl: './post.component.html',
     styleUrls: ['./post.component.css'],
-    standalone: false
+    
 })
 export class PostComponent implements OnInit {
-  title: string = '';
+  title = '';
   post: Post = new Post('', '', '', new Date().toISOString(), [], []);
 
   constructor(
@@ -20,30 +20,29 @@ export class PostComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit(): void {
     const newLocal = 'title';
     this.title = this.route.snapshot.params[newLocal];
     this.postDataService.retrievePostByTitleAndUserName(this.title, 'raja')
-      .subscribe(
-        response => this.post = response
-      );
+      .subscribe({
+        next: (response) => this.post = response,
+        error: (error) => console.log('Error retrieving post:', error)
+      });
   }
-
   updatePost() {
     const transformedDate = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
     this.post.createdOn = transformedDate || this.post.createdOn;
     console.log(`inside update Post ${this.post}`);
     this.postDataService.updatePostByTitleAndUserName(this.title, 'raja', this.post)
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (response) => {
           console.log(response);
           this.router.navigate(['posts']);
         },
-        error => {
-          console.error('Error updating post:', error);
+        error: (error) => {
+          console.log('Error updating post:', error);
           // Consider adding user feedback for the error
         }
-      );
+      });
   }
 }

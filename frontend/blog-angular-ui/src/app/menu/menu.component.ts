@@ -6,7 +6,7 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css'],
-    standalone: false
+    
 })
 export class MenuComponent implements OnInit {
 

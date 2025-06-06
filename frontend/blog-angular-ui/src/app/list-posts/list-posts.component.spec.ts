@@ -12,7 +12,6 @@ describe('ListPostsComponent', () => {
   let component: ListPostsComponent;
   let fixture: ComponentFixture<ListPostsComponent>;
   let router: Router;
-  let postDataService: PostDataService;
   let httpTestingController: HttpTestingController;
 
   const mockComments = [new Comment('Test Comment')];
@@ -69,12 +68,13 @@ describe('ListPostsComponent', () => {
   });
 
   it('should handle error when loading posts', () => {
-    spyOn(console, 'log');
-    component.ngOnInit();    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
-    req.error(new ProgressEvent('error'));
+    const consoleSpy = spyOn(console, 'log');
+    component.ngOnInit();    
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
+    req.error(new ErrorEvent('error'));
 
     expect(component.posts).toEqual([]);
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalled();
   });
 
   it('should navigate to create post page', () => {
@@ -109,13 +109,14 @@ describe('ListPostsComponent', () => {
   });
 
   it('should handle error when deleting post', () => {
-    spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'log');
     const testTitle = 'Test Title';
     
-    component.deletePost(testTitle);    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/${testTitle}`);
-    req.error(new ProgressEvent('error'));
+    component.deletePost(testTitle);
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/${testTitle}`);
+    req.error(new ErrorEvent('error'));
 
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalled();
   });
 
   it('should refresh posts list successfully', () => {
@@ -127,16 +128,15 @@ describe('ListPostsComponent', () => {
 
     expect(component.posts).toEqual(mockPosts.postList);
   });
-
   it('should handle error when refreshing posts', () => {
-    spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'log');
     
     component.refreshPosts();
 
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
     req.error(new ErrorEvent('Network error'));
 
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalled();
     expect(component.posts).toEqual([]);
   });
 

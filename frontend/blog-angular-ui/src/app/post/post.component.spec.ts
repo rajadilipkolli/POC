@@ -53,7 +53,9 @@ describe('PostComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);
     datePipe = TestBed.inject(DatePipe);
-    fixture.detectChanges();
+    // We're setting the title directly instead of calling fixture.detectChanges()
+    // which would trigger ngOnInit and make an HTTP call
+    component.title = mockPost.title;
   });
 
   afterEach(() => {
@@ -76,18 +78,16 @@ describe('PostComponent', () => {
     expect(component.post).toEqual(mockPost);
     expect(component.title).toBe(mockPost.title);
   });
-
   it('should handle error when loading post', () => {
-    spyOn(console, 'log');
+    const consoleSpy = spyOn(console, 'log');
     component.ngOnInit();
 
     const req = httpTestingController.expectOne(
       `${API_URL}/users/raja/posts/${mockPost.title}`
     );
-    const errorResponse = new ProgressEvent('error');
-    req.error(errorResponse);
+    req.error(new ErrorEvent('Network error'));
 
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalled();
   });
 
   it('should update post successfully', () => {
@@ -110,10 +110,9 @@ describe('PostComponent', () => {
 
     expect(router.navigate).toHaveBeenCalledWith(['posts']);
   });
-
   it('should handle error when updating post', () => {
-    spyOn(console, 'log');
-    spyOn(router, 'navigate');
+    const consoleSpy = spyOn(console, 'log');
+    const navigateSpy = spyOn(router, 'navigate');
 
     component.post = { ...mockPost };
     component.updatePost();
@@ -121,11 +120,10 @@ describe('PostComponent', () => {
     const req = httpTestingController.expectOne(
       `${API_URL}/users/raja/posts/${mockPost.title}`
     );
-    const errorResponse = new ProgressEvent('error');
-    req.error(errorResponse);
+    req.error(new ErrorEvent('Network error'));
 
-    expect(console.log).toHaveBeenCalled();
-    expect(router.navigate).not.toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalled();
+    expect(navigateSpy).not.toHaveBeenCalled();
   });
 
   it('should transform date when updating post', () => {

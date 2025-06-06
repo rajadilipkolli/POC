@@ -7,7 +7,7 @@ import { HardcodedAuthenticationService } from '../service/hardcoded-authenticat
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    standalone: false
+    
 })
 export class LoginComponent implements OnInit {
 
@@ -37,14 +37,12 @@ export class LoginComponent implements OnInit {
       this.invalidLogin = true;
     }
   }
-
   handleBasicAuthLogin() {
     // console.log(this.username);
     // if(this.username==="username" && this.password === 'password') {
-
     this.basicAuthenticationService.executeAuthenticationService(this.userName, this.passWord)
       .subscribe(
-        respone => {
+        () => {
           this.router.navigate(['welcome', this.userName]);
           this.invalidLogin = false;
         },

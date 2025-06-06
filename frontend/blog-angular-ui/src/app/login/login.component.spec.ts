@@ -14,7 +14,6 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let router: Router;
   let hardcodedAuthService: HardcodedAuthenticationService;
-  let basicAuthService: BasicAuthenticationService;
   let httpTestingController: HttpTestingController;
 
   beforeEach(waitForAsync(() => {

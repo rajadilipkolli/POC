@@ -8,7 +8,7 @@ const newLocal = 'name';
     selector: 'app-welcome',
     templateUrl: './welcome.component.html',
     styleUrls: ['./welcome.component.css'],
-    standalone: false
+    
 })
 export class WelcomeComponent implements OnInit {
 
@@ -38,7 +38,7 @@ export class WelcomeComponent implements OnInit {
     this.welcomeMessage = response.message;
   }
 
-  handleErrorResponse(error: any): void {
+  handleErrorResponse(error: unknown): void {
     this.welcomeMessage = error.error.message;
   }
 

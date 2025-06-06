@@ -8,11 +8,11 @@ import { DatePipe } from '@angular/common';
     selector: 'app-create-post',
     templateUrl: './create-post.component.html',
     styleUrls: ['./create-post.component.css'],
-    standalone: false
+    
 })
 export class CreatePostComponent implements OnInit {
   post: Post = new Post('', '', '', new Date().toISOString(), [], []);
-  message: string = '';
+  message = '';
 
   constructor(
     private postDataService: PostDataService,
@@ -22,19 +22,20 @@ export class CreatePostComponent implements OnInit {
 
   ngOnInit(): void {
     this.post = new Post('', '', '', new Date().toISOString(), [], []);
-  }
-
-  createPost() {
+  }  createPost() {
     const transformedDate = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
     this.post.createdOn = transformedDate || this.post.createdOn;
     this.postDataService.createPostByUserName(this.post, 'raja')
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (response) => {
           console.log(response);
           this.message = `Successfully Created Post With Title ${this.post.title}`;
           this.router.navigate(['posts']);
+        },
+        error: (error) => {
+          console.log('Error creating post:', error);
         }
-      );
+      });
   }
 
 }
