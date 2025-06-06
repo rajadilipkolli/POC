@@ -7,20 +7,18 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
-  let fixture: ComponentFixture<WelcomeComponent>;
-  beforeEach(waitForAsync(() => {
+  let fixture: ComponentFixture<WelcomeComponent>;  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule, WelcomeComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-    .compileComponents();
+      imports: [RouterTestingModule, WelcomeComponent],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    })
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(WelcomeComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(WelcomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -7,20 +7,18 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
-  let fixture: ComponentFixture<LogoutComponent>;
-  beforeEach(waitForAsync(() => {
+  let fixture: ComponentFixture<LogoutComponent>;  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
     imports: [RouterTestingModule, LogoutComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
-    .compileComponents();
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(LogoutComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LogoutComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

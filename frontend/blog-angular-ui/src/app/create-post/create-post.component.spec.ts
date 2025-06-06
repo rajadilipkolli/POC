@@ -16,7 +16,6 @@ describe('CreatePostComponent', () => {
   let router: Router;
   let datePipe: jasmine.SpyObj<DatePipe>;
   const fixedDate = '2025-06-06T10:00:00';
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), FormsModule, CreatePostComponent],
@@ -28,22 +27,22 @@ describe('CreatePostComponent', () => {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
-    }).compileComponents();
-  }));  
-  
-  beforeEach(() => {    
-    fixture = TestBed.createComponent(CreatePostComponent);
-    component = fixture.componentInstance;
-    httpTestingController = TestBed.inject(HttpTestingController);
-    router = TestBed.inject(Router);
-    datePipe = TestBed.inject(DatePipe) as jasmine.SpyObj<DatePipe>;
-    
-    // Reset and set up the spy for each test
-    datePipe.transform.calls.reset();
-    datePipe.transform.and.returnValue(fixedDate);
-    
-    // We don't need to call detectChanges() here to prevent multiple HTTP calls
-  });
+    })
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(CreatePostComponent);
+      component = fixture.componentInstance;
+      httpTestingController = TestBed.inject(HttpTestingController);
+      router = TestBed.inject(Router);
+      datePipe = TestBed.inject(DatePipe) as jasmine.SpyObj<DatePipe>;
+      
+      // Reset and set up the spy for each test
+      datePipe.transform.calls.reset();
+      datePipe.transform.and.returnValue(fixedDate);
+      
+      // We don't need to call detectChanges() here to prevent multiple HTTP calls
+    });
+  }));
 
   afterEach(() => {
     httpTestingController.verify();
