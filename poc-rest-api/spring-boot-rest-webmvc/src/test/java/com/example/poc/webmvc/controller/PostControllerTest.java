@@ -17,9 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(PostController.class)
@@ -27,11 +27,11 @@ class PostControllerTest {
 
     @Autowired private MockMvc mvc;
 
-    @MockBean
+    @MockitoBean
     @Qualifier("jpaPostService")
     private PostService jpaPostService;
 
-    @MockBean
+    @MockitoBean
     @Qualifier("jooqPostService")
     private PostService jooqPostService;
 
