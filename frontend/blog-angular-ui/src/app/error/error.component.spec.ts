@@ -1,19 +1,20 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { ErrorComponent } from './error.component';
+import {ErrorComponent} from './error.component';
 
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
-  let fixture: ComponentFixture<ErrorComponent>;  beforeEach(waitForAsync(() => {
+  let fixture: ComponentFixture<ErrorComponent>;
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ ErrorComponent ]
+      imports: [ErrorComponent]
     })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(ErrorComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(ErrorComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+      });
   }));
 
   it('should create', () => {

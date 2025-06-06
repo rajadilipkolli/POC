@@ -1,21 +1,21 @@
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { Router, provideRouter } from '@angular/router';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
+import {provideRouter, Router} from '@angular/router';
 
-import { LoginComponent } from './login.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
-import { BasicAuthenticationService } from '../service/basic-authentication.service';
-import { API_URL } from '../app.constants';
+import {LoginComponent} from './login.component';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {HardcodedAuthenticationService} from '../service/hardcoded-authentication.service';
+import {BasicAuthenticationService} from '../service/basic-authentication.service';
+import {API_URL} from '../app.constants';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router: Router;
   let hardcodedAuthService: HardcodedAuthenticationService;
-  let httpTestingController: HttpTestingController;  
-  
+  let httpTestingController: HttpTestingController;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule, LoginComponent],
@@ -27,16 +27,16 @@ describe('LoginComponent', () => {
         BasicAuthenticationService
       ]
     })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(LoginComponent);
-      component = fixture.componentInstance;
-      router = TestBed.inject(Router);
-      hardcodedAuthService = TestBed.inject(HardcodedAuthenticationService);
-      const basicAuthService = TestBed.inject(BasicAuthenticationService);
-      httpTestingController = TestBed.inject(HttpTestingController);
-      fixture.detectChanges();
-    });
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(LoginComponent);
+        component = fixture.componentInstance;
+        router = TestBed.inject(Router);
+        hardcodedAuthService = TestBed.inject(HardcodedAuthenticationService);
+        const basicAuthService = TestBed.inject(BasicAuthenticationService);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        fixture.detectChanges();
+      });
   }));
 
   afterEach(() => {
@@ -84,7 +84,7 @@ describe('LoginComponent', () => {
 
     const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
     expect(req.request.headers.get('Authorization')).toBeDefined();
-    req.flush({ message: 'Success' });
+    req.flush({message: 'Success'});
 
     expect(component.invalidLogin).toBeFalse();
     expect(router.navigate).toHaveBeenCalledWith(['welcome', component.userName]);
@@ -114,7 +114,7 @@ describe('LoginComponent', () => {
 
     const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
     expect(req.request.headers.get('Authorization')).toBe(expectedAuthHeader);
-    req.flush({ message: 'Success' });
+    req.flush({message: 'Success'});
   });
 
   it('should clear invalid login state on successful auth', () => {
@@ -124,7 +124,7 @@ describe('LoginComponent', () => {
     component.handleBasicAuthLogin();
 
     const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
-    req.flush({ message: 'Success' });
+    req.flush({message: 'Success'});
 
     expect(component.invalidLogin).toBeFalse();
   });

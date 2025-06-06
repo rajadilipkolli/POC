@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HardcodedAuthenticationService {
 
-  constructor() { }
+  constructor() {
+  }
 
   authenticate(userName: string, passCode: string) {
     if (userName === 'username' && passCode === 'dummy') {

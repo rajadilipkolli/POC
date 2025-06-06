@@ -1,12 +1,12 @@
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterModule } from '@angular/router';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {provideRouter, Router} from '@angular/router';
 
-import { ListPostsComponent , Post, PostList, Comment, Tag } from './list-posts.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { PostDataService } from '../service/data/post-data.service';
+import {Comment, ListPostsComponent, Post, PostList, Tag} from './list-posts.component';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {PostDataService} from '../service/data/post-data.service';
 
-import { API_URL } from '../app.constants';
+import {API_URL} from '../app.constants';
 
 describe('ListPostsComponent', () => {
   let component: ListPostsComponent;
@@ -19,24 +19,27 @@ describe('ListPostsComponent', () => {
   const mockPosts = new PostList([
     new Post('Test Title 1', 'Content 1', 'user1', new Date().toISOString(), mockComments, mockTags),
     new Post('Test Title 2', 'Content 2', 'user1', new Date().toISOString(), [], [])
-  ]);  beforeEach(waitForAsync(() => {
+  ]);
+
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), ListPostsComponent],
+      imports: [ListPostsComponent],
       providers: [
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         PostDataService
       ]
     })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(ListPostsComponent);
-      component = fixture.componentInstance;
-      router = TestBed.inject(Router);
-      const postDataService = TestBed.inject(PostDataService);
-      httpTestingController = TestBed.inject(HttpTestingController);
-      // Remove fixture.detectChanges() from here to prevent initial HTTP request
-    });
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(ListPostsComponent);
+        component = fixture.componentInstance;
+        router = TestBed.inject(Router);
+        const postDataService = TestBed.inject(PostDataService);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        // Remove fixture.detectChanges() from here to prevent initial HTTP request
+      });
   }));
 
   afterEach(() => {
@@ -54,7 +57,7 @@ describe('ListPostsComponent', () => {
 
   it('should load posts with comments and tags on init', () => {
     component.ngOnInit();
-    
+
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
     expect(req.request.method).toBe('GET');
     req.flush(mockPosts);
@@ -66,7 +69,7 @@ describe('ListPostsComponent', () => {
 
   it('should handle error when loading posts', () => {
     const consoleSpy = spyOn(console, 'error');
-    component.ngOnInit();    
+    component.ngOnInit();
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);
     req.error(new ErrorEvent('error'));
 
@@ -108,7 +111,7 @@ describe('ListPostsComponent', () => {
   it('should handle error when deleting post', () => {
     const consoleSpy = spyOn(console, 'error');
     const testTitle = 'Test Title';
-    
+
     component.deletePost(testTitle);
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/${testTitle}`);
     req.error(new ErrorEvent('error'));
@@ -127,7 +130,7 @@ describe('ListPostsComponent', () => {
   });
   it('should handle error when refreshing posts', () => {
     const consoleSpy = spyOn(console, 'error');
-    
+
     component.refreshPosts();
 
     const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts`);

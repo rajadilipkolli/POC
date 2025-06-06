@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Post } from '../list-posts/list-posts.component';
-import { PostDataService } from '../service/data/post-data.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {Post} from '../list-posts/list-posts.component';
+import {PostDataService} from '../service/data/post-data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CommonModule, DatePipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
-    selector: 'app-post',
-    templateUrl: './post.component.html',
-    styleUrls: ['./post.component.css'],
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    providers: [DatePipe]
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  providers: [DatePipe]
 })
 export class PostComponent implements OnInit {
   title = '';
@@ -22,7 +22,9 @@ export class PostComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe
-  ) { }
+  ) {
+  }
+
   ngOnInit(): void {
     const newLocal = 'title';
     this.title = this.route.snapshot.params[newLocal];
@@ -32,7 +34,7 @@ export class PostComponent implements OnInit {
         error: (error) => console.error('Error retrieving post:', error)
       });
   }
-  
+
   updatePost() {
     // Use a basic format string that matches our test mock
     const transformedDate = this.datePipe.transform(new Date(this.post.createdOn), 'yyyy-MM-ddTHH:mm:ss');

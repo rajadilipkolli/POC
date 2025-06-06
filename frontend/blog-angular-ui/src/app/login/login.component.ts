@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { BasicAuthenticationService } from '../service/basic-authentication.service';
-import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {BasicAuthenticationService} from '../service/basic-authentication.service';
+import {HardcodedAuthenticationService} from '../service/hardcoded-authentication.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    standalone: true,
-    imports: [CommonModule, FormsModule]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class LoginComponent implements OnInit {
 
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private hardcodedAuthenticationService: HardcodedAuthenticationService,
     private basicAuthenticationService: BasicAuthenticationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
       this.invalidLogin = true;
     }
   }
+
   handleBasicAuthLogin() {
     // console.log(this.username);
     // if(this.username==="username" && this.password === 'password') {

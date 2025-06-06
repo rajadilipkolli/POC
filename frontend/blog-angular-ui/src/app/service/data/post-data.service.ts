@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Post, PostList } from 'src/app/list-posts/list-posts.component';
-import { API_URL } from 'src/app/app.constants';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Post, PostList} from 'src/app/list-posts/list-posts.component';
+import {API_URL} from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   retrieveAllPosts(username: string) {
     return this.http.get<PostList>(`${API_URL}/users/${username}/posts`);

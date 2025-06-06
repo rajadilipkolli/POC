@@ -1,10 +1,10 @@
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { API_URL } from '../app.constants';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
+import {API_URL} from '../app.constants';
 
-import { BasicAuthenticationService, TOKEN, AUTHENTICATED_USER } from './basic-authentication.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {AUTHENTICATED_USER, BasicAuthenticationService, TOKEN} from './basic-authentication.service';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 describe('BasicAuthenticationService', () => {
   let service: BasicAuthenticationService;
@@ -12,8 +12,8 @@ describe('BasicAuthenticationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
       providers: [
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
@@ -34,7 +34,7 @@ describe('BasicAuthenticationService', () => {
   it('should execute authentication service and store session data on success', () => {
     const username = 'testUser';
     const password = 'testPass';
-    const mockResponse = { message: 'Success' };
+    const mockResponse = {message: 'Success'};
 
     service.executeAuthenticationService(username, password).subscribe(response => {
       expect(response).toEqual(mockResponse);
@@ -77,9 +77,9 @@ describe('BasicAuthenticationService', () => {
   it('should clear session storage on logout', () => {
     sessionStorage.setItem(AUTHENTICATED_USER, 'testUser');
     sessionStorage.setItem(TOKEN, 'testToken');
-    
+
     service.logout();
-    
+
     expect(sessionStorage.getItem(AUTHENTICATED_USER)).toBeNull();
     expect(sessionStorage.getItem(TOKEN)).toBeNull();
   });

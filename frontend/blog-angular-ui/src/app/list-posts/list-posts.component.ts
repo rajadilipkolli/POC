@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PostDataService } from '../service/data/post-data.service';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {PostDataService} from '../service/data/post-data.service';
+import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 
 export class PostList {
@@ -42,11 +42,11 @@ export class Tag {
 }
 
 @Component({
-    selector: 'app-list-posts',
-    templateUrl: './list-posts.component.html',
-    styleUrls: ['./list-posts.component.css'],
-    standalone: true,
-    imports: [CommonModule]
+  selector: 'app-list-posts',
+  templateUrl: './list-posts.component.html',
+  styleUrls: ['./list-posts.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class ListPostsComponent implements OnInit {
   posts: Post[] = [];
@@ -55,7 +55,8 @@ export class ListPostsComponent implements OnInit {
   constructor(
     private postDataService: PostDataService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.refreshPosts();
@@ -77,6 +78,7 @@ export class ListPostsComponent implements OnInit {
       }
     });
   }
+
   refreshPosts() {
     this.postDataService.retrieveAllPosts('raja').subscribe({
       next: (response) => this.handleRetrieveAllPostsResponse(response),

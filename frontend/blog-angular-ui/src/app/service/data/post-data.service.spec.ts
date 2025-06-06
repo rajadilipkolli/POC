@@ -1,11 +1,11 @@
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
 
-import { PostDataService } from './post-data.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { Post, PostList } from '../../list-posts/list-posts.component';
-import { API_URL } from '../../app.constants';
+import {PostDataService} from './post-data.service';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {Post, PostList} from '../../list-posts/list-posts.component';
+import {API_URL} from '../../app.constants';
 
 describe('PostDataService', () => {
   let service: PostDataService;
@@ -17,8 +17,8 @@ describe('PostDataService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
       providers: [
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]

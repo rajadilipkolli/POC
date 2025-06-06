@@ -1,16 +1,16 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {TestBed, waitForAsync} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
+import {AppComponent} from './app.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('AppComponent', () => {
-  
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         AppComponent
       ],
+      providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA] // Add this to ignore unknown elements
     }).compileComponents();
   }));
