@@ -73,7 +73,7 @@ export class ListPostsComponent implements OnInit {
         this.refreshPosts();
       },
       error: (error) => {
-        console.log('Error deleting post:', error);
+        console.error('Error deleting post:', error);
       }
     });
   }
@@ -81,7 +81,7 @@ export class ListPostsComponent implements OnInit {
     this.postDataService.retrieveAllPosts('raja').subscribe({
       next: (response) => this.handleRetrieveAllPostsResponse(response),
       error: (error) => {
-        console.log('Error loading posts:', error);
+        console.error('Error loading posts:', error);
       }
     });
   }

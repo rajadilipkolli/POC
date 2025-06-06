@@ -19,6 +19,7 @@ describe('PostComponent', () => {
   const mockComments = [new Comment('Test Comment')];
   const mockTags = [new Tag('Test Tag')];
   const fixedDate = '2025-06-06T10:00:00';
+  const testUserName = 'raja';
   const mockPost = new Post(
     'Test Title',
     'Test Content',
@@ -27,7 +28,6 @@ describe('PostComponent', () => {
     mockComments,
     mockTags
   );
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), FormsModule, PostComponent],
@@ -47,23 +47,24 @@ describe('PostComponent', () => {
           }
         }
       ]
-    }).compileComponents();
+    })
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(PostComponent);
+      component = fixture.componentInstance;
+      httpTestingController = TestBed.inject(HttpTestingController);
+      router = TestBed.inject(Router);
+      datePipe = TestBed.inject(DatePipe) as jasmine.SpyObj<DatePipe>;
+      
+      // Reset and set up the spy for each test
+      datePipe.transform.calls.reset();
+      datePipe.transform.and.returnValue(fixedDate);
+      
+      // We're setting the title directly instead of calling fixture.detectChanges()
+      // which would trigger ngOnInit and make an HTTP call
+      component.title = mockPost.title;
+    });
   }));
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PostComponent);
-    component = fixture.componentInstance;
-    httpTestingController = TestBed.inject(HttpTestingController);
-    router = TestBed.inject(Router);
-    datePipe = TestBed.inject(DatePipe) as jasmine.SpyObj<DatePipe>;
-    
-    // Reset and set up the spy for each test
-    datePipe.transform.calls.reset();
-    datePipe.transform.and.returnValue(fixedDate);
-    
-    // We're setting the title directly instead of calling fixture.detectChanges()
-    // which would trigger ngOnInit and make an HTTP call
-    component.title = mockPost.title;
-  });
 
   afterEach(() => {
     httpTestingController.verify();
@@ -72,12 +73,11 @@ describe('PostComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   it('should load post details on init', () => {
     component.ngOnInit();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     expect(req.request.method).toBe('GET');
     req.flush(mockPost);
@@ -85,19 +85,17 @@ describe('PostComponent', () => {
     expect(component.post).toEqual(mockPost);
     expect(component.title).toBe(mockPost.title);
   });
-
   it('should handle error when loading post', () => {
     const consoleSpy = spyOn(console, 'log');
     component.ngOnInit();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     req.error(new ErrorEvent('Network error'));
 
     expect(consoleSpy).toHaveBeenCalled();
   });
-
   it('should update post successfully', () => {
     // No need to spy on datePipe.transform again as it's already set up in beforeEach
     spyOn(router, 'navigate');
@@ -106,7 +104,7 @@ describe('PostComponent', () => {
     component.updatePost();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     expect(req.request.method).toBe('PUT');
     
@@ -117,7 +115,6 @@ describe('PostComponent', () => {
 
     expect(router.navigate).toHaveBeenCalledWith(['posts']);
   });
-
   it('should handle error when updating post', () => {
     const consoleSpy = spyOn(console, 'log');
     const navigateSpy = spyOn(router, 'navigate');
@@ -126,21 +123,20 @@ describe('PostComponent', () => {
     component.updatePost();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     req.error(new ErrorEvent('Network error'));
 
     expect(consoleSpy).toHaveBeenCalled();
     expect(navigateSpy).not.toHaveBeenCalled();
   });
-
   it('should transform date when updating post', () => {
     // No need to spy on datePipe.transform again
     component.post = { ...mockPost };
     component.updatePost();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     expect(req.request.body.createdOn).toBe(fixedDate);
     req.flush(null);
@@ -153,7 +149,6 @@ describe('PostComponent', () => {
     expect(component.post.comments).toEqual([]);
     expect(component.post.tags).toEqual([]);
   });
-
   it('should preserve post metadata when updating', () => {
     component.post = { ...mockPost };
     // No need to spy on datePipe.transform again
@@ -161,7 +156,7 @@ describe('PostComponent', () => {
     component.updatePost();
 
     const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/${mockPost.title}`
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
     expect(req.request.body.comments).toEqual(mockComments);
     expect(req.request.body.tags).toEqual(mockTags);

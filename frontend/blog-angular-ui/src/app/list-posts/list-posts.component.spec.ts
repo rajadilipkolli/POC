@@ -34,7 +34,7 @@ describe('ListPostsComponent', () => {
     fixture = TestBed.createComponent(ListPostsComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    let postDataService = TestBed.inject(PostDataService);
+    const postDataService = TestBed.inject(PostDataService);
     httpTestingController = TestBed.inject(HttpTestingController);
     // Remove fixture.detectChanges() from here to prevent initial HTTP request
   });

@@ -16,6 +16,7 @@ describe('CreatePostComponent', () => {
   let router: Router;
   let datePipe: jasmine.SpyObj<DatePipe>;
   const fixedDate = '2025-06-06T10:00:00';
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), FormsModule, CreatePostComponent],
@@ -28,7 +29,10 @@ describe('CreatePostComponent', () => {
         provideHttpClientTesting()
       ]
     }).compileComponents();
-  }));  beforeEach(() => {    fixture = TestBed.createComponent(CreatePostComponent);
+  }));  
+  
+  beforeEach(() => {    
+    fixture = TestBed.createComponent(CreatePostComponent);
     component = fixture.componentInstance;
     httpTestingController = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);

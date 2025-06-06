@@ -29,7 +29,7 @@ export class PostComponent implements OnInit {
     this.postDataService.retrievePostByTitleAndUserName(this.title, 'raja')
       .subscribe({
         next: (response) => this.post = response,
-        error: (error) => console.log('Error retrieving post:', error)
+        error: (error) => console.error('Error retrieving post:', error)
       });
   }
   
@@ -45,7 +45,7 @@ export class PostComponent implements OnInit {
           this.router.navigate(['posts']);
         },
         error: (error) => {
-          console.log('Error updating post:', error);
+          console.error('Error updating post:', error);
           // Consider adding user feedback for the error
         }
       });
