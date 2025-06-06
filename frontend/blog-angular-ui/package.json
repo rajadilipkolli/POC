@@ -8,7 +8,7 @@
     "build": "ng build",
     "build:prod": "ng build --configuration production",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
-    "test:ci": "cross-env SKIP_BROWSER_TESTS=true ng test --watch=false --browsers=ChromeHeadlessCustom || echo 'Tests skipped in CI environment'",
+    "test:ci": "cross-env SKIP_BROWSER_TESTS=true ng test --watch=false --browsers=ChromeHeadlessCustom --karma-config=karma.conf.js || (echo 'Tests failed' && exit 1)",
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -37,7 +37,9 @@
     "@types/jasmine": "5.1.8",
     "@types/jasminewd2": "2.0.13",
     "@types/node": "22.15.29",
+    "angular-eslint": "19.8.0",
     "cross-env": "^7.0.3",
+    "eslint": "9.28.0",
     "jasmine-core": "5.7.1",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.4",
@@ -49,6 +51,7 @@
     "puppeteer": "24.9.0",
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.33.1"
   }
 }

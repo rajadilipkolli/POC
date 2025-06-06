@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PingResponse } from './data/welcome-data.service';
-import { map } from 'rxjs/operators';
-import { API_URL } from '../app.constants';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {PingResponse} from './data/welcome-data.service';
+import {map} from 'rxjs/operators';
+import {API_URL} from '../app.constants';
 
 
 export const TOKEN = 'token';
@@ -15,7 +15,8 @@ export class BasicAuthenticationService {
 
   constructor(
     private httpClient: HttpClient
-  ) { }
+  ) {
+  }
 
   executeAuthenticationService(username: string, password: string) {
 
@@ -26,16 +27,16 @@ export class BasicAuthenticationService {
     });
 
     return this.httpClient.get<PingResponse>(`${API_URL}/pingWithAuthentication`,
-      { headers }).pipe(
-        map(
-          data => {
-            console.log(`inside basic authentication ${username} & token ${basicAuthHeaderString}`);
-            sessionStorage.setItem(AUTHENTICATED_USER, username);
-            sessionStorage.setItem(TOKEN, basicAuthHeaderString);
-            return data;
-          }
-        )
-      );
+      {headers}).pipe(
+      map(
+        data => {
+          console.log(`inside basic authentication ${username} & token ${basicAuthHeaderString}`);
+          sessionStorage.setItem(AUTHENTICATED_USER, username);
+          sessionStorage.setItem(TOKEN, basicAuthHeaderString);
+          return data;
+        }
+      )
+    );
   }
 
   getAuthenticatedUser() {

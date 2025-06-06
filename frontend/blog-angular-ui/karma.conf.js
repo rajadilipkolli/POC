@@ -15,6 +15,8 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
+    // Force Karma to exit with an error if there are test failures
+    failOnFailingTestSuite: true,
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
@@ -37,6 +39,15 @@ module.exports = function (config) {
         flags: ['--no-sandbox', '--disable-gpu']
       }
     },
-    browserNoActivityTimeout: 60000
+    browserNoActivityTimeout: 120000,
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 3,
+    failOnEmptyTestSuite: true,
+    failOnSkippedTests: false,
+    detailedReporter: {
+      showSkipped: true,
+      showFailed: true,
+      maxFailedTestsToShow: 100
+    }
   });
 };

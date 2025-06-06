@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,8 @@ export class WelcomeDataService {
   constructor(
     // when we try to use any third party application we need to add it in app.module.ts as a module
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   executeHelloWorldBeanService() {
     // TODO configure properties
@@ -18,5 +19,6 @@ export class WelcomeDataService {
 }
 
 export class PingResponse {
-  constructor(public message: string) { }
+  constructor(public message: string) {
+  }
 }
