@@ -11,10 +11,8 @@ import { DatePipe } from '@angular/common';
     standalone: false
 })
 export class PostComponent implements OnInit {
-
-  title: string;
-
-  post: Post;
+  title: string = '';
+  post: Post = new Post('', '', '', new Date().toISOString(), [], []);
 
   constructor(
     private postDataService: PostDataService,
@@ -26,7 +24,6 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     const newLocal = 'title';
     this.title = this.route.snapshot.params[newLocal];
-    this.post = new Post('', '', '', new Date().toUTCString(), [], []);
     this.postDataService.retrievePostByTitleAndUserName(this.title, 'raja')
       .subscribe(
         response => this.post = response
@@ -34,7 +31,8 @@ export class PostComponent implements OnInit {
   }
 
   updatePost() {
-    this.post.createdOn = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
+    const transformedDate = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
+    this.post.createdOn = transformedDate || this.post.createdOn;
     console.log(`inside update Post ${this.post}`);
     this.postDataService.updatePostByTitleAndUserName(this.title, 'raja', this.post)
       .subscribe(

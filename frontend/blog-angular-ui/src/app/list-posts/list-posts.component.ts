@@ -47,15 +47,8 @@ export class Tag {
     standalone: false
 })
 export class ListPostsComponent implements OnInit {
-
-  // posts = [
-  //   new Post(1, 'dummy Title', 'dummy Content', new Date()),
-  //   new Post(2, 'new Title', 'new Content', new Date())
-  // ];
-
-  posts: Post[];
-
-  message: string;
+  posts: Post[] = [];
+  message: string = '';
 
   constructor(
     private postDataService: PostDataService,
