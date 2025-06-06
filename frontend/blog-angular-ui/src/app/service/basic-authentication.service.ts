@@ -44,8 +44,9 @@ export class BasicAuthenticationService {
 
   getAuthenticatedToken() {
     if (this.getAuthenticatedUser()) {
-      return sessionStorage.getItem(TOKEN);
+      return sessionStorage.getItem(TOKEN) || '';
     }
+    return '';
   }
 
   isUserLoggedIn() {

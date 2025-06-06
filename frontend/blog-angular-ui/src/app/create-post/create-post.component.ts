@@ -11,9 +11,8 @@ import { DatePipe } from '@angular/common';
     standalone: false
 })
 export class CreatePostComponent implements OnInit {
-
-  post: Post;
-  message: string;
+  post: Post = new Post('', '', '', new Date().toISOString(), [], []);
+  message: string = '';
 
   constructor(
     private postDataService: PostDataService,
@@ -26,7 +25,8 @@ export class CreatePostComponent implements OnInit {
   }
 
   createPost() {
-    this.post.createdOn = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
+    const transformedDate = this.datePipe.transform(this.post.createdOn, 'yyyy-MM-ddTHH:mm:ss');
+    this.post.createdOn = transformedDate || this.post.createdOn;
     this.postDataService.createPostByUserName(this.post, 'raja')
       .subscribe(
         response => {
