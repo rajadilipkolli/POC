@@ -2,9 +2,7 @@
 package com.example.poc.webmvc.controller;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -16,7 +14,13 @@ public class PingController {
      * @return a simple "pong" response.
      */
     @GetMapping(value = "/ping", produces = MediaType.APPLICATION_JSON_VALUE)
-    String ping() {
-        return "{\"message\": \"pong\"}";
+    PingResponse ping(@RequestParam(required = false) String userName) {
+        if (userName == null) {
+            return new PingResponse("Welcome");
+        } else {
+            return new PingResponse("Welcome " + userName);
+        }
     }
+
+    record PingResponse(String message) {}
 }
