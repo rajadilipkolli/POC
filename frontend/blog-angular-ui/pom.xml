@@ -66,8 +66,8 @@
                   <goal>install-node-and-npm</goal>
                 </goals>
                 <configuration>
-                  <nodeVersion>v20.11.1</nodeVersion>
-                  <npmVersion>8.0.0</npmVersion>
+                  <nodeVersion>v20.19.0</nodeVersion>
+                  <npmVersion>10.2.4</npmVersion>
                 </configuration>
               </execution>
               <!-- Install all project dependencies -->
@@ -76,11 +76,9 @@
                 <goals>
                   <goal>npm</goal>
                 </goals>
-                <!-- optional: default phase is "generate-resources" -->
                 <phase>generate-resources</phase>
-                <!-- Optional configuration which provides for running any npm/yarn command -->
                 <configuration>
-                  <arguments>install</arguments>
+                  <arguments>ci</arguments>
                 </configuration>
               </execution>
               <!-- Build and minify static files -->
@@ -90,7 +88,7 @@
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>run build</arguments>
+                  <arguments>run build:prod</arguments>
                 </configuration>
               </execution>
             </executions>
