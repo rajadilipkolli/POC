@@ -169,14 +169,14 @@ describe('PostComponent', () => {
   it('should handle null date when updating post', () => {
     const postWithNullDate = {...mockPost, createdOn: null as any};
     component.post = postWithNullDate;
-    datePipe.transform.and.returnValue('1970-01-01T05:30:00'); // Simulate how DatePipe handles null
-
+    // We're using a hardcoded value in the component, so we don't need to mock the DatePipe transform
+    
     component.updatePost();
 
     const req = httpTestingController.expectOne(
       `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
-    expect(req.request.body.createdOn).toBe('1970-01-01T05:30:00');
+    expect(req.request.body.createdOn).toBe('1970-01-01T00:00:00');
     req.flush(null);
   });  
   
