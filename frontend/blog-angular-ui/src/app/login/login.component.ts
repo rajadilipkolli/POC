@@ -15,7 +15,7 @@ import {HardcodedAuthenticationService} from '../service/hardcoded-authenticatio
 export class LoginComponent implements OnInit {
 
   userName = 'username';
-  passWord = '';
+  passWord = 'dummy';
   errorMessage = 'Invalid Credentials';
   invalidLogin = false;
 
@@ -46,16 +46,16 @@ export class LoginComponent implements OnInit {
     // console.log(this.username);
     // if(this.username==="username" && this.password === 'password') {
     this.basicAuthenticationService.executeAuthenticationService(this.userName, this.passWord)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.router.navigate(['welcome', this.userName]);
           this.invalidLogin = false;
         },
-        error => {
+        error: (error) => {
           console.log(error);
           this.invalidLogin = true;
         }
-      );
+      });
   }
 
 

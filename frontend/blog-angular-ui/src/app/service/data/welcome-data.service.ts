@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {API_URL} from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,13 @@ export class WelcomeDataService {
   }
 
   executeHelloWorldBeanService() {
-    // TODO configure properties
-    return this.http.get<PingResponse>('http://localhost:8080/ping');
+    // Updated endpoint to match backend API
+    return this.http.get<PingResponse>(`${API_URL}/ping`);
+  }
+
+  executeHelloWorldBeanServiceWithPathVariable(name: string) {
+    // Endpoint with path variable for personalized welcome message
+    return this.http.get<PingResponse>(`${API_URL}/ping?userName=${name}`);
   }
 }
 

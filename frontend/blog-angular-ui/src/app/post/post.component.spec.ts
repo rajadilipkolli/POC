@@ -151,6 +151,7 @@ describe('PostComponent', () => {
     expect(component.post.comments).toEqual([]);
     expect(component.post.tags).toEqual([]);
   });
+
   it('should preserve post metadata when updating', () => {
     component.post = {...mockPost};
     // No need to spy on datePipe.transform again
@@ -163,5 +164,64 @@ describe('PostComponent', () => {
     expect(req.request.body.comments).toEqual(mockComments);
     expect(req.request.body.tags).toEqual(mockTags);
     req.flush(null);
+  });
+  
+  it('should handle null date when updating post', () => {
+    const postWithNullDate = {...mockPost, createdOn: null as any};
+    component.post = postWithNullDate;
+    datePipe.transform.and.returnValue('1970-01-01T05:30:00'); // Simulate how DatePipe handles null
+
+    component.updatePost();
+
+    const req = httpTestingController.expectOne(
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
+    );
+    expect(req.request.body.createdOn).toBe('1970-01-01T05:30:00');
+    req.flush(null);
+  });  
+  
+  it('should handle invalid date when updating post', () => {
+    const postWithInvalidDate = {...mockPost, createdOn: 'invalid-date'};
+    component.post = postWithInvalidDate;
+    
+    // Mock the datePipe to return null for invalid date (which is the actual behavior)
+    datePipe.transform.and.returnValue(null);
+    
+    spyOn(console, 'log');
+    
+    component.updatePost();
+
+    const req = httpTestingController.expectOne(
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
+    );
+    
+    // The original date should be preserved when DatePipe returns null
+    expect(req.request.body.createdOn).toBe('invalid-date');
+    req.flush(null);
+  });
+
+  it('should handle 404 error when loading post', () => {
+    const consoleSpy = spyOn(console, 'error');
+    component.ngOnInit();
+
+    const req = httpTestingController.expectOne(
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
+    );
+    req.flush('Post not found', { status: 404, statusText: 'Not Found' });
+
+    expect(consoleSpy).toHaveBeenCalledWith('Error retrieving post:', jasmine.any(Object));
+  });
+
+  it('should handle server error when updating post', () => {
+    const consoleSpy = spyOn(console, 'error');
+    component.post = {...mockPost};
+    component.updatePost();
+
+    const req = httpTestingController.expectOne(
+      `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
+    );
+    req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
+
+    expect(consoleSpy).toHaveBeenCalledWith('Error updating post:', jasmine.any(Object));
   });
 });

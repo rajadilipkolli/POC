@@ -47,10 +47,9 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   it('should initialize with default values', () => {
     expect(component.userName).toBe('username');
-    expect(component.passWord).toBe('');
+    expect(component.passWord).toBe('dummy');
     expect(component.errorMessage).toBe('Invalid Credentials');
     expect(component.invalidLogin).toBeFalse();
   });

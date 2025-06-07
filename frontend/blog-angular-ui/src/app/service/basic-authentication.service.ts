@@ -6,7 +6,7 @@ import {API_URL} from '../app.constants';
 
 
 export const TOKEN = 'token';
-export const AUTHENTICATED_USER = 'authenticaterUser';
+export const AUTHENTICATED_USER = 'authenticatedUser';
 
 @Injectable({
   providedIn: 'root'

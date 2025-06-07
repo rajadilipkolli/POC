@@ -23,17 +23,23 @@ export class WelcomeComponent implements OnInit {
     private helloWorldService: WelcomeDataService
   ) {
   }
-
   ngOnInit(): void {
-    this.name = this.route.snapshot.params[newLocal];
+    this.name = this.route.snapshot.params[newLocal] || '';
   }
 
   getWelcomeMessage() {
-    // to call any service we should do it asynchronously
-    this.helloWorldService.executeHelloWorldBeanService().subscribe(
-      response => this.handleSuccessFulResponse(response),
-      error => this.handleErrorResponse(error)
-    );
+    // First try with name parameter
+    this.helloWorldService.executeHelloWorldBeanServiceWithPathVariable(this.name).subscribe({
+      next: (response) => this.handleSuccessFulResponse(response),
+      error: (error) => {
+        console.log('Error with path variable, falling back to basic service:', error);
+        // Fall back to the basic service if the personalized one fails
+        this.helloWorldService.executeHelloWorldBeanService().subscribe({
+          next: (response) => this.handleSuccessFulResponse(response),
+          error: (fallbackError) => this.handleErrorResponse(fallbackError)
+        });
+      }
+    });
   }
 
   handleSuccessFulResponse(response: PingResponse): void {
@@ -41,11 +47,12 @@ export class WelcomeComponent implements OnInit {
   }
 
   handleErrorResponse(error: unknown): void {
+    console.error('Error fetching welcome message:', error);
     // Type assertion to handle the unknown type
     if (this.isHttpErrorResponse(error)) {
-      this.welcomeMessage = error.error?.message || 'An error occurred';
+      this.welcomeMessage = `Error: ${error.error?.message || 'Server error occurred'}`;
     } else {
-      this.welcomeMessage = 'An unexpected error occurred';
+      this.welcomeMessage = 'An unexpected error occurred. Please check if the backend server is running.';
     }
   }
 

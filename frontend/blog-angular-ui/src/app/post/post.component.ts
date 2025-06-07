@@ -34,11 +34,19 @@ export class PostComponent implements OnInit {
         error: (error) => console.error('Error retrieving post:', error)
       });
   }
-
   updatePost() {
     // Use a basic format string that matches our test mock
-    const transformedDate = this.datePipe.transform(new Date(this.post.createdOn), 'yyyy-MM-ddTHH:mm:ss');
-    this.post.createdOn = transformedDate || this.post.createdOn;
+    try {
+      const dateObj = new Date(this.post.createdOn);
+      // Check if the date is valid before using DatePipe
+      if (!isNaN(dateObj.getTime())) {
+        const transformedDate = this.datePipe.transform(dateObj, 'yyyy-MM-ddTHH:mm:ss');
+        this.post.createdOn = transformedDate || this.post.createdOn;
+      }
+    } catch (e) {
+      // Keep the original date string if there's an error
+    }
+
     console.log(`inside update Post ${this.post}`);
     this.postDataService.updatePostByTitleAndUserName(this.title, 'raja', this.post)
       .subscribe({
