@@ -39,7 +39,7 @@
     "@types/node": "22.15.31",
     "angular-eslint": "20.0.0",
     "cross-env": "^7.0.3",
-    "eslint": "9.28.0",
+    "eslint": "9.29.0",
     "jasmine-core": "5.8.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.4",
