@@ -19,7 +19,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
 
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
-        <dependency-check-maven.version>12.1.2</dependency-check-maven.version>
+        <dependency-check-maven.version>12.1.3</dependency-check-maven.version>
         <spotless.version>2.44.5</spotless.version>
     </properties>
 
