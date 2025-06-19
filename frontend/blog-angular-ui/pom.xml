@@ -7,14 +7,77 @@
   <groupId>com.example.poc</groupId>
   <artifactId>blog-angular-ui</artifactId>
   <version>0.4.0-SNAPSHOT</version>
-
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+    <spotless.version>2.43.0</spotless.version>
   </properties>
-
   <build>
     <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.version}</version>
+        <configuration>
+          <typescript>
+            <includes>
+              <include>src/**/*.ts</include>
+              <include>e2e/src/**/*.ts</include>
+            </includes>
+            <excludes>
+              <exclude>node_modules/**</exclude>
+              <exclude>dist/**</exclude>
+              <exclude>build/**</exclude>
+              <exclude>target/**</exclude>
+            </excludes>
+            <prettier>
+              <devDependencyProperties>
+                <property>
+                  <name>prettier</name>
+                  <value>3.0.0</value>
+                </property>
+                <property>
+                  <name>@typescript-eslint/parser</name>
+                  <value>6.0.0</value>
+                </property>
+              </devDependencyProperties>
+              <configFile>.prettierrc</configFile>
+            </prettier>
+          </typescript>
+          <formats>
+            <format>
+              <includes>
+                <include>src/**/*.html</include>
+                <include>src/**/*.css</include>
+                <include>src/**/*.scss</include>
+                <include>src/**/*.json</include>
+              </includes>
+              <excludes>
+                <exclude>node_modules/**</exclude>
+                <exclude>dist/**</exclude>
+                <exclude>build/**</exclude>
+                <exclude>target/**</exclude>
+              </excludes>
+              <prettier>
+                <devDependencyProperties>
+                  <property>
+                    <name>prettier</name>
+                    <value>3.0.0</value>
+                  </property>
+                </devDependencyProperties>
+                <configFile>.prettierrc</configFile>
+              </prettier>
+            </format>
+          </formats>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>

@@ -1,15 +1,33 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Post, PostList} from 'src/app/list-posts/list-posts.component';
-import {API_URL} from 'src/app/app.constants';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../app.constants';
+
+export interface Comment {
+  review: string;
+}
+
+export interface Tag {
+  name: string;
+}
+
+export interface Post {
+  title: string;
+  content: string;
+  createdBy: string;
+  createdOn: string;
+  comments: Comment[];
+  tags: Tag[];
+}
+
+export interface PostList {
+  postList: Post[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostDataService {
-
-  constructor(private http: HttpClient) {
-  }
+  private readonly http = inject(HttpClient);
 
   retrieveAllPosts(username: string) {
     return this.http.get<PostList>(`${API_URL}/users/${username}/posts`);
@@ -30,5 +48,4 @@ export class PostDataService {
   createPostByUserName(post: Post, username: string) {
     return this.http.post(`${API_URL}/users/${username}/posts/`, post);
   }
-
 }

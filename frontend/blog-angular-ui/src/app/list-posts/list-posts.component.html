@@ -1,39 +1,47 @@
-<h1> My Posts</h1>
+<h1>My Posts</h1>
 
-<div *ngIf='message' class="alert alert-success">{{ message }}</div>
+@if (message()) {
+<div class="alert alert-success">{{ message() }}</div>
+}
 <div class="container">
   <table class="table">
     <thead>
-    <tr>
-      <th>Title</th>
-      <th>content</th>
-      <th>createdOn</th>
-      <th>createdBy</th>
-      <th>comments</th>
-      <th>tags</th>
-      <th>Update</th>
-      <th>Delete</th>
-    </tr>
+      <tr>
+        <th>Title</th>
+        <th>content</th>
+        <th>createdOn</th>
+        <th>createdBy</th>
+        <th>comments</th>
+        <th>tags</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let post of posts">
-      <td>{{ post.title | uppercase }}</td>
-      <td>{{ post.content }}</td>
-      <td>{{ post.createdOn | date:'MMM d, y, h:mm:ss a' }}</td>
-      <td>{{ post.createdBy | titlecase }}</td>
-      <td>
-        <li *ngFor="let comment of post.comments">{{ comment.review }}</li>
-      </td>
-      <td>
-        <li *ngFor="let tag of post.tags">{{ tag.name }}</li>
-      </td>
-      <td>
-        <button (click)="updatePost(post.title)" class="btn btn-success">Update</button>
-      </td>
-      <td>
-        <button (click)="deletePost(post.title)" class="btn btn-warning">Delete</button>
-      </td>
-    </tr>
+      @for (post of posts(); track post.title) {
+      <tr>
+        <td>{{ post.title | uppercase }}</td>
+        <td>{{ post.content }}</td>
+        <td>{{ post.createdOn | date: 'MMM d, y, h:mm:ss a' }}</td>
+        <td>{{ post.createdBy | titlecase }}</td>
+        <td>
+          @for (comment of post.comments; track comment.review) {
+          <li>{{ comment.review }}</li>
+          }
+        </td>
+        <td>
+          @for (tag of post.tags; track tag.name) {
+          <li>{{ tag.name }}</li>
+          }
+        </td>
+        <td>
+          <button (click)="updatePost(post.title)" class="btn btn-success">Update</button>
+        </td>
+        <td>
+          <button (click)="deletePost(post.title)" class="btn btn-warning">Delete</button>
+        </td>
+      </tr>
+      }
     </tbody>
   </table>
 

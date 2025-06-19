@@ -1,18 +1,25 @@
-import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {provideRouter} from '@angular/router';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
-import {PostDataService} from './post-data.service';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {Post, PostList} from '../../list-posts/list-posts.component';
-import {API_URL} from '../../app.constants';
+import { PostDataService } from './post-data.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { Post, PostList } from '../../list-posts/list-posts.component';
+import { API_URL } from '../../app.constants';
 
 describe('PostDataService', () => {
   let service: PostDataService;
   let httpTestingController: HttpTestingController;
 
   const mockUsername = 'testUser';
-  const mockPost = new Post('Test Title', 'Test Content', mockUsername, new Date().toISOString(), [], []);
+  const mockPost = new Post(
+    'Test Title',
+    'Test Content',
+    mockUsername,
+    new Date().toISOString(),
+    [],
+    []
+  );
   const mockPostList = new PostList([mockPost]);
 
   beforeEach(() => {
@@ -70,9 +77,11 @@ describe('PostDataService', () => {
   });
 
   it('should update post by title and username', () => {
-    service.updatePostByTitleAndUserName(mockPost.title, mockUsername, mockPost).subscribe(response => {
-      expect(response).toBeNull();
-    });
+    service
+      .updatePostByTitleAndUserName(mockPost.title, mockUsername, mockPost)
+      .subscribe(response => {
+        expect(response).toBeNull();
+      });
 
     const req = httpTestingController.expectOne(
       `${API_URL}/users/${mockUsername}/posts/${mockPost.title}`
@@ -87,9 +96,7 @@ describe('PostDataService', () => {
       expect(response).toBeNull();
     });
 
-    const req = httpTestingController.expectOne(
-      `${API_URL}/users/${mockUsername}/posts/`
-    );
+    const req = httpTestingController.expectOne(`${API_URL}/users/${mockUsername}/posts/`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockPost);
     req.flush(null);

@@ -1,21 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-error',
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css'],
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule]
 })
-export class ErrorComponent implements OnInit {
-
-  errorMessage = 'An Error Occurred! ';
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class ErrorComponent {
+  readonly errorMessage = signal('An Error Occurred!');
 }

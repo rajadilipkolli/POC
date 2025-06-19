@@ -1,10 +1,14 @@
-import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {provideRouter} from '@angular/router';
-import {API_URL} from '../app.constants';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { API_URL } from '../app.constants';
 
-import {AUTHENTICATED_USER, BasicAuthenticationService, TOKEN} from './basic-authentication.service';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {
+  AUTHENTICATED_USER,
+  BasicAuthenticationService,
+  TOKEN
+} from './basic-authentication.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('BasicAuthenticationService', () => {
   let service: BasicAuthenticationService;
@@ -34,7 +38,7 @@ describe('BasicAuthenticationService', () => {
   it('should execute authentication service and store session data on success', () => {
     const username = 'testUser';
     const password = 'testPass';
-    const mockResponse = {message: 'Success'};
+    const mockResponse = { message: 'Success' };
 
     service.executeAuthenticationService(username, password).subscribe(response => {
       expect(response).toEqual(mockResponse);
@@ -43,30 +47,32 @@ describe('BasicAuthenticationService', () => {
     });
 
     const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
-    expect(req.request.headers.get('Authorization')).toBe('Basic ' + window.btoa(username + ':' + password));
+    expect(req.request.headers.get('Authorization')).toBe(
+      'Basic ' + window.btoa(username + ':' + password)
+    );
     req.flush(mockResponse);
   });
-
   it('should return correct authentication status when user is logged in', () => {
     sessionStorage.setItem(AUTHENTICATED_USER, 'testUser');
+    service.refreshFromStorage(); // Refresh signals from storage
     expect(service.isUserLoggedIn()).toBeTrue();
   });
 
   it('should return correct authentication status when user is not logged in', () => {
     expect(service.isUserLoggedIn()).toBeFalse();
   });
-
   it('should retrieve authenticated user from session storage', () => {
     const testUser = 'testUser';
     sessionStorage.setItem(AUTHENTICATED_USER, testUser);
+    service.refreshFromStorage(); // Refresh signals from storage
     expect(service.getAuthenticatedUser()).toBe(testUser);
   });
-
   it('should retrieve authentication token when user is logged in', () => {
     const testUser = 'testUser';
     const testToken = 'testToken';
     sessionStorage.setItem(AUTHENTICATED_USER, testUser);
     sessionStorage.setItem(TOKEN, testToken);
+    service.refreshFromStorage(); // Refresh signals from storage
     expect(service.getAuthenticatedToken()).toBe(testToken);
   });
 
@@ -83,15 +89,13 @@ describe('BasicAuthenticationService', () => {
     expect(sessionStorage.getItem(AUTHENTICATED_USER)).toBeNull();
     expect(sessionStorage.getItem(TOKEN)).toBeNull();
   });
-
   it('should handle authentication error', () => {
     const username = 'testUser';
     const password = 'wrongPass';
-    const consoleSpy = spyOn(console, 'log');
 
     service.executeAuthenticationService(username, password).subscribe({
       next: () => fail('Should have failed'),
-      error: (error) => {
+      error: error => {
         expect(error).toBeDefined();
         expect(sessionStorage.getItem(AUTHENTICATED_USER)).toBeNull();
         expect(sessionStorage.getItem(TOKEN)).toBeNull();
@@ -105,7 +109,7 @@ describe('BasicAuthenticationService', () => {
   it('should handle empty username and password', () => {
     const username = '';
     const password = '';
-    const mockResponse = {message: 'Success'};
+    const mockResponse = { message: 'Success' };
 
     service.executeAuthenticationService(username, password).subscribe(response => {
       expect(response).toEqual(mockResponse);
@@ -121,7 +125,7 @@ describe('BasicAuthenticationService', () => {
   it('should handle special characters in username and password', () => {
     const username = 'test@user.com';
     const password = 'p@ssw0rd!';
-    const mockResponse = {message: 'Success'};
+    const mockResponse = { message: 'Success' };
 
     service.executeAuthenticationService(username, password).subscribe(response => {
       expect(response).toEqual(mockResponse);
@@ -149,7 +153,7 @@ describe('BasicAuthenticationService', () => {
 
     service.executeAuthenticationService(username, password).subscribe({
       next: () => fail('Should have failed'),
-      error: (error) => {
+      error: error => {
         expect(error).toBeDefined();
         expect(sessionStorage.getItem(AUTHENTICATED_USER)).toBeNull();
         expect(sessionStorage.getItem(TOKEN)).toBeNull();
@@ -159,12 +163,13 @@ describe('BasicAuthenticationService', () => {
     const req = httpTestingController.expectOne(`${API_URL}/pingWithAuthentication`);
     req.error(new ErrorEvent('Network error'));
   });
-
   it('should handle null values in session storage gracefully', () => {
     sessionStorage.setItem(AUTHENTICATED_USER, 'null');
-    expect(service.isUserLoggedIn()).toBeTrue(); // 'null' string is truthy
-    
+    service.refreshFromStorage(); // Refresh signals from storage
+    expect(service.isUserLoggedIn()).toBeFalse(); // 'null' string should be treated as null
+
     sessionStorage.removeItem(AUTHENTICATED_USER);
+    service.refreshFromStorage(); // Refresh signals from storage
     expect(service.isUserLoggedIn()).toBeFalse();
   });
 

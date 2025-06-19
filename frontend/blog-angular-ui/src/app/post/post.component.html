@@ -1,33 +1,50 @@
 <h1>Post</h1>
 
 <div class="container">
-  <div *ngIf="postForm.dirty && postForm.invalid" class="alert alert-warning">Enter valid</div>
+  @if (postForm.dirty && postForm.invalid) {
+  <div class="alert alert-warning">Enter valid</div>
+  }
   <!-- <div class="alert alert-warning" *ngIf="postForm.dirty && createdOn.invalid">Enter valid Target Date</div> -->
-
   <form #postForm="ngForm" (ngSubmit)="!postForm.invalid && updatePost()">
-
     <fieldset class="form-group">
       <label for="title">Title</label>
-      <input [ngModel]="post.title" class="form-control" id="title" name="title" readonly type="text"/>
+      <input
+        [ngModel]="post.title"
+        class="form-control"
+        id="title"
+        name="title"
+        readonly
+        type="text"
+      />
     </fieldset>
 
     <fieldset class="form-group">
       <label for="formControlContentTextarea">Content</label>
-      <textarea [(ngModel)]="post.content" class="form-control" id="formControlContentTextarea" name="content"
-                rows="3"></textarea>
+      <textarea
+        [(ngModel)]="post.content"
+        class="form-control"
+        id="formControlContentTextarea"
+        name="content"
+        rows="3"
+      ></textarea>
     </fieldset>
 
     <fieldset class="form-group">
       <label for="formCreatedOn">createdOn</label>
-      <input [(ngModel)]="post.createdOn" class="form-control" id="formCreatedOn" name="createdOn"
-             type="datetime">
+      <input
+        [(ngModel)]="post.createdOn"
+        class="form-control"
+        id="formCreatedOn"
+        name="createdOn"
+        type="datetime"
+      />
     </fieldset>
 
     <!-- <fieldset class="form-group">
         <label for="tags">Tags</label>
-        <select multiple class="form-control" id="tags" *ngFor="let tag of post.tags">
+        <select multiple class="form-control" id="tags" @for (tag of post.tags; track tag.name) {
             <option>{{tag.name}}</option>
-        </select>
+        }
     </fieldset> -->
 
     <button class="btn btn-success" type="submit">Update</button>

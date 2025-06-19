@@ -1,17 +1,25 @@
-import {Component} from '@angular/core';
-import {RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {MenuComponent} from './menu/menu.component';
-import {FooterComponent} from './footer/footer.component';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+    <!-- Menus-->
+    <app-menu />
+
+    <div class="container">
+      <router-outlet />
+    </div>
+
+    <!-- Footer -->
+    <app-footer />
+  `,
   styleUrls: ['./app.component.css'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, MenuComponent, FooterComponent, HttpClientModule]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterOutlet, MenuComponent, FooterComponent]
 })
 export class AppComponent {
-  title = 'blog-angular-ui';
+  title = signal('blog-angular-ui');
 }

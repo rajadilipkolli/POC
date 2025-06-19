@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {ActivatedRoute, provideRouter, Router} from '@angular/router';
-import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {FormsModule} from '@angular/forms';
-import {DatePipe} from '@angular/common';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
-import {PostComponent} from './post.component';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {Comment, Post, Tag} from '../list-posts/list-posts.component';
-import {API_URL} from '../app.constants';
+import { PostComponent } from './post.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { Comment, Post, Tag } from '../list-posts/list-posts.component';
+import { API_URL } from '../app.constants';
 
 describe('PostComponent', () => {
   let component: PostComponent;
@@ -43,7 +43,7 @@ describe('PostComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              params: {title: mockPost.title}
+              params: { title: mockPost.title }
             }
           }
         }
@@ -101,7 +101,7 @@ describe('PostComponent', () => {
     // No need to spy on datePipe.transform again as it's already set up in beforeEach
     spyOn(router, 'navigate');
 
-    component.post = {...mockPost};
+    component.post = { ...mockPost };
     component.updatePost();
 
     const req = httpTestingController.expectOne(
@@ -109,7 +109,7 @@ describe('PostComponent', () => {
     );
     expect(req.request.method).toBe('PUT');
 
-    const expectedPost = {...mockPost, createdOn: fixedDate};
+    const expectedPost = { ...mockPost, createdOn: fixedDate };
     expect(req.request.body).toEqual(expectedPost);
 
     req.flush(null);
@@ -121,7 +121,7 @@ describe('PostComponent', () => {
     const consoleSpy = spyOn(console, 'error');
     const navigateSpy = spyOn(router, 'navigate');
 
-    component.post = {...mockPost};
+    component.post = { ...mockPost };
     component.updatePost();
 
     const req = httpTestingController.expectOne(
@@ -134,7 +134,7 @@ describe('PostComponent', () => {
   });
   it('should transform date when updating post', () => {
     // No need to spy on datePipe.transform again
-    component.post = {...mockPost};
+    component.post = { ...mockPost };
     component.updatePost();
 
     const req = httpTestingController.expectOne(
@@ -153,7 +153,7 @@ describe('PostComponent', () => {
   });
 
   it('should preserve post metadata when updating', () => {
-    component.post = {...mockPost};
+    component.post = { ...mockPost };
     // No need to spy on datePipe.transform again
 
     component.updatePost();
@@ -165,12 +165,12 @@ describe('PostComponent', () => {
     expect(req.request.body.tags).toEqual(mockTags);
     req.flush(null);
   });
-  
+
   it('should handle null date when updating post', () => {
-    const postWithNullDate = {...mockPost, createdOn: null as any};
+    const postWithNullDate = { ...mockPost, createdOn: null as unknown as string };
     component.post = postWithNullDate;
     // We're using a hardcoded value in the component, so we don't need to mock the DatePipe transform
-    
+
     component.updatePost();
 
     const req = httpTestingController.expectOne(
@@ -178,23 +178,23 @@ describe('PostComponent', () => {
     );
     expect(req.request.body.createdOn).toBe('1970-01-01T00:00:00');
     req.flush(null);
-  });  
-  
+  });
+
   it('should handle invalid date when updating post', () => {
-    const postWithInvalidDate = {...mockPost, createdOn: 'invalid-date'};
+    const postWithInvalidDate = { ...mockPost, createdOn: 'invalid-date' };
     component.post = postWithInvalidDate;
-    
+
     // Mock the datePipe to return null for invalid date (which is the actual behavior)
     datePipe.transform.and.returnValue(null);
-    
+
     spyOn(console, 'log');
-    
+
     component.updatePost();
 
     const req = httpTestingController.expectOne(
       `${API_URL}/users/${testUserName}/posts/${mockPost.title}`
     );
-    
+
     // The original date should be preserved when DatePipe returns null
     expect(req.request.body.createdOn).toBe('invalid-date');
     req.flush(null);
@@ -214,7 +214,7 @@ describe('PostComponent', () => {
 
   it('should handle server error when updating post', () => {
     const consoleSpy = spyOn(console, 'error');
-    component.post = {...mockPost};
+    component.post = { ...mockPost };
     component.updatePost();
 
     const req = httpTestingController.expectOne(
