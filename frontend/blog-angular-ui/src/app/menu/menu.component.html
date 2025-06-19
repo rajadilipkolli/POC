@@ -1,22 +1,22 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div><a class="navbar-brand" href="https://github.com/rajadilipkolli/POC/">
-      SourceCode</a></div>
+    <div><a class="navbar-brand" href="https://github.com/rajadilipkolli/POC/"> SourceCode</a></div>
 
     <ul class="navbar-nav">
-      <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/welcome/raja" class="nav-link">Home</a></li> -->
-      <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/posts" class="nav-link">Posts</a></li> -->
-      <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" class="nav-link" routerLink="/welcome/raja">Home</a>
-      </li>
-      <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" class="nav-link" routerLink="/posts">Posts</a></li>
+      @if (basicAuthenticationService.isUserLoggedIn()) {
+      <li><a class="nav-link" routerLink="/welcome/raja">Home</a></li>
+      } @if (basicAuthenticationService.isUserLoggedIn()) {
+      <li><a class="nav-link" routerLink="/posts">Posts</a></li>
+      }
     </ul>
 
     <!-- As menu is refreshed only once data is not availabe, hence calling method directly-->
     <ul class="navbar-nav navbar-collapse justify-content-end">
-      <!-- <li><a *ngIf="!hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li> -->
-      <!-- <li><a *ngIf="hardcodedAuthenticationService.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li> -->
-      <li><a *ngIf="!basicAuthenticationService.isUserLoggedIn()" class="nav-link" routerLink="/login">Login</a></li>
-      <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" class="nav-link" routerLink="/logout">Logout</a></li>
+      @if (!basicAuthenticationService.isUserLoggedIn()) {
+      <li><a class="nav-link" routerLink="/login">Login</a></li>
+      } @if (basicAuthenticationService.isUserLoggedIn()) {
+      <li><a class="nav-link" routerLink="/logout">Logout</a></li>
+      }
     </ul>
   </nav>
 </header>

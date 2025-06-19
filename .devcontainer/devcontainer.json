@@ -21,20 +21,27 @@
 			"extensions": [
 				"vscjava.vscode-java-pack",
 				"vmware.vscode-boot-dev-pack",
-				"angular.ng-template"
+				"angular.ng-template",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode"
 			]
 		}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [4200],
+	"forwardPorts": [4200, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "cd frontend/blog-angular-ui && npm install -g @angular/cli && npm install && java -version"
+	"postCreateCommand": "bash -c 'echo \"Installing dependencies...\" && cd frontend/blog-angular-ui && npm config set legacy-peer-deps true && npm install && npm install -g @angular/cli && echo \"Verifying installations...\" && ng version && java -version'",
+
+	// Add mount for ~/.m2 to cache Maven dependencies
+	"mounts": [
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.m2,target=/home/vscode/.m2,type=bind,consistency=cached"
+	],
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "vscode"
 }

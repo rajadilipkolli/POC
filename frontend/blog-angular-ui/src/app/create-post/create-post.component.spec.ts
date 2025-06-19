@@ -1,13 +1,13 @@
-import {DatePipe} from '@angular/common';
-import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
-import {provideRouter, Router} from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { provideRouter, Router } from '@angular/router';
 
-import {CreatePostComponent} from './create-post.component';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {Post} from '../list-posts/list-posts.component';
-import {API_URL} from '../app.constants';
+import { CreatePostComponent } from './create-post.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { Post } from '../list-posts/list-posts.component';
+import { API_URL } from '../app.constants';
 
 describe('CreatePostComponent', () => {
   let component: CreatePostComponent;
@@ -61,19 +61,23 @@ describe('CreatePostComponent', () => {
     expect(component.post.tags).toEqual([]);
   });
 
-
   it('should create post successfully', () => {
     // No need to spy on datePipe.transform again since it's already set up in beforeEach
     spyOn(router, 'navigate');
     spyOn(console, 'log');
 
-    const testPost = new Post('Test Title', 'Test Content', 'testUser', new Date().toISOString(), [], []);
+    const testPost = new Post(
+      'Test Title',
+      'Test Content',
+      'testUser',
+      new Date().toISOString(),
+      [],
+      []
+    );
     component.post = testPost;
     component.createPost();
 
-    const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/`
-    );
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/`);
     expect(req.request.method).toBe('POST');
 
     // Compare properties individually instead of the whole object
@@ -84,7 +88,7 @@ describe('CreatePostComponent', () => {
     expect(req.request.body.comments).toEqual([]);
     expect(req.request.body.tags).toEqual([]);
 
-    req.flush({message: 'Post created successfully'});
+    req.flush({ message: 'Post created successfully' });
 
     expect(component.message).toContain('Successfully Created Post');
     expect(router.navigate).toHaveBeenCalledWith(['posts']);
@@ -97,9 +101,7 @@ describe('CreatePostComponent', () => {
 
     component.createPost();
 
-    const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/`
-    );
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/`);
     req.error(new ErrorEvent('Network error'));
 
     expect(router.navigate).not.toHaveBeenCalled();
@@ -109,11 +111,9 @@ describe('CreatePostComponent', () => {
     // No need to spy on datePipe.transform again
     component.createPost();
 
-    const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/`
-    );
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/`);
     expect(req.request.body.createdOn).toBe(fixedDate);
-    req.flush({message: 'Post created successfully'});
+    req.flush({ message: 'Post created successfully' });
   });
 
   it('should initialize new post on ngOnInit', () => {
@@ -133,13 +133,11 @@ describe('CreatePostComponent', () => {
     // No need to spy on datePipe.transform again
     component.createPost();
 
-    const req = httpTestingController.expectOne(
-      `${API_URL}/users/raja/posts/`
-    );
+    const req = httpTestingController.expectOne(`${API_URL}/users/raja/posts/`);
     // Compare individual properties rather than the whole object
     expect(req.request.body.title).toBe('');
     expect(req.request.body.content).toBe('');
     expect(req.request.body.createdOn).toBe(fixedDate);
-    req.flush({message: 'Post created successfully'});
+    req.flush({ message: 'Post created successfully' });
   });
 });

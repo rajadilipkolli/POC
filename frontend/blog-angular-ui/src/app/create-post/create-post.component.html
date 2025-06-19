@@ -1,31 +1,52 @@
 <h1>Post</h1>
 
 <div class="container">
-  <div *ngIf="postForm.dirty && postForm.invalid" class="alert alert-warning">Enter valid values</div>
-  <div *ngIf="postForm.dirty && title.invalid" class="alert alert-warning">Enter atleast 5 alphabets</div>
-  <div *ngIf="postForm.dirty && createdOn.invalid" class="alert alert-warning">Enter valid Target Date</div>
+  @if (postForm.dirty && postForm.invalid) {
+  <div class="alert alert-warning">Enter valid values</div>
+  } @if (postForm.dirty && title.invalid) {
+  <div class="alert alert-warning">Enter atleast 5 alphabets</div>
+  } @if (postForm.dirty && createdOn.invalid) {
+  <div class="alert alert-warning">Enter valid Target Date</div>
+  }
 
   <form #postForm="ngForm" (ngSubmit)="!postForm.invalid && createPost()">
-
     <fieldset class="form-group">
       <label for="title">Title</label>
-      <input #title="ngModel" [(ngModel)]="post.title" class="form-control" id="title" minlength="5" name="title"
-             required="required" type="text"/>
+      <input
+        #title="ngModel"
+        [(ngModel)]="post.title"
+        class="form-control"
+        id="title"
+        minlength="5"
+        name="title"
+        required="required"
+        type="text"
+      />
     </fieldset>
 
     <fieldset class="form-group">
       <label for="formControlContentTextarea">Content</label>
-      <textarea #content="ngModel" [(ngModel)]="post.content" class="form-control" id="formControlContentTextarea"
-                name="content"
-                rows="3"></textarea>
+      <textarea
+        #content="ngModel"
+        [(ngModel)]="post.content"
+        class="form-control"
+        id="formControlContentTextarea"
+        name="content"
+        rows="3"
+      ></textarea>
     </fieldset>
 
     <fieldset class="form-group">
       <label for="formCreatedOn">createdOn</label>
-      <input #createdOn="ngModel" (ngModelChange)="post.createdOn = $event"
-             [ngModel]="post.createdOn  | date:'yyyy-MM-dd HH:mm:ss'"
-             class="form-control" id="formCreatedOn"
-             name="createdOn" type="datetime">
+      <input
+        #createdOn="ngModel"
+        (ngModelChange)="post.createdOn = $event"
+        [ngModel]="post.createdOn | date: 'yyyy-MM-dd HH:mm:ss'"
+        class="form-control"
+        id="formCreatedOn"
+        name="createdOn"
+        type="datetime"
+      />
     </fieldset>
 
     <!-- <fieldset class="form-group">

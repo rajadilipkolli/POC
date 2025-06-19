@@ -1,12 +1,12 @@
-import {provideHttpClientTesting} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {provideRouter} from '@angular/router';
-import {HttpRequest, HttpHandler, HttpResponse} from '@angular/common/http';
-import {of} from 'rxjs';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
-import {HttpInterceptorBasicAuthService} from './http-interceptor-basic-auth.service';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {BasicAuthenticationService} from '../basic-authentication.service';
+import { HttpInterceptorBasicAuthService } from './http-interceptor-basic-auth.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { BasicAuthenticationService } from '../basic-authentication.service';
 
 describe('HttpInterceptorBasicAuthService', () => {
   let service: HttpInterceptorBasicAuthService;
@@ -14,8 +14,10 @@ describe('HttpInterceptorBasicAuthService', () => {
   let httpHandler: jasmine.SpyObj<HttpHandler>;
 
   beforeEach(() => {
-    const basicAuthSpy = jasmine.createSpyObj('BasicAuthenticationService', 
-      ['getAuthenticatedToken', 'getAuthenticatedUser']);
+    const basicAuthSpy = jasmine.createSpyObj('BasicAuthenticationService', [
+      'getAuthenticatedToken',
+      'getAuthenticatedUser'
+    ]);
     const httpHandlerSpy = jasmine.createSpyObj('HttpHandler', ['handle']);
 
     TestBed.configureTestingModule({
@@ -26,9 +28,11 @@ describe('HttpInterceptorBasicAuthService', () => {
         { provide: BasicAuthenticationService, useValue: basicAuthSpy }
       ]
     });
-    
+
     service = TestBed.inject(HttpInterceptorBasicAuthService);
-    basicAuthService = TestBed.inject(BasicAuthenticationService) as jasmine.SpyObj<BasicAuthenticationService>;
+    basicAuthService = TestBed.inject(
+      BasicAuthenticationService
+    ) as jasmine.SpyObj<BasicAuthenticationService>;
     httpHandler = httpHandlerSpy;
   });
 

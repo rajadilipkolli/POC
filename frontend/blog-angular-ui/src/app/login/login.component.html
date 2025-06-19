@@ -1,17 +1,67 @@
-<h1> Login !! </h1>
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="login-title">Welcome Back</h1>
+    <p class="login-subtitle">Please sign in to your account</p>
 
-<div class="container">
-  <div *ngIf='invalidLogin' class="alert alert-warning">{{ errorMessage }}</div>
+    @if (invalidLogin()) {
+    <div class="alert alert-error" role="alert">
+      {{ errorMessage() }}
+    </div>
+    }
 
-  <div>
-    <div> User Name : <input [(ngModel)]="userName" name="username" type="text"></div>
-    <div>Password : <input [(ngModel)]="passWord" name="password" type="password"></div>
+    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="handleBasicAuthLogin()">
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="form-input"
+          [class.error]="usernameError()"
+          placeholder="Enter your username"
+          autocomplete="username"
+        />
+        @if (usernameError()) {
+        <span class="error-message">{{ usernameError() }}</span>
+        }
+      </div>
 
-    <!-- Interpolation User Name : <input type="text" name="username" value="{{userName}}"> -->
-    <!-- Event Binding -->
-    <!-- <div> <button (click)=handleLogin() class="btn btn-success"> Login </button></div> -->
-    <div>
-      <button (click)=handleBasicAuthLogin() class="btn btn-success"> Login</button>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-input"
+          [class.error]="passwordError()"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        />
+        @if (passwordError()) {
+        <span class="error-message">{{ passwordError() }}</span>
+        }
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary btn-login"
+        [disabled]="!isFormValid() || isLoading()"
+      >
+        @if (isLoading()) {
+        <span class="loading-spinner"></span>
+        Signing in... } @else { Sign In }
+      </button>
+    </form>
+
+    <div class="demo-section">
+      <p class="demo-text">Demo credentials: username / dummy</p>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="handleLogin()"
+        [disabled]="isLoading()"
+      >
+        Quick Demo Login
+      </button>
     </div>
   </div>
 </div>
