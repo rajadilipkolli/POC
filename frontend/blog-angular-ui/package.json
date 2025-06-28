@@ -36,7 +36,7 @@
     "@angular/language-service": "20.0.4",
     "@types/jasmine": "5.1.8",
     "@types/jasminewd2": "2.0.13",
-    "@types/node": "22.15.32",
+    "@types/node": "22.15.34",
     "angular-eslint": "20.1.1",
     "cross-env": "^7.0.3",
     "eslint": "9.30.0",
