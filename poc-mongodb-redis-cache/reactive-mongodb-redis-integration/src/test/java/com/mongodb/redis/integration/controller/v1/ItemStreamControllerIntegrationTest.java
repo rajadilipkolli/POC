@@ -5,7 +5,6 @@ import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.ItemCapped;
 import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
-import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,15 +31,12 @@ class ItemStreamControllerIntegrationTest extends AbstractIntegrationTest {
         mongoOperations.createCollection(
                 ItemCapped.class, CollectionOptions.empty().maxDocuments(50).size(5000).capped());
         Flux<ItemCapped> itemCappedFlux =
-                Flux.interval(Duration.ofMillis(5))
-                        .onBackpressureBuffer()
-                        .map(i -> new ItemCapped(null, "Random Item " + i, 100.00 + i))
-                        .take(5);
+                Flux.range(0, 5).map(i -> new ItemCapped(null, "Random Item " + i, 100.00 + i));
 
         reactiveItemCappedRepository
                 .insert(itemCappedFlux)
                 .doOnNext(itemCapped -> log.info("ItemCapped inserted is :{}", itemCapped))
-                .subscribe();
+                .blockLast();
     }
 
     @Test
