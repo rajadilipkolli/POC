@@ -99,6 +99,11 @@
             <artifactId>r2dbc</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.projectreactor.tools</groupId>
+            <artifactId>blockhound</artifactId>
+            <version>1.0.8.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -188,7 +193,7 @@
                 <configuration>
                     <java>
                         <googleJavaFormat>
-                            <version>1.17.0</version>
+                            <version>1.25.2</version>
                             <style>AOSP</style>
                         </googleJavaFormat>
                         <licenseHeader>
