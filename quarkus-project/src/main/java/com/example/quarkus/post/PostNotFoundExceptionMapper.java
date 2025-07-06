@@ -8,6 +8,8 @@ import jakarta.ws.rs.ext.Provider;
 public class PostNotFoundExceptionMapper implements ExceptionMapper<PostNotFoundException> {
     @Override
     public Response toResponse(PostNotFoundException exception) {
-        return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+        return Response.status(Response.Status.NOT_FOUND)
+                .entity(exception.getMessage())
+                .build();
     }
 }

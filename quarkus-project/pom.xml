@@ -11,11 +11,15 @@
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+    <spotless.version>2.44.5</spotless.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>3.24.2</quarkus.platform.version>
+
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
   </properties>
 
@@ -94,6 +98,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -128,8 +133,32 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+      <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless.version}</version>
+          <configuration>
+              <java>
+                  <palantirJavaFormat>
+                      <version>2.63.0</version>
+                  </palantirJavaFormat>
+                  <importOrder />
+                  <removeUnusedImports />
+                  <formatAnnotations />
+              </java>
+          </configuration>
+          <executions>
+              <execution>
+                  <phase>compile</phase>
+                  <goals>
+                      <goal>check</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>native</id>

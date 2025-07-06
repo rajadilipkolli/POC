@@ -15,7 +15,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,10 +44,7 @@ public class PostResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response savePost(@Valid Post post) {
         Post saved = this.postRepository.save(Post.of(post.getTitle(), post.getContent()));
-        return Response.created(
-                uriInfo.getBaseUriBuilder()
-                        .path("/posts/{id}")
-                        .build(saved.getId()))
+        return Response.created(uriInfo.getBaseUriBuilder().path("/posts/{id}").build(saved.getId()))
                 .build();
     }
 
