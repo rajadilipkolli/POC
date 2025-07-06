@@ -26,7 +26,7 @@ public class PostRepository {
         return post;
     }
 
-    public Post getById(String id) {
+    public Post getById(Long id) {
         return em.find(Post.class, id);
     }
 
@@ -35,7 +35,7 @@ public class PostRepository {
     }
 
     @Transactional
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         Post post = em.find(Post.class, id);
         if (post != null) {
             em.remove(post);

@@ -33,7 +33,7 @@ public class PostResourceTest {
     @Test
     void getNoneExistedPostShouldReturn404() {
         given()
-            .when().get("/posts/nonexisted")
+            .when().get("/posts/999999") // Use a non-existent numeric ID
             .then()
             .statusCode(404);
     }
@@ -81,7 +81,7 @@ public class PostResourceTest {
             .contentType(ContentType.JSON)
             .body("title", is("Integration Test Post"))
             .body("content", is("Testing the full CRUD cycle"))
-            .body("id", is(id))
+            .body("id", is(Integer.parseInt(id)))
             .body("createdAt", notNullValue());
     }
     
@@ -130,7 +130,7 @@ public class PostResourceTest {
             .contentType(ContentType.JSON)
             .body("title", is("Updated Title"))
             .body("content", is("Updated Content"))
-            .body("id", is(id));
+            .body("id", is(Integer.parseInt(id)));
             
         // Verify the update worked by getting the post
         given()

@@ -1,8 +1,10 @@
 package com.example.quarkus.post;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,8 +15,10 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "posts")
 public class Post implements Serializable {
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NotBlank(message = "Title is required")
     @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters")
@@ -30,18 +34,17 @@ public class Post implements Serializable {
 
     public static Post of(String title, String content) {
         Post post = new Post();
-        post.setId(UUID.randomUUID().toString());
         post.setCreatedAt(LocalDateTime.now());
         post.setTitle(title);
         post.setContent(content);
         return post;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

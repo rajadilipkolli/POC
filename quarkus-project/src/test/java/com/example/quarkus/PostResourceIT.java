@@ -23,7 +23,7 @@ public class PostResourceIT {
     @Test
     void getNoneExistedPost_shouldReturn404() {
         given()
-            .when().get("/posts/nonexisted")
+            .when().get("/posts/999999") // Use a non-existent numeric ID
             .then()
             .statusCode(404);
     }
