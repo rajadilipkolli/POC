@@ -1,4 +1,4 @@
-version: "3"
+name: "reactive-mongodb-redis-integration"
 services:
   mongo:
     image: mongo:8.0.11
@@ -9,10 +9,10 @@ services:
 
   redis:
     image: 'redis:8.0.2-alpine'
-    ports:
-      - '127.0.0.1:6379:6379/tcp'
     volumes:
-      - 'redis_data:/data:rw'
+      - redis-data:/data/db/redis
+    ports:
+      - 6379:6379
     deploy:
       resources:
         limits:
