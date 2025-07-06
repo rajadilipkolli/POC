@@ -1,6 +1,7 @@
 package com.example.quarkus;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
+import io.quarkus.test.common.QuarkusTestResource;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
  * This is a standalone class that doesn't extend PostResourceTest to avoid @Inject issues
  */
 @QuarkusIntegrationTest
+@QuarkusTestResource(PostgresTestResource.class)
 public class PostResourceIT {
     
     @Test

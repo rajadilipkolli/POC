@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import com.example.quarkus.post.PostRepository;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
 
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @QuarkusTest
+@QuarkusTestResource(PostgresTestResource.class)
 public class PostResourceTest {
 
     @Inject
@@ -29,7 +31,7 @@ public class PostResourceTest {
     }
 
     @Test
-    void getNoneExistedPost_shouldReturn404() {
+    void getNoneExistedPostShouldReturn404() {
         given()
             .when().get("/posts/nonexisted")
             .then()
@@ -37,7 +39,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void createPost_shouldReturn201() {
+    void createPostShouldReturn201() {
         // Create a post using POST request
         Map<String, String> post = new HashMap<>();
         post.put("title", "Test Post Title");
@@ -53,7 +55,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void createAndGetPost_shouldWorkTogether() {
+    void createAndGetPostShouldWorkTogether() {
         // Create a post
         Map<String, String> post = new HashMap<>();
         post.put("title", "Integration Test Post");
@@ -84,7 +86,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void postWithoutRequiredFields_shouldFail() {
+    void postWithoutRequiredFieldsShouldFail() {
         // Create invalid post missing required fields
         Map<String, String> post = new HashMap<>();
         post.put("title", ""); // Empty title
@@ -98,7 +100,7 @@ public class PostResourceTest {
     }
 
     @Test
-    void updatePost_shouldUpdate() {
+    void updatePostShouldUpdate() {
         // First create a post
         Map<String, String> post = new HashMap<>();
         post.put("title", "Original Title");
@@ -141,7 +143,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void deletePost_shouldRemovePost() {
+    void deletePostShouldRemovePost() {
         // First create a post
         Map<String, String> post = new HashMap<>();
         post.put("title", "Delete Test Post");
@@ -171,7 +173,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void getAllPosts_shouldReturnListOfPosts() {
+    void getAllPostsShouldReturnListOfPosts() {
         // Create multiple posts
         for (int i = 1; i <= 3; i++) {
             Map<String, String> post = new HashMap<>();
@@ -196,7 +198,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void updateNonExistentPost_shouldReturn404() {
+    void updateNonExistentPostShouldReturn404() {
         Map<String, String> updatedPost = new HashMap<>();
         updatedPost.put("title", "Updated Title");
         updatedPost.put("content", "Updated Content");
@@ -210,7 +212,7 @@ public class PostResourceTest {
     }
     
     @Test
-    void deleteNonExistentPost_shouldReturn404() {
+    void deleteNonExistentPostShouldReturn404() {
         given()
             .when().delete("/posts/nonexistent")
             .then()

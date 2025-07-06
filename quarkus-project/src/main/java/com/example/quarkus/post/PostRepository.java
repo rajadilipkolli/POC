@@ -1,45 +1,55 @@
 package com.example.quarkus.post;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
 
 @ApplicationScoped
 public class PostRepository {
 
-    static Map<String, Post> data = new ConcurrentHashMap<>();
+    @PersistenceContext
+    EntityManager em;
 
+    /**
+     * Remove all posts from the database. Used for test isolation.
+     */
+    @Transactional
+    public void clearAll() {
+        em.createQuery("DELETE FROM Post").executeUpdate();
+    }
+
+    @Transactional
     public Post save(Post post) {
-        data.put(post.getId(), post);
+        em.persist(post);
         return post;
     }
 
     public Post getById(String id) {
-       return data.get(id);
-    }
-    
-    public Collection<Post> getAllPosts() {
-        return data.values();
+        return em.find(Post.class, id);
     }
 
+    public List<Post> getAllPosts() {
+        return em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
+    }
+
+    @Transactional
     public void deleteById(String id) {
-        data.remove(id);
+        Post post = em.find(Post.class, id);
+        if (post != null) {
+            em.remove(post);
+        }
     }
 
+    @Transactional
     public Post update(Post post) {
-        Post existingPost = data.get(post.getId());
+        Post existingPost = em.find(Post.class, post.getId());
         if (existingPost != null) {
             existingPost.setTitle(post.getTitle());
             existingPost.setContent(post.getContent());
-            return existingPost;
+            return em.merge(existingPost);
         }
         return null;
-    }
-    
-    // Method to clear all posts - useful for testing
-    public void clearAll() {
-        data.clear();
     }
 }
