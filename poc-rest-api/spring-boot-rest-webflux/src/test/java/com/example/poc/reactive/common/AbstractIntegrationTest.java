@@ -11,7 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = TestApplication.class)
 @AutoConfigureWebTestClient
-public abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest extends BlockHoundTestConfig {
 
     @Autowired protected WebTestClient webTestClient;
 }

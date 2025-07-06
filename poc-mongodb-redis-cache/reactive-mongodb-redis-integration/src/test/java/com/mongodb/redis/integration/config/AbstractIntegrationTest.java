@@ -15,7 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
-public abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest extends BlockHoundTestConfig {
 
     @Autowired protected WebTestClient webTestClient;
 }
