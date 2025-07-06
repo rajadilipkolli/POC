@@ -1,38 +1,46 @@
 package com.example.quarkus.post;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "posts")
 public class Post implements Serializable {
-    String id;
-    
-    @NotBlank(message = "Title is required")
-    @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters")
-    String title;
-    
-    @NotBlank(message = "Content is required")
-    String content;
-    
-    LocalDateTime createdAt;
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    @NotBlank(message = "Title is required") @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters") @Column(nullable = false, length = 255)
+    private String title;
+
+    @NotBlank(message = "Content is required") @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     public static Post of(String title, String content) {
         Post post = new Post();
-        post.setId(UUID.randomUUID().toString());
         post.setCreatedAt(LocalDateTime.now());
         post.setTitle(title);
         post.setContent(content);
         return post;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,5 +67,4 @@ public class Post implements Serializable {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.example.quarkus;
 
 import com.example.quarkus.service.HelloService;
-
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

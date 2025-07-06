@@ -1,4 +1,5 @@
 package com.example.quarkus.post;
+
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -14,7 +15,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,17 +44,14 @@ public class PostResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response savePost(@Valid Post post) {
         Post saved = this.postRepository.save(Post.of(post.getTitle(), post.getContent()));
-        return Response.created(
-            uriInfo.getBaseUriBuilder()
-                .path("/posts/{id}")
-                .build(saved.getId())
-        ).build();
+        return Response.created(uriInfo.getBaseUriBuilder().path("/posts/{id}").build(saved.getId()))
+                .build();
     }
 
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPostById(@PathParam("id") final String id) {
+    public Response getPostById(@PathParam("id") final Long id) {
         Post post = this.postRepository.getById(id);
         if (post == null) {
             throw new PostNotFoundException(id);
@@ -66,12 +63,12 @@ public class PostResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePost(@PathParam("id") final String id, @Valid Post post) {
+    public Response updatePost(@PathParam("id") final Long id, @Valid Post post) {
         Post existingPost = this.postRepository.getById(id);
         if (existingPost == null) {
             throw new PostNotFoundException(id);
         }
-        
+
         post.setId(id);
         Post updated = this.postRepository.update(post);
         return Response.ok(updated).build();
@@ -79,12 +76,12 @@ public class PostResource {
 
     @Path("{id}")
     @DELETE
-    public Response deletePost(@PathParam("id") final String id) {
+    public Response deletePost(@PathParam("id") final Long id) {
         Post existingPost = this.postRepository.getById(id);
         if (existingPost == null) {
             throw new PostNotFoundException(id);
         }
-        
+
         this.postRepository.deleteById(id);
         return Response.noContent().build();
     }
