@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 public class PostResourceIT {
     
     @Test
-    void getNoneExistedPost_shouldReturn404() {
+    void getNoneExistedPostShouldReturn404() {
         given()
             .when().get("/posts/999999") // Use a non-existent numeric ID
             .then()
@@ -29,7 +29,7 @@ public class PostResourceIT {
     }
     
     @Test
-    void createPost_shouldReturn201() {
+    void createPostShouldReturn201() {
         Map<String, String> post = new HashMap<>();
         post.put("title", "Test Post Title - IT");
         post.put("content", "Test Post Content - IT");
@@ -44,7 +44,7 @@ public class PostResourceIT {
     }
     
     @Test
-    void createAndGetPost_shouldWorkTogether() {
+    void createAndGetPostShouldWorkTogether() {
         // Create a post with a unique title
         Map<String, String> post = new HashMap<>();
         post.put("title", "Integration Test Post " + System.currentTimeMillis());
@@ -70,12 +70,12 @@ public class PostResourceIT {
             .contentType(ContentType.JSON)
             .body("title", is(post.get("title")))
             .body("content", is(post.get("content")))
-            .body("id", is(id))
+            .body("id", is(Integer.parseInt(id)))
             .body("createdAt", notNullValue());
     }
     
     @Test
-    void updatePost_shouldUpdate() {
+    void updatePostShouldUpdate() {
         // First create a post with unique ID
         Map<String, String> post = new HashMap<>();
         String uniqueId = "UpdateTest-" + System.currentTimeMillis();
@@ -106,7 +106,7 @@ public class PostResourceIT {
             .contentType(ContentType.JSON)
             .body("title", is(updatedPost.get("title")))
             .body("content", is(updatedPost.get("content")))
-            .body("id", is(id));
+            .body("id", is(Integer.parseInt(id)));
             
         // Verify the update worked by getting the post
         given()
@@ -119,7 +119,7 @@ public class PostResourceIT {
     }
     
     @Test
-    void deletePost_shouldRemovePost() {
+    void deletePostShouldRemovePost() {
         // First create a post
         Map<String, String> post = new HashMap<>();
         post.put("title", "Delete Test Post " + System.currentTimeMillis());
@@ -149,7 +149,7 @@ public class PostResourceIT {
     }
     
     @Test
-    void getAllPosts_shouldReturnListOfPosts() {
+    void getAllPostsShouldReturnListOfPosts() {
         // Create a post to ensure there's something to retrieve
         Map<String, String> post = new HashMap<>();
         post.put("title", "Native Mode List Post - " + System.currentTimeMillis());
@@ -171,7 +171,7 @@ public class PostResourceIT {
     }
     
     @Test
-    void updateNonExistentPost_shouldReturn404() {
+    void updateNonExistentPostShouldReturn404() {
         Map<String, String> updatedPost = new HashMap<>();
         updatedPost.put("title", "Updated Title");
         updatedPost.put("content", "Updated Content");
@@ -179,15 +179,15 @@ public class PostResourceIT {
         given()
             .contentType(ContentType.JSON)
             .body(updatedPost)
-            .when().put("/posts/nonexistent")
+            .when().put("/posts/999999")
             .then()
             .statusCode(404);
     }
     
     @Test
-    void deleteNonExistentPost_shouldReturn404() {
+    void deleteNonExistentPostShouldReturn404() {
         given()
-            .when().delete("/posts/nonexistent")
+            .when().delete("/posts/999999")
             .then()
             .statusCode(404);
     }
