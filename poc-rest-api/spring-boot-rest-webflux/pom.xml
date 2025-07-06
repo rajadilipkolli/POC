@@ -103,6 +103,7 @@
             <groupId>io.projectreactor.tools</groupId>
             <artifactId>blockhound</artifactId>
             <version>1.0.13.RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
