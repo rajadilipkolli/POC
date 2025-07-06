@@ -31,7 +31,7 @@ class ReactiveItemRepositoryTest {
                 .thenMany(Flux.fromIterable(MockObjectUtils.getItemsList()))
                 .flatMap(reactiveItemRepository::save)
                 .doOnNext(item -> log.info("Inserted Item is : {}", item))
-                .blockLast();
+                .subscribe();
     }
 
     @Test

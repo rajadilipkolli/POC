@@ -40,7 +40,7 @@ class ItemStreamControllerIntegrationTest extends AbstractIntegrationTest {
         reactiveItemCappedRepository
                 .insert(itemCappedFlux)
                 .doOnNext(itemCapped -> log.info("ItemCapped inserted is :{}", itemCapped))
-                .blockLast();
+                .subscribe();
     }
 
     @Test

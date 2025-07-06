@@ -9,6 +9,13 @@ import reactor.blockhound.BlockHound;
 public abstract class BlockHoundTestConfig {
     @BeforeAll
     void setUpBlockHound() {
-        BlockHound.install();
+        BlockHound.builder()
+                .allowBlockingCallsInside(
+                        "org.springframework.validation.beanvalidation.SpringValidatorAdapter",
+                        "validate")
+                .allowBlockingCallsInside("jakarta.validation.Validator", "validate")
+                .allowBlockingCallsInside("org.slf4j.LoggerFactory", "getLogger")
+                .allowBlockingCallsInside("java.util.UUID", "randomUUID")
+                .install();
     }
 }

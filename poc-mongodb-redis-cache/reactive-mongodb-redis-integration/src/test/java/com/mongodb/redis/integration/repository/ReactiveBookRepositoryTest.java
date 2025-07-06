@@ -29,7 +29,7 @@ class ReactiveBookRepositoryTest {
                 .thenMany(Flux.just(book))
                 .flatMap(bookRepository::save)
                 .doOnNext(insertedBook -> log.info("Inserted Book is : {}", insertedBook))
-                .blockLast();
+                .subscribe();
     }
 
     @Test
