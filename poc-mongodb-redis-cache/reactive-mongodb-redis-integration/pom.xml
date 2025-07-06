@@ -158,7 +158,7 @@
 				<configuration>
 					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
 					<runOrder>alphabetical</runOrder>
-					<argLine>-Xmx1024M ${argLine}</argLine>
+					<argLine>-Xmx1024M -XX:+AllowRedefinitionToAddDeleteMethods ${argLine}</argLine>
 					<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
 					<includes>
 						<include>**/*IT*</include>

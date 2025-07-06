@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -20,6 +21,7 @@ import reactor.test.StepVerifier;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
 @Import(TestContainersConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReactiveItemRepositoryTest {
 
     @Autowired private ReactiveItemRepository reactiveItemRepository;
@@ -31,7 +33,7 @@ class ReactiveItemRepositoryTest {
                 .thenMany(Flux.fromIterable(MockObjectUtils.getItemsList()))
                 .flatMap(reactiveItemRepository::save)
                 .doOnNext(item -> log.info("Inserted Item is : {}", item))
-                .subscribe();
+                .blockLast();
     }
 
     @Test

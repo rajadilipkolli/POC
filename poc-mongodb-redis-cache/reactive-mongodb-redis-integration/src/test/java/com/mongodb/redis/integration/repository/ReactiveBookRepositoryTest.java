@@ -8,6 +8,7 @@ import com.mongodb.redis.integration.document.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
@@ -17,6 +18,7 @@ import reactor.test.StepVerifier;
 @DataMongoTest
 @Slf4j
 @Import(TestContainersConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReactiveBookRepositoryTest {
 
     @Autowired ReactiveBookRepository bookRepository;
@@ -29,7 +31,7 @@ class ReactiveBookRepositoryTest {
                 .thenMany(Flux.just(book))
                 .flatMap(bookRepository::save)
                 .doOnNext(insertedBook -> log.info("Inserted Book is : {}", insertedBook))
-                .subscribe();
+                .blockLast();
     }
 
     @Test
