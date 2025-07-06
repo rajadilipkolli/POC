@@ -102,7 +102,7 @@
         <dependency>
             <groupId>io.projectreactor.tools</groupId>
             <artifactId>blockhound</artifactId>
-            <version>1.0.8.RELEASE</version>
+            <version>1.0.13.RELEASE</version>
         </dependency>
     </dependencies>
 
@@ -222,6 +222,7 @@
                         <exclude>**/*IntTest*</exclude>
                         <exclude>**/*IntegrationTest*</exclude>
                     </excludes>
+                    <argLine>-XX:+AllowRedefinitionToAddDeleteMethods</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -237,6 +238,7 @@
                         <include>**/*IntTest*</include>
                         <include>**/*IntegrationTest*</include>
                     </includes>
+                    <argLine>-XX:+AllowRedefinitionToAddDeleteMethods</argLine>
                 </configuration>
                 <executions>
                     <execution>

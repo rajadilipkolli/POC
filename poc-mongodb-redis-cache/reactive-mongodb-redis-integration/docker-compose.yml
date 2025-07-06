@@ -10,7 +10,7 @@ services:
   redis:
     image: 'redis:8.0.2-alpine'
     volumes:
-      - redis-data:/data/db/redis
+      - redis-data:/data:rw
     ports:
       - 6379:6379
     deploy:
