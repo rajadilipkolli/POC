@@ -51,7 +51,7 @@
     "puppeteer": "24.17.0",
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "typescript-eslint": "8.40.0"
   }
 }
