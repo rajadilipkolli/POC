@@ -4,7 +4,7 @@ services:
   #  Create a service named postgres.
   postgres:
     #   Use the Docker Image postgres. This will pull the newest release.
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     #   Give the container the name postgres. You can change to something else.
     container_name: postgres
     #   Setup the username, password, and database name. You can change these values.
