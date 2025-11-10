@@ -37,7 +37,7 @@
     "@types/jasmine": "5.1.12",
     "@types/jasminewd2": "2.0.13",
     "@types/node": "22.19.0",
-    "angular-eslint": "20.5.2",
+    "angular-eslint": "20.6.0",
     "cross-env": "^10.0.0",
     "eslint": "9.39.1",
     "jasmine-core": "5.12.1",
