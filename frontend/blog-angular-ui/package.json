@@ -48,7 +48,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
     "protractor": "7.0.0",
-    "puppeteer": "24.30.0",
+    "puppeteer": "24.31.0",
     "rimraf": "6.1.2",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
