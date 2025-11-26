@@ -22,7 +22,7 @@ jobs:
         working-directory: "frontend/blog-angular-ui"
     strategy:
       matrix:
-        node: [ '20', '22' ]
+        node: [ '24', '22' ]
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v6
