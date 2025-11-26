@@ -8,18 +8,18 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -28,7 +28,7 @@ class BookControllerTest {
 
     @Autowired private ObjectMapper objectMapper;
 
-    @MockBean private BookService bookService;
+    @MockitoBean private BookService bookService;
 
     @Test
     void getBookShouldReturnBook() throws Exception {

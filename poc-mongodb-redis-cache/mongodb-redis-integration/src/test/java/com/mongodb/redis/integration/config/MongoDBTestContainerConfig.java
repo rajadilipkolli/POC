@@ -3,14 +3,14 @@ package com.mongodb.redis.integration.config;
 
 import java.time.Duration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public interface MongoDBTestContainerConfig {
 
     @ServiceConnection
     MongoDBContainer mongoDBContainer =
-            new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.0.11"))
+            new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.2.2"))
                     .withSharding()
                     .withStartupAttempts(3)
                     .withStartupTimeout(Duration.ofMinutes(2))

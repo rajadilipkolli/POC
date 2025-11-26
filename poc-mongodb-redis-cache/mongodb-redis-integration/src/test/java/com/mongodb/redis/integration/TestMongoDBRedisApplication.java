@@ -19,7 +19,7 @@ public class TestMongoDBRedisApplication {
     @ServiceConnection(name = "redis")
     @RestartScope
     public GenericContainer redisContainer() {
-        return new GenericContainer(DockerImageName.parse("redis").withTag("8.0.2-alpine"))
+        return new GenericContainer(DockerImageName.parse("redis").withTag("8.4.0-alpine"))
                 .withExposedPorts(6379);
     }
 
