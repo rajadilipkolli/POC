@@ -8,18 +8,18 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -28,19 +28,18 @@ class BookControllerTest {
 
     @Autowired private ObjectMapper objectMapper;
 
-    @MockBean private BookService bookService;
+    @MockitoBean private BookService bookService;
 
     @Test
     void getBookShouldReturnBook() throws Exception {
         given(this.bookService.findBookByTitle(anyString()))
                 .willReturn(
-                        Book.builder()
-                                .title("JUNIT_TITLE")
-                                .author("JUNIT_AUTHOR")
-                                .bookId("JUNIT")
-                                .text("JUNIT_TEXT")
-                                .version(1L)
-                                .build());
+                        new Book()
+                                .setTitle("JUNIT_TITLE")
+                                .setAuthor("JUNIT_AUTHOR")
+                                .setBookId("JUNIT")
+                                .setText("JUNIT_TEXT")
+                                .setVersion(1L));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/book/findByTitle/JUNIT_TITLE"))
@@ -62,12 +61,12 @@ class BookControllerTest {
     @Test
     void saveBookShouldReturnBook() throws Exception {
         Book book =
-                Book.builder()
-                        .title("JUNIT_TITLE")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("JUNIT_TITLE")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT")
+                        .setVersion(1L);
         given(this.bookService.saveBook(ArgumentMatchers.any(Book.class))).willReturn(book);
 
         this.mockMvc
@@ -83,12 +82,12 @@ class BookControllerTest {
     @Test
     void updateBookShouldReturnBook() throws Exception {
         Book book =
-                Book.builder()
-                        .title("MongoDbCookBook")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("MongoDbCookBook")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT")
+                        .setVersion(1L);
         given(
                         this.bookService.updateAuthorByTitle(
                                 ArgumentMatchers.eq("MongoDbCookBook"), anyString()))

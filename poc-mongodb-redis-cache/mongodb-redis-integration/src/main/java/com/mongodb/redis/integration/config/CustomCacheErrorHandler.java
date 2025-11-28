@@ -1,12 +1,14 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.config;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 
-@Slf4j
 class CustomCacheErrorHandler implements CacheErrorHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomCacheErrorHandler.class);
 
     /** {@inheritDoc} */
     @Override

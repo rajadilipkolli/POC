@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -30,12 +30,11 @@ class BookRepositoryTest {
     void setUp() {
         this.collectionName = "books";
         this.bookRecToInsert =
-                Book.builder()
-                        .title("JUNIT_TITLE")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("JUNIT_TITLE")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT");
     }
 
     @AfterAll

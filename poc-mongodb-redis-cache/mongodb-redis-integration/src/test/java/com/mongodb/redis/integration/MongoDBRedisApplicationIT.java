@@ -6,8 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = TestMongoDBRedisApplication.class)
 @ActiveProfiles("test")
+@AutoConfigureTestRestTemplate
 class MongoDBRedisApplicationIT {
 
     @Autowired private TestRestTemplate testRestTemplate;
@@ -44,12 +46,11 @@ class MongoDBRedisApplicationIT {
     void getBookByTitle_returnsBookDetails() {
         // arrange
         Book book =
-                Book.builder()
-                        .title("MongoDbCookBook")
-                        .author("Raja")
-                        .bookId("book1")
-                        .text("text1")
-                        .build();
+                new Book()
+                        .setTitle("MongoDbCookBook")
+                        .setAuthor("Raja")
+                        .setBookId("book1")
+                        .setText("text1");
         ResponseEntity<Book> response =
                 this.testRestTemplate.postForEntity("/book/saveBook", book, Book.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

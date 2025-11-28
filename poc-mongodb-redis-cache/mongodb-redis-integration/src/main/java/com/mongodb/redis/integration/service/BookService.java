@@ -4,8 +4,8 @@ package com.mongodb.redis.integration.service;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.BookRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,13 +17,18 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class BookService {
+
+    private static final Logger log = LoggerFactory.getLogger(BookService.class);
 
     private final BookRepository bookRepository;
 
     private final MongoTemplate mongoTemplate;
+
+    public BookService(BookRepository bookRepository, MongoTemplate mongoTemplate) {
+        this.bookRepository = bookRepository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @Cacheable(value = "books", key = "#title", unless = "#result == null")
     public Book findBookByTitle(String title) throws BookNotFoundException {
