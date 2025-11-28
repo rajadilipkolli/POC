@@ -44,12 +44,11 @@ class MongoDBRedisApplicationIT {
     void getBookByTitle_returnsBookDetails() {
         // arrange
         Book book =
-                Book.builder()
-                        .title("MongoDbCookBook")
-                        .author("Raja")
-                        .bookId("book1")
-                        .text("text1")
-                        .build();
+                new Book()
+                        .setTitle("MongoDbCookBook")
+                        .setAuthor("Raja")
+                        .setBookId("book1")
+                        .setText("text1");
         ResponseEntity<Book> response =
                 this.testRestTemplate.postForEntity("/book/saveBook", book, Book.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

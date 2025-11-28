@@ -35,13 +35,12 @@ class BookServiceTest {
     void getBookDetailsReturnBookInfo() throws BookNotFoundException {
         String title = "JUNIT_TITLE";
         Book builderBook =
-                Book.builder()
-                        .title(title)
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .version(1L)
-                        .build();
+                new Book()
+                        .setTitle("JUNIT_TITLE")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT")
+                        .setVersion(1L);
         given(this.bookRepository.findBookByTitle(eq(title))).willReturn(Optional.of(builderBook));
 
         Book book = this.bookService.findBookByTitle(title);
@@ -67,12 +66,11 @@ class BookServiceTest {
     void testSaveBook() {
         // Arrange
         Book book =
-                Book.builder()
-                        .bookId("1234567890")
-                        .title("Title")
-                        .author("Author")
-                        .text("Text")
-                        .build();
+                new Book()
+                        .setBookId("1234567890")
+                        .setTitle("Title")
+                        .setAuthor("Author")
+                        .setText("Text");
 
         // Mock the behavior of the bookRepository
         given(bookRepository.save(book)).willReturn(book);
@@ -92,12 +90,11 @@ class BookServiceTest {
         // Arrange
         String title = "The Book Title";
         Book book =
-                Book.builder()
-                        .bookId("1234567890")
-                        .title(title)
-                        .author("Author")
-                        .text("Text")
-                        .build();
+                new Book()
+                        .setBookId("1234567890")
+                        .setTitle(title)
+                        .setAuthor("Author")
+                        .setText("Text");
         given(bookRepository.findBookByTitle(title)).willReturn(Optional.of(book));
 
         // Act

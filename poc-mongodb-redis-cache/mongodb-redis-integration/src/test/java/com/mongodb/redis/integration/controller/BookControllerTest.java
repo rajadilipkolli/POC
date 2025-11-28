@@ -34,13 +34,12 @@ class BookControllerTest {
     void getBookShouldReturnBook() throws Exception {
         given(this.bookService.findBookByTitle(anyString()))
                 .willReturn(
-                        Book.builder()
-                                .title("JUNIT_TITLE")
-                                .author("JUNIT_AUTHOR")
-                                .bookId("JUNIT")
-                                .text("JUNIT_TEXT")
-                                .version(1L)
-                                .build());
+                        new Book()
+                                .setTitle("JUNIT_TITLE")
+                                .setAuthor("JUNIT_AUTHOR")
+                                .setBookId("JUNIT")
+                                .setText("JUNIT_TEXT")
+                                .setVersion(1L));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/book/findByTitle/JUNIT_TITLE"))
@@ -62,12 +61,12 @@ class BookControllerTest {
     @Test
     void saveBookShouldReturnBook() throws Exception {
         Book book =
-                Book.builder()
-                        .title("JUNIT_TITLE")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("JUNIT_TITLE")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT")
+                        .setVersion(1L);
         given(this.bookService.saveBook(ArgumentMatchers.any(Book.class))).willReturn(book);
 
         this.mockMvc
@@ -83,12 +82,12 @@ class BookControllerTest {
     @Test
     void updateBookShouldReturnBook() throws Exception {
         Book book =
-                Book.builder()
-                        .title("MongoDbCookBook")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("MongoDbCookBook")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT")
+                        .setVersion(1L);
         given(
                         this.bookService.updateAuthorByTitle(
                                 ArgumentMatchers.eq("MongoDbCookBook"), anyString()))

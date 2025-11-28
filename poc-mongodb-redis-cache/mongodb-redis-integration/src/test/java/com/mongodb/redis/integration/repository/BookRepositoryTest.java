@@ -30,12 +30,11 @@ class BookRepositoryTest {
     void setUp() {
         this.collectionName = "books";
         this.bookRecToInsert =
-                Book.builder()
-                        .title("JUNIT_TITLE")
-                        .author("JUNIT_AUTHOR")
-                        .bookId("JUNIT")
-                        .text("JUNIT_TEXT")
-                        .build();
+                new Book()
+                        .setTitle("JUNIT_TITLE")
+                        .setAuthor("JUNIT_AUTHOR")
+                        .setBookId("JUNIT")
+                        .setText("JUNIT_TEXT");
     }
 
     @AfterAll

@@ -6,7 +6,6 @@ import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/book")
-@RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping("/findByTitle/{title}")
     public Book findBookByTitle(@NotNull @PathVariable String title) throws BookNotFoundException {
