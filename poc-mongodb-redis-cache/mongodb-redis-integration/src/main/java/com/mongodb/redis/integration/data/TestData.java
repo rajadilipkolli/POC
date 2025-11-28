@@ -3,7 +3,8 @@ package com.mongodb.redis.integration.data;
 
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.repository.BookRepository;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,8 +12,9 @@ import org.springframework.context.event.EventListener;
 
 @Configuration
 @Profile({"local", "test"})
-@Slf4j
 public class TestData {
+
+    private static final Logger log = LoggerFactory.getLogger(TestData.class);
 
     private final BookRepository bookRepository;
 

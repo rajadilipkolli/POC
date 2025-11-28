@@ -2,7 +2,6 @@
 package com.mongodb.redis.integration.config;
 
 import jakarta.annotation.PreDestroy;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -12,10 +11,13 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
-@RequiredArgsConstructor
 public class RedisCachingConfig implements CachingConfigurer {
 
     private final RedisConnectionFactory connectionFactory;
+
+    public RedisCachingConfig(RedisConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     @Bean
     @Override

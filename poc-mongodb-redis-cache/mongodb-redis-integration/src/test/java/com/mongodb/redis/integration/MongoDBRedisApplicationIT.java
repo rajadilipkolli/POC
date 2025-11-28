@@ -7,6 +7,7 @@ import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = TestMongoDBRedisApplication.class)
 @ActiveProfiles("test")
+@AutoConfigureTestRestTemplate
 class MongoDBRedisApplicationIT {
 
     @Autowired private TestRestTemplate testRestTemplate;
