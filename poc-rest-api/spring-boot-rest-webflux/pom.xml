@@ -65,18 +65,18 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-webflux-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-testcontainers</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -86,17 +86,17 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>r2dbc</artifactId>
+            <artifactId>testcontainers-r2dbc</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -135,9 +135,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source> <!-- depending on your project -->
-                    <target>${java.version}</target> <!-- depending on your project -->
+                <configuration> <!-- depending on your project --> <!-- depending on your project -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -157,6 +155,7 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -194,7 +193,7 @@
                 <configuration>
                     <java>
                         <googleJavaFormat>
-                            <version>1.25.2</version>
+                            <version>1.28.0</version>
                             <style>AOSP</style>
                         </googleJavaFormat>
                         <licenseHeader>

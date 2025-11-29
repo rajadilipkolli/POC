@@ -2,10 +2,10 @@
 package com.example.poc.reactive.common;
 
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 public interface TestContainersConfig {
 
     @ServiceConnection
-    PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:18-alpine");
+    PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:18-alpine");
 }
