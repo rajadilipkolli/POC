@@ -50,6 +50,8 @@ public class RedisCachingConfig implements CachingConfigurer {
 
     @PreDestroy
     public void flushTestDb() {
-        this.connectionFactory.getConnection().serverCommands().flushDb();
+        try (var connection = this.connectionFactory.getConnection()) {
+            connection.serverCommands().flushDb();
+        }
     }
 }

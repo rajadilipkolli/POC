@@ -90,7 +90,7 @@ class ItemControllerTest {
                 .isOk()
                 .expectBody()
                 .jsonPath("$.price")
-                .isEqualTo("900.99");
+                .isEqualTo(900.99);
     }
 
     @Test
