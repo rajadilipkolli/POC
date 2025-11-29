@@ -29,13 +29,7 @@ class ReactiveBookServiceTest {
     @InjectMocks private ReactiveBookService reactiveBookService;
 
     private final Book dummyBook =
-            Book.builder()
-                    .title("JUNIT_TITLE")
-                    .author("JUNIT_AUTHOR")
-                    .bookId("JUNIT")
-                    .text("JUNIT_TEXT")
-                    .version(1L)
-                    .build();
+            new Book("JUNIT", "JUNIT_TITLE", "JUNIT_AUTHOR", "JUNIT_TEXT", 1L);
 
     @Test
     void getBookDetailsReturnBookInfo() {

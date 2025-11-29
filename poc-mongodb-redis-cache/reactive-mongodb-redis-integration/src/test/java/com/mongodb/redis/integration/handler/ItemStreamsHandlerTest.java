@@ -4,26 +4,21 @@ package com.mongodb.redis.integration.handler;
 import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.constants.ItemConstants;
 import com.mongodb.redis.integration.document.ItemCapped;
-import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
 import java.time.Duration;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.CollectionOptions;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-@Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ItemStreamsHandlerTest extends AbstractIntegrationTest {
 
-    @Autowired private ReactiveItemCappedRepository reactiveItemCappedRepository;
-
-    @Autowired private MongoOperations mongoOperations;
+    private static final Logger log = LoggerFactory.getLogger(ItemStreamsHandlerTest.class);
 
     @BeforeAll
     void setUp() {

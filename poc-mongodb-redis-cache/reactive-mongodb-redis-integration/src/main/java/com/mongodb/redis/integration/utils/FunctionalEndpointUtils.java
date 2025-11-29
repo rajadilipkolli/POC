@@ -2,14 +2,12 @@
 package com.mongodb.redis.integration.utils;
 
 import com.mongodb.redis.integration.request.BookDTO;
-import lombok.experimental.UtilityClass;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-@UtilityClass
 public class FunctionalEndpointUtils {
 
     public static String id(ServerRequest serverRequest) {

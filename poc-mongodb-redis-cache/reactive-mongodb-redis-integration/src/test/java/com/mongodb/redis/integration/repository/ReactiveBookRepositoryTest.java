@@ -5,27 +5,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.TestContainersConfig;
 import com.mongodb.redis.integration.document.Book;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 @DataMongoTest
-@Slf4j
 @Import(TestContainersConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReactiveBookRepositoryTest {
 
+    private static final Logger log = LoggerFactory.getLogger(ReactiveBookRepositoryTest.class);
     @Autowired ReactiveBookRepository bookRepository;
 
     @BeforeAll
     void setUp() {
-        Book book = Book.builder().title("prius").author("hybrid").text("Junit").build();
+        Book book = new Book().setTitle("prius").setAuthor("hybrid").setText("Junit");
         this.bookRepository
                 .deleteAll()
                 .thenMany(Flux.just(book))

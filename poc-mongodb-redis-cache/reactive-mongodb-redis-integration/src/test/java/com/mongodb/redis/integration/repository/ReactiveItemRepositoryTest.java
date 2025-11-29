@@ -4,14 +4,15 @@ package com.mongodb.redis.integration.repository;
 import com.mongodb.redis.integration.config.TestContainersConfig;
 import com.mongodb.redis.integration.document.Item;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,11 +20,11 @@ import reactor.test.StepVerifier;
 
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
-@Slf4j
 @Import(TestContainersConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReactiveItemRepositoryTest {
 
+    private static final Logger log = LoggerFactory.getLogger(ReactiveItemRepositoryTest.class);
     @Autowired private ReactiveItemRepository reactiveItemRepository;
 
     @BeforeAll
