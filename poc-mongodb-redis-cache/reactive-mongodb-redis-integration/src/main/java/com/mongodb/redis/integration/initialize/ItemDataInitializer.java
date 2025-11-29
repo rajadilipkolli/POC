@@ -18,15 +18,15 @@ import reactor.core.publisher.Flux;
 
 @Component
 @Profile("!test")
-public class ItemDataInitiliazer implements CommandLineRunner {
+public class ItemDataInitializer implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(ItemDataInitiliazer.class);
+    private static final Logger log = LoggerFactory.getLogger(ItemDataInitializer.class);
 
     private final ReactiveItemRepository reactiveItemRepository;
     private final ReactiveItemCappedRepository reactiveItemCappedRepository;
     private final MongoOperations mongoOperations;
 
-    public ItemDataInitiliazer(
+    public ItemDataInitializer(
             ReactiveItemRepository reactiveItemRepository,
             ReactiveItemCappedRepository reactiveItemCappedRepository,
             MongoOperations mongoOperations) {

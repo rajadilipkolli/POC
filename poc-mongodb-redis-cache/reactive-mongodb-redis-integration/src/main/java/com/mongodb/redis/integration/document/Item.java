@@ -1,6 +1,7 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.document;
 
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -43,5 +44,25 @@ public class Item {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id)
+                && Objects.equals(description, item.description)
+                && Objects.equals(price, item.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{id='" + id + "', description='" + description + "', price=" + price + "}";
     }
 }

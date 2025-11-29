@@ -1,6 +1,7 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.document;
 
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -43,5 +44,31 @@ public class ItemCapped {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemCapped that = (ItemCapped) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(description, that.description)
+                && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, price);
+    }
+
+    @Override
+    public String toString() {
+        return "ItemCapped{id='"
+                + id
+                + "', description='"
+                + description
+                + "', price="
+                + price
+                + "}";
     }
 }

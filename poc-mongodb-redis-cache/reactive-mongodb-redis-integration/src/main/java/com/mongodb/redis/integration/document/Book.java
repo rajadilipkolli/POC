@@ -6,9 +6,7 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Book implements Serializable {
 
     @Serial private static final long serialVersionUID = 1L;
@@ -74,7 +72,8 @@ public class Book implements Serializable {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public Book setVersion(Long version) {
         this.version = version;
+        return this;
     }
 }
