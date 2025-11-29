@@ -11,7 +11,7 @@ import com.mongodb.redis.integration.utils.MockObjectUtils;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -89,7 +89,8 @@ class ItemControllerTest {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.price", "900.99");
+                .jsonPath("$.price")
+                .isEqualTo(900.99);
     }
 
     @Test
@@ -123,7 +124,8 @@ class ItemControllerTest {
                 .expectStatus()
                 .isCreated()
                 .expectBody()
-                .jsonPath("$.price", item.getPrice());
+                .jsonPath("$.price")
+                .isEqualTo(item.getPrice());
     }
 
     @Test
@@ -148,7 +150,8 @@ class ItemControllerTest {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.price", newPrice);
+                .jsonPath("$.price")
+                .isEqualTo(newPrice);
     }
 
     @Test

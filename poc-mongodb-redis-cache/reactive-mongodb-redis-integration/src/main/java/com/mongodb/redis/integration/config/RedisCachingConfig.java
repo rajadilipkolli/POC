@@ -3,7 +3,6 @@ package com.mongodb.redis.integration.config;
 
 import com.mongodb.redis.integration.request.BookDTO;
 import jakarta.annotation.PreDestroy;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -12,16 +11,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
-@RequiredArgsConstructor
 public class RedisCachingConfig implements CachingConfigurer {
 
     private final RedisConnectionFactory connectionFactory;
+
+    public RedisCachingConfig(RedisConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     @Bean
     @Override
@@ -33,8 +35,8 @@ public class RedisCachingConfig implements CachingConfigurer {
     public ReactiveRedisTemplate<String, BookDTO> reactiveJsonBookRedisTemplate(
             ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 
-        Jackson2JsonRedisSerializer<BookDTO> serializer =
-                new Jackson2JsonRedisSerializer<>(BookDTO.class);
+        JacksonJsonRedisSerializer<BookDTO> serializer =
+                new JacksonJsonRedisSerializer<>(BookDTO.class);
 
         RedisSerializationContext<String, BookDTO> serializationContext =
                 RedisSerializationContext.<String, BookDTO>newSerializationContext(
@@ -48,6 +50,8 @@ public class RedisCachingConfig implements CachingConfigurer {
 
     @PreDestroy
     public void flushTestDb() {
-        this.connectionFactory.getConnection().flushDb();
+        try (var connection = this.connectionFactory.getConnection()) {
+            connection.serverCommands().flushDb();
+        }
     }
 }

@@ -7,21 +7,26 @@ import com.mongodb.redis.integration.exception.BookNotFoundException;
 import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class ReactiveBookService {
 
+    private static final Logger log = LoggerFactory.getLogger(ReactiveBookService.class);
     private final ReactiveBookRepository reactiveBookRepository;
 
     private final ApplicationEventPublisher publisher;
+
+    public ReactiveBookService(
+            ReactiveBookRepository reactiveBookRepository, ApplicationEventPublisher publisher) {
+        this.reactiveBookRepository = reactiveBookRepository;
+        this.publisher = publisher;
+    }
 
     public Mono<Book> findBookByTitle(String title) {
         return this.reactiveBookRepository

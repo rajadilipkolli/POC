@@ -1,16 +1,11 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.mongodb.redis.integration.document;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ItemCapped {
 
     @Id private String id;
@@ -18,4 +13,62 @@ public class ItemCapped {
     private String description;
 
     private Double price;
+
+    public ItemCapped() {}
+
+    public ItemCapped(String id, String description, Double price) {
+        this.id = id;
+        this.description = description;
+        this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemCapped that = (ItemCapped) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(description, that.description)
+                && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, price);
+    }
+
+    @Override
+    public String toString() {
+        return "ItemCapped{id='"
+                + id
+                + "', description='"
+                + description
+                + "', price="
+                + price
+                + "}";
+    }
 }

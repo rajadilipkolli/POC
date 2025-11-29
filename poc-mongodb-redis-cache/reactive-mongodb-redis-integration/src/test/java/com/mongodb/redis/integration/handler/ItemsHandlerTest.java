@@ -6,22 +6,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.document.Item;
-import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.MockObjectUtils;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@Slf4j
 class ItemsHandlerTest extends AbstractIntegrationTest {
 
-    @Autowired private ReactiveItemRepository reactiveItemRepository;
+    private static final Logger log = LoggerFactory.getLogger(ItemsHandlerTest.class);
 
     @BeforeEach
     void setUp() {
@@ -92,7 +90,8 @@ class ItemsHandlerTest extends AbstractIntegrationTest {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.price", "900.99");
+                .jsonPath("$.price")
+                .isEqualTo("900.99");
     }
 
     @Test
@@ -157,7 +156,8 @@ class ItemsHandlerTest extends AbstractIntegrationTest {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.price", newPrice);
+                .jsonPath("$.price")
+                .isEqualTo(newPrice);
     }
 
     @Test

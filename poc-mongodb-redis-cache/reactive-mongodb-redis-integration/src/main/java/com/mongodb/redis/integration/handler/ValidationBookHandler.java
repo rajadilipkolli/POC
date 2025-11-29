@@ -49,7 +49,7 @@ public class ValidationBookHandler extends AbstractValidationHandler<BookDTO, Va
         return Mono.from(books)
                 .flatMap(
                         book ->
-                                ServerResponse.created(URI.create("/api/book/" + book.getBookId()))
+                                ServerResponse.created(URI.create("/api/book/" + book.bookId()))
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .build());
     }

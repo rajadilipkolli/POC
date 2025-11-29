@@ -7,8 +7,8 @@ import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import java.time.Duration;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.CollectionOptions;
@@ -17,14 +17,23 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
-@Slf4j
-@RequiredArgsConstructor
 @Profile("!test")
-public class ItemDataInitiliazer implements CommandLineRunner {
+public class ItemDataInitializer implements CommandLineRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(ItemDataInitializer.class);
 
     private final ReactiveItemRepository reactiveItemRepository;
     private final ReactiveItemCappedRepository reactiveItemCappedRepository;
     private final MongoOperations mongoOperations;
+
+    public ItemDataInitializer(
+            ReactiveItemRepository reactiveItemRepository,
+            ReactiveItemCappedRepository reactiveItemCappedRepository,
+            MongoOperations mongoOperations) {
+        this.reactiveItemRepository = reactiveItemRepository;
+        this.reactiveItemCappedRepository = reactiveItemCappedRepository;
+        this.mongoOperations = mongoOperations;
+    }
 
     @Override
     public void run(String... args) {

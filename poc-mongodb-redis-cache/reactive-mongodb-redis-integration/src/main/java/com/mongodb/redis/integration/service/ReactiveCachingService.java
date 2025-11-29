@@ -4,7 +4,6 @@ package com.mongodb.redis.integration.service;
 import com.mongodb.redis.integration.document.Book;
 import com.mongodb.redis.integration.request.BookDTO;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class ReactiveCachingService {
 
     private final ReactiveBookService reactiveBookService;
@@ -22,6 +20,13 @@ public class ReactiveCachingService {
 
     /** KeyName of the region where cache stored. */
     public static final String CACHEABLES_REGION_KEY = "reactivebooks";
+
+    public ReactiveCachingService(
+            ReactiveBookService reactiveBookService,
+            ReactiveRedisTemplate<String, BookDTO> reactiveJsonBookRedisTemplate) {
+        this.reactiveBookService = reactiveBookService;
+        this.reactiveJsonBookRedisTemplate = reactiveJsonBookRedisTemplate;
+    }
 
     @PostConstruct
     void setUpReactiveHashOperations() {
@@ -93,11 +98,11 @@ public class ReactiveCachingService {
     // convert to Book from BookDTO
     private Book convertToBook(BookDTO bookDTO) {
         return new Book(
-                bookDTO.getBookId(),
-                bookDTO.getTitle(),
-                bookDTO.getAuthor(),
-                bookDTO.getText(),
-                bookDTO.getVersion());
+                bookDTO.bookId(),
+                bookDTO.title(),
+                bookDTO.author(),
+                bookDTO.text(),
+                bookDTO.version());
     }
 
     // convert to Mono<BookDTO> from Book
@@ -117,7 +122,7 @@ public class ReactiveCachingService {
     // updates the value in cache
     private Mono<BookDTO> putToCache(BookDTO bookDTO) {
         return this.bookReactiveHashOperations
-                .put(CACHEABLES_REGION_KEY, bookDTO.getBookId(), bookDTO)
+                .put(CACHEABLES_REGION_KEY, bookDTO.bookId(), bookDTO)
                 .log("Pushing to Cache")
                 .thenReturn(bookDTO);
     }

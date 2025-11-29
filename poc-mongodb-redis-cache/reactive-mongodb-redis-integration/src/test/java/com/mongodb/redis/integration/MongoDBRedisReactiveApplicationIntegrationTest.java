@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mongodb.redis.integration.config.AbstractIntegrationTest;
 import com.mongodb.redis.integration.document.Book;
-import com.mongodb.redis.integration.repository.ReactiveBookRepository;
 import com.mongodb.redis.integration.request.BookDTO;
 import java.util.Collections;
 import java.util.List;
@@ -14,24 +13,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.data.mongodb.core.CollectionOptions;
-import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
 
 class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegrationTest {
-
-    @Autowired private TestRestTemplate testRestTemplate;
-
-    @Autowired private ReactiveMongoOperations operations;
-
-    @Autowired private ReactiveBookRepository reactiveBookRepository;
 
     @BeforeAll
     void init() {
@@ -55,23 +44,30 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
                         })
                 .then(
                         this.reactiveBookRepository.save(
-                                Book.builder()
-                                        .title("MongoDbCookBook")
-                                        .text("MongoDB Data Book")
-                                        .author("Raja")
-                                        .bookId("1")
-                                        .build()))
+                                new Book()
+                                        .setTitle("MongoDbCookBook")
+                                        .setText("MongoDB Data Book")
+                                        .setAuthor("Raja")
+                                        .setBookId("1")))
                 .subscribe();
     }
 
     @Test
     @DisplayName("Traditional way")
     void should_return_hello_world() {
-        ResponseEntity<String> response = this.testRestTemplate.getForEntity("/", String.class);
-
-        // assert
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotBlank().isEqualTo("Hello World!");
+        this.webTestClient
+                .get()
+                .uri("/")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(String.class)
+                .consumeWith(
+                        stringEntityExchangeResult -> {
+                            assertThat(stringEntityExchangeResult.getResponseBody())
+                                    .isNotBlank()
+                                    .isEqualTo("Hello World!");
+                        });
     }
 
     @Test
@@ -107,10 +103,10 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
         assertThat(result.getResponseBody()).size().isGreaterThanOrEqualTo(1);
         assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
         assertThat(result.getUriTemplate()).isEqualTo("/api/book/");
-        BookDTO response = Objects.requireNonNull(result.getResponseBody()).get(0);
-        assertThat(response.getTitle()).isEqualTo("MongoDbCookBook");
-        assertThat(response.getAuthor()).isEqualTo("Raja");
-        assertThat(response.getText()).isEqualTo("MongoDB Data Book");
+        BookDTO response = Objects.requireNonNull(result.getResponseBody()).getFirst();
+        assertThat(response.title()).isEqualTo("MongoDbCookBook");
+        assertThat(response.author()).isEqualTo("Raja");
+        assertThat(response.text()).isEqualTo("MongoDB Data Book");
     }
 
     @Test
@@ -126,10 +122,10 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
                 .consumeWith(
                         (response) -> {
                             assertThat(response.getResponseBody()).isNotNull();
-                            assertThat(response.getResponseBody().getTitle())
+                            assertThat(response.getResponseBody().title())
                                     .isEqualTo("MongoDbCookBook");
-                            assertThat(response.getResponseBody().getAuthor()).isEqualTo("Raja");
-                            assertThat(response.getResponseBody().getText())
+                            assertThat(response.getResponseBody().author()).isEqualTo("Raja");
+                            assertThat(response.getResponseBody().text())
                                     .isEqualTo("MongoDB Data Book");
                         });
     }
@@ -208,11 +204,10 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
     @DisplayName("Invalid Data")
     void testCreateBookFail() {
         Book book =
-                Book.builder()
-                        .author("Raja")
-                        .text("This is a Test Book")
-                        .title(RandomStringUtils.randomAlphanumeric(200))
-                        .build();
+                new Book()
+                        .setAuthor("Raja")
+                        .setText("This is a Test Book")
+                        .setTitle(RandomStringUtils.secure().nextAlphabetic(200));
 
         this.webTestClient
                 .post()
@@ -229,7 +224,7 @@ class MongoDBRedisReactiveApplicationIntegrationTest extends AbstractIntegration
                 .jsonPath("$.status")
                 .isEqualTo("400");
 
-        book = Book.builder().build();
+        book = new Book();
         this.webTestClient
                 .post()
                 .uri("/api/book/")

@@ -11,7 +11,6 @@ import com.mongodb.redis.integration.repository.ReactiveItemCappedRepository;
 import com.mongodb.redis.integration.repository.ReactiveItemRepository;
 import com.mongodb.redis.integration.utils.FunctionalEndpointUtils;
 import java.net.URI;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class ItemsHandler {
 
     private final ReactiveItemRepository reactiveItemRepository;
@@ -27,6 +25,13 @@ public class ItemsHandler {
 
     // build notFound response
     private static final Mono<ServerResponse> notFound = ServerResponse.notFound().build();
+
+    public ItemsHandler(
+            ReactiveItemRepository reactiveItemRepository,
+            ReactiveItemCappedRepository reactiveItemCappedRepository) {
+        this.reactiveItemRepository = reactiveItemRepository;
+        this.reactiveItemCappedRepository = reactiveItemCappedRepository;
+    }
 
     public Mono<ServerResponse> getAllItems(ServerRequest serverRequest) {
         return ServerResponse.ok()
