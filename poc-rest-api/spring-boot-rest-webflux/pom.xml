@@ -37,12 +37,8 @@
             <artifactId>spring-boot-starter-data-r2dbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-liquibase</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -60,18 +56,13 @@
             <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <version>0.2.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux-test</artifactId>
+            <artifactId>spring-boot-starter-data-r2dbc-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -116,14 +107,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -141,18 +124,6 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
-                        </path>
-                        <!-- other annotation processors -->
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                        <!-- This is needed when using Lombok 1.18.16 and above -->
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
                     <release>${java.version}</release>

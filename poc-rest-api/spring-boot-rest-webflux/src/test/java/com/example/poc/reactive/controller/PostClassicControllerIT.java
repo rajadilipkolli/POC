@@ -26,18 +26,9 @@ class PostClassicControllerIT extends AbstractIntegrationTest {
                         .deleteAll()
                         .thenMany(
                                 Flux.just(
-                                        ReactivePost.builder()
-                                                .title("title 1")
-                                                .content("content 1")
-                                                .build(),
-                                        ReactivePost.builder()
-                                                .title("title 2")
-                                                .content("content 2")
-                                                .build(),
-                                        ReactivePost.builder()
-                                                .title("title 3")
-                                                .content("content 3")
-                                                .build()))
+                                        new ReactivePost("title 1", "content 1"),
+                                        new ReactivePost("title 2", "content 2"),
+                                        new ReactivePost("title 3", "content 3")))
                         .flatMap(reactivePostRepository::save)
                         .thenMany(reactivePostRepository.findAll());
     }

@@ -7,8 +7,8 @@ import com.example.poc.reactive.event.PostCreatedEvent;
 import com.example.poc.reactive.exception.PostNotFoundException;
 import com.example.poc.reactive.mapping.PostMapper;
 import com.example.poc.reactive.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,21 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class PostServiceImpl implements PostService {
 
+    private static final Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
     private final PostRepository postRepository;
     private final ApplicationEventPublisher publisher;
     private final PostMapper postMapper;
+
+    public PostServiceImpl(
+            PostRepository postRepository,
+            ApplicationEventPublisher publisher,
+            PostMapper postMapper) {
+        this.postRepository = postRepository;
+        this.publisher = publisher;
+        this.postMapper = postMapper;
+    }
 
     @Override
     public Flux<ReactivePost> findAllPosts() {

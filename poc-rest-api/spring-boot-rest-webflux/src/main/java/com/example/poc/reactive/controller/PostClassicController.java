@@ -5,7 +5,6 @@ import com.example.poc.reactive.dto.PostDto;
 import com.example.poc.reactive.entity.ReactivePost;
 import com.example.poc.reactive.service.PostService;
 import java.net.URI;
-import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +19,13 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/posts")
-@RequiredArgsConstructor
 public class PostClassicController {
 
     private final PostService postService;
+
+    public PostClassicController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping
     public Publisher<ReactivePost> all() {

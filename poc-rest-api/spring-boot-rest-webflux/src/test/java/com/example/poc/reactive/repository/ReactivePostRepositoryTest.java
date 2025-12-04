@@ -9,16 +9,13 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
+import org.springframework.boot.data.r2dbc.test.autoconfigure.DataR2dbcTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
-@DataR2dbcTest(
-        properties = {
-            "spring.test.database.replace=none",
-        })
+@DataR2dbcTest
 @ImportTestcontainers(TestContainersConfig.class)
 class ReactivePostRepositoryTest {
 
