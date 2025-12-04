@@ -1,26 +1,25 @@
 /* Licensed under Apache-2.0 2021-2023 */
 package com.example.poc.reactive.config;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
-import reactor.core.publisher.Mono;
 
-@Configuration
-@Slf4j
+@Configuration(proxyBeanMethods = false)
 class SecurityConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Bean
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
@@ -39,17 +38,20 @@ class SecurityConfig {
                                         .pathMatchers(postPath)
                                         .hasRole("USER")
                                         .pathMatchers("/users/{user}/**")
-                                        .access(this::currentUserMatchesPath)
+                                        .access(
+                                                (authentication, context) ->
+                                                        authentication
+                                                                .map(
+                                                                        auth ->
+                                                                                context.getVariables()
+                                                                                        .get("user")
+                                                                                        .equals(
+                                                                                                auth
+                                                                                                        .getName()))
+                                                                .map(AuthorizationDecision::new))
                                         .anyExchange()
                                         .authenticated())
                 .build();
-    }
-
-    private Mono<AuthorizationDecision> currentUserMatchesPath(
-            Mono<Authentication> authentication, AuthorizationContext context) {
-        return authentication
-                .map(a -> context.getVariables().get("user").equals(a.getName()))
-                .map(AuthorizationDecision::new);
     }
 
     @Bean

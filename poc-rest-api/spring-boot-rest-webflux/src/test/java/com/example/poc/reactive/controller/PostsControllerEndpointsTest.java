@@ -11,22 +11,20 @@ import com.example.poc.reactive.service.PostService;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @WebFluxTest(controllers = {PostClassicController.class})
-@AutoConfigureWebTestClient
 @WithMockUser(username = "username")
 class PostsControllerEndpointsTest {
 
-    @MockBean private PostService postService;
+    @MockitoBean private PostService postService;
 
     @Autowired private WebTestClient webTestClient;
 
@@ -36,8 +34,8 @@ class PostsControllerEndpointsTest {
         given(this.postService.findAllPosts())
                 .willReturn(
                         Flux.just(
-                                ReactivePost.builder().id(1).content("A").build(),
-                                ReactivePost.builder().id(2).content("B").build()));
+                                new ReactivePost().setId(1).setContent("A"),
+                                new ReactivePost().setId(2).setContent("B")));
 
         this.webTestClient
                 .get()
@@ -62,7 +60,7 @@ class PostsControllerEndpointsTest {
     @Test
     void save() {
         String content = UUID.randomUUID().toString();
-        ReactivePost data = ReactivePost.builder().id(123).content(content).build();
+        ReactivePost data = new ReactivePost().setId(123).setContent(content);
         PostDto postDto = new PostDto("title", content);
         given(this.postService.savePost(any(PostDto.class))).willReturn(Mono.just(data));
         this.webTestClient
@@ -79,8 +77,8 @@ class PostsControllerEndpointsTest {
     @Test
     @WithMockUser(roles = {"ADMIN"})
     void delete() {
-        ReactivePost data =
-                ReactivePost.builder().id(123).content(UUID.randomUUID().toString()).build();
+        String content = UUID.randomUUID().toString();
+        ReactivePost data = new ReactivePost().setId(123).setContent(content);
         given(this.postService.deletePostById(data.getId()))
                 .willReturn(Mono.just(ResponseEntity.accepted().build()));
         this.webTestClient
@@ -113,7 +111,7 @@ class PostsControllerEndpointsTest {
     @Test
     void getById() {
 
-        ReactivePost data = ReactivePost.builder().id(1).content("A").build();
+        ReactivePost data = new ReactivePost().setId(1).setContent("A");
 
         given(this.postService.findPostById(data.getId())).willReturn(Mono.just(data));
 

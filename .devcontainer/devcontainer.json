@@ -34,12 +34,7 @@
 	"forwardPorts": [4200, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash -c 'echo \"Installing dependencies...\" && cd frontend/blog-angular-ui && npm config set legacy-peer-deps true && npm install && npm install -g @angular/cli && echo \"Verifying installations...\" && ng version && java -version'",
-
-	// Add mount for ~/.m2 to cache Maven dependencies
-	"mounts": [
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.m2,target=/home/vscode/.m2,type=bind,consistency=cached"
-	],
+	"postCreateCommand": "bash -c 'echo \"Installing dependencies...\" && cd frontend/blog-angular-ui && npm install && npm install -g @angular/cli && echo \"Verifying installations...\" && ng version && java -version'",
 
 	// Configure tool-specific properties.
 	// "customizations": {},
