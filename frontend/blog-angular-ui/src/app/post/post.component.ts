@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/cor
 import { Post } from '../list-posts/list-posts.component';
 import { PostDataService } from '../service/data/post-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [DatePipe]
 })
 export class PostComponent implements OnInit {
@@ -47,8 +47,9 @@ export class PostComponent implements OnInit {
           this.post.createdOn = transformedDate || this.post.createdOn;
         }
       }
-    } catch {
+    } catch (error) {
       // Keep the original date string if there's an error
+      console.debug('Date transformation failed, using original value:', error);
     }
 
     console.log(`inside update Post ${this.post}`);

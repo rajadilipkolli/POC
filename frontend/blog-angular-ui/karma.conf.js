@@ -13,7 +13,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      
     ],
     // Force Karma to exit with an error if there are test failures
     failOnFailingTestSuite: true,
