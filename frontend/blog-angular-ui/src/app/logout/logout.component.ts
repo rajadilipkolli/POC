@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
 
@@ -8,7 +8,7 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule]
+  imports: []
 })
 export class LogoutComponent implements OnInit {
   private readonly hardCodedAuthenticationService = inject(HardcodedAuthenticationService);

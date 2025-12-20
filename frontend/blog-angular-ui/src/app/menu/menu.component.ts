@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
 import { BasicAuthenticationService } from '../service/basic-authentication.service';
@@ -9,7 +9,7 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterModule]
+  imports: [RouterModule]
 })
 export class MenuComponent {
   readonly hardcodedAuthenticationService = inject(HardcodedAuthenticationService);
