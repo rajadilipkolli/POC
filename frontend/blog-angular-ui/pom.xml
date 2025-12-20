@@ -120,7 +120,7 @@
           <plugin>
             <groupId>com.github.eirslett</groupId>
             <artifactId>frontend-maven-plugin</artifactId>
-            <version>1.15.4</version>
+            <version>2.0.0</version>
             <executions>
               <!-- Install our node and npm version to run npm/node scripts-->
               <execution>
@@ -166,7 +166,7 @@
           <plugin>
             <groupId>com.github.eirslett</groupId>
             <artifactId>frontend-maven-plugin</artifactId>
-            <version>1.15.4</version>
+            <version>2.0.0</version>
             <executions>
               <!-- Install our node and npm version to run npm/node scripts-->
               <execution>
