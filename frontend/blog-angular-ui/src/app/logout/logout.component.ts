@@ -7,8 +7,7 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
   selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: []
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogoutComponent implements OnInit {
   private readonly hardCodedAuthenticationService = inject(HardcodedAuthenticationService);

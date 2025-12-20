@@ -47,8 +47,9 @@ export class PostComponent implements OnInit {
           this.post.createdOn = transformedDate || this.post.createdOn;
         }
       }
-    } catch {
+    } catch (error) {
       // Keep the original date string if there's an error
+      console.debug('Date transformation failed, using original value:', error);
     }
 
     console.log(`inside update Post ${this.post}`);
