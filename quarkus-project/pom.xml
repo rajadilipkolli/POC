@@ -18,7 +18,7 @@
 
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.30.8</quarkus.platform.version>
+    <quarkus.platform.version>3.31.1</quarkus.platform.version>
 
     <surefire-plugin.version>3.5.4</surefire-plugin.version>
   </properties>
@@ -144,7 +144,6 @@
                   </palantirJavaFormat>
                   <importOrder />
                   <removeUnusedImports />
-                  <formatAnnotations />
               </java>
           </configuration>
           <executions>
@@ -192,7 +191,7 @@
       </build>
       <properties>
         <skipITs>false</skipITs>
-        <quarkus.package.type>native</quarkus.package.type>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
       </properties>
     </profile>
   </profiles>
