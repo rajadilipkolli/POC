@@ -3,10 +3,8 @@ package com.example.poc.webmvc.batch;
 
 import com.example.poc.webmvc.dto.PostDTO;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.JobExecution;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -21,8 +19,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
 @Configuration
-@EnableBatchProcessing
-@RequiredArgsConstructor
 public class ReportsExecutionJob implements JobExecutionListener {
 
     @Bean(name = "executionJob")

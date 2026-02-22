@@ -112,7 +112,7 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     @Override
-    @Cacheable(value = "posts", key = "#userName+#title", unless = "#result == null")
+    @Cacheable(value = "posts", key = "#userName + ':' + #title", unless = "#result == null")
     public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
 
         return dsl.select(
