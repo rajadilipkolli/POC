@@ -8,10 +8,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.item.database.AbstractPagingItemReader;
+import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.step.StepExecution;
+import org.springframework.batch.infrastructure.item.database.AbstractPagingItemReader;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor

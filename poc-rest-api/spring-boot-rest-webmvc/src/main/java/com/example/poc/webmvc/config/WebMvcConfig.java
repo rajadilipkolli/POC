@@ -1,8 +1,8 @@
 /* Licensed under Apache-2.0 2025 */
 package com.example.poc.webmvc.config;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

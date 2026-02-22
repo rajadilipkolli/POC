@@ -2,8 +2,8 @@
 package com.example.poc.webmvc.exception;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import java.util.Locale;
+import tools.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 class LowerCaseClassNameResolver extends TypeIdResolverBase {
 

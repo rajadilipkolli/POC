@@ -3,7 +3,6 @@ package com.example.poc.webmvc.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import jakarta.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import tools.jackson.databind.annotation.JsonTypeIdResolver;
 
 @Data
 @JsonTypeInfo(
