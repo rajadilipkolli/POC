@@ -82,7 +82,7 @@ public class JooqPostServiceImpl implements PostService {
      * @return list of posts
      */
     @Override
-    @Cacheable(value = "posts", key = "#userName", unless = "#result == null")
+    @Cacheable(value = "postsByUser", key = "#userName", unless = "#result == null")
     public List<PostDTO> fetchAllPostsByUserName(String userName) {
 
         return dsl.select(
@@ -112,7 +112,10 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     @Override
-    @Cacheable(value = "posts", key = "#userName + ':' + #title", unless = "#result == null")
+    @Cacheable(
+            value = "postByUserAndTitle",
+            key = "#userName + ':' + #title",
+            unless = "#result == null")
     public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
 
         return dsl.select(
