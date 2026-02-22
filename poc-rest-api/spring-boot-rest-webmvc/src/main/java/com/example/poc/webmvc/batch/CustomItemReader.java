@@ -29,7 +29,6 @@ public class CustomItemReader<T> extends AbstractPagingItemReader<List<Long>> {
         JobParameters parameters = stepExecution.getJobExecution().getJobParameters();
         // use your parameters
         this.titleValue = parameters.getString("key");
-        this.ids = new ArrayList<>();
     }
 
     @Override
@@ -54,8 +53,6 @@ public class CustomItemReader<T> extends AbstractPagingItemReader<List<Long>> {
                                     .values());
         }
 
-        if (getPage() < this.ids.size()) {
-            results.add(this.ids.get(getPage()));
-        }
+        results.add(this.ids.get(getPage() * getPageSize()));
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
 @Configuration
@@ -29,7 +30,8 @@ public class ReportsExecutionJob implements JobExecutionListener {
             CustomItemReader<List<Long>> reader,
             CustomItemProcessor processor,
             CustomItemWriter<List<PostDTO>> writer,
-            JobRepository jobRepository) {
+            JobRepository jobRepository,
+            PlatformTransactionManager platformTransactionManager) {
 
         Step step =
                 new StepBuilder("execution-step", jobRepository)
@@ -38,6 +40,7 @@ public class ReportsExecutionJob implements JobExecutionListener {
                         .reader(reader)
                         .processor(processor)
                         .writer(writer)
+                        .transactionManager(platformTransactionManager)
                         .build();
 
         return new JobBuilder("reporting-job", jobRepository)

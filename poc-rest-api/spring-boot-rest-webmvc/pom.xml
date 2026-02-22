@@ -100,11 +100,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <version>0.2.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
@@ -300,7 +295,7 @@
                                         <inputSchema>public</inputSchema>
                                     </database>
                                     <target>
-                                        <packageName>com.example.poc.webmvc.testcontainersflyway.db</packageName>
+                                        <packageName>com.example.poc.webmvc.db</packageName>
                                         <directory>target/generated-sources/jooq</directory>
                                     </target>
                                 </generator>

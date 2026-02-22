@@ -7,6 +7,7 @@ import static com.example.poc.webmvc.utils.AppConstants.PROFILE_TEST;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.restclient.RestTemplateBuilder;
+import org.springframework.boot.restclient.autoconfigure.RestTemplateBuilderConfigurer;
 import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,8 +34,9 @@ public abstract class AbstractIntegrationTest extends AbstractPostgreSQLContaine
     static class Config {
 
         @Bean
-        RestTemplateBuilder restTemplateBuilder() {
-            return new RestTemplateBuilder()
+        RestTemplateBuilder restTemplateBuilder(RestTemplateBuilderConfigurer configurer) {
+            return configurer
+                    .configure(new RestTemplateBuilder())
                     .connectTimeout(Duration.ofSeconds(1))
                     .readTimeout(Duration.ofSeconds(1));
         }
