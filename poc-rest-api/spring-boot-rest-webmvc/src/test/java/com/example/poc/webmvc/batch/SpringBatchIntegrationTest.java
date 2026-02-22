@@ -13,7 +13,7 @@ import org.springframework.batch.core.job.JobExecution;
 import org.springframework.batch.core.job.JobInstance;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
-import org.springframework.batch.test.JobOperatorTestUtils;
+import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class SpringBatchIntegrationTest extends AbstractIntegrationTest {
 
-    @Autowired private JobOperatorTestUtils jobOperatorTestUtils;
+    @Autowired private JobLauncherTestUtils jobLauncherTestUtils;
     @Autowired private JobRepositoryTestUtils jobRepositoryTestUtils;
 
     @Autowired private Job jobUnderTest;
@@ -31,7 +31,7 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     void setup() {
         this.jobRepositoryTestUtils.removeJobExecutions();
-        this.jobOperatorTestUtils.setJob(this.jobUnderTest);
+        this.jobLauncherTestUtils.setJob(this.jobUnderTest);
     }
 
     @Test
@@ -39,7 +39,7 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
         // given
 
         // when
-        JobExecution jobExecution = jobOperatorTestUtils.startJob(defaultJobParameters());
+        JobExecution jobExecution = jobLauncherTestUtils.launchJob(defaultJobParameters());
         JobInstance actualJobInstance = jobExecution.getJobInstance();
         ExitStatus actualJobExitStatus = jobExecution.getExitStatus();
 
@@ -53,12 +53,12 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
     void testMyJob() throws Exception {
         // given
         JobParameters jobParameters =
-                new JobParametersBuilder(this.jobOperatorTestUtils.getUniqueJobParameters())
+                new JobParametersBuilder(this.jobLauncherTestUtils.getUniqueJobParameters())
                         .addString("key", "Post")
                         .toJobParameters();
 
         // when
-        JobExecution jobExecution = this.jobOperatorTestUtils.startJob(jobParameters);
+        JobExecution jobExecution = this.jobLauncherTestUtils.launchJob(jobParameters);
 
         // then
         assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);

@@ -31,7 +31,7 @@ public class ReportsExecutionJob implements JobExecutionListener {
             CustomItemProcessor processor,
             CustomItemWriter<List<PostDTO>> writer,
             JobRepository jobRepository,
-            PlatformTransactionManager platformTransactionManager) {
+            PlatformTransactionManager transactionManager) {
 
         Step step =
                 new StepBuilder("execution-step", jobRepository)
@@ -40,13 +40,14 @@ public class ReportsExecutionJob implements JobExecutionListener {
                         .reader(reader)
                         .processor(processor)
                         .writer(writer)
-                        .transactionManager(platformTransactionManager)
+                        .listener(reader)
+                        .transactionManager(transactionManager)
                         .build();
 
         return new JobBuilder("reporting-job", jobRepository)
-                .start(step)
                 .incrementer(new RunIdIncrementer())
                 .listener(this)
+                .start(step)
                 .build();
     }
 
