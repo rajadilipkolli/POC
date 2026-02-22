@@ -15,7 +15,7 @@ class PingControllerITTest extends AbstractIntegrationTest {
     @Test
     void testPingEndpoint() {
         ResponseEntity<PingController.PingResponse> response =
-                restTemplate().getForEntity("/api/ping", PingController.PingResponse.class);
+                restTemplate.getForEntity("/api/ping", PingController.PingResponse.class);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -28,9 +28,8 @@ class PingControllerITTest extends AbstractIntegrationTest {
     @Test
     void testPingWithAuthentication() {
         ResponseEntity<PingController.PingResponse> response =
-                restTemplate()
-                        .getForEntity(
-                                "/api/pingWithAuthentication", PingController.PingResponse.class);
+                restTemplate.getForEntity(
+                        "/api/pingWithAuthentication", PingController.PingResponse.class);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -50,12 +49,11 @@ class PingControllerITTest extends AbstractIntegrationTest {
         headers.set(HttpHeaders.AUTHORIZATION, authHeader);
 
         ResponseEntity<PingController.PingResponse> response =
-                restTemplate()
-                        .exchange(
-                                "/api/pingWithAuthentication",
-                                HttpMethod.GET,
-                                new HttpEntity<>(headers),
-                                PingController.PingResponse.class);
+                restTemplate.exchange(
+                        "/api/pingWithAuthentication",
+                        HttpMethod.GET,
+                        new HttpEntity<>(headers),
+                        PingController.PingResponse.class);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -73,12 +71,11 @@ class PingControllerITTest extends AbstractIntegrationTest {
         headers.set(HttpHeaders.HOST, "localhost");
 
         ResponseEntity<PingController.PingResponse> response =
-                restTemplate()
-                        .exchange(
-                                "/api/ping",
-                                HttpMethod.GET,
-                                new HttpEntity<>(headers),
-                                PingController.PingResponse.class);
+                restTemplate.exchange(
+                        "/api/ping",
+                        HttpMethod.GET,
+                        new HttpEntity<>(headers),
+                        PingController.PingResponse.class);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -97,12 +94,8 @@ class PingControllerITTest extends AbstractIntegrationTest {
         headers.set(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "Content-Type,Authorization");
 
         ResponseEntity<Void> response =
-                restTemplate()
-                        .exchange(
-                                "/api/ping",
-                                HttpMethod.OPTIONS,
-                                new HttpEntity<>(headers),
-                                Void.class);
+                restTemplate.exchange(
+                        "/api/ping", HttpMethod.OPTIONS, new HttpEntity<>(headers), Void.class);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

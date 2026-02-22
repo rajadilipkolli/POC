@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.11</version>
+        <version>4.0.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -18,14 +18,13 @@
     <properties>
         <java.version>21</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
-        <springdoc-open-ui.version>2.8.15</springdoc-open-ui.version>
+        <springdoc-open-ui.version>3.0.1</springdoc-open-ui.version>
+
+        <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>12.2.0</dependency-check-maven.version>
         <spotless.version>3.2.1</spotless.version>
-
-        <db.username>local</db.username>
-        <db.password>local</db.password>
     </properties>
 
     <dependencies>
@@ -43,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,8 +65,8 @@
             <artifactId>caffeine</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-liquibase</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -102,22 +101,37 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.batch</groupId>
-            <artifactId>spring-batch-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-resttestclient</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -215,112 +229,80 @@
                     <failOnError>false</failOnError>
                 </configuration>
             </plugin>
-            <!-- Much better if there was a testcontainers lifecycle management plugin!
-                 Upvote here if you like the idea: https://github.com/testcontainers/testcontainers-java/issues/4397 -->
-            <plugin>
-                <groupId>org.codehaus.gmaven</groupId>
-                <artifactId>groovy-maven-plugin</artifactId>
-                <version>2.1.1</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <source>
-                                db = new org.testcontainers.containers.PostgreSQLContainer("postgres:latest")
-                                        .withUsername("${db.username}")
-                                        .withDatabaseName("rest")
-                                        .withPassword("${db.password}");
-
-                                db.start();
-                                project.properties.setProperty('db.url', db.getJdbcUrl());
-                            </source>
-                        </configuration>
-                    </execution>
-                </executions>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${testcontainers.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                        <configuration>
-                            <url>${db.url}</url>
-                            <user>${db.username}</user>
-                            <password>${db.password}</password>
-                            <locations>
-                                <location>filesystem:src/main/resources/db/migration</location>
-                            </locations>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-database-postgresql</artifactId>
-                        <version>${flyway.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-
-                <executions>
-                    <execution>
-                        <id>java-generator</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-
-                        <configuration>
-                            <jdbc>
-                                <url>${db.url}</url>
-                                <user>${db.username}</user>
-                                <password>${db.password}</password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <inputSchema>public</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>com.example.poc.webmvc.testcontainersflyway.db</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <db.url>${db.url}</db.url>
-                        <db.username>${db.username}</db.username>
-                        <db.password>${db.password}</db.password>
-                    </systemPropertyVariables>
-                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>dev.sivalabs</groupId>
+                <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+                <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>testcontainers-postgresql</artifactId>
+                        <version>${testcontainers.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen</artifactId>
+                        <version>${jooq.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>generate-jooq-sources</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <database>
+                                <!--
+                                "type" can be: POSTGRES, MYSQL, MARIADB
+                                -->
+                                <type>POSTGRES</type>
+                                <!--
+                                "containerImage" is optional.
+                                The defaults are
+                                    POSTGRES: postgres:15.2-alpine
+                                    MYSQL: mysql:8.0.33
+                                    MARIADB: mariadb:10.11
+                                -->
+                                <containerImage>postgres:18.2-alpine</containerImage>
+                            </database>
+                            <flyway>
+                                <locations>
+                                    filesystem:src/main/resources/db/migration
+                                </locations>
+                            </flyway>
+                            <!--
+                                You can configure any supporting jooq config here.
+                                see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/
+                            -->
+                            <jooq>
+                                <generator>
+                                    <database>
+                                        <includes>.*</includes>
+                                        <excludes>DATABASECHANGELOG.*</excludes>
+                                        <inputSchema>public</inputSchema>
+                                    </database>
+                                    <target>
+                                        <packageName>com.example.poc.webmvc.db</packageName>
+                                        <directory>target/generated-sources/jooq</directory>
+                                    </target>
+                                </generator>
+                            </jooq>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
 				<groupId>com.diffplug.spotless</groupId>
@@ -329,7 +311,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.25.2</version>
+							<version>1.28.0</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 						<licenseHeader>
@@ -348,26 +330,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

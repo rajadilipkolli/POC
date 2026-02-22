@@ -13,6 +13,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PostControllerITTest extends AbstractIntegrationTest {
 
     private PostDTO postDto;
@@ -46,7 +48,7 @@ class PostControllerITTest extends AbstractIntegrationTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().postList()).isNotEmpty().hasSize(2);
-        PostDTO postDTO = response.getBody().postList().get(0);
+        PostDTO postDTO = response.getBody().postList().getFirst();
         assertThat(postDTO.getComments())
                 .isNotEmpty()
                 .hasSize(2)

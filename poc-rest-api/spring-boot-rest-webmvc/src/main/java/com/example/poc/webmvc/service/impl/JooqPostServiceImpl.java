@@ -1,11 +1,11 @@
 /* Licensed under Apache-2.0 2025 */
 package com.example.poc.webmvc.service.impl;
 
-import static com.example.poc.webmvc.testcontainersflyway.db.tables.Post.POST;
-import static com.example.poc.webmvc.testcontainersflyway.db.tables.PostComment.POST_COMMENT;
-import static com.example.poc.webmvc.testcontainersflyway.db.tables.PostDetails.POST_DETAILS;
-import static com.example.poc.webmvc.testcontainersflyway.db.tables.PostTag.POST_TAG;
-import static com.example.poc.webmvc.testcontainersflyway.db.tables.Tag.TAG;
+import static com.example.poc.webmvc.db.tables.Post.POST;
+import static com.example.poc.webmvc.db.tables.PostComment.POST_COMMENT;
+import static com.example.poc.webmvc.db.tables.PostDetails.POST_DETAILS;
+import static com.example.poc.webmvc.db.tables.PostTag.POST_TAG;
+import static com.example.poc.webmvc.db.tables.Tag.TAG;
 import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.multiset;
 import static org.jooq.impl.DSL.select;
@@ -82,7 +82,7 @@ public class JooqPostServiceImpl implements PostService {
      * @return list of posts
      */
     @Override
-    @Cacheable(value = "posts", key = "#userName", unless = "#result == null")
+    @Cacheable(value = "postsByUser", key = "#userName", unless = "#result == null")
     public List<PostDTO> fetchAllPostsByUserName(String userName) {
 
         return dsl.select(
@@ -112,7 +112,10 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     @Override
-    @Cacheable(value = "posts", key = "#userName+#title", unless = "#result == null")
+    @Cacheable(
+            value = "postByUserAndTitle",
+            key = "#userName + ':' + #title",
+            unless = "#result == null")
     public PostDTO fetchPostByUserNameAndTitle(String userName, String title) {
 
         return dsl.select(

@@ -3,11 +3,11 @@ package com.example.poc.webmvc.batch;
 
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.job.JobExecution;
+import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.job.parameters.JobParametersBuilder;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class JobInvokerController {
 
-    private final JobLauncher jobLauncher;
+    private final JobOperator jobOperator;
 
     private final Job executionJob;
 
@@ -27,8 +27,8 @@ public class JobInvokerController {
                         .addString("key", "Post")
                         .addDate("currentDate", new Date())
                         .toJobParameters();
-        JobExecution jobExecution = this.jobLauncher.run(this.executionJob, jobParameters);
+        JobExecution jobExecution = this.jobOperator.start(this.executionJob, jobParameters);
 
-        return "Batch job has been invoked as " + jobExecution.getJobId();
+        return "Batch job has been invoked as " + jobExecution.getJobInstanceId();
     }
 }

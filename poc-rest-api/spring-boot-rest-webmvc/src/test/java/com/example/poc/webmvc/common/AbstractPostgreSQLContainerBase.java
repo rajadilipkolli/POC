@@ -3,14 +3,14 @@ package com.example.poc.webmvc.common;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 public abstract class AbstractPostgreSQLContainerBase {
 
     @Container
-    protected static final PostgreSQLContainer<?> sqlContainer =
-            new PostgreSQLContainer<>("postgres:18-alpine");
+    protected static final PostgreSQLContainer sqlContainer =
+            new PostgreSQLContainer("postgres:18-alpine");
 
     static {
         sqlContainer.start();

@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.infrastructure.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
