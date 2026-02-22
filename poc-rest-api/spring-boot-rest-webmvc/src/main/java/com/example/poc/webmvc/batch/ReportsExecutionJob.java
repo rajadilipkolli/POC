@@ -36,7 +36,6 @@ public class ReportsExecutionJob implements JobExecutionListener {
                         .reader(reader)
                         .processor(processor)
                         .writer(writer)
-                        .listener(reader)
                         .transactionManager(transactionManager)
                         .build();
 

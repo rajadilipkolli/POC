@@ -15,7 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 @Component
 @StepScope
-public class CustomItemReader extends AbstractPagingItemReader<List<Long>> {
+public class CustomItemReader<T> extends AbstractPagingItemReader<List<Long>> {
 
     private final PostRepository postRepository;
 

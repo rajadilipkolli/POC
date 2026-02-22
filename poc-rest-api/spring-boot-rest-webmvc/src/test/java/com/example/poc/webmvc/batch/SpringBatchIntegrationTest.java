@@ -13,7 +13,7 @@ import org.springframework.batch.core.job.JobExecution;
 import org.springframework.batch.core.job.JobInstance;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
-import org.springframework.batch.test.JobLauncherTestUtils;
+import org.springframework.batch.test.JobOperatorTestUtils;
 import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class SpringBatchIntegrationTest extends AbstractIntegrationTest {
 
-    @Autowired private JobLauncherTestUtils jobLauncherTestUtils;
+    @Autowired private JobOperatorTestUtils jobLauncherTestUtils;
     @Autowired private JobRepositoryTestUtils jobRepositoryTestUtils;
 
     @Autowired private Job jobUnderTest;
@@ -52,10 +52,7 @@ class SpringBatchIntegrationTest extends AbstractIntegrationTest {
     @Test
     void testMyJob() throws Exception {
         // given
-        JobParameters jobParameters =
-                new JobParametersBuilder(this.jobLauncherTestUtils.getUniqueJobParameters())
-                        .addString("key", "Post")
-                        .toJobParameters();
+        JobParameters jobParameters = this.jobLauncherTestUtils.getUniqueJobParameters();
 
         // when
         JobExecution jobExecution = this.jobLauncherTestUtils.launchJob(jobParameters);
