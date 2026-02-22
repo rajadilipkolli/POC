@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class JobInvokerController {
 
-    private final JobOperator jobLauncher;
+    private final JobOperator jobOperator;
 
     private final Job executionJob;
 
@@ -27,8 +27,8 @@ public class JobInvokerController {
                         .addString("key", "Post")
                         .addDate("currentDate", new Date())
                         .toJobParameters();
-        JobExecution jobExecution = this.jobLauncher.run(this.executionJob, jobParameters);
+        JobExecution jobExecution = this.jobOperator.start(this.executionJob, jobParameters);
 
-        return "Batch job has been invoked as " + jobExecution.getJobId();
+        return "Batch job has been invoked as " + jobExecution.getJobInstanceId();
     }
 }

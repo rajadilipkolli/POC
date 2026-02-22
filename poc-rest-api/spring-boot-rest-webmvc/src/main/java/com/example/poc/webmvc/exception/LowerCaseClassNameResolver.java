@@ -3,20 +3,21 @@ package com.example.poc.webmvc.exception;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Locale;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DatabindContext;
 import tools.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 class LowerCaseClassNameResolver extends TypeIdResolverBase {
 
-    /** {@inheritDoc} */
     @Override
-    public String idFromValue(Object value) {
+    public String idFromValue(DatabindContext ctxt, Object value) throws JacksonException {
         return value.getClass().getSimpleName().toLowerCase(Locale.getDefault());
     }
 
-    /** {@inheritDoc} */
     @Override
-    public String idFromValueAndType(Object value, Class<?> suggestedType) {
-        return idFromValue(value);
+    public String idFromValueAndType(DatabindContext ctxt, Object value, Class<?> suggestedType)
+            throws JacksonException {
+        return idFromValue(ctxt, value);
     }
 
     /** {@inheritDoc} */

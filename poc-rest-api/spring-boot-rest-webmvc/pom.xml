@@ -25,9 +25,6 @@
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <dependency-check-maven.version>12.2.0</dependency-check-maven.version>
         <spotless.version>3.2.1</spotless.version>
-
-        <db.username>local</db.username>
-        <db.password>local</db.password>
     </properties>
 
     <dependencies>
@@ -113,8 +110,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.batch</groupId>
-            <artifactId>spring-batch-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -286,11 +283,11 @@
                                 -->
                                 <containerImage>postgres:18.2-alpine</containerImage>
                             </database>
-                            <liquibase>
-                                <changeLogPath>db.changelog-master.yaml</changeLogPath>
-                                <changeLogDirectory>src/main/resources/db/changelog</changeLogDirectory>
-                                <defaultSchemaName>public</defaultSchemaName>
-                            </liquibase>
+                            <flyway>
+                                <locations>
+                                    filesystem:src/main/resources/db/migration
+                                </locations>
+                            </flyway>
                             <!--
                                 You can configure any supporting jooq config here.
                                 see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/
@@ -338,26 +335,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>
