@@ -23,7 +23,7 @@
         <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
 
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <dependency-check-maven.version>12.2.0</dependency-check-maven.version>
+        <dependency-check-maven.version>12.2.1</dependency-check-maven.version>
         <spotless.version>3.4.0</spotless.version>
     </properties>
 
