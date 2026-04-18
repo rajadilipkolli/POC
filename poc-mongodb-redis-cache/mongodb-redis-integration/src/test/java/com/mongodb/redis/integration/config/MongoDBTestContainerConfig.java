@@ -10,7 +10,7 @@ public interface MongoDBTestContainerConfig {
 
     @ServiceConnection
     MongoDBContainer mongoDBContainer =
-            new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.2.4"))
+            new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.2.7"))
                     .withSharding()
                     .withStartupAttempts(3)
                     .withStartupTimeout(Duration.ofMinutes(2))
