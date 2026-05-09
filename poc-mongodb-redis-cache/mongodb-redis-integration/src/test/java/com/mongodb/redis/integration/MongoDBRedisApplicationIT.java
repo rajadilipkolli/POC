@@ -3,12 +3,15 @@ package com.mongodb.redis.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.mongodb.redis.integration.config.MongoDBTestContainerConfig;
+import com.mongodb.redis.integration.config.RedisTestContainerConfig;
 import com.mongodb.redis.integration.document.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +19,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = TestMongoDBRedisApplication.class)
+        classes = RedisTestContainerConfig.class)
 @ActiveProfiles("test")
+@ImportTestcontainers(MongoDBTestContainerConfig.class)
 @AutoConfigureTestRestTemplate
 class MongoDBRedisApplicationIT {
 
