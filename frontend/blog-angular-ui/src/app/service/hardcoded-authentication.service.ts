@@ -1,8 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Service, signal, computed } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class HardcodedAuthenticationService {
   private readonly authenticatedUser = signal<string | null>(
     sessionStorage.getItem('authenticatedUser')

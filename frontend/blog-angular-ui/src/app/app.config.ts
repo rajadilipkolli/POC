@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(BrowserModule, FormsModule),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorBasicAuthService,

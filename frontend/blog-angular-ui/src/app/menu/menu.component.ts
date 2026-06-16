@@ -8,7 +8,6 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterModule]
 })
 export class MenuComponent {

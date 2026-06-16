@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { HardcodedAuthenticationService } from './hardcoded-authentication.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('HardcodedAuthenticationService', () => {
   let service: HardcodedAuthenticationService;
@@ -12,7 +12,7 @@ describe('HardcodedAuthenticationService', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
@@ -101,7 +101,7 @@ describe('HardcodedAuthenticationService', () => {
       TestBed.configureTestingModule({
         providers: [
           provideRouter([]),
-          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClient(withXhr(), withInterceptorsFromDi()),
           provideHttpClientTesting()
         ]
       });
@@ -120,7 +120,7 @@ describe('HardcodedAuthenticationService', () => {
       TestBed.configureTestingModule({
         providers: [
           provideRouter([]),
-          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClient(withXhr(), withInterceptorsFromDi()),
           provideHttpClientTesting()
         ]
       });

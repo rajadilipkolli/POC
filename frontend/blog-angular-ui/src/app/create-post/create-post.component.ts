@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule],
   providers: [DatePipe]
 })

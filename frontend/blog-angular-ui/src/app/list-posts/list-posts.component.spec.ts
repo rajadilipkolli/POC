@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
 import { Comment, ListPostsComponent, Post, PostList, Tag } from './list-posts.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { PostDataService } from '../service/data/post-data.service';
 
 import { API_URL } from '../app.constants';
@@ -33,7 +33,7 @@ describe('ListPostsComponent', () => {
       imports: [ListPostsComponent],
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         PostDataService
       ]

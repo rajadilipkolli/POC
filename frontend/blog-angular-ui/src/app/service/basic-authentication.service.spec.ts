@@ -8,7 +8,7 @@ import {
   BasicAuthenticationService,
   TOKEN
 } from './basic-authentication.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('BasicAuthenticationService', () => {
   let service: BasicAuthenticationService;
@@ -18,7 +18,7 @@ describe('BasicAuthenticationService', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });

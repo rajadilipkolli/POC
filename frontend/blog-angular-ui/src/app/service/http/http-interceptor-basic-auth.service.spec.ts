@@ -1,7 +1,7 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpResponse, withXhr } from '@angular/common/http';
 import { of } from 'rxjs';
 
 import { HttpInterceptorBasicAuthService } from './http-interceptor-basic-auth.service';
@@ -23,7 +23,7 @@ describe('HttpInterceptorBasicAuthService', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         { provide: BasicAuthenticationService, useValue: basicAuthSpy }
       ]

@@ -1,11 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BasicAuthenticationService } from '../basic-authentication.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class HttpInterceptorBasicAuthService implements HttpInterceptor {
   private readonly basicAuthenticationService = inject(BasicAuthenticationService);
 

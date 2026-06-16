@@ -1,14 +1,13 @@
-import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TitleCasePipe } from '@angular/common';
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TitleCasePipe, CommonModule } from '@angular/common';
 import { PingResponse, WelcomeDataService } from '../service/data/welcome-data.service';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TitleCasePipe]
+  imports: [RouterLink, CommonModule]
 })
 export class WelcomeComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

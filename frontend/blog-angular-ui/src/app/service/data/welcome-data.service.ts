@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 
@@ -6,9 +6,7 @@ export interface PingResponse {
   message: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class WelcomeDataService {
   private readonly http = inject(HttpClient);
 

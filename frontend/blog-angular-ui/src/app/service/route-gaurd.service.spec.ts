@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
 import { RouteGaurdService } from './route-gaurd.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { BasicAuthenticationService } from './basic-authentication.service';
 import { HardcodedAuthenticationService } from './hardcoded-authentication.service';
 
@@ -20,7 +20,7 @@ describe('RouteGaurdService', () => {
           { path: 'login', component: class {} },
           { path: 'protected', component: class {} }
         ]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });

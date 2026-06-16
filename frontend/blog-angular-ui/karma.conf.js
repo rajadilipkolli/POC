@@ -2,9 +2,10 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
-  // Check for Chrome binary path environment variable
-  process.env.CHROME_BIN = process.env.CHROME_BIN || require('puppeteer').executablePath();
-  
+  // Check for Chrome binary path environment variable synchronously since puppeteer.executablePath() returns a Promise
+  const { execSync } = require('child_process');
+  process.env.CHROME_BIN = process.env.CHROME_BIN || execSync('node -e "require(\'puppeteer\').executablePath().then(console.log)"').toString().trim();
+
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -13,7 +14,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      
+
     ],
     // Force Karma to exit with an error if there are test failures
     failOnFailingTestSuite: true,
