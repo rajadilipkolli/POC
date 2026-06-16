@@ -32,7 +32,6 @@ export class Tag {
   selector: 'app-list-posts',
   templateUrl: './list-posts.component.html',
   styleUrls: ['./list-posts.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule]
 })
 export class ListPostsComponent implements OnInit {

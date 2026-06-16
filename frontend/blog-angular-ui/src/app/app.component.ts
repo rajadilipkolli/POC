@@ -17,7 +17,6 @@ import { FooterComponent } from './footer/footer.component';
     <app-footer />
   `,
   styleUrls: ['./app.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, MenuComponent, FooterComponent]
 })
 export class AppComponent {

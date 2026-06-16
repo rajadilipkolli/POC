@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 
@@ -23,9 +23,7 @@ export interface PostList {
   postList: Post[];
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class PostDataService {
   private readonly http = inject(HttpClient);
 

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import { PostComponent } from './post.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { Comment, Post, Tag } from '../list-posts/list-posts.component';
 import { API_URL } from '../app.constants';
 
@@ -37,7 +37,7 @@ describe('PostComponent', () => {
           provide: DatePipe,
           useValue: jasmine.createSpyObj('DatePipe', ['transform'])
         },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         {
           provide: ActivatedRoute,

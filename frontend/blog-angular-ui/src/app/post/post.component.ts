@@ -2,15 +2,14 @@ import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/cor
 import { Post } from '../list-posts/list-posts.component';
 import { PostDataService } from '../service/data/post-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   providers: [DatePipe]
 })
 export class PostComponent implements OnInit {

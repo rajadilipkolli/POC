@@ -8,7 +8,6 @@ import { BasicAuthenticationService } from '../service/basic-authentication.serv
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule]
 })
 export class LoginComponent {

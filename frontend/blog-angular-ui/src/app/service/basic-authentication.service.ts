@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Service, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { API_URL } from '../app.constants';
@@ -10,9 +10,7 @@ export interface PingResponse {
   message: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class BasicAuthenticationService {
   private readonly httpClient = inject(HttpClient);
 

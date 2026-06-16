@@ -4,7 +4,7 @@ import { provideRouter, ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { WelcomeComponent } from './welcome.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { WelcomeDataService, PingResponse } from '../service/data/welcome-data.service';
 
 describe('WelcomeComponent', () => {
@@ -27,7 +27,7 @@ describe('WelcomeComponent', () => {
       imports: [WelcomeComponent],
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         { provide: WelcomeDataService, useValue: welcomeDataServiceSpy },
         { provide: ActivatedRoute, useValue: activatedRouteSpy }
