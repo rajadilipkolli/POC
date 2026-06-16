@@ -127,13 +127,11 @@ public abstract class PostMapperDecorator implements PostMapper {
                         .filter(postComment -> !newPostComments.contains(postComment))
                         .forEach(
                                 (postComment) -> {
-                                    postComment.setPost(post);
-                                    PostComment mergedPostComment =
-                                            this.postCommentRepository.save(postComment);
-                                    post.getComments()
-                                            .set(
-                                                    post.getComments().indexOf(mergedPostComment),
-                                                    mergedPostComment);
+                                    int index = post.getComments().indexOf(postComment);
+                                    if (index != -1) {
+                                        PostComment existing = post.getComments().get(index);
+                                        existing.setReview(postComment.getReview());
+                                    }
                                 });
 
                 // Add the rows found in the incoming collection,
