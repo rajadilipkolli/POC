@@ -4,6 +4,7 @@ package com.example.poc.webmvc.exception;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.validation.FieldError;
@@ -132,9 +132,13 @@ public class ApiError {
      * @param cv the ConstraintViolation
      */
     private void addValidationError(ConstraintViolation<?> cv) {
+        String leafNode = "";
+        for (Path.Node node : cv.getPropertyPath()) {
+            leafNode = node.toString();
+        }
         this.addValidationError(
                 cv.getRootBeanClass().getSimpleName(),
-                ((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
+                leafNode,
                 cv.getInvalidValue(),
                 cv.getMessage());
     }
