@@ -25,7 +25,7 @@ jobs:
         node: [ '24', '26' ]
     name: Node ${{ matrix.node }} sample
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       
       - name: Cache node modules
         uses: actions/cache@v5.0.5
