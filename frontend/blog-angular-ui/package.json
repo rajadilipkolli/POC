@@ -40,7 +40,7 @@
     "@types/node": "24.13.3",
     "angular-eslint": "^22.0.0",
     "cross-env": "^10.0.0",
-    "eslint": "10.6.0",
+    "eslint": "10.7.0",
     "istanbul-lib-instrument": "^6.0.3",
     "jasmine-core": "6.3.0",
     "jasmine-spec-reporter": "7.0.0",
