@@ -30,8 +30,6 @@ public class JooqPostServiceImpl implements PostService {
     }
 
     /**
-     *
-     *
      * {@snippet :
      * String generatedQuery =
      *
