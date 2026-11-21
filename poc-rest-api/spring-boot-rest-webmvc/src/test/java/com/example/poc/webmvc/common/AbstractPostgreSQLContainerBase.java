@@ -10,7 +10,7 @@ public abstract class AbstractPostgreSQLContainerBase {
 
     @Container
     protected static final PostgreSQLContainer sqlContainer =
-            new PostgreSQLContainer("postgres:18-alpine");
+            new PostgreSQLContainer("postgres:19-alpine");
 
     static {
         sqlContainer.start();
