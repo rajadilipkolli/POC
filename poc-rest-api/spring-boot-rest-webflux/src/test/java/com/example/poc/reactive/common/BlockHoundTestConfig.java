@@ -9,6 +9,10 @@ import reactor.blockhound.BlockHound;
 public abstract class BlockHoundTestConfig {
     @BeforeAll
     void setUpBlockHound() {
-        BlockHound.install();
+        // PostgreSQL SCRAM nonce generation can read JDK entropy on the Netty event loop.
+        BlockHound.install(
+                builder ->
+                        builder.allowBlockingCallsInside(
+                                "com.ongres.scram.common.ScramFunctions", "nonce"));
     }
 }
