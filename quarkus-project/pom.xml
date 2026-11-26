@@ -160,6 +160,19 @@
 
   <profiles>
     <profile>
+      <id>github-actions-native-builder</id>
+      <activation>
+        <property>
+          <name>env.GITHUB_ACTIONS</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- Oracle GraalVM 25.0.4 lacks a Native Image API required by Quarkus 4. Use the platform's Mandrel builder in CI. -->
+        <quarkus.native.container-build>true</quarkus.native.container-build>
+      </properties>
+    </profile>
+    <profile>
       <id>native</id>
       <activation>
         <property>
